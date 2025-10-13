@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adda Store - Your Multi-Tool Solution</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #1E1E2F;
+            color: #EAEAEA;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #2B2D42;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #2B2D42 0%, #1E1E2F 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #FFD700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #CCCCCC;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            color: #FFD700;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .tool-card {
+            background-color: #3A3D5B;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .tool-card:hover {
+            background-color: #FFD700;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .tool-card:hover h2,
+        .tool-card:hover p {
+            color: #1E1E2F;
+        }
+
+        .tool-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #FFD700;
+            transition: color 0.3s ease;
+        }
+
+        .tool-card p {
+            margin-bottom: 20px;
+            color: #CCCCCC;
+            flex-grow: 1;
+            transition: color 0.3s ease;
+        }
+
+        .tool-btn {
+            background-color: #FFD700;
+            color: #1E1E2F;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+        }
+
+        .tool-btn:hover {
+            background-color: #E6C200;
+            transform: scale(1.05);
+        }
+
+        /* Games Section */
+        .games-section {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #1E1E2F 0%, #2B2D42 100%);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .game-card {
+            background-color: #3A3D5B;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .game-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #FFD700;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2B2D42;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-content p {
+            color: #CCCCCC;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .games-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tool-card, .game-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">Adda Store</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Your All-in-One Digital Toolkit</h1>
+            <p>Discover a collection of powerful tools and entertaining games designed to simplify your digital life and provide endless fun.</p>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="tools-section">
+        <div class="container">
+            <h2 class="section-title">Our Tools</h2>
+            <div class="tools-grid">
+                <!-- Tool Cards -->
+                <div class="tool-card">
+                    <h2>Image Converter</h2>
+                    <p>Convert your images between various formats like JPG, PNG, WEBP, and more with just a few clicks.</p>
+                    <button class="tool-btn" data-tool="Image Converter">Use Tool</button>
+                </div>
+                
+                <div class="tool-card">
+                    <h2>Image Compressor</h2>
+                    <p>Reduce image file sizes without compromising quality to save storage and improve loading times.</p>
+                    <button class="tool-btn" data-tool="Image Compressor">Use Tool</button>
+                </div>
+                
+                <div class="tool-card">
+                    <h2>Image Crop</h2>
+                    <p>Easily crop and resize your images to the perfect dimensions for social media or websites.</p>
+                    <button class="tool-btn" data-tool="Image Crop">Use Tool</button>
+                </div>
+                
+                <div class="tool-card">
+                    <h2>Video Converter</h2>
+                    <p>Convert videos between different formats like MP4, AVI, MOV, and more with high quality output.</p>
+                    <button class="tool-btn" data-tool="Video Converter">Use Tool</button>
+                </div>
+                
+                <div class="tool-card">
+                    <h2>Age Calculator</h2>
+                    <p>Calculate your exact age in years, months, and days with this simple and accurate tool.</p>
+                    <button class="tool-btn" data-tool="Age Calculator">Use Tool</button>
+                </div>
+                
+                <div class="tool-card">
+                    <h2>EMI Calculator</h2>
+                    <p>Calculate your Equated Monthly Installments for loans with detailed breakdown of principal and interest.</p>
+                    <button class="tool-btn" data-tool="EMI Calculator">Use Tool</button>
+                </div>
+                
+                <div class="tool-card">
+                    <h2>SIP Calculator</h2>
+                    <p>Plan your investments with our Systematic Investment Plan calculator to estimate returns.</p>
+                    <button class="tool-btn" data-tool="SIP Calculator">Use Tool</button>
+                </div>
+                
+                <div class="tool-card">
+                    <h2>Audio Trim</h2>
+                    <p>Trim and edit your audio files easily to create perfect sound clips for your projects.</p>
+                    <button class="tool-btn" data-tool="Audio Trim">Use Tool</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section class="games-section">
+        <div class="container">
+            <h2 class="section-title">Our Games</h2>
+            <div class="games-grid">
+                <!-- Game Cards -->
+                <div class="game-card">
+                    <h3>Metro Dash</h3>
+                    <p>Navigate through busy metro tunnels in this fast-paced endless runner.</p>
+                    <button class="tool-btn" data-tool="Metro Dash">Play Game</button>
+                </div>
+                
+                <div class="game-card">
+                    <h3>Jelly Sparkle</h3>
+                    <p>Match colorful jellies in this sweet and addictive puzzle adventure.</p>
+                    <button class="tool-btn" data-tool="Jelly Sparkle">Play Game</button>
+                </div>
+                
+                <div class="game-card">
+                    <h3>TicTac Pro</h3>
+                    <p>The classic game of Tic Tac Toe with challenging AI opponents.</p>
+                    <button class="tool-btn" data-tool="TicTac Pro">Play Game</button>
+                </div>
+                
+                <div class="game-card">
+                    <h3>Speed Rift</h3>
+                    <p>Race through dimensional rifts in this high-speed arcade game.</p>
+                    <button class="tool-btn" data-tool="Speed Rift">Play Game</button>
+                </div>
+                
+                <div class="game-card">
+                    <h3>Turbo Asphalt</h3>
+                    <p>Experience intense street racing with realistic physics and stunning visuals.</p>
+                    <button class="tool-btn" data-tool="Turbo Asphalt">Play Game</button>
+                </div>
+                
+                <div class="game-card">
+                    <h3>Road Fury</h3>
+                    <p>Unleash your driving skills in this action-packed racing game.</p>
+                    <button class="tool-btn" data-tool="Road Fury">Play Game</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2023 Adda Store. All rights reserved.</p>
+                <p>Your one-stop solution for tools and entertainment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add click event listeners to all buttons
+        document.querySelectorAll('.tool-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const toolName = this.getAttribute('data-tool');
+                alert(`Redirecting to ${toolName}`);
+                // In a real implementation, you would redirect to the actual tool/game page
+                // window.location.href = `/${toolName.toLowerCase().replace(' ', '-')}`;
+            });
+        });
+    </script>
+</body>
+</html>
