@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mood Mosaic - A visual emotion tracker that transforms your feelings into beautiful abstract art. Track your mental wellness journey through color and pattern.">
+    <meta name="keywords" content="mood tracker, emotion journal, mental wellness, self-awareness, art therapy, psychology tool, emotional health, mood mosaic, visual journal">
+    <title>Mood Mosaic - Visual Emotion Tracker | Transform Feelings into Art</title>
+    <style>
+        :root {
+            --primary: #6d5dfc;
+            --primary-dark: #5b4ce2;
+            --light: #f5f7fa;
+            --dark: #2d3748;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, var(--primary), #8b7ff0);
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .controls-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+        
+        .mood-palette {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .mood-tile {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            cursor: grab;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .mood-tile:hover {
+            transform: scale(1.05);
+        }
+        
+        .mood-tile:active {
+            cursor: grabbing;
+        }
+        
+        .mosaic-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            min-height: 500px;
+            position: relative;
+        }
+        
+        .mosaic-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 5px;
+            margin-bottom: 20px;
+            min-height: 400px;
+        }
+        
+        .mosaic-cell {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            background-color: #f0f0f0;
+            transition: var(--transition);
+        }
+        
+        .mosaic-cell.filled {
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--primary);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            flex: 1;
+        }
+        
+        button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        button.secondary {
+            background-color: #e2e8f0;
+            color: var(--dark);
+        }
+        
+        button.secondary:hover {
+            background-color: #cbd5e0;
+        }
+        
+        .stats-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #718096;
+        }
+        
+        .instructions {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+        
+        .instructions h2 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        .color-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        
+        .empty-state {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #a0aec0;
+        }
+        
+        .empty-state h3 {
+            margin-bottom: 10px;
+        }
+        
+        .date-selector {
+            margin-bottom: 20px;
+        }
+        
+        .date-selector label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .date-selector input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mood Mosaic</h1>
+            <p class="tagline">Transform your emotional journey into beautiful abstract art</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="controls-panel">
+                <h2>How are you feeling today?</h2>
+                <p>Drag a color tile to the mosaic to represent your current emotion</p>
+                
+                <div class="date-selector">
+                    <label for="current-date">Select Date:</label>
+                    <input type="date" id="current-date">
+                </div>
+                
+                <div class="mood-palette">
+                    <div class="mood-tile" style="background-color: #FF6B6B;" data-mood="Angry" data-color="#FF6B6B">Angry</div>
+                    <div class="mood-tile" style="background-color: #4ECDC4;" data-mood="Calm" data-color="#4ECDC4">Calm</div>
+                    <div class="mood-tile" style="background-color: #FFD166;" data-mood="Happy" data-color="#FFD166">Happy</div>
+                    <div class="mood-tile" style="background-color: #118AB2;" data-mood="Sad" data-color="#118AB2">Sad</div>
+                    <div class="mood-tile" style="background-color: #06D6A0;" data-mood="Energetic" data-color="#06D6A0">Energetic</div>
+                    <div class="mood-tile" style="background-color: #9B5DE5;" data-mood="Creative" data-color="#9B5DE5">Creative</div>
+                    <div class="mood-tile" style="background-color: #F15BB5;" data-mood="Loving" data-color="#F15BB5">Loving</div>
+                    <div class="mood-tile" style="background-color: #00BBF9;" data-mood="Anxious" data-color="#00BBF9">Anxious</div>
+                    <div class="mood-tile" style="background-color: #FB5607;" data-mood="Excited" data-color="#FB5607">Excited</div>
+                </div>
+                
+                <div class="color-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #FF6B6B;"></div>
+                        <span>Angry</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #4ECDC4;"></div>
+                        <span>Calm</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #FFD166;"></div>
+                        <span>Happy</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #118AB2;"></div>
+                        <span>Sad</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #06D6A0;"></div>
+                        <span>Energetic</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #9B5DE5;"></div>
+                        <span>Creative</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #F15BB5;"></div>
+                        <span>Loving</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #00BBF9;"></div>
+                        <span>Anxious</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #FB5607;"></div>
+                        <span>Excited</span>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="save-btn">Save Today's Mood</button>
+                    <button id="clear-btn" class="secondary">Clear</button>
+                </div>
+            </div>
+            
+            <div class="mosaic-container">
+                <h2>Your Mood Mosaic</h2>
+                <p>Watch your emotional journey unfold as a beautiful abstract pattern</p>
+                
+                <div class="mosaic-grid" id="mosaic-grid">
+                    <!-- Mosaic cells will be generated by JavaScript -->
+                </div>
+                
+                <div class="empty-state" id="empty-state">
+                    <h3>Your mosaic is empty</h3>
+                    <p>Drag emotion tiles from the palette to start building your mood mosaic</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats-panel">
+            <h2>Your Emotional Insights</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-days">0</div>
+                    <div class="stat-label">Days Tracked</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="primary-mood">-</div>
+                    <div class="stat-label">Most Common Mood</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="mood-streak">0</div>
+                    <div class="stat-label">Current Streak</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="mosaic-size">0</div>
+                    <div class="stat-label">Tiles Placed</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h2>How to Use Mood Mosaic</h2>
+            <ol>
+                <li><strong>Select a date</strong> - Choose the day you want to track emotions for</li>
+                <li><strong>Choose your emotions</strong> - Drag colored tiles from the palette that represent how you're feeling</li>
+                <li><strong>Build your mosaic</strong> - Place tiles on the grid to create a visual representation of your emotions</li>
+                <li><strong>Save your progress</strong> - Click "Save Today's Mood" to record your emotional state</li>
+                <li><strong>Track over time</strong> - Return daily to build a beautiful mosaic of your emotional journey</li>
+            </ol>
+            
+            <h3>Game Rules & Benefits</h3>
+            <ul>
+                <li><strong>Consistency Reward</strong>: Build longer streaks for more visual satisfaction</li>
+                <li><strong>Pattern Recognition</strong>: Identify emotional patterns through color clusters</li>
+                <li><strong>Non-judgmental Tracking</strong>: All emotions are valid and contribute to your unique mosaic</li>
+                <li><strong>Art Therapy</strong>: The process of creating visual art from emotions has therapeutic benefits</li>
+                <li><strong>Privacy Focused</strong>: Your data stays in your browser - no registration required</li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>Mood Mosaic &copy; 2023 | A tool for self-awareness and mental wellness through visual emotion tracking</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('current-date').value = today;
+            
+            // Generate mosaic grid
+            const mosaicGrid = document.getElementById('mosaic-grid');
+            const gridSize = 100; // 10x10 grid
+            let selectedColor = null;
+            let selectedMood = null;
+            
+            for (let i = 0; i < gridSize; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'mosaic-cell';
+                cell.dataset.index = i;
+                
+                // Allow dropping tiles
+                cell.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                });
+                
+                cell.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    if (selectedColor) {
+                        this.style.backgroundColor = selectedColor;
+                        this.dataset.mood = selectedMood;
+                        this.classList.add('filled');
+                        updateEmptyState();
+                        updateStats();
+                    }
+                });
+                
+                mosaicGrid.appendChild(cell);
+            }
+            
+            // Make mood tiles draggable
+            const moodTiles = document.querySelectorAll('.mood-tile');
+            moodTiles.forEach(tile => {
+                tile.setAttribute('draggable', 'true');
+                
+                tile.addEventListener('dragstart', function(e) {
+                    selectedColor = this.dataset.color;
+                    selectedMood = this.dataset.mood;
+                    e.dataTransfer.setData('text/plain', this.dataset.mood);
+                });
+            });
+            
+            // Save button functionality
+            document.getElementById('save-btn').addEventListener('click', function() {
+                const date = document.getElementById('current-date').value;
+                const mosaicData = [];
+                
+                document.querySelectorAll('.mosaic-cell.filled').forEach(cell => {
+                    mosaicData.push({
+                        index: parseInt(cell.dataset.index),
+                        color: cell.style.backgroundColor,
+                        mood: cell.dataset.mood
+                    });
+                });
+                
+                // In a real app, you would save to a database
+                // For this demo, we'll save to localStorage
+                const savedData = JSON.parse(localStorage.getItem('moodMosaicData') || '{}');
+                savedData[date] = mosaicData;
+                localStorage.setItem('moodMosaicData', JSON.stringify(savedData));
+                
+                alert('Mood saved for ' + new Date(date).toLocaleDateString());
+                updateStats();
+            });
+            
+            // Clear button functionality
+            document.getElementById('clear-btn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to clear the current mosaic?')) {
+                    document.querySelectorAll('.mosaic-cell').forEach(cell => {
+                        cell.style.backgroundColor = '';
+                        cell.dataset.mood = '';
+                        cell.classList.remove('filled');
+                    });
+                    updateEmptyState();
+                    updateStats();
+                }
+            });
+            
+            // Date change functionality
+            document.getElementById('current-date').addEventListener('change', function() {
+                const date = this.value;
+                const savedData = JSON.parse(localStorage.getItem('moodMosaicData') || '{}');
+                const dateData = savedData[date] || [];
+                
+                // Clear current mosaic
+                document.querySelectorAll('.mosaic-cell').forEach(cell => {
+                    cell.style.backgroundColor = '';
+                    cell.dataset.mood = '';
+                    cell.classList.remove('filled');
+                });
+                
+                // Load saved data for selected date
+                dateData.forEach(item => {
+                    const cell = document.querySelector(`.mosaic-cell[data-index="${item.index}"]`);
+                    if (cell) {
+                        cell.style.backgroundColor = item.color;
+                        cell.dataset.mood = item.mood;
+                        cell.classList.add('filled');
+                    }
+                });
+                
+                updateEmptyState();
+                updateStats();
+            });
+            
+            // Update empty state visibility
+            function updateEmptyState() {
+                const filledCells = document.querySelectorAll('.mosaic-cell.filled').length;
+                const emptyState = document.getElementById('empty-state');
+                
+                if (filledCells > 0) {
+                    emptyState.style.display = 'none';
+                } else {
+                    emptyState.style.display = 'block';
+                }
+            }
+            
+            // Update statistics
+            function updateStats() {
+                const filledCells = document.querySelectorAll('.mosaic-cell.filled').length;
+                document.getElementById('mosaic-size').textContent = filledCells;
+                
+                // Count mood frequencies
+                const moodCounts = {};
+                document.querySelectorAll('.mosaic-cell.filled').forEach(cell => {
+                    const mood = cell.dataset.mood;
+                    moodCounts[mood] = (moodCounts[mood] || 0) + 1;
+                });
+                
+                // Find most common mood
+                let primaryMood = '-';
+                let maxCount = 0;
+                
+                for (const mood in moodCounts) {
+                    if (moodCounts[mood] > maxCount) {
+                        maxCount = moodCounts[mood];
+                        primaryMood = mood;
+                    }
+                }
+                
+                document.getElementById('primary-mood').textContent = primaryMood;
+                
+                // Calculate days tracked and streak (simplified for demo)
+                const savedData = JSON.parse(localStorage.getItem('moodMosaicData') || '{}');
+                const trackedDates = Object.keys(savedData);
+                document.getElementById('total-days').textContent = trackedDates.length;
+                
+                // Simple streak calculation (just for demo)
+                let streak = 0;
+                const today = new Date().toISOString().split('T')[0];
+                if (savedData[today] && savedData[today].length > 0) {
+                    streak = 1;
+                }
+                document.getElementById('mood-streak').textContent = streak;
+            }
+            
+            // Initialize
+            updateEmptyState();
+            updateStats();
+        });
+    </script>
+</body>
+</html>
