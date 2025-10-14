@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idea Orchard - Creative Idea Growing Game | Gamify Your Creative Thinking</title>
+    <meta name="description" content="Idea Orchard is a creative game where you plant ideas and nurture them into beautiful digital trees. Grow your creativity through daily journaling and watch your ideas blossom into unique AI-generated visuals.">
+    <meta name="keywords" content="creativity game, idea journal, creative thinking, brainstorming tool, digital garden, idea cultivation, creative exercise, mind mapping, innovation game">
+    <style>
+        :root {
+            --primary: #8BC34A;
+            --primary-dark: #689F38;
+            --primary-light: #DCEDC8;
+            --earth: #795548;
+            --earth-light: #A1887F;
+            --sky: #E3F2FD;
+            --accent: #FF9800;
+            --text: #333333;
+            --text-light: #757575;
+            --surface: #FFFFFF;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --radius: 16px;
+            --transition: all 0.4s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(180deg, var(--sky) 0%, #B3E5FC 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><path d="M50 10 L60 40 L90 40 L65 60 L75 90 L50 70 L25 90 L35 60 L10 40 L40 40 Z" fill="white"/></svg>');
+            background-size: 80px 80px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .tagline {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 968px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: var(--surface);
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .idea-planter {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #E0E0E0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .idea-preview {
+            margin-top: 20px;
+            padding: 18px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .idea-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+        
+        .idea-description {
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+        
+        .idea-type {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        button {
+            padding: 15px 24px;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--primary);
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        button.secondary {
+            background-color: #E0E0E0;
+            color: var(--text);
+        }
+        
+        button.secondary:hover {
+            background-color: #BDBDBD;
+        }
+        
+        button.accent {
+            background-color: var(--accent);
+        }
+        
+        button.accent:hover {
+            background-color: #F57C00;
+        }
+        
+        .orchard-container {
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius);
+            background: linear-gradient(180deg, var(--earth-light) 0%, var(--earth) 100%);
+            box-shadow: var(--shadow);
+        }
+        
+        .orchard-ground {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: var(--earth);
+            z-index: 1;
+        }
+        
+        .tree {
+            position: absolute;
+            bottom: 100px;
+            transition: var(--transition);
+            z-index: 2;
+            cursor: pointer;
+        }
+        
+        .tree-trunk {
+            width: 20px;
+            background: #8D6E63;
+            margin: 0 auto;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .tree-canopy {
+            width: 0;
+            height: 0;
+            margin: 0 auto;
+            border-radius: 50%;
+            position: relative;
+            transition: all 1s ease;
+        }
+        
+        .tree-sapling .tree-canopy {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            bottom: 10px;
+        }
+        
+        .tree-growing .tree-canopy {
+            width: 100px;
+            height: 100px;
+            background: var(--primary);
+            bottom: 20px;
+        }
+        
+        .tree-mature .tree-canopy {
+            width: 150px;
+            height: 150px;
+            background: var(--primary-dark);
+            bottom: 30px;
+        }
+        
+        .tree-blooming .tree-canopy {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, var(--primary-dark), #4CAF50);
+            bottom: 40px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .tree-fruit {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .tree-blooming .tree-fruit {
+            opacity: 1;
+        }
+        
+        .fruit-1 { top: 20%; left: 20%; }
+        .fruit-2 { top: 30%; right: 30%; }
+        .fruit-3 { bottom: 40%; left: 40%; }
+        .fruit-4 { bottom: 20%; right: 20%; }
+        
+        .empty-orchard {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            z-index: 1;
+            width: 80%;
+        }
+        
+        .empty-orchard h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            background: var(--primary-light);
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .nurture-panel {
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .nurture-panel.active {
+            display: block;
+        }
+        
+        .nurture-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .nurture-actions button {
+            flex: 1;
+        }
+        
+        .ideas-list {
+            margin-top: 30px;
+        }
+        
+        .idea-item {
+            padding: 18px;
+            border-left: 5px solid var(--primary);
+            background: var(--surface);
+            margin-bottom: 15px;
+            border-radius: 0 10px 10px 0;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .idea-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .idea-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .idea-item-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .idea-item-date {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        
+        .idea-item-growth {
+            height: 8px;
+            background: #E0E0E0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .idea-item-growth-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+        
+        .idea-item-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .idea-item-actions button {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        
+        .instructions {
+            margin-top: 40px;
+        }
+        
+        .instructions h2 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        .rule-card {
+            background: var(--surface);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+        }
+        
+        .rule-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .tree-detail-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tree-detail-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
+        .tree-visual-large {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .tree-journal {
+            margin-top: 20px;
+        }
+        
+        .journal-entry {
+            padding: 15px;
+            background: var(--primary-light);
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .journal-date {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+        
+        .tree-stage-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .tree-stage {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .tree-stage::before {
+            content: "";
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #E0E0E0;
+            display: block;
+            margin: 0 auto 10px;
+        }
+        
+        .tree-stage.active::before {
+            background: var(--primary);
+        }
+        
+        .tree-stage.completed::before {
+            background: var(--primary-dark);
+        }
+        
+        .tree-stage-indicator::after {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: #E0E0E0;
+            z-index: 1;
+        }
+        
+        .growth-message {
+            text-align: center;
+            padding: 15px;
+            background: var(--primary-light);
+            border-radius: 10px;
+            margin: 20px 0;
+            font-style: italic;
+            display: none;
+        }
+        
+        .growth-message.active {
+            display: block;
+            animation: fadeInOut 3s ease;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Idea Orchard</h1>
+            <p class="tagline">Plant your ideas, nurture them daily, and watch them grow into beautiful digital trees</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="card idea-planter">
+                <h2>Plant a New Idea</h2>
+                <p>Start growing your creativity with a seed of an idea</p>
+                
+                <div class="form-group">
+                    <label for="idea-title">Idea Title</label>
+                    <input type="text" id="idea-title" placeholder="Give your idea a name...">
+                </div>
+                
+                <div class="form-group">
+                    <label for="idea-description">Idea Description</label>
+                    <textarea id="idea-description" placeholder="Describe your idea in detail..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="idea-type">Idea Type</label>
+                    <select id="idea-type">
+                        <option value="creative">Creative Project</option>
+                        <option value="business">Business Idea</option>
+                        <option value="story">Story Concept</option>
+                        <option value="solution">Problem Solution</option>
+                        <option value="invention">Invention</option>
+                        <option value="art">Art Concept</option>
+                    </select>
+                </div>
+                
+                <div class="idea-preview">
+                    <div class="idea-title" id="preview-title">Your Idea Title</div>
+                    <div class="idea-description" id="preview-description">Your idea description will appear here</div>
+                    <div class="idea-type" id="preview-type">Creative Project</div>
+                </div>
+                
+                <button id="plant-idea-btn">
+                    <span>Plant This Idea</span>
+                </button>
+            </div>
+            
+            <div class="orchard-container" id="orchard">
+                <div class="orchard-ground"></div>
+                
+                <div class="empty-orchard" id="empty-orchard">
+                    <h3>Your Orchard is Empty</h3>
+                    <p>Plant your first idea to start growing your creative orchard</p>
+                </div>
+                
+                <!-- Trees will be dynamically added here -->
+            </div>
+        </div>
+        
+        <div class="growth-message" id="growth-message">
+            Your idea is growing!
+        </div>
+        
+        <div class="card nurture-panel" id="nurture-panel">
+            <h2>Nurture Your Idea: <span id="selected-idea-title"></span></h2>
+            <p>Add thoughts, inspiration, or progress to help your idea grow</p>
+            
+            <div class="form-group">
+                <label for="nurture-text">Today's Nurturing</label>
+                <textarea id="nurture-text" placeholder="Add your thoughts, inspirations, or progress..."></textarea>
+            </div>
+            
+            <div class="nurture-actions">
+                <button id="add-nurture-btn" class="accent">
+                    <span>Add Nurturing</span>
+                </button>
+                <button id="cancel-nurture-btn" class="secondary">
+                    <span>Cancel</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>Your Idea Garden</h2>
+            <p>Track the growth of all your planted ideas</p>
+            
+            <div class="stats-panel">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-ideas">0</div>
+                    <div class="stat-label">Ideas Planted</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="growing-ideas">0</div>
+                    <div class="stat-label">Ideas Growing</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="mature-ideas">0</div>
+                    <div class="stat-label">Mature Ideas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-nurtures">0</div>
+                    <div class="stat-label">Total Nurturings</div>
+                </div>
+            </div>
+            
+            <div class="ideas-list" id="ideas-list">
+                <!-- Idea items will be dynamically added here -->
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h2>How Idea Orchard Works</h2>
+            <ol>
+                <li><strong>Plant an idea</strong> - Start with a creative thought, concept, or inspiration</li>
+                <li><strong>Nurture daily</strong> - Add thoughts, inspirations, or progress each day</li>
+                <li><strong>Watch it grow</strong> - Your idea transforms through stages: Seed → Sapling → Growing → Mature → Blooming</li>
+                <li><strong>Harvest creativity</strong> - Mature ideas bear fruit that can inspire new ideas</li>
+                <li><strong>Expand your orchard</strong> - The more ideas you nurture, the more your creative garden flourishes</li>
+            </ol>
+            
+            <div class="rule-card">
+                <h3>Game Rules</h3>
+                <ul>
+                    <li>Each idea starts as a seed and grows through 5 stages</li>
+                    <li>Nurture your ideas daily with journal entries to help them grow</li>
+                    <li>Ideas grow faster with consistent, quality nurturing</li>
+                    <li>Mature ideas (Stage 4) can inspire new related ideas</li>
+                    <li>Blooming ideas (Stage 5) bear fruit that can be harvested for creative inspiration</li>
+                    <li>Your orchard's diversity increases your overall creativity score</li>
+                </ul>
+            </div>
+            
+            <div class="rule-card">
+                <h3>Why Idea Orchard Works</h3>
+                <p>Traditional brainstorming often leaves ideas underdeveloped. Idea Orchard uses gamification and visualization to encourage consistent creative development. By treating ideas as living things that need nurturing, you develop the habit of revisiting and expanding your creative concepts regularly, leading to more fully realized projects and innovations.</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Idea Orchard &copy; 2023 | A creativity game for growing your ideas into fully-realized projects</p>
+        </footer>
+    </div>
+
+    <!-- Tree Detail Modal -->
+    <div class="tree-detail-modal" id="tree-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <h2 id="modal-title">Idea Details</h2>
+            
+            <div class="tree-stage-indicator">
+                <div class="tree-stage completed" id="stage-1">Seed</div>
+                <div class="tree-stage" id="stage-2">Sapling</div>
+                <div class="tree-stage" id="stage-3">Growing</div>
+                <div class="tree-stage" id="stage-4">Mature</div>
+                <div class="tree-stage" id="stage-5">Blooming</div>
+            </div>
+            
+            <div class="tree-visual-large" id="modal-tree-visual">
+                <!-- Large tree visualization will go here -->
+            </div>
+            
+            <div class="tree-journal">
+                <h3>Idea Nurturing Journal</h3>
+                <div id="journal-entries">
+                    <!-- Journal entries will be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const ideaTitleInput = document.getElementById('idea-title');
+            const ideaDescriptionInput = document.getElementById('idea-description');
+            const ideaTypeSelect = document.getElementById('idea-type');
+            const previewTitle = document.getElementById('preview-title');
+            const previewDescription = document.getElementById('preview-description');
+            const previewType = document.getElementById('preview-type');
+            const plantIdeaBtn = document.getElementById('plant-idea-btn');
+            const orchard = document.getElementById('orchard');
+            const emptyOrchard = document.getElementById('empty-orchard');
+            const nurturePanel = document.getElementById('nurture-panel');
+            const selectedIdeaTitle = document.getElementById('selected-idea-title');
+            const nurtureText = document.getElementById('nurture-text');
+            const addNurtureBtn = document.getElementById('add-nurture-btn');
+            const cancelNurtureBtn = document.getElementById('cancel-nurture-btn');
+            const ideasList = document.getElementById('ideas-list');
+            const treeModal = document.getElementById('tree-modal');
+            const closeModal = document.getElementById('close-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const journalEntries = document.getElementById('journal-entries');
+            const growthMessage = document.getElementById('growth-message');
+            
+            // Stats elements
+            const totalIdeas = document.getElementById('total-ideas');
+            const growingIdeas = document.getElementById('growing-ideas');
+            const matureIdeas = document.getElementById('mature-ideas');
+            const totalNurtures = document.getElementById('total-nurtures');
+            
+            // App State
+            let ideas = [];
+            let selectedIdeaId = null;
+            let nextId = 1;
+            
+            // Tree growth stages
+            const growthStages = [
+                { name: 'Seed', minNurtures: 0, className: 'tree-sapling' },
+                { name: 'Sapling', minNurtures: 1, className: 'tree-sapling' },
+                { name: 'Growing', minNurtures: 3, className: 'tree-growing' },
+                { name: 'Mature', minNurtures: 7, className: 'tree-mature' },
+                { name: 'Blooming', minNurtures: 12, className: 'tree-blooming' }
+            ];
+            
+            // Initialize
+            loadData();
+            updatePreview();
+            renderOrchard();
+            updateStats();
+            renderIdeasList();
+            
+            // Event Listeners
+            ideaTitleInput.addEventListener('input', updatePreview);
+            ideaDescriptionInput.addEventListener('input', updatePreview);
+            ideaTypeSelect.addEventListener('change', updatePreview);
+            
+            plantIdeaBtn.addEventListener('click', function() {
+                if (!ideaTitleInput.value.trim()) {
+                    alert('Please give your idea a title');
+                    return;
+                }
+                
+                if (!ideaDescriptionInput.value.trim()) {
+                    alert('Please describe your idea');
+                    return;
+                }
+                
+                plantIdea();
+            });
+            
+            addNurtureBtn.addEventListener('click', function() {
+                if (!nurtureText.value.trim()) {
+                    alert('Please add some nurturing content');
+                    return;
+                }
+                
+                addNurturing();
+            });
+            
+            cancelNurtureBtn.addEventListener('click', function() {
+                nurturePanel.classList.remove('active');
+                selectedIdeaId = null;
+            });
+            
+            closeModal.addEventListener('click', function() {
+                treeModal.classList.remove('active');
+            });
+            
+            // Close modal when clicking outside
+            treeModal.addEventListener('click', function(e) {
+                if (e.target === treeModal) {
+                    treeModal.classList.remove('active');
+                }
+            });
+            
+            // Functions
+            function updatePreview() {
+                const title = ideaTitleInput.value.trim() || "Your Idea Title";
+                const description = ideaDescriptionInput.value.trim() || "Your idea description will appear here";
+                const type = ideaTypeSelect.options[ideaTypeSelect.selectedIndex].text;
+                
+                previewTitle.textContent = title;
+                previewDescription.textContent = description;
+                previewType.textContent = type;
+            }
+            
+            function plantIdea() {
+                const newIdea = {
+                    id: nextId++,
+                    title: ideaTitleInput.value.trim(),
+                    description: ideaDescriptionInput.value.trim(),
+                    type: ideaTypeSelect.value,
+                    typeText: ideaTypeSelect.options[ideaTypeSelect.selectedIndex].text,
+                    created: new Date().toISOString(),
+                    nurtures: [],
+                    growth: 0, // 0-100 percentage
+                    stage: 0, // Index in growthStages array
+                    position: getRandomPosition()
+                };
+                
+                // Add initial nurturing as the idea description
+                newIdea.nurtures.push({
+                    date: new Date().toISOString(),
+                    text: `Idea planted: ${newIdea.description}`,
+                    growth: 10
+                });
+                
+                newIdea.growth = 10;
+                newIdea.stage = 1; // Start at sapling stage
+                
+                ideas.push(newIdea);
+                
+                // Clear form
+                ideaTitleInput.value = '';
+                ideaDescriptionInput.value = '';
+                ideaTypeSelect.value = 'creative';
+                updatePreview();
+                
+                // Update UI
+                renderOrchard();
+                renderIdeasList();
+                updateStats();
+                saveData();
+                
+                // Show growth message
+                showGrowthMessage("Your idea has been planted!");
+            }
+            
+            function getRandomPosition() {
+                // Return random position within orchard (avoiding edges)
+                const padding = 100;
+                const maxX = orchard.offsetWidth - padding;
+                const maxY = orchard.offsetHeight - 200; // Leave space for ground
+                
+                return {
+                    x: padding + Math.random() * maxX,
+                    y: padding + Math.random() * (maxY - padding)
+                };
+            }
+            
+            function renderOrchard() {
+                // Clear orchard
+                const existingTrees = document.querySelectorAll('.tree');
+                existingTrees.forEach(tree => tree.remove());
+                
+                if (ideas.length === 0) {
+                    emptyOrchard.style.display = 'block';
+                    return;
+                }
+                
+                emptyOrchard.style.display = 'none';
+                
+                // Create tree for each idea
+                ideas.forEach(idea => {
+                    const tree = document.createElement('div');
+                    tree.className = `tree ${growthStages[idea.stage].className}`;
+                    tree.style.left = `${idea.position.x}px`;
+                    tree.style.bottom = `${idea.position.y}px`;
+                    tree.dataset.id = idea.id;
+                    
+                    const trunk = document.createElement('div');
+                    trunk.className = 'tree-trunk';
+                    trunk.style.height = `${40 + (idea.growth / 100) * 100}px`;
+                    
+                    const canopy = document.createElement('div');
+                    canopy.className = 'tree-canopy';
+                    
+                    // Add fruits for blooming trees
+                    if (idea.stage >= 4) {
+                        for (let i = 1; i <= 4; i++) {
+                            const fruit = document.createElement('div');
+                            fruit.className = `tree-fruit fruit-${i}`;
+                            canopy.appendChild(fruit);
+                        }
+                    }
+                    
+                    tree.appendChild(trunk);
+                    tree.appendChild(canopy);
+                    
+                    // Add click event to show nurture panel
+                    tree.addEventListener('click', function() {
+                        selectedIdeaId = idea.id;
+                        selectedIdeaTitle.textContent = idea.title;
+                        nurturePanel.classList.add('active');
+                    });
+                    
+                    orchard.appendChild(tree);
+                });
+            }
+            
+            function addNurturing() {
+                if (!selectedIdeaId) return;
+                
+                const idea = ideas.find(i => i.id === selectedIdeaId);
+                if (!idea) return;
+                
+                // Add nurturing entry
+                idea.nurtures.push({
+                    date: new Date().toISOString(),
+                    text: nurtureText.value.trim(),
+                    growth: calculateGrowthValue(idea)
+                });
+                
+                // Update idea growth
+                idea.growth = Math.min(idea.growth + calculateGrowthValue(idea), 100);
+                
+                // Update stage based on number of nurtures
+                const prevStage = idea.stage;
+                for (let i = growthStages.length - 1; i >= 0; i--) {
+                    if (idea.nurtures.length >= growthStages[i].minNurtures) {
+                        idea.stage = i;
+                        break;
+                    }
+                }
+                
+                // Clear nurture text
+                nurtureText.value = '';
+                
+                // Hide nurture panel
+                nurturePanel.classList.remove('active');
+                selectedIdeaId = null;
+                
+                // Update UI
+                renderOrchard();
+                renderIdeasList();
+                updateStats();
+                saveData();
+                
+                // Show growth message if stage increased
+                if (idea.stage > prevStage) {
+                    showGrowthMessage(`Your idea is now ${growthStages[idea.stage].name}!`);
+                } else {
+                    showGrowthMessage("Your idea has been nurtured!");
+                }
+            }
+            
+            function calculateGrowthValue(idea) {
+                // Growth value decreases as idea matures (harder to grow mature ideas)
+                const baseGrowth = 10;
+                const stagePenalty = idea.stage * 1.5;
+                return Math.max(baseGrowth - stagePenalty, 3);
+            }
+            
+            function renderIdeasList() {
+                if (ideas.length === 0) {
+                    ideasList.innerHTML = `
+                        <div style="text-align: center; padding: 40px 20px; color: var(--text-light);">
+                            <h3>No ideas yet</h3>
+                            <p>Your planted ideas will appear here</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let ideasHTML = '';
+                
+                ideas.forEach(idea => {
+                    const createdDate = new Date(idea.created);
+                    const dateStr = createdDate.toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+                    
+                    ideasHTML += `
+                        <div class="idea-item" data-id="${idea.id}">
+                            <div class="idea-item-header">
+                                <div class="idea-item-title">${idea.title}</div>
+                                <div class="idea-item-date">Planted: ${dateStr}</div>
+                            </div>
+                            <div class="idea-item-description">${idea.description}</div>
+                            <div class="idea-item-type">${idea.typeText}</div>
+                            <div class="idea-item-growth">
+                                <div class="idea-item-growth-fill" style="width: ${idea.growth}%"></div>
+                            </div>
+                            <div>Stage: ${growthStages[idea.stage].name} | Nurtures: ${idea.nurtures.length}</div>
+                            <div class="idea-item-actions">
+                                <button class="nurture-idea-btn secondary" data-id="${idea.id}">
+                                    <span>Nurture</span>
+                                </button>
+                                <button class="view-idea-btn" data-id="${idea.id}">
+                                    <span>View</span>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                ideasList.innerHTML = ideasHTML;
+                
+                // Add event listeners to the buttons
+                document.querySelectorAll('.nurture-idea-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.dataset.id);
+                        selectedIdeaId = id;
+                        const idea = ideas.find(i => i.id === id);
+                        selectedIdeaTitle.textContent = idea.title;
+                        nurturePanel.classList.add('active');
+                    });
+                });
+                
+                document.querySelectorAll('.view-idea-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.dataset.id);
+                        showIdeaDetails(id);
+                    });
+                });
+            }
+            
+            function showIdeaDetails(id) {
+                const idea = ideas.find(i => i.id === id);
+                if (!idea) return;
+                
+                modalTitle.textContent = idea.title;
+                
+                // Update stage indicators
+                for (let i = 1; i <= 5; i++) {
+                    const stageElement = document.getElementById(`stage-${i}`);
+                    if (i <= idea.stage) {
+                        stageElement.classList.add('completed');
+                        stageElement.classList.add('active');
+                    } else {
+                        stageElement.classList.remove('completed');
+                        stageElement.classList.remove('active');
+                    }
+                }
+                
+                // Create tree visualization for modal
+                const treeVisual = document.createElement('div');
+                treeVisual.className = `tree ${growthStages[idea.stage].className}`;
+                treeVisual.style.position = 'relative';
+                treeVisual.style.left = 'auto';
+                treeVisual.style.bottom = 'auto';
+                treeVisual.style.margin = '0 auto';
+                treeVisual.style.transform = 'scale(1.5)';
+                
+                const trunk = document.createElement('div');
+                trunk.className = 'tree-trunk';
+                trunk.style.height = `${40 + (idea.growth / 100) * 100}px`;
+                
+                const canopy = document.createElement('div');
+                canopy.className = 'tree-canopy';
+                
+                // Add fruits for blooming trees
+                if (idea.stage >= 4) {
+                    for (let i = 1; i <= 4; i++) {
+                        const fruit = document.createElement('div');
+                        fruit.className = `tree-fruit fruit-${i}`;
+                        canopy.appendChild(fruit);
+                    }
+                }
+                
+                treeVisual.appendChild(trunk);
+                treeVisual.appendChild(canopy);
+                
+                const modalTreeVisual = document.getElementById('modal-tree-visual');
+                modalTreeVisual.innerHTML = '';
+                modalTreeVisual.appendChild(treeVisual);
+                
+                // Render journal entries
+                let journalHTML = '';
+                
+                idea.nurtures.forEach(nurture => {
+                    const nurtureDate = new Date(nurture.date);
+                    const dateStr = nurtureDate.toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    journalHTML += `
+                        <div class="journal-entry">
+                            <div class="journal-date">${dateStr}</div>
+                            <div>${nurture.text}</div>
+                        </div>
+                    `;
+                });
+                
+                journalEntries.innerHTML = journalHTML;
+                
+                // Show modal
+                treeModal.classList.add('active');
+            }
+            
+            function updateStats() {
+                totalIdeas.textContent = ideas.length;
+                
+                const growingCount = ideas.filter(idea => idea.stage >= 1 && idea.stage < 4).length;
+                growingIdeas.textContent = growingCount;
+                
+                const matureCount = ideas.filter(idea => idea.stage >= 3).length;
+                matureIdeas.textContent = matureCount;
+                
+                const totalNurturesCount = ideas.reduce((total, idea) => total + idea.nurtures.length, 0);
+                totalNurtures.textContent = totalNurturesCount;
+            }
+            
+            function showGrowthMessage(message) {
+                growthMessage.textContent = message;
+                growthMessage.classList.add('active');
+                
+                setTimeout(() => {
+                    growthMessage.classList.remove('active');
+                }, 3000);
+            }
+            
+            function saveData() {
+                const data = {
+                    ideas,
+                    nextId
+                };
+                
+                localStorage.setItem('ideaOrchardData', JSON.stringify(data));
+            }
+            
+            function loadData() {
+                const savedData = localStorage.getItem('ideaOrchardData');
+                
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    ideas = data.ideas || [];
+                    nextId = data.nextId || 1;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
