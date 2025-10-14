@@ -1,11 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adda Store - Your Multi-Tool Solution</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adda Store — Free Online Tools & Creative Games | AI, Productivity, Mindfulness, Learning</title>
+    
+    <meta name="description" content="Adda Store is a premium collection of unique, simple, and valuable web tools and games inspired by ChatGPT, DeepSeek, and Gemini AI. Discover creative, productivity, mindfulness, and educational tools — all in one responsive, minimal website. Explore Mood Mosaic, Tiny Promises, Focus Dice, and 40+ exclusive experiences built to inspire growth and reflection.">
+    
+    <meta name="keywords" content="Adda Store, AI tools, ChatGPT tools, DeepSeek tools, Gemini AI, free online tools, creative web apps, productivity games, mindfulness tools, habit tracker, idea generator, focus tools, mood tracker, gratitude journal, typing game, decision helper, balance game, digital wellness, personal growth apps, unique AI utilities, minimal web games, educational micro tools">
+    
+    <meta name="author" content="Adda Store Team" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Adda Store — Creative AI Tools & Games for Growth" />
+    <meta property="og:description" content="Discover 40+ unique online tools and games powered by creativity and AI — inspired by ChatGPT, DeepSeek, and Gemini. Simple, valuable, authentic." />
+    <meta property="og:image" content="https://yourdomain.com/preview.jpg" />
+    <meta property="og:url" content="https://yourdomain.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    
     <style>
         /* Base Styles */
+        :root {
+            --primary-bg: white;
+            --text-color: black;
+            --header-bg: #2B2D42;
+            --accent-color: #4CAF50;
+            --card-bg: #3A3D5B;
+            --card-hover-bg: #FFD700;
+            --card-hover-text: #1E1E2F;
+            --button-bg: #FFD700;
+            --button-hover-bg: #E6C200;
+            --shadow: rgba(255, 215, 0, 0.2);
+            --section-bg: #f8f9fa;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -14,358 +41,621 @@
         }
 
         body {
-            background-color: #1E1E2F;
-            color: #EAEAEA;
+            background-color: var(--primary-bg);
+            color: var(--text-color);
             line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
         }
 
         /* Header Styles */
         header {
-            background-color: #2B2D42;
-            padding: 20px 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: var(--header-bg);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--header-bg);
+            padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-
-        .header-content {
+        
+        nav ul {
             display: flex;
             justify-content: center;
-            align-items: center;
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            flex-wrap: wrap;
+        }
+        
+        nav li {
+            margin: 0 1rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
-        .logo {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
         }
 
-        /* Hero Section */
-        .hero {
-            padding: 60px 0;
+        /* Section Styles */
+        section {
+            margin-bottom: 3rem;
+        }
+        
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
             text-align: center;
-            background: linear-gradient(135deg, #2B2D42 0%, #1E1E2F 100%);
+            color: var(--header-bg);
+            position: relative;
+        }
+        
+        section h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            margin: 0.5rem auto;
+            border-radius: 2px;
+        }
+        
+        .about {
+            background-color: var(--section-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .about p {
+            margin-bottom: 1rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: #FFD700;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            color: #CCCCCC;
-        }
-
-        /* Tools Section */
-        .tools-section {
-            padding: 60px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 2.2rem;
-            color: #FFD700;
-        }
-
+        /* Tools Grid */
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
+            gap: 1.5rem;
         }
 
+        /* Tool Card */
         .tool-card {
-            background-color: #3A3D5B;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+            background-color: var(--card-bg);
+            color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px var(--shadow);
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--accent-color);
         }
 
         .tool-card:hover {
-            background-color: #FFD700;
+            background-color: var(--card-hover-bg);
+            color: var(--card-hover-text);
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 8px 16px var(--shadow);
         }
 
-        .tool-card:hover h2,
-        .tool-card:hover p {
-            color: #1E1E2F;
-        }
-
-        .tool-card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #FFD700;
-            transition: color 0.3s ease;
+        .tool-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: inherit;
         }
 
         .tool-card p {
-            margin-bottom: 20px;
-            color: #CCCCCC;
+            margin-bottom: 1.2rem;
             flex-grow: 1;
-            transition: color 0.3s ease;
+            color: inherit;
         }
 
-        .tool-btn {
-            background-color: #FFD700;
-            color: #1E1E2F;
+        .tool-card button {
+            background-color: var(--button-bg);
+            color: var(--card-hover-text);
             border: none;
-            padding: 12px 20px;
             border-radius: 5px;
-            font-weight: 600;
+            padding: 0.7rem 1.2rem;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background-color 0.3s ease;
             align-self: flex-start;
         }
 
-        .tool-btn:hover {
-            background-color: #E6C200;
-            transform: scale(1.05);
+        .tool-card button:hover {
+            background-color: var(--button-hover-bg);
         }
-
-        /* Games Section */
-        .games-section {
-            padding: 60px 0;
-            background: linear-gradient(135deg, #1E1E2F 0%, #2B2D42 100%);
+        
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
-
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
+        
+        .category-btn {
+            background-color: white;
+            border: 2px solid var(--header-bg);
+            color: var(--header-bg);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
         }
-
-        .game-card {
-            background-color: #3A3D5B;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
-            transition: all 0.3s ease;
+        
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--header-bg);
+            color: white;
         }
-
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
-        }
-
-        .game-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: #FFD700;
-        }
-
+        
         /* Footer */
         footer {
-            background-color: #2B2D42;
-            padding: 30px 0;
+            background-color: var(--header-bg);
+            color: white;
             text-align: center;
-            margin-top: 60px;
+            padding: 2rem 0;
+            margin-top: 3rem;
         }
-
-        .footer-content p {
-            color: #CCCCCC;
-            margin-bottom: 10px;
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--card-hover-bg);
         }
 
         /* Responsive Design */
-        @media (max-width: 992px) {
-            .games-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
         @media (max-width: 768px) {
             .tools-grid {
                 grid-template-columns: 1fr;
             }
             
-            .games-grid {
-                grid-template-columns: 1fr;
+            header h1 {
+                font-size: 2rem;
             }
             
-            .hero h1 {
-                font-size: 2.2rem;
+            .tool-card h3 {
+                font-size: 1.2rem;
             }
             
-            .hero p {
-                font-size: 1rem;
+            nav ul {
+                flex-direction: column;
+                align-items: center;
             }
             
-            .section-title {
-                font-size: 1.8rem;
+            nav li {
+                margin: 0.3rem 0;
             }
         }
 
         @media (max-width: 480px) {
-            .logo {
-                font-size: 2rem;
+            main {
+                padding: 0 1rem;
             }
             
-            .hero h1 {
-                font-size: 1.8rem;
+            .tool-card {
+                padding: 1rem;
             }
             
-            .tool-card, .game-card {
-                padding: 20px;
+            section h2 {
+                font-size: 1.7rem;
             }
+        }
+        
+        /* Loading Animation */
+        .loading {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .loaded {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
-        <div class="container">
-            <div class="header-content">
-                <h1 class="logo">Adda Store</h1>
-            </div>
-        </div>
+        <h1>Adda Store</h1>
+        <p>Discover unique tools and games designed to enhance your daily life, productivity, and creativity.</p>
     </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#all-tools">All Tools</a></li>
+            <li><a href="#productivity">Productivity</a></li>
+            <li><a href="#mindfulness">Mindfulness</a></li>
+            <li><a href="#creativity">Creativity</a></li>
+            <li><a href="#learning">Learning</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Your All-in-One Digital Toolkit</h1>
-            <p>Discover a collection of powerful tools and entertaining games designed to simplify your digital life and provide endless fun.</p>
-        </div>
-    </section>
-
-    <!-- Tools Section -->
-    <section class="tools-section">
-        <div class="container">
-            <h2 class="section-title">Our Tools</h2>
-            <div class="tools-grid">
-                <!-- Tool Cards -->
-                <div class="tool-card">
-                    <h2>Image Converter</h2>
-                    <p>Convert your images between various formats like JPG, PNG, WEBP, and more with just a few clicks.</p>
-                    <button class="tool-btn" data-tool="image-converter.html">Use Tool</button>
-                </div>
-                
-                <div class="tool-card">
-                    <h2>Image Compressor</h2>
-                    <p>Reduce image file sizes without compromising quality to save storage and improve loading times.</p>
-                    <button class="tool-btn" data-tool="Image Compressor">Use Tool</button>
-                </div>
-                
-                <div class="tool-card">
-                    <h2>Image Crop</h2>
-                    <p>Easily crop and resize your images to the perfect dimensions for social media or websites.</p>
-                    <button class="tool-btn" data-tool="Image Crop">Use Tool</button>
-                </div>
-                
-                <div class="tool-card">
-                    <h2>Video Converter</h2>
-                    <p>Convert videos between different formats like MP4, AVI, MOV, and more with high quality output.</p>
-                    <button class="tool-btn" data-tool="Video Converter">Use Tool</button>
-                </div>
-                
-                <div class="tool-card">
-                    <h2>Age Calculator</h2>
-                    <p>Calculate your exact age in years, months, and days with this simple and accurate tool.</p>
-                    <button class="tool-btn" data-tool="Age Calculator">Use Tool</button>
-                </div>
-                
-                <div class="tool-card">
-                    <h2>EMI Calculator</h2>
-                    <p>Calculate your Equated Monthly Installments for loans with detailed breakdown of principal and interest.</p>
-                    <button class="tool-btn" data-tool="EMI Calculator">Use Tool</button>
-                </div>
-                
-                <div class="tool-card">
-                    <h2>SIP Calculator</h2>
-                    <p>Plan your investments with our Systematic Investment Plan calculator to estimate returns.</p>
-                    <button class="tool-btn" data-tool="SIP Calculator">Use Tool</button>
-                </div>
-                
-                <div class="tool-card">
-                    <h2>Audio Trim</h2>
-                    <p>Trim and edit your audio files easily to create perfect sound clips for your projects.</p>
-                    <button class="tool-btn" data-tool="Audio Trim">Use Tool</button>
-                </div>
+    <main>
+        <section class="about" id="about">
+            <h2>About Adda Store</h2>
+            <p>
+                Adda Store is your all-in-one destination for <strong>creative, AI-inspired tools and games</strong> designed to improve your focus, creativity, learning, and emotional well-being.  
+                Whether you're exploring <em>Mood Mosaic</em> for emotional tracking, <em>Tiny Promises</em> for habit building, or <em>Idea Orchard</em> for creativity, every tool at Adda Store offers real value — not just entertainment.  
+                Built with simplicity, quality, and authenticity, Adda Store helps users grow personally and professionally through unique, minimal, and meaningful web experiences.  
+            </p>
+            <p>
+                Discover tools inspired by <strong>ChatGPT</strong>, <strong>DeepSeek</strong>, and <strong>Gemini AI</strong> — crafted for thinkers, creators, and learners who value clarity, mindfulness, and innovation.  
+                Search-friendly, responsive, and premium by design, Adda Store bridges technology and human creativity.
+            </p>
+        </section>
+        
+        <section id="all-tools">
+            <h2>All Tools & Games</h2>
+            
+            <div class="category-filter">
+                <button class="category-btn active" data-category="all">All Tools</button>
+                <button class="category-btn" data-category="productivity">Productivity</button>
+                <button class="category-btn" data-category="mindfulness">Mindfulness</button>
+                <button class="category-btn" data-category="creativity">Creativity</button>
+                <button class="category-btn" data-category="learning">Learning</button>
             </div>
-        </div>
-    </section>
-
-    <!-- Games Section -->
-    <section class="games-section">
-        <div class="container">
-            <h2 class="section-title">Our Games</h2>
-            <div class="games-grid">
-                <!-- Game Cards -->
-                <div class="game-card">
-                    <h3>Metro Dash</h3>
-                    <p>Navigate through busy metro tunnels in this fast-paced endless runner.</p>
-                    <button class="tool-btn" data-tool="Metro Dash">Play Game</button>
-                </div>
-                
-                <div class="game-card">
-                    <h3>Jelly Sparkle</h3>
-                    <p>Match colorful jellies in this sweet and addictive puzzle adventure.</p>
-                    <button class="tool-btn" data-tool="Jelly Sparkle">Play Game</button>
-                </div>
-                
-                <div class="game-card">
-                    <h3>TicTac Pro</h3>
-                    <p>The classic game of Tic Tac Toe with challenging AI opponents.</p>
-                    <button class="tool-btn" data-tool="TicTac Pro">Play Game</button>
-                </div>
-                
-                <div class="game-card">
-                    <h3>Speed Rift</h3>
-                    <p>Race through dimensional rifts in this high-speed arcade game.</p>
-                    <button class="tool-btn" data-tool="Speed Rift">Play Game</button>
-                </div>
-                
-                <div class="game-card">
-                    <h3>Turbo Asphalt</h3>
-                    <p>Experience intense street racing with realistic physics and stunning visuals.</p>
-                    <button class="tool-btn" data-tool="Turbo Asphalt">Play Game</button>
-                </div>
-                
-                <div class="game-card">
-                    <h3>Road Fury</h3>
-                    <p>Unleash your driving skills in this action-packed racing game.</p>
-                    <button class="tool-btn" data-tool="Road Fury">Play Game</button>
-                </div>
+            
+            <div class="tools-grid" id="toolsContainer">
+                <!-- Tool cards will be generated by JavaScript -->
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2023 Adda Store. All rights reserved.</p>
-                <p>Your one-stop solution for tools and entertainment.</p>
+        <div class="footer-content">
+            <p>&copy; 2023 Adda Store. All tools designed with care and purpose.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Feedback</a>
             </div>
         </div>
     </footer>
 
     <script>
-        // Add click event listeners to all buttons
-        document.querySelectorAll('.tool-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const toolName = this.getAttribute('data-tool');
-                alert(`Redirecting to ${toolName}`);
-                // In a real implementation, you would redirect to the actual tool/game page
-                // window.location.href = `/${toolName.toLowerCase().replace(' ', '-')}`;
+        // Tool data with categories
+        const tools = [
+            {
+                name: "Mood Mosaic",
+                description: "Visual Emotion Tracker - Track and visualize your emotional patterns over time.",
+                category: "mindfulness"
+            },
+            {
+                name: "Tiny Promises",
+                description: "Micro Habit Keeper - Build lasting habits through small, daily commitments.",
+                category: "productivity"
+            },
+            {
+                name: "Idea Orchard",
+                description: "Creative Idea Growing Game - Nurture your ideas from seed to fruition.",
+                category: "creativity"
+            },
+            {
+                name: "Life Alignment Compass",
+                description: "Find your true north and align your daily actions with your core values.",
+                category: "mindfulness"
+            },
+            {
+                name: "WordSprint",
+                description: "Typing + Vocabulary Challenge - Improve your typing speed while expanding your vocabulary.",
+                category: "learning"
+            },
+            {
+                name: "Carbon Footprint Simulator",
+                description: "Understand and reduce your environmental impact through interactive simulations.",
+                category: "learning"
+            },
+            {
+                name: "Focus Dice",
+                description: "Randomly select a focused task and commit to completing it.",
+                category: "productivity"
+            },
+            {
+                name: "Compliment Generator",
+                description: "Create personalized, meaningful compliments for friends and colleagues.",
+                category: "mindfulness"
+            },
+            {
+                name: "Learn-a-Minute",
+                description: "Acquire new knowledge in bite-sized, one-minute lessons.",
+                category: "learning"
+            },
+            {
+                name: "Kindness Chain",
+                description: "Track acts of kindness and build a chain of positive impact.",
+                category: "mindfulness"
+            },
+            {
+                name: "Soundscape Composer",
+                description: "Create custom ambient sound environments for focus or relaxation.",
+                category: "creativity"
+            },
+            {
+                name: "Decision Matrix Helper",
+                description: "Make better decisions by weighing factors and options systematically.",
+                category: "productivity"
+            },
+            {
+                name: "Read-It-Later Digest",
+                description: "Transform your reading list into a personalized daily digest.",
+                category: "productivity"
+            },
+            {
+                name: "Personal Journal",
+                description: "This Day in My Life - Reflect on your personal growth journey.",
+                category: "mindfulness"
+            },
+            {
+                name: "Fair Split Calculator",
+                description: "Equitably divide expenses among roommates, friends, or partners.",
+                category: "productivity"
+            },
+            {
+                name: "Tone Detective",
+                description: "Improve your communication skills by identifying subtle emotional tones in text.",
+                category: "learning"
+            },
+            {
+                name: "One-Minute Masterpiece",
+                description: "Create art under time constraints to boost creativity and reduce perfectionism.",
+                category: "creativity"
+            },
+            {
+                name: "Sound Guesser",
+                description: "Minimalist Version - Test your auditory recognition skills with everyday sounds.",
+                category: "learning"
+            },
+            {
+                name: "WikiWalk Game",
+                description: "Navigate from one Wikipedia topic to another using only article links.",
+                category: "learning"
+            },
+            {
+                name: "Three Word Story",
+                description: "Collaborative storytelling game where each player adds only three words.",
+                category: "creativity"
+            },
+            {
+                name: "Sound of Focus",
+                description: "Use scientifically-designed sounds to enhance concentration and productivity.",
+                category: "productivity"
+            },
+            {
+                name: "Decision Mirror",
+                description: "Reflect on past decisions to improve future choice-making.",
+                category: "mindfulness"
+            },
+            {
+                name: "One Sentence Journal",
+                description: "Capture your day's essence in a single, meaningful sentence.",
+                category: "mindfulness"
+            },
+            {
+                name: "Future Letter",
+                description: "Write letters to your future self with timed delivery options.",
+                category: "mindfulness"
+            },
+            {
+                name: "Palette of You",
+                description: "Discover your personal color preferences and create custom palettes.",
+                category: "creativity"
+            },
+            {
+                name: "Time Well Spent",
+                description: "Track and analyze how you spend your time to find more meaningful moments.",
+                category: "productivity"
+            },
+            {
+                name: "Local Story Finder",
+                description: "Discover interesting stories and histories from your local area.",
+                category: "learning"
+            },
+            {
+                name: "Dream Decoder",
+                description: "Record and analyze your dreams to uncover patterns and meanings.",
+                category: "mindfulness"
+            },
+            {
+                name: "The Balance Game",
+                description: "Find equilibrium in your life by visualizing and adjusting different areas.",
+                category: "mindfulness"
+            },
+            {
+                name: "Gratitude Box",
+                description: "Collect and revisit moments of gratitude for improved wellbeing.",
+                category: "mindfulness"
+            },
+            {
+                name: "Digital Sabbath Planner",
+                description: "Plan and implement regular digital detoxes for mental clarity.",
+                category: "mindfulness"
+            },
+            {
+                name: "Conversation Spark Generator",
+                description: "Generate thought-provoking questions for deeper conversations.",
+                category: "creativity"
+            },
+            {
+                name: "Price Per Use Calculator",
+                description: "Calculate the true cost of items based on how often you use them.",
+                category: "productivity"
+            },
+            {
+                name: "Family Lore Archivist",
+                description: "Preserve and organize your family stories and histories.",
+                category: "creativity"
+            },
+            {
+                name: "Crisis Comms Message Drafter",
+                description: "Create clear, compassionate communication for difficult situations.",
+                category: "productivity"
+            },
+            {
+                name: "Echo Chamber Escape",
+                description: "Challenge your perspectives with diverse viewpoints and information.",
+                category: "learning"
+            },
+            {
+                name: "The 5-Minute Gardener",
+                description: "Virtual gardening game that requires just five minutes of daily care.",
+                category: "mindfulness"
+            },
+            {
+                name: "Silent Duet",
+                description: "Collaborative puzzle game where players communicate without words.",
+                category: "creativity"
+            },
+            {
+                name: "Ancestral Meal",
+                description: "Explore historical recipes and the stories behind traditional dishes.",
+                category: "learning"
+            },
+            {
+                name: "The Memory Palace Builder",
+                description: "Learn and practice the ancient art of memory palaces for better recall.",
+                category: "learning"
+            }
+        ];
+
+        // Generate tool cards
+        const toolsContainer = document.getElementById('toolsContainer');
+        
+        function generateToolCards(toolsToShow = tools) {
+            toolsContainer.innerHTML = '';
+            
+            toolsToShow.forEach(tool => {
+                const toolCard = document.createElement('div');
+                toolCard.className = 'tool-card loading';
+                toolCard.dataset.category = tool.category;
+                
+                toolCard.innerHTML = `
+                    <h3>${tool.name}</h3>
+                    <p>${tool.description}</p>
+                    <button>Try Tool</button>
+                `;
+                
+                // Add click event to button
+                const button = toolCard.querySelector('button');
+                button.addEventListener('click', () => {
+                    alert(`Redirecting to ${tool.name}`);
+                });
+                
+                toolsContainer.appendChild(toolCard);
+                
+                // Trigger animation after a small delay
+                setTimeout(() => {
+                    toolCard.classList.add('loaded');
+                }, 50);
+            });
+        }
+        
+        // Initialize tool cards
+        generateToolCards();
+        
+        // Category filtering
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Filter tools
+                const category = button.dataset.category;
+                if (category === 'all') {
+                    generateToolCards();
+                } else {
+                    const filteredTools = tools.filter(tool => tool.category === category);
+                    generateToolCards(filteredTools);
+                }
+            });
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
     </script>
