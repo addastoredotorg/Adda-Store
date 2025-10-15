@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Focus Dice: Beat procrastination with gamified micro-tasks. Roll the virtual dice for random focus challenges that help you start working and maintain productivity.">
+    <title>Focus Dice - Anti-Procrastination Productivity Tool</title>
+    <meta name="keywords" content="procrastination, productivity tool, focus, task management, gamification, anti-procrastination, work motivation, micro-tasks">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: #a8e6cf;
+            margin-bottom: 5px;
+        }
+
+        .description {
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto 20px;
+            line-height: 1.5;
+        }
+
+        .dice-container {
+            margin: 30px 0;
+            perspective: 1000px;
+        }
+
+        .dice {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            margin: 0 auto 30px;
+            transform-style: preserve-3d;
+            transition: transform 1.5s ease-out;
+        }
+
+        .dice-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2a5298;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+            backface-visibility: hidden;
+        }
+
+        .dice-face:nth-child(1) { transform: translateZ(75px); }
+        .dice-face:nth-child(2) { transform: rotateX(180deg) translateZ(75px); }
+        .dice-face:nth-child(3) { transform: rotateY(90deg) translateZ(75px); }
+        .dice-face:nth-child(4) { transform: rotateY(-90deg) translateZ(75px); }
+        .dice-face:nth-child(5) { transform: rotateX(90deg) translateZ(75px); }
+        .dice-face:nth-child(6) { transform: rotateX(-90deg) translateZ(75px); }
+
+        .dot {
+            width: 25px;
+            height: 25px;
+            background: #2a5298;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .face-1 .dot:nth-child(1) { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+        .face-2 .dot:nth-child(1) { top: 25%; left: 25%; }
+        .face-2 .dot:nth-child(2) { bottom: 25%; right: 25%; }
+
+        .face-3 .dot:nth-child(1) { top: 25%; left: 25%; }
+        .face-3 .dot:nth-child(2) { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .face-3 .dot:nth-child(3) { bottom: 25%; right: 25%; }
+
+        .face-4 .dot:nth-child(1) { top: 25%; left: 25%; }
+        .face-4 .dot:nth-child(2) { top: 25%; right: 25%; }
+        .face-4 .dot:nth-child(3) { bottom: 25%; left: 25%; }
+        .face-4 .dot:nth-child(4) { bottom: 25%; right: 25%; }
+
+        .face-5 .dot:nth-child(1) { top: 25%; left: 25%; }
+        .face-5 .dot:nth-child(2) { top: 25%; right: 25%; }
+        .face-5 .dot:nth-child(3) { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .face-5 .dot:nth-child(4) { bottom: 25%; left: 25%; }
+        .face-5 .dot:nth-child(5) { bottom: 25%; right: 25%; }
+
+        .face-6 .dot:nth-child(1) { top: 25%; left: 25%; }
+        .face-6 .dot:nth-child(2) { top: 25%; right: 25%; }
+        .face-6 .dot:nth-child(3) { top: 50%; left: 25%; transform: translateY(-50%); }
+        .face-6 .dot:nth-child(4) { top: 50%; right: 25%; transform: translateY(-50%); }
+        .face-6 .dot:nth-child(5) { bottom: 25%; left: 25%; }
+        .face-6 .dot:nth-child(6) { bottom: 25%; right: 25%; }
+
+        #roll-btn {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        #roll-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        #roll-btn:active {
+            transform: translateY(-1px);
+        }
+
+        #roll-btn:disabled {
+            background: #7a7a7a;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .task-display {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .task-display h3 {
+            color: #a8e6cf;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        #task-text {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .task-timer {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .timer-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+        }
+
+        .timer-circle::before {
+            content: '';
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 5px solid transparent;
+            border-top: 5px solid #00f2fe;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #time-left {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00f2fe;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        #done-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        #skip-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4facfe;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-top: 5px;
+        }
+
+        .task-history {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .task-history h4 {
+            color: #a8e6cf;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #task-list {
+            list-style-type: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        #task-list li {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .task-time {
+            color: #a8e6cf;
+            font-size: 0.9rem;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .dice {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .dice-face:nth-child(1) { transform: translateZ(60px); }
+            .dice-face:nth-child(2) { transform: rotateX(180deg) translateZ(60px); }
+            .dice-face:nth-child(3) { transform: rotateY(90deg) translateZ(60px); }
+            .dice-face:nth-child(4) { transform: rotateY(-90deg) translateZ(60px); }
+            .dice-face:nth-child(5) { transform: rotateX(90deg) translateZ(60px); }
+            .dice-face:nth-child(6) { transform: rotateX(-90deg) translateZ(60px); }
+            
+            .progress-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Focus Dice</h1>
+            <p class="tagline">Roll away procrastination</p>
+            <p class="description">Beat procrastination with gamified micro-tasks. Roll the dice for random focus challenges that help you start working and maintain productivity.</p>
+        </header>
+        
+        <div class="dice-container">
+            <div id="dice" class="dice">
+                <div class="dice-face face-1">
+                    <div class="dot"></div>
+                </div>
+                <div class="dice-face face-2">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="dice-face face-3">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="dice-face face-4">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="dice-face face-5">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="dice-face face-6">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+            <button id="roll-btn">Roll Dice</button>
+        </div>
+        
+        <div class="task-display">
+            <h3>Your Focus Task:</h3>
+            <div id="task-text">Roll the dice to get your first task!</div>
+            <div class="task-timer" id="task-timer">
+                <div class="timer-circle">
+                    <span id="time-left">5:00</span>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="done-btn" disabled>Task Done</button>
+                <button class="action-btn" id="skip-btn" disabled>Skip Task</button>
+            </div>
+        </div>
+        
+        <div class="progress-stats">
+            <div class="stat">
+                <span class="stat-value" id="tasks-completed">0</span>
+                <div class="stat-label">Tasks Done</div>
+            </div>
+            <div class="stat">
+                <span class="stat-value" id="current-streak">0</span>
+                <div class="stat-label">Day Streak</div>
+            </div>
+            <div class="stat">
+                <span class="stat-value" id="focus-minutes">0</span>
+                <div class="stat-label">Focus Minutes</div>
+            </div>
+        </div>
+        
+        <div class="task-history">
+            <h4>Recent Tasks</h4>
+            <ul id="task-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        let tasksCompleted = 0;
+        let currentStreak = 0;
+        let focusMinutes = 0;
+        let currentTask = null;
+        let timerInterval = null;
+        let timeLeft = 0;
+        let lastRollDate = null;
+
+        // Task database
+        const tasks = [
+            // Time-Based Tasks
+            { text: "Work on your hardest task for 5 minutes", type: "time", duration: 5 },
+            { text: "Focus for 10 minutes without any distractions", type: "time", duration: 10 },
+            { text: "Spend 3 minutes organizing your workspace", type: "time", duration: 3 },
+            { text: "Dedicate 7 minutes to your most important project", type: "time", duration: 7 },
+            { text: "Work uninterrupted for 15 minutes", type: "time", duration: 15 },
+            
+            // Action-Based Tasks
+            { text: "Delete one digital distraction from your device", type: "action" },
+            { text: "Clear your physical workspace surface", type: "action" },
+            { text: "Write down your top 3 priorities for today", type: "action" },
+            { text: "Close all unnecessary browser tabs", type: "action" },
+            { text: "Put your phone in another room for 15 minutes", type: "action" },
+            
+            // Mindset Tasks
+            { text: "Identify one fear that's blocking your progress", type: "mindset" },
+            { text: "Recall your main goal for this project", type: "mindset" },
+            { text: "Name one small step you've been avoiding", type: "mindset" },
+            { text: "Write down one reason why this task matters", type: "mindset" },
+            { text: "Acknowledge one distraction and consciously ignore it", type: "mindset" },
+            
+            // Environment Tasks
+            { text: "Set up optimal lighting for your workspace", type: "environment" },
+            { text: "Adjust your chair and screen to ergonomic positions", type: "environment" },
+            { text: "Remove one physical clutter item from your desk", type: "environment" },
+            { text: "Open a window for fresh air (if possible)", type: "environment" },
+            { text: "Create a dedicated focus playlist or use noise-cancelling", type: "environment" },
+            
+            // Progress Tasks
+            { text: "Complete one tiny part of your project", type: "progress" },
+            { text: "Answer one easy email first", type: "progress" },
+            { text: "Make one decision you've been postponing", type: "progress" },
+            { text: "Outline the next three steps for your project", type: "progress" },
+            { text: "Send one message you've been putting off", type: "progress" },
+            
+            // Break Tasks
+            { text: "Take a 2-minute stretch break", type: "break" },
+            { text: "Drink a full glass of water", type: "break" },
+            { text: "Do 30 seconds of deep breathing", type: "break" },
+            { text: "Look away from your screen for 1 minute", type: "break" },
+            { text: "Do 5 quick physical exercises", type: "break" }
+        ];
+
+        // DOM elements
+        const dice = document.getElementById('dice');
+        const rollBtn = document.getElementById('roll-btn');
+        const taskText = document.getElementById('task-text');
+        const taskTimer = document.getElementById('task-timer');
+        const timeLeftDisplay = document.getElementById('time-left');
+        const doneBtn = document.getElementById('done-btn');
+        const skipBtn = document.getElementById('skip-btn');
+        const tasksCompletedDisplay = document.getElementById('tasks-completed');
+        const currentStreakDisplay = document.getElementById('current-streak');
+        const focusMinutesDisplay = document.getElementById('focus-minutes');
+        const taskList = document.getElementById('task-list');
+
+        // Initialize game
+        function init() {
+            // Load saved data from localStorage
+            loadProgress();
+            
+            // Add event listeners
+            rollBtn.addEventListener('click', rollDice);
+            doneBtn.addEventListener('click', completeTask);
+            skipBtn.addEventListener('click', skipTask);
+            
+            // Update displays
+            updateDisplays();
+        }
+
+        // Load progress from localStorage
+        function loadProgress() {
+            const savedTasksCompleted = localStorage.getItem('focusDiceTasksCompleted');
+            const savedCurrentStreak = localStorage.getItem('focusDiceCurrentStreak');
+            const savedFocusMinutes = localStorage.getItem('focusDiceFocusMinutes');
+            const savedLastRollDate = localStorage.getItem('focusDiceLastRollDate');
+            const savedTaskHistory = localStorage.getItem('focusDiceTaskHistory');
+            
+            if (savedTasksCompleted) tasksCompleted = parseInt(savedTasksCompleted);
+            if (savedCurrentStreak) currentStreak = parseInt(savedCurrentStreak);
+            if (savedFocusMinutes) focusMinutes = parseInt(savedFocusMinutes);
+            if (savedLastRollDate) lastRollDate = new Date(savedLastRollDate);
+            
+            if (savedTaskHistory) {
+                const history = JSON.parse(savedTaskHistory);
+                history.forEach(task => addTaskToHistory(task.text, task.completed, task.timestamp));
+            }
+            
+            // Check if streak should be reset (if last roll wasn't today)
+            checkStreak();
+        }
+
+        // Check and update streak
+        function checkStreak() {
+            const today = new Date().toDateString();
+            if (lastRollDate && lastRollDate.toDateString() !== today) {
+                // Check if last roll was yesterday (maintain streak) or earlier (reset streak)
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                
+                if (lastRollDate.toDateString() !== yesterday.toDateString()) {
+                    currentStreak = 0;
+                    saveProgress();
+                }
+            }
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            localStorage.setItem('focusDiceTasksCompleted', tasksCompleted.toString());
+            localStorage.setItem('focusDiceCurrentStreak', currentStreak.toString());
+            localStorage.setItem('focusDiceFocusMinutes', focusMinutes.toString());
+            if (lastRollDate) {
+                localStorage.setItem('focusDiceLastRollDate', lastRollDate.toISOString());
+            }
+            
+            // Save task history
+            const historyItems = Array.from(taskList.children).map(li => ({
+                text: li.querySelector('.task-text').textContent,
+                completed: li.classList.contains('completed'),
+                timestamp: li.querySelector('.task-time').textContent
+            }));
+            localStorage.setItem('focusDiceTaskHistory', JSON.stringify(historyItems));
+        }
+
+        // Update all displays
+        function updateDisplays() {
+            tasksCompletedDisplay.textContent = tasksCompleted;
+            currentStreakDisplay.textContent = currentStreak;
+            focusMinutesDisplay.textContent = focusMinutes;
+        }
+
+        // Roll the dice
+        function rollDice() {
+            // Disable roll button during animation
+            rollBtn.disabled = true;
+            doneBtn.disabled = true;
+            skipBtn.disabled = true;
+            
+            // Generate random dice roll (1-6)
+            const rollResult = Math.floor(Math.random() * 6) + 1;
+            
+            // Animate dice
+            const rotations = {
+                1: 'rotateX(0deg) rotateY(0deg)',
+                2: 'rotateX(180deg) rotateY(0deg)',
+                3: 'rotateX(0deg) rotateY(90deg)',
+                4: 'rotateX(0deg) rotateY(-90deg)',
+                5: 'rotateX(90deg) rotateY(0deg)',
+                6: 'rotateX(-90deg) rotateY(0deg)'
+            };
+            
+            // Add some random extra rotations for realism
+            const extraX = Math.floor(Math.random() * 3) * 360;
+            const extraY = Math.floor(Math.random() * 3) * 360;
+            
+            dice.style.transform = `rotateX(${extraX}deg) rotateY(${extraY}deg) ${rotations[rollResult]}`;
+            
+            // After animation, get a task
+            setTimeout(() => {
+                getRandomTask();
+                rollBtn.disabled = false;
+                doneBtn.disabled = false;
+                skipBtn.disabled = false;
+                
+                // Update streak if this is the first roll today
+                const today = new Date().toDateString();
+                if (!lastRollDate || lastRollDate.toDateString() !== today) {
+                    currentStreak++;
+                    lastRollDate = new Date();
+                }
+                
+                updateDisplays();
+                saveProgress();
+            }, 1500);
+        }
+
+        // Get a random task
+        function getRandomTask() {
+            const randomIndex = Math.floor(Math.random() * tasks.length);
+            currentTask = tasks[randomIndex];
+            
+            // Display task
+            taskText.textContent = currentTask.text;
+            
+            // Show timer if it's a time-based task
+            if (currentTask.type === 'time') {
+                timeLeft = currentTask.duration * 60; // Convert to seconds
+                updateTimerDisplay();
+                taskTimer.style.display = 'block';
+                
+                // Start timer
+                if (timerInterval) clearInterval(timerInterval);
+                timerInterval = setInterval(updateTimer, 1000);
+            } else {
+                taskTimer.style.display = 'none';
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                }
+            }
+            
+            // Add to history
+            addTaskToHistory(currentTask.text, false, new Date().toLocaleTimeString());
+            saveProgress();
+        }
+
+        // Update timer
+        function updateTimer() {
+            timeLeft--;
+            updateTimerDisplay();
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                completeTask();
+            }
+        }
+
+        // Update timer display
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timeLeftDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        // Complete the current task
+        function completeTask() {
+            if (!currentTask) return;
+            
+            tasksCompleted++;
+            
+            // Add focus minutes if it was a time-based task
+            if (currentTask.type === 'time') {
+                focusMinutes += currentTask.duration;
+            }
+            
+            // Mark as completed in history
+            const listItems = taskList.querySelectorAll('li');
+            if (listItems.length > 0) {
+                const lastItem = listItems[0];
+                lastItem.classList.add('completed');
+            }
+            
+            // Reset for next task
+            currentTask = null;
+            taskText.textContent = "Great job! Ready for another task?";
+            taskTimer.style.display = 'none';
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            
+            updateDisplays();
+            saveProgress();
+        }
+
+        // Skip the current task
+        function skipTask() {
+            if (!currentTask) return;
+            
+            taskText.textContent = "Task skipped. Roll again for a new one!";
+            taskTimer.style.display = 'none';
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            
+            currentTask = null;
+        }
+
+        // Add task to history
+        function addTaskToHistory(text, completed, timestamp) {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span class="task-text">${text}</span>
+                <span class="task-time">${timestamp}</span>
+            `;
+            
+            if (completed) {
+                li.classList.add('completed');
+            }
+            
+            // Add to top of list
+            taskList.insertBefore(li, taskList.firstChild);
+            
+            // Limit history to 10 items
+            if (taskList.children.length > 10) {
+                taskList.removeChild(taskList.lastChild);
+            }
+        }
+
+        // Initialize the game when page loads
+        window.onload = init;
+    </script>
+</body>
+</html>
