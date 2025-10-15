@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Carbon Footprint Simulator: An interactive educational game that teaches sustainability. Make lifestyle choices and see real-time environmental impact. Learn how to reduce your carbon footprint through engaging gameplay.">
+    <title>Carbon Footprint Simulator - Environmental Education Game</title>
+    <meta name="keywords" content="carbon footprint, sustainability game, environmental education, climate change, eco-friendly, CO2 emissions, interactive learning, green lifestyle">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a3a1a, #2d5a2d);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #4CAF50;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #4CAF50, #8BC34A);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #8BC34A;
+            margin-bottom: 5px;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(76, 175, 80, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .carbon-score {
+            text-align: center;
+            flex: 1;
+        }
+
+        .score-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .score-label {
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        .environment-status {
+            text-align: center;
+            flex: 1;
+        }
+
+        .status-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #FFC107;
+        }
+
+        .status-label {
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .environment-view {
+            height: 200px;
+            border: 3px solid #2E7D32;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .environment-element {
+            position: absolute;
+            transition: all 1s ease;
+        }
+
+        .sun {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #FFEB3B, #FFC107);
+            border-radius: 50%;
+            top: 20px;
+            right: 30px;
+            box-shadow: 0 0 20px #FFC107;
+        }
+
+        .cloud {
+            width: 100px;
+            height: 40px;
+            background: white;
+            border-radius: 50px;
+            top: 30px;
+            left: 50px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+
+        .tree {
+            width: 40px;
+            height: 80px;
+            bottom: 0;
+        }
+
+        .tree-trunk {
+            width: 10px;
+            height: 40px;
+            background: #8B4513;
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+        }
+
+        .tree-top {
+            width: 40px;
+            height: 40px;
+            background: #4CAF50;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 30px;
+        }
+
+        .animal {
+            width: 30px;
+            height: 30px;
+            bottom: 10px;
+        }
+
+        .bird {
+            background: #FF9800;
+            border-radius: 50%;
+            left: 150px;
+            top: 50px;
+        }
+
+        .rabbit {
+            background: #E0E0E0;
+            border-radius: 40% 40% 20% 20%;
+            left: 250px;
+        }
+
+        .factory {
+            width: 60px;
+            height: 80px;
+            background: #78909C;
+            bottom: 0;
+            right: 100px;
+            display: none;
+        }
+
+        .smoke {
+            width: 20px;
+            height: 40px;
+            background: #9E9E9E;
+            border-radius: 10px;
+            bottom: 80px;
+            right: 120px;
+            opacity: 0.7;
+            display: none;
+        }
+
+        .pollution {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(97, 97, 97, 0);
+            transition: background 1s ease;
+            pointer-events: none;
+        }
+
+        .choices-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .choices-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .category {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .category h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 1px solid #4CAF50;
+            padding-bottom: 5px;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .choice-btn {
+            padding: 12px;
+            background: rgba(76, 175, 80, 0.3);
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .choice-btn:hover {
+            background: rgba(76, 175, 80, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .choice-btn.active {
+            background: rgba(76, 175, 80, 0.7);
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+
+        .co2-value {
+            font-weight: bold;
+            color: #FFC107;
+        }
+
+        .impact-feedback {
+            background: rgba(255, 193, 7, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .impact-feedback h3 {
+            color: #FFC107;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .feedback-text {
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .achievements-panel {
+            background: rgba(33, 150, 243, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .achievements-panel h3 {
+            color: #2196F3;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .achievements-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .achievement {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            width: 120px;
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
+
+        .achievement.unlocked {
+            opacity: 1;
+            background: rgba(76, 175, 80, 0.3);
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+
+        .achievement-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .fact-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: popIn 0.4s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .popup-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #FFC107;
+        }
+
+        .popup-text {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        #close-popup {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            background: #FFC107;
+            color: #2E7D32;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        #close-popup:hover {
+            background: #FFD54F;
+            transform: translateY(-2px);
+        }
+
+        .reset-btn {
+            display: block;
+            margin: 20px auto 0;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .reset-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Carbon Footprint Simulator</h1>
+            <p class="tagline">Make sustainable choices. See environmental impact.</p>
+            <p>Learn how your lifestyle affects the planet in real-time</p>
+        </header>
+
+        <div class="game-info">
+            <div class="carbon-score">
+                <div class="score-value" id="carbon-score">2.1</div>
+                <div class="score-label">TONS CO₂ / MONTH</div>
+            </div>
+            <div class="environment-status">
+                <div class="status-value" id="environment-status">Excellent</div>
+                <div class="status-label">ENVIRONMENT STATUS</div>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <div class="environment-view" id="environment-view">
+                <div class="environment-element sun"></div>
+                <div class="environment-element cloud"></div>
+                <div class="environment-element tree" style="left: 50px;">
+                    <div class="tree-trunk"></div>
+                    <div class="tree-top"></div>
+                </div>
+                <div class="environment-element tree" style="left: 120px;">
+                    <div class="tree-trunk"></div>
+                    <div class="tree-top"></div>
+                </div>
+                <div class="environment-element tree" style="left: 350px;">
+                    <div class="tree-trunk"></div>
+                    <div class="tree-top"></div>
+                </div>
+                <div class="environment-element animal bird"></div>
+                <div class="environment-element animal rabbit"></div>
+                <div class="environment-element factory" id="factory"></div>
+                <div class="environment-element smoke" id="smoke"></div>
+                <div class="pollution" id="pollution-overlay"></div>
+            </div>
+
+            <div class="choices-container">
+                <div class="category" data-category="transport">
+                    <h3>🚗 Transportation</h3>
+                    <div class="choices">
+                        <button class="choice-btn active" data-value="0.1" data-fact="Walking or biking produces virtually no CO2 emissions and improves your health!">
+                            Walking/Biking <span class="co2-value">0.1 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="0.5" data-fact="Electric cars produce about 50% less emissions than gasoline cars over their lifetime.">
+                            Electric Car <span class="co2-value">0.5 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="1.0" data-fact="Hybrid cars combine electric and gasoline power to reduce emissions by 25-35%.">
+                            Hybrid Car <span class="co2-value">1.0 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="1.8" data-fact="The average gasoline car emits about 4.6 tons of CO2 per year.">
+                            Gasoline Car <span class="co2-value">1.8 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="2.5" data-fact="A single round-trip transatlantic flight can emit more CO2 than some people produce in a year.">
+                            Flying <span class="co2-value">2.5 tons</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="category" data-category="diet">
+                    <h3>🍽️ Diet</h3>
+                    <div class="choices">
+                        <button class="choice-btn active" data-value="0.3" data-fact="Plant-based diets can reduce food-related emissions by up to 70% compared to meat-heavy diets.">
+                            Plant-Based <span class="co2-value">0.3 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="0.6" data-fact="Vegetarian diets typically generate about 50% less emissions than diets with regular meat consumption.">
+                            Vegetarian <span class="co2-value">0.6 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="0.9" data-fact="The Mediterranean diet is not only healthy but also has a moderate carbon footprint.">
+                            Mediterranean <span class="co2-value">0.9 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="1.3" data-fact="Reducing meat consumption to a few times per week can significantly lower your carbon footprint.">
+                            Meat-Occasional <span class="co2-value">1.3 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="1.8" data-fact="Beef production generates about 10 times more emissions than chicken production per kilogram.">
+                            Meat-Heavy <span class="co2-value">1.8 tons</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="category" data-category="housing">
+                    <h3>🏠 Housing</h3>
+                    <div class="choices">
+                        <button class="choice-btn active" data-value="0.5" data-fact="Eco-homes use sustainable materials and energy-efficient designs to minimize environmental impact.">
+                            Eco-Home <span class="co2-value">0.5 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="1.2" data-fact="Energy-efficient homes can reduce heating and cooling costs by 20-30%.">
+                            Energy Efficient <span class="co2-value">1.2 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="1.8" data-fact="The average home emits about 4 tons of CO2 annually from energy use.">
+                            Standard Home <span class="co2-value">1.8 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="3.0" data-fact="Larger homes require more energy for heating, cooling, and lighting, increasing their carbon footprint.">
+                            Large Home <span class="co2-value">3.0 tons</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="category" data-category="energy">
+                    <h3>⚡ Energy</h3>
+                    <div class="choices">
+                        <button class="choice-btn active" data-value="0.2" data-fact="Solar and wind energy produce electricity with virtually no greenhouse gas emissions.">
+                            Solar/Wind <span class="co2-value">0.2 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="0.6" data-fact="Green energy from providers supports the development of renewable energy infrastructure.">
+                            Green Energy <span class="co2-value">0.6 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="1.2" data-fact="Most grids use a mix of renewable and fossil fuel sources for electricity generation.">
+                            Mixed Sources <span class="co2-value">1.2 tons</span>
+                        </button>
+                        <button class="choice-btn" data-value="2.2" data-fact="Coal power plants are among the largest sources of CO2 emissions worldwide.">
+                            Fossil Fuels <span class="co2-value">2.2 tons</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="impact-feedback">
+            <h3>Environmental Impact</h3>
+            <p class="feedback-text" id="impact-text">Your choices are creating a sustainable future! The environment is healthy and thriving.</p>
+        </div>
+
+        <div class="achievements-panel">
+            <h3>Sustainability Achievements</h3>
+            <div class="achievements-list">
+                <div class="achievement unlocked">
+                    <div class="achievement-icon">🌱</div>
+                    <div>Eco-Starter</div>
+                </div>
+                <div class="achievement" id="low-carbon-diet">
+                    <div class="achievement-icon">🥦</div>
+                    <div>Low-Carbon Diet</div>
+                </div>
+                <div class="achievement" id="green-commuter">
+                    <div class="achievement-icon">🚲</div>
+                    <div>Green Commuter</div>
+                </div>
+                <div class="achievement" id="energy-saver">
+                    <div class="achievement-icon">💡</div>
+                    <div>Energy Saver</div>
+                </div>
+                <div class="achievement" id="eco-master">
+                    <div class="achievement-icon">🏆</div>
+                    <div>Eco Master</div>
+                </div>
+            </div>
+        </div>
+
+        <button class="reset-btn" id="reset-btn">Reset Choices</button>
+    </div>
+
+    <div class="fact-popup" id="fact-popup">
+        <div class="popup-content">
+            <div class="popup-title">Did You Know?</div>
+            <div class="popup-text" id="fact-text">Environmental fact will appear here</div>
+            <button id="close-popup">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        let carbonScore = 2.1;
+        let currentChoices = {
+            transport: 0.1,
+            diet: 0.3,
+            housing: 0.5,
+            energy: 0.2
+        };
+
+        // DOM elements
+        const carbonScoreDisplay = document.getElementById('carbon-score');
+        const environmentStatusDisplay = document.getElementById('environment-status');
+        const impactText = document.getElementById('impact-text');
+        const factory = document.getElementById('factory');
+        const smoke = document.getElementById('smoke');
+        const pollutionOverlay = document.getElementById('pollution-overlay');
+        const factPopup = document.getElementById('fact-popup');
+        const factText = document.getElementById('fact-text');
+        const closePopup = document.getElementById('close-popup');
+        const resetBtn = document.getElementById('reset-btn');
+        const choiceButtons = document.querySelectorAll('.choice-btn');
+        const achievements = {
+            lowCarbonDiet: document.getElementById('low-carbon-diet'),
+            greenCommuter: document.getElementById('green-commuter'),
+            energySaver: document.getElementById('energy-saver'),
+            ecoMaster: document.getElementById('eco-master')
+        };
+
+        // Initialize game
+        function init() {
+            // Add event listeners to choice buttons
+            choiceButtons.forEach(button => {
+                button.addEventListener('click', handleChoice);
+            });
+
+            // Add event listener to close popup
+            closePopup.addEventListener('click', () => {
+                factPopup.style.display = 'none';
+            });
+
+            // Add event listener to reset button
+            resetBtn.addEventListener('click', resetChoices);
+
+            // Initial update
+            updateGame();
+        }
+
+        // Handle choice selection
+        function handleChoice(e) {
+            const button = e.currentTarget;
+            const category = button.closest('.category').dataset.category;
+            const value = parseFloat(button.dataset.value);
+            const fact = button.dataset.fact;
+
+            // Update active button in category
+            const categoryButtons = button.parentElement.querySelectorAll('.choice-btn');
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            // Update choice
+            currentChoices[category] = value;
+
+            // Show fact popup
+            factText.textContent = fact;
+            factPopup.style.display = 'flex';
+
+            // Update game state
+            updateGame();
+        }
+
+        // Update game state based on choices
+        function updateGame() {
+            // Calculate carbon score
+            carbonScore = Object.values(currentChoices).reduce((sum, value) => sum + value, 0);
+            carbonScoreDisplay.textContent = carbonScore.toFixed(1);
+
+            // Update environment status and visuals
+            updateEnvironment();
+
+            // Update achievements
+            updateAchievements();
+        }
+
+        // Update environment based on carbon score
+        function updateEnvironment() {
+            let status, statusColor, impactMessage;
+
+            if (carbonScore < 4) {
+                status = "Excellent";
+                statusColor = "#4CAF50";
+                impactMessage = "Your choices are creating a sustainable future! The environment is healthy and thriving.";
+                updateVisuals(0, false);
+            } else if (carbonScore < 6) {
+                status = "Good";
+                statusColor = "#8BC34A";
+                impactMessage = "Your environmental impact is moderate. Consider greener options to improve further.";
+                updateVisuals(0.2, false);
+            } else if (carbonScore < 8) {
+                status = "Poor";
+                statusColor = "#FF9800";
+                impactMessage = "Your carbon footprint is affecting the environment. Try making more sustainable choices.";
+                updateVisuals(0.4, true);
+            } else {
+                status = "Critical";
+                statusColor = "#F44336";
+                impactMessage = "Your lifestyle is causing significant environmental damage. Immediate changes are needed.";
+                updateVisuals(0.7, true);
+            }
+
+            environmentStatusDisplay.textContent = status;
+            environmentStatusDisplay.style.color = statusColor;
+            impactText.textContent = impactMessage;
+        }
+
+        // Update visual elements based on environmental state
+        function updateVisuals(pollutionLevel, showFactory) {
+            // Update pollution overlay
+            pollutionOverlay.style.background = `rgba(97, 97, 97, ${pollutionLevel})`;
+
+            // Show/hide factory
+            factory.style.display = showFactory ? 'block' : 'none';
+            smoke.style.display = showFactory ? 'block' : 'none';
+
+            // Adjust tree health based on pollution
+            const trees = document.querySelectorAll('.tree-top');
+            trees.forEach(tree => {
+                const greenValue = Math.max(50, 255 - (pollutionLevel * 200));
+                tree.style.background = `rgb(76, ${greenValue}, 76)`;
+            });
+        }
+
+        // Update achievements based on player choices
+        function updateAchievements() {
+            // Low Carbon Diet achievement
+            if (currentChoices.diet <= 0.6) {
+                achievements.lowCarbonDiet.classList.add('unlocked');
+            }
+
+            // Green Commuter achievement
+            if (currentChoices.transport <= 0.5) {
+                achievements.greenCommuter.classList.add('unlocked');
+            }
+
+            // Energy Saver achievement
+            if (currentChoices.energy <= 0.6 && currentChoices.housing <= 1.2) {
+                achievements.energySaver.classList.add('unlocked');
+            }
+
+            // Eco Master achievement (all categories optimized)
+            if (currentChoices.transport <= 0.5 && currentChoices.diet <= 0.6 && 
+                currentChoices.housing <= 1.2 && currentChoices.energy <= 0.6) {
+                achievements.ecoMaster.classList.add('unlocked');
+            }
+        }
+
+        // Reset all choices to default
+        function resetChoices() {
+            // Reset choice buttons
+            choiceButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Set default active buttons
+            document.querySelectorAll('.category').forEach(category => {
+                const firstButton = category.querySelector('.choice-btn');
+                firstButton.classList.add('active');
+            });
+
+            // Reset choices
+            currentChoices = {
+                transport: 0.1,
+                diet: 0.3,
+                housing: 0.5,
+                energy: 0.2
+            };
+
+            // Reset achievements (except Eco-Starter)
+            Object.values(achievements).forEach(achievement => {
+                achievement.classList.remove('unlocked');
+            });
+
+            // Update game
+            updateGame();
+        }
+
+        // Initialize the game when page loads
+        window.onload = init;
+    </script>
+</body>
+</html>
