@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WordSprint: The ultimate free typing game that boosts your typing speed and vocabulary! Type falling words to win and learn new definitions. Educational, fun, and challenging for all ages.">
+    <title>WordSprint - Typing Speed & Vocabulary Builder Game</title>
+    <meta name="keywords" content="typing game, vocabulary game, educational game, learn to type, word game, speed typing, learn new words, free online game">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #fdbb2d;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fdbb2d, #b21f1f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #fdbb2d;
+            margin-bottom: 5px;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .difficulty-btn {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .difficulty-btn.active {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .slow-btn {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+        }
+
+        .medium-btn {
+            background: linear-gradient(135deg, #FF9800, #EF6C00);
+            color: white;
+        }
+
+        .fast-btn {
+            background: linear-gradient(135deg, #F44336, #C62828);
+            color: white;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(26, 42, 108, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fdbb2d;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .game-area {
+            height: 400px;
+            border: 3px solid #1a2a6c;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.4);
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .word {
+            position: absolute;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+            cursor: default;
+            user-select: none;
+            font-size: 1.2rem;
+        }
+
+        .word.slow {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        }
+
+        .word.medium {
+            background: linear-gradient(135deg, #FF9800, #EF6C00);
+        }
+
+        .word.fast {
+            background: linear-gradient(135deg, #F44336, #C62828);
+        }
+
+        .word:hover {
+            transform: scale(1.05);
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #word-input {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        #word-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px #fdbb2d;
+            transform: translateY(-2px);
+        }
+
+        #start-btn {
+            padding: 15px 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #fdbb2d, #b21f1f);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        #start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        #start-btn:active {
+            transform: translateY(-1px);
+        }
+
+        #definition-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: popIn 0.4s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .popup-word {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #fdbb2d;
+        }
+
+        .popup-pos {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        .popup-definition {
+            font-size: 1.3rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        #continue-btn {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            background: #fdbb2d;
+            color: #1a2a6c;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        #continue-btn:hover {
+            background: #ffcc44;
+            transform: translateY(-2px);
+        }
+
+        .instructions {
+            background: rgba(26, 42, 108, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .instructions h3 {
+            color: #fdbb2d;
+            margin-bottom: 10px;
+        }
+
+        .instructions ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .instructions li:before {
+            content: "•";
+            color: #fdbb2d;
+            position: absolute;
+            left: 0;
+        }
+
+        .game-over {
+            text-align: center;
+            padding: 20px;
+            background: rgba(178, 31, 31, 0.8);
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .game-over h2 {
+            color: #fdbb2d;
+            margin-bottom: 15px;
+        }
+
+        .difficulty-info {
+            text-align: center;
+            margin-top: 10px;
+            color: #fdbb2d;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .game-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .input-area {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .difficulty-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .difficulty-btn {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>WordSprint</h1>
+            <p class="tagline">Typing Speed & Vocabulary Builder</p>
+            <p>Type falling words to win and learn new definitions!</p>
+            
+            <div class="difficulty-selector">
+                <button class="difficulty-btn slow-btn active" data-level="slow">Slow</button>
+                <button class="difficulty-btn medium-btn" data-level="medium">Medium</button>
+                <button class="difficulty-btn fast-btn" data-level="fast">Fast</button>
+            </div>
+            <p class="difficulty-info">Current Level: <span id="current-level">Slow</span></p>
+        </header>
+
+        <div class="game-info">
+            <div class="stat">
+                <div class="stat-value" id="score">0</div>
+                <div class="stat-label">SCORE</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="timer">60</div>
+                <div class="stat-label">TIME</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="wpm">0</div>
+                <div class="stat-label">WPM</div>
+            </div>
+        </div>
+
+        <div class="game-area" id="game-area">
+            <!-- Falling words will appear here -->
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="word-input" placeholder="Type the words here..." disabled>
+            <button id="start-btn">Start Game</button>
+        </div>
+
+        <div class="instructions">
+            <h3>How to Play:</h3>
+            <ul>
+                <li>Type the falling words correctly before they reach the bottom</li>
+                <li>Press Enter to submit your word</li>
+                <li>Learn new vocabulary from the definition pop-ups</li>
+                <li>Your score increases with each correct word</li>
+                <li>Game ends when time runs out or a word reaches the bottom</li>
+                <li><strong>Choose your difficulty level:</strong> Slow, Medium, or Fast</li>
+            </ul>
+        </div>
+
+        <div class="game-over" id="game-over">
+            <h2>Game Over!</h2>
+            <p>Your final score: <span id="final-score">0</span></p>
+            <p>Words typed: <span id="words-typed">0</span></p>
+            <p>Best WPM: <span id="best-wpm">0</span></p>
+            <p>Difficulty: <span id="final-difficulty">Slow</span></p>
+            <button id="restart-btn">Play Again</button>
+        </div>
+    </div>
+
+    <div id="definition-popup">
+        <div class="popup-content">
+            <div class="popup-word" id="popup-word">Word</div>
+            <div class="popup-pos" id="popup-pos">part of speech</div>
+            <div class="popup-definition" id="popup-definition">Definition will appear here</div>
+            <button id="continue-btn">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        // Game variables
+        let score = 0;
+        let timeLeft = 60;
+        let gameTime = 0;
+        let isPlaying = false;
+        let wordsTyped = 0;
+        let activeWords = [];
+        let currentDifficulty = 'slow';
+        let gameInterval;
+        let spawnInterval;
+        let startTime;
+        
+        // Difficulty settings
+        const difficultySettings = {
+            slow: {
+                wordFallSpeed: 1,
+                wordSpawnRate: 2000,
+                speedIncrease: 0.1,
+                spawnRateDecrease: 50,
+                difficultyInterval: 15,
+                minSpawnRate: 1200
+            },
+            medium: {
+                wordFallSpeed: 2,
+                wordSpawnRate: 1500,
+                speedIncrease: 0.2,
+                spawnRateDecrease: 100,
+                difficultyInterval: 10,
+                minSpawnRate: 800
+            },
+            fast: {
+                wordFallSpeed: 3,
+                wordSpawnRate: 1000,
+                speedIncrease: 0.3,
+                spawnRateDecrease: 150,
+                difficultyInterval: 8,
+                minSpawnRate: 500
+            }
+        };
+        
+        // DOM elements
+        const gameArea = document.getElementById('game-area');
+        const wordInput = document.getElementById('word-input');
+        const startBtn = document.getElementById('start-btn');
+        const scoreDisplay = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
+        const wpmDisplay = document.getElementById('wpm');
+        const definitionPopup = document.getElementById('definition-popup');
+        const popupWord = document.getElementById('popup-word');
+        const popupPos = document.getElementById('popup-pos');
+        const popupDefinition = document.getElementById('popup-definition');
+        const continueBtn = document.getElementById('continue-btn');
+        const gameOverScreen = document.getElementById('game-over');
+        const finalScore = document.getElementById('final-score');
+        const wordsTypedDisplay = document.getElementById('words-typed');
+        const bestWpmDisplay = document.getElementById('best-wpm');
+        const restartBtn = document.getElementById('restart-btn');
+        const currentLevelDisplay = document.getElementById('current-level');
+        const finalDifficultyDisplay = document.getElementById('final-difficulty');
+        const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+
+        // Vocabulary database
+        const vocabulary = [
+            { word: "Happy", definition: "Feeling or showing pleasure or contentment.", pos: "adjective" },
+            { word: "Sun", definition: "The star around which the earth orbits.", pos: "noun" },
+            { word: "Run", definition: "Move at a speed faster than a walk.", pos: "verb" },
+            { word: "Book", definition: "A written or printed work consisting of pages.", pos: "noun" },
+            { word: "Friend", definition: "A person whom one knows and with whom one has a bond of mutual affection.", pos: "noun" },
+            { word: "House", definition: "A building for human habitation.", pos: "noun" },
+            { word: "Water", definition: "A transparent, odorless, tasteless liquid.", pos: "noun" },
+            { word: "Food", definition: "Any nutritious substance that people or animals eat.", pos: "noun" },
+            { word: "School", definition: "An institution for educating children.", pos: "noun" },
+            { word: "Family", definition: "A group of one or more parents and their children.", pos: "noun" },
+            { word: "Music", definition: "Vocal or instrumental sounds combined to produce beauty of form.", pos: "noun" },
+            { word: "Color", definition: "The property possessed by an object of producing different sensations on the eye.", pos: "noun" },
+            { word: "Animal", definition: "A living organism that feeds on organic matter.", pos: "noun" },
+            { word: "Flower", definition: "The seed-bearing part of a plant.", pos: "noun" },
+            { word: "Tree", definition: "A woody perennial plant.", pos: "noun" },
+            { word: "Car", definition: "A road vehicle, typically with four wheels.", pos: "noun" },
+            { word: "Love", definition: "An intense feeling of deep affection.", pos: "noun" },
+            { word: "Play", definition: "Engage in activity for enjoyment and recreation.", pos: "verb" },
+            { word: "Sleep", definition: "A condition of body and mind that typically recurs for several hours every night.", pos: "noun" },
+            { word: "Time", definition: "The indefinite continued progress of existence.", pos: "noun" },
+            { word: "Work", definition: "Activity involving mental or physical effort done to achieve a purpose.", pos: "noun" },
+            { word: "Home", definition: "The place where one lives permanently.", pos: "noun" },
+            { word: "City", definition: "A large town.", pos: "noun" },
+            { word: "Country", definition: "A nation with its own government.", pos: "noun" },
+            { word: "World", definition: "The earth, together with all of its countries and peoples.", pos: "noun" }
+        ];
+
+        // Initialize game
+        function init() {
+            startBtn.addEventListener('click', startGame);
+            wordInput.addEventListener('keyup', handleInput);
+            continueBtn.addEventListener('click', nextWord);
+            restartBtn.addEventListener('click', startGame);
+            
+            // Add event listeners to difficulty buttons
+            difficultyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    difficultyButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    // Update current difficulty
+                    currentDifficulty = button.dataset.level;
+                    currentLevelDisplay.textContent = button.textContent;
+                });
+            });
+        }
+
+        // Start the game
+        function startGame() {
+            // Get current difficulty settings
+            const settings = difficultySettings[currentDifficulty];
+            
+            // Reset game state
+            score = 0;
+            timeLeft = 60;
+            gameTime = 0;
+            wordsTyped = 0;
+            activeWords = [];
+            
+            // Update UI
+            scoreDisplay.textContent = score;
+            timerDisplay.textContent = timeLeft;
+            wpmDisplay.textContent = 0;
+            gameOverScreen.style.display = 'none';
+            
+            // Clear game area
+            gameArea.innerHTML = '';
+            
+            // Enable input and focus
+            wordInput.disabled = false;
+            wordInput.value = '';
+            wordInput.focus();
+            
+            // Change button text
+            startBtn.textContent = 'Restart Game';
+            
+            // Start game loops
+            isPlaying = true;
+            startTime = Date.now();
+            
+            gameInterval = setInterval(updateGame, 100);
+            spawnInterval = setInterval(spawnWord, settings.wordSpawnRate);
+        }
+
+        // Spawn a new falling word
+        function spawnWord() {
+            if (!isPlaying) return;
+            
+            // Select a random word from vocabulary
+            const wordObj = vocabulary[Math.floor(Math.random() * vocabulary.length)];
+            
+            // Create word element
+            const wordElement = document.createElement('div');
+            wordElement.className = `word ${currentDifficulty}`;
+            wordElement.textContent = wordObj.word;
+            wordElement.dataset.word = wordObj.word;
+            wordElement.dataset.definition = wordObj.definition;
+            wordElement.dataset.pos = wordObj.pos;
+            
+            // Random horizontal position
+            const maxLeft = gameArea.offsetWidth - 150;
+            const leftPos = Math.floor(Math.random() * maxLeft);
+            wordElement.style.left = `${leftPos}px`;
+            wordElement.style.top = '0px';
+            
+            // Add to game area and active words
+            gameArea.appendChild(wordElement);
+            activeWords.push({
+                element: wordElement,
+                top: 0,
+                word: wordObj.word,
+                definition: wordObj.definition,
+                pos: wordObj.pos
+            });
+        }
+
+        // Update game state
+        function updateGame() {
+            if (!isPlaying) return;
+            
+            // Get current difficulty settings
+            const settings = difficultySettings[currentDifficulty];
+            
+            // Update game time and calculate WPM
+            gameTime = Math.floor((Date.now() - startTime) / 1000);
+            timeLeft = 60 - gameTime;
+            
+            if (timeLeft <= 0) {
+                endGame();
+                return;
+            }
+            
+            // Update timer display
+            timerDisplay.textContent = timeLeft;
+            
+            // Calculate WPM
+            const wpm = wordsTyped > 0 ? Math.floor((wordsTyped / gameTime) * 60) : 0;
+            wpmDisplay.textContent = wpm;
+            
+            // Move all active words down
+            for (let i = activeWords.length - 1; i >= 0; i--) {
+                const word = activeWords[i];
+                word.top += settings.wordFallSpeed;
+                word.element.style.top = `${word.top}px`;
+                
+                // Check if word reached bottom
+                if (word.top > gameArea.offsetHeight - 40) {
+                    endGame();
+                    break;
+                }
+            }
+            
+            // Gradually increase difficulty
+            if (gameTime % settings.difficultyInterval === 0) {
+                settings.wordFallSpeed += settings.speedIncrease;
+                if (settings.wordSpawnRate > settings.minSpawnRate) {
+                    settings.wordSpawnRate -= settings.spawnRateDecrease;
+                    clearInterval(spawnInterval);
+                    spawnInterval = setInterval(spawnWord, settings.wordSpawnRate);
+                }
+            }
+        }
+
+        // Handle word input
+        function handleInput(e) {
+            if (!isPlaying) return;
+            
+            if (e.key === 'Enter') {
+                const typedWord = wordInput.value.trim();
+                
+                // Check if typed word matches any active word
+                for (let i = 0; i < activeWords.length; i++) {
+                    if (activeWords[i].word.toLowerCase() === typedWord.toLowerCase()) {
+                        // Remove word from game
+                        gameArea.removeChild(activeWords[i].element);
+                        
+                        // Update score and stats
+                        score += 10;
+                        wordsTyped++;
+                        scoreDisplay.textContent = score;
+                        
+                        // Show definition popup
+                        showDefinition(activeWords[i]);
+                        
+                        // Remove from active words
+                        activeWords.splice(i, 1);
+                        
+                        // Clear input
+                        wordInput.value = '';
+                        return;
+                    }
+                }
+                
+                // If no match found, just clear input
+                wordInput.value = '';
+            }
+        }
+
+        // Show definition popup
+        function showDefinition(wordObj) {
+            // Pause game
+            isPlaying = false;
+            
+            // Set popup content
+            popupWord.textContent = wordObj.word;
+            popupPos.textContent = wordObj.pos;
+            popupDefinition.textContent = wordObj.definition;
+            
+            // Show popup
+            definitionPopup.style.display = 'flex';
+        }
+
+        // Continue to next word
+        function nextWord() {
+            // Hide popup
+            definitionPopup.style.display = 'none';
+            
+            // Resume game
+            isPlaying = true;
+            
+            // Focus input
+            wordInput.focus();
+        }
+
+        // End the game
+        function endGame() {
+            isPlaying = false;
+            clearInterval(gameInterval);
+            clearInterval(spawnInterval);
+            
+            // Disable input
+            wordInput.disabled = true;
+            
+            // Calculate final WPM
+            const wpm = wordsTyped > 0 ? Math.floor((wordsTyped / gameTime) * 60) : 0;
+            
+            // Show game over screen
+            finalScore.textContent = score;
+            wordsTypedDisplay.textContent = wordsTyped;
+            bestWpmDisplay.textContent = wpm;
+            finalDifficultyDisplay.textContent = currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1);
+            gameOverScreen.style.display = 'block';
+        }
+
+        // Initialize the game when page loads
+        window.onload = init;
+    </script>
+</body>
+</html>
