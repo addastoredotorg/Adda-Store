@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="This Day in My Life - A private journal for reflecting on your thoughts from the same date across different years. Track your personal growth journey through time.">
+    <meta name="keywords" content="personal journal, diary, reflection, growth, memories, private journal, this day in my life, self-reflection">
+    <title>This Day in My Life - Your Private Reflection Journal</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .tagline {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+        
+        .date-display {
+            background-color: white;
+            padding: 15px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .journal-card {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .year-tabs {
+            display: flex;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .year-tab {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: var(--radius);
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .year-tab:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .year-tab.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .entry-form textarea {
+            width: 100%;
+            height: 200px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        
+        .entry-form button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        .entry-form button:hover {
+            background-color: #2980b9;
+        }
+        
+        .entry-display {
+            min-height: 200px;
+            padding: 15px;
+            border-radius: var(--radius);
+            background-color: #f8f9fa;
+            white-space: pre-wrap;
+            line-height: 1.8;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #7f8c8d;
+        }
+        
+        .empty-state p {
+            margin-bottom: 15px;
+        }
+        
+        .rules-section {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-top: 30px;
+        }
+        
+        .rules-section h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .rules-list {
+            list-style-type: none;
+        }
+        
+        .rules-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .rules-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .rule-icon {
+            margin-right: 15px;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .privacy-notice {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: var(--radius);
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .journal-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>This Day in My Life</h1>
+            <p class="tagline">A private journal for reflection across time</p>
+        </header>
+        
+        <div class="date-display" id="current-date">
+            <!-- Date will be populated by JavaScript -->
+        </div>
+        
+        <div class="journal-card">
+            <div class="year-tabs" id="year-tabs">
+                <!-- Year tabs will be populated by JavaScript -->
+            </div>
+            
+            <div id="entry-container">
+                <!-- Entry form or display will be shown here -->
+            </div>
+        </div>
+        
+        <div class="rules-section">
+            <h2>How It Works</h2>
+            <ul class="rules-list">
+                <li>
+                    <span class="rule-icon">📝</span>
+                    <div>
+                        <strong>Write Today's Entry</strong>
+                        <p>Record your thoughts, feelings, and experiences for today.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="rule-icon">🔒</span>
+                    <div>
+                        <strong>Private & Secure</strong>
+                        <p>Your entries are stored locally in your browser - no account needed, no data shared.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="rule-icon">📅</span>
+                    <div>
+                        <strong>Reflect on This Day</strong>
+                        <p>Come back on this same date in future years to see what you were thinking about in previous years.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="rule-icon">🌱</span>
+                    <div>
+                        <strong>Track Your Growth</strong>
+                        <p>Observe how your perspectives, challenges, and joys evolve over time.</p>
+                    </div>
+                </li>
+            </ul>
+            
+            <div class="privacy-notice">
+                <strong>Privacy First:</strong> All journal entries are stored locally on your device. They are never sent to any server and cannot be accessed by anyone else.
+            </div>
+        </div>
+        
+        <footer>
+            <p>This Day in My Life Journal &copy; <span id="current-year"></span> - Your private space for reflection</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // Initialize the journal
+            initJournal();
+        });
+        
+        function initJournal() {
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth();
+            const currentDay = currentDate.getDate();
+            const currentYear = currentDate.getFullYear();
+            
+            // Display current date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+            
+            // Get or initialize journal data
+            let journalData = JSON.parse(localStorage.getItem('thisDayJournal')) || {};
+            
+            // Create year tabs
+            const yearTabsContainer = document.getElementById('year-tabs');
+            const entryContainer = document.getElementById('entry-container');
+            
+            // Always include current year
+            const years = [currentYear];
+            
+            // Add previous years that have entries for this date
+            Object.keys(journalData).forEach(year => {
+                if (journalData[year][`${currentMonth}-${currentDay}`] && !years.includes(parseInt(year))) {
+                    years.push(parseInt(year));
+                }
+            });
+            
+            // Sort years in descending order
+            years.sort((a, b) => b - a);
+            
+            // Create year tabs
+            years.forEach(year => {
+                const tab = document.createElement('button');
+                tab.className = 'year-tab';
+                tab.textContent = year;
+                if (year === currentYear) {
+                    tab.classList.add('active');
+                }
+                
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.year-tab').forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    // Load entry for selected year
+                    loadEntry(year, currentMonth, currentDay, journalData);
+                });
+                
+                yearTabsContainer.appendChild(tab);
+            });
+            
+            // Load current year's entry by default
+            loadEntry(currentYear, currentMonth, currentDay, journalData);
+            
+            // Function to load entry for a specific year and date
+            function loadEntry(year, month, day, journalData) {
+                const dateKey = `${month}-${day}`;
+                
+                // Clear entry container
+                entryContainer.innerHTML = '';
+                
+                if (year === currentYear) {
+                    // Show entry form for current year
+                    const form = document.createElement('div');
+                    form.className = 'entry-form';
+                    form.innerHTML = `
+                        <h3>What's on your mind today?</h3>
+                        <textarea id="entry-text" placeholder="Write about your day, your thoughts, your feelings...">${journalData[year] && journalData[year][dateKey] ? journalData[year][dateKey] : ''}</textarea>
+                        <button id="save-entry">Save Today's Entry</button>
+                    `;
+                    entryContainer.appendChild(form);
+                    
+                    // Add event listener for save button
+                    document.getElementById('save-entry').addEventListener('click', function() {
+                        saveEntry(year, month, day, journalData);
+                    });
+                } else {
+                    // Show entry from previous year
+                    const entryDisplay = document.createElement('div');
+                    entryDisplay.className = 'entry-display';
+                    
+                    if (journalData[year] && journalData[year][dateKey]) {
+                        entryDisplay.innerHTML = `
+                            <h3>On this day in ${year}, you wrote:</h3>
+                            <div class="entry-content">${journalData[year][dateKey]}</div>
+                        `;
+                    } else {
+                        entryDisplay.innerHTML = `
+                            <div class="empty-state">
+                                <p>No entry found for ${year}.</p>
+                                <p>You didn't write anything on this date that year.</p>
+                            </div>
+                        `;
+                    }
+                    
+                    entryContainer.appendChild(entryDisplay);
+                }
+            }
+            
+            // Function to save an entry
+            function saveEntry(year, month, day, journalData) {
+                const entryText = document.getElementById('entry-text').value.trim();
+                const dateKey = `${month}-${day}`;
+                
+                if (entryText === '') {
+                    alert('Please write something before saving.');
+                    return;
+                }
+                
+                // Initialize year if it doesn't exist
+                if (!journalData[year]) {
+                    journalData[year] = {};
+                }
+                
+                // Save entry
+                journalData[year][dateKey] = entryText;
+                
+                // Save to localStorage
+                localStorage.setItem('thisDayJournal', JSON.stringify(journalData));
+                
+                // Show confirmation
+                alert('Entry saved successfully! Come back next year to reflect on today.');
+            }
+        }
+    </script>
+</body>
+</html>
