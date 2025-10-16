@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kindness Chain: Join a global movement of positivity! Complete small acts of kindness and watch our visual chain grow as others contribute worldwide. Turn compassion into a beautiful collective experience.">
+    <title>Kindness Chain - Global Positivity Social Game</title>
+    <meta name="keywords" content="kindness, social game, positivity, community, random acts of kindness, emotional connection, global chain, anonymous kindness, compassion game">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            color: #5a3e36;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #kindness-chain-app {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(252, 182, 159, 0.5);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ff9a9e, #fecfef);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: #e76f51;
+            margin-bottom: 15px;
+        }
+
+        #global-stats {
+            font-size: 1.1rem;
+            color: #666;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 968px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Chain Visualization Styles */
+        #chain-visualization {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            min-height: 500px;
+        }
+
+        #world-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #80deea;
+        }
+
+        #world-map {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><path fill="%23b2dfdb" d="M200,200 Q300,150 400,200 T600,200" stroke="%2380cbc4" stroke-width="2" fill-opacity="0.3"/></svg>');
+            background-size: cover;
+            opacity: 0.3;
+        }
+
+        #global-chain {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        .chain-link {
+            position: absolute;
+            width: 40px;
+            height: 20px;
+            border-radius: 10px;
+            transform-origin: center;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .chain-link:hover {
+            transform: scale(1.3);
+            z-index: 100;
+        }
+
+        .chain-link.compassion { background: linear-gradient(135deg, #ff9a9e, #fad0c4); }
+        .chain-link.community { background: linear-gradient(135deg, #a1c4fd, #c2e9fb); }
+        .chain-link.digital { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
+        .chain-link.environment { background: linear-gradient(135deg, #84fab0, #8fd3f4); }
+        .chain-link.self { background: linear-gradient(135deg, #d4fc79, #96e6a1); }
+
+        .chain-connection {
+            position: absolute;
+            height: 3px;
+            background: linear-gradient(90deg, #ff9a9e, #a1c4fd, #84fab0);
+            transform-origin: 0 0;
+            z-index: 5;
+        }
+
+        #chain-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        #chain-controls button, #chain-controls select {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            background: #ff9a9e;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        #chain-controls select {
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        #chain-controls button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sidebar Styles */
+        .sidebar-section {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .sidebar-section h2 {
+            color: #e76f51;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #fecfef;
+            padding-bottom: 10px;
+        }
+
+        /* Add Kindness Form */
+        #kindness-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #kindness-description {
+            padding: 15px;
+            border: 1px solid #ffd7d5;
+            border-radius: 10px;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 100px;
+            transition: border-color 0.3s;
+        }
+
+        #kindness-description:focus {
+            outline: none;
+            border-color: #ff9a9e;
+            box-shadow: 0 0 0 2px rgba(255, 154, 158, 0.2);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .form-row {
+                flex-direction: column;
+            }
+        }
+
+        #kindness-category, #location-input {
+            padding: 12px;
+            border: 1px solid #ffd7d5;
+            border-radius: 8px;
+            font-size: 1rem;
+            flex: 1;
+        }
+
+        #submit-kindness {
+            padding: 15px;
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        #submit-kindness:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
+        }
+
+        .privacy-note {
+            font-size: 0.8rem;
+            color: #666;
+            text-align: center;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        /* Recent Activity */
+        #activity-feed {
+            max-height: 300px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .activity-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ff9a9e;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .activity-description {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .activity-category {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .category-compassion { background: #ff9a9e; }
+        .category-community { background: #a1c4fd; }
+        .category-digital { background: #ffd7b5; }
+        .category-environment { background: #84fab0; }
+        .category-self { background: #d4fc79; }
+
+        /* Personal Progress */
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat span {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e76f51;
+            margin-bottom: 5px;
+        }
+
+        .stat small {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        #badges-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .badge {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .badge.locked {
+            background: #ccc;
+            color: #999;
+        }
+
+        .badge-tooltip {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            display: none;
+            z-index: 1000;
+        }
+
+        .badge:hover .badge-tooltip {
+            display: block;
+        }
+
+        /* Milestones Section */
+        #milestones {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #milestones h2 {
+            color: #e76f51;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .milestone-tracker {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .milestone {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .milestone-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .milestone-progress {
+            height: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff9a9e, #fecfef);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Celebration Animation */
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .celebrate {
+            animation: celebrate 0.5s ease;
+        }
+
+        /* Modal for Chain Link Details */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #kindness-chain-app {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .progress-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            #world-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="kindness-chain-app">
+        <header>
+            <h1>Kindness Chain</h1>
+            <p class="tagline">Connecting the world through compassion</p>
+            <div id="global-stats">
+                <span id="chain-length">0</span> acts of kindness • 
+                <span id="countries-reached">0</span> countries •
+                <span id="active-today">0</span> active today
+            </div>
+        </header>
+
+        <main>
+            <!-- Global Chain Visualization -->
+            <section id="chain-visualization">
+                <div id="world-container">
+                    <div id="world-map"></div>
+                    <div id="global-chain">
+                        <!-- Dynamic chain links will be added here -->
+                    </div>
+                </div>
+                <div id="chain-controls">
+                    <button id="zoom-in">+</button>
+                    <button id="zoom-out">-</button>
+                    <button id="reset-view">Reset</button>
+                    <select id="filter-category">
+                        <option value="all">All Kindness</option>
+                        <option value="compassion">Everyday Compassion</option>
+                        <option value="community">Community Support</option>
+                        <option value="digital">Digital Kindness</option>
+                        <option value="environment">Environmental Care</option>
+                        <option value="self">Self-Kindness</option>
+                    </select>
+                </div>
+            </section>
+
+            <div class="sidebar">
+                <!-- Add Kindness Section -->
+                <section id="add-kindness" class="sidebar-section">
+                    <h2>Add Your Link to the Chain</h2>
+                    <form id="kindness-form">
+                        <textarea id="kindness-description" 
+                                 placeholder="Describe your act of kindness... (e.g., 'Bought lunch for a homeless person', 'Helped neighbor with groceries')"
+                                 maxlength="200"></textarea>
+                        <div class="form-row">
+                            <select id="kindness-category">
+                                <option value="compassion">Everyday Compassion</option>
+                                <option value="community">Community Support</option>
+                                <option value="digital">Digital Kindness</option>
+                                <option value="environment">Environmental Care</option>
+                                <option value="self">Self-Kindness</option>
+                            </select>
+                            <input type="text" id="location-input" placeholder="Your city/country (optional)">
+                        </div>
+                        <button type="submit" id="submit-kindness">Add to Chain</button>
+                        <p class="privacy-note">All submissions are anonymous. We only store your kindness description and approximate location.</p>
+                    </form>
+                </section>
+
+                <!-- Recent Activity -->
+                <section id="recent-activity" class="sidebar-section">
+                    <h2>Recent Kindness Around the World</h2>
+                    <div id="activity-feed">
+                        <!-- Dynamic activity items -->
+                    </div>
+                </section>
+
+                <!-- Personal Progress -->
+                <section id="personal-progress" class="sidebar-section">
+                    <h2>Your Kindness Journey</h2>
+                    <div class="progress-stats">
+                        <div class="stat">
+                            <span id="your-streak">0</span>
+                            <small>Day Streak</small>
+                        </div>
+                        <div class="stat">
+                            <span id="your-contributions">0</span>
+                            <small>Chain Links</small>
+                        </div>
+                        <div class="stat">
+                            <span id="your-impact">0</span>
+                            <small>Global Rank</small>
+                        </div>
+                    </div>
+                    <div id="achievements">
+                        <h3>Your Achievements</h3>
+                        <div id="badges-container">
+                            <!-- Achievement badges will be added here -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Community Milestones -->
+        <section id="milestones">
+            <h2>Global Milestones</h2>
+            <div class="milestone-tracker">
+                <div class="milestone" data-target="1000">
+                    <span class="milestone-label">First 1,000 Acts</span>
+                    <div class="milestone-progress">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="milestone" data-target="5000">
+                    <span class="milestone-label">Global Reach (5,000 Acts)</span>
+                    <div class="milestone-progress">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="milestone" data-target="10000">
+                    <span class="milestone-label">Kindness Wave (10,000 Acts)</span>
+                    <div class="milestone-progress">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for Chain Link Details -->
+    <div class="modal" id="link-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h3 id="modal-title">Kindness Act</h3>
+            <p id="modal-description">Description will appear here</p>
+            <div id="modal-meta">
+                <span id="modal-category"></span>
+                <span id="modal-location"></span>
+                <span id="modal-time"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Kindness Chain Database
+        let kindnessActs = JSON.parse(localStorage.getItem('kindnessActs')) || [];
+        let userStats = JSON.parse(localStorage.getItem('userStats')) || {
+            streak: 0,
+            contributions: 0,
+            lastContribution: null,
+            achievements: []
+        };
+
+        // Sample initial data for demonstration
+        const sampleActs = [
+            {
+                id: "act1",
+                description: "Paid for the coffee of the person behind me in line",
+                category: "compassion",
+                location: "New York, USA",
+                coordinates: { x: 200, y: 150 },
+                timestamp: new Date(Date.now() - 3600000).toISOString()
+            },
+            {
+                id: "act2",
+                description: "Volunteered at local animal shelter for 3 hours",
+                category: "community",
+                location: "London, UK",
+                coordinates: { x: 450, y: 140 },
+                timestamp: new Date(Date.now() - 7200000).toISOString()
+            },
+            {
+                id: "act3",
+                description: "Left positive reviews for small local businesses",
+                category: "digital",
+                location: "Tokyo, Japan",
+                coordinates: { x: 650, y: 180 },
+                timestamp: new Date(Date.now() - 10800000).toISOString()
+            },
+            {
+                id: "act4",
+                description: "Planted trees in community park with neighbors",
+                category: "environment",
+                location: "Sydney, Australia",
+                coordinates: { x: 620, y: 320 },
+                timestamp: new Date(Date.now() - 14400000).toISOString()
+            },
+            {
+                id: "act5",
+                description: "Took a mental health day and practiced self-care",
+                category: "self",
+                location: "Toronto, Canada",
+                coordinates: { x: 180, y: 160 },
+                timestamp: new Date(Date.now() - 18000000).toISOString()
+            }
+        ];
+
+        // Initialize with sample data if empty
+        if (kindnessActs.length === 0) {
+            kindnessActs = sampleActs;
+            localStorage.setItem('kindnessActs', JSON.stringify(kindnessActs));
+        }
+
+        // DOM Elements
+        const globalChain = document.getElementById('global-chain');
+        const chainLength = document.getElementById('chain-length');
+        const countriesReached = document.getElementById('countries-reached');
+        const activeToday = document.getElementById('active-today');
+        const kindnessForm = document.getElementById('kindness-form');
+        const kindnessDescription = document.getElementById('kindness-description');
+        const kindnessCategory = document.getElementById('kindness-category');
+        const locationInput = document.getElementById('location-input');
+        const activityFeed = document.getElementById('activity-feed');
+        const yourStreak = document.getElementById('your-streak');
+        const yourContributions = document.getElementById('your-contributions');
+        const yourImpact = document.getElementById('your-impact');
+        const badgesContainer = document.getElementById('badges-container');
+        const filterCategory = document.getElementById('filter-category');
+        const linkModal = document.getElementById('link-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDescription = document.getElementById('modal-description');
+        const modalCategory = document.getElementById('modal-category');
+        const modalLocation = document.getElementById('modal-location');
+        const modalTime = document.getElementById('modal-time');
+        const closeModal = document.querySelector('.close-modal');
+
+        // Achievement definitions
+        const achievements = [
+            { id: 'first', icon: '🌟', name: 'First Kindness', description: 'Added your first act of kindness', unlocked: false },
+            { id: 'streak3', icon: '🔥', name: 'Kindling', description: '3-day kindness streak', unlocked: false },
+            { id: 'streak7', icon: '💫', name: 'Radiant', description: '7-day kindness streak', unlocked: false },
+            { id: 'categories', icon: '🌈', name: 'Rainbow Heart', description: 'Acts in all 5 categories', unlocked: false },
+            { id: 'contributor', icon: '⭐', name: 'Shining Star', description: '10 chain contributions', unlocked: false }
+        ];
+
+        // Initialize the application
+        function init() {
+            updateGlobalStats();
+            renderChain();
+            updateActivityFeed();
+            updateUserStats();
+            renderAchievements();
+            setupEventListeners();
+        }
+
+        // Update global statistics
+        function updateGlobalStats() {
+            chainLength.textContent = kindnessActs.length;
+            
+            // Count unique countries (simplified for demo)
+            const locations = kindnessActs.map(act => act.location).filter(loc => loc);
+            const uniqueLocations = [...new Set(locations)];
+            countriesReached.textContent = uniqueLocations.length;
+            
+            // Count acts from today
+            const today = new Date().toDateString();
+            const todayActs = kindnessActs.filter(act => 
+                new Date(act.timestamp).toDateString() === today
+            );
+            activeToday.textContent = todayActs.length;
+            
+            updateMilestones();
+        }
+
+        // Render the visual chain
+        function renderChain() {
+            globalChain.innerHTML = '';
+            
+            // Filter acts based on category selection
+            const filteredActs = filterCategory.value === 'all' 
+                ? kindnessActs 
+                : kindnessActs.filter(act => act.category === filterCategory.value);
+            
+            // Create chain links and connections
+            filteredActs.forEach((act, index) => {
+                createChainLink(act);
+                
+                // Create connection to next link (if exists)
+                if (index < filteredActs.length - 1) {
+                    createConnection(act, filteredActs[index + 1]);
+                }
+            });
+        }
+
+        // Create a single chain link
+        function createChainLink(act) {
+            const link = document.createElement('div');
+            link.className = `chain-link ${act.category}`;
+            link.dataset.id = act.id;
+            
+            // Position randomly within world container (in a real app, use actual coordinates)
+            const worldRect = document.getElementById('world-container').getBoundingClientRect();
+            const x = act.coordinates?.x || Math.random() * (worldRect.width - 40);
+            const y = act.coordinates?.y || Math.random() * (worldRect.height - 20);
+            
+            link.style.left = `${x}px`;
+            link.style.top = `${y}px`;
+            
+            // Add category icon
+            const icons = {
+                compassion: '💖',
+                community: '🤝',
+                digital: '💻',
+                environment: '🌱',
+                self: '🧘'
+            };
+            
+            link.innerHTML = icons[act.category];
+            
+            // Add click event to show details
+            link.addEventListener('click', () => showActDetails(act));
+            
+            globalChain.appendChild(link);
+        }
+
+        // Create connection between two acts
+        function createConnection(act1, act2) {
+            const connection = document.createElement('div');
+            connection.className = 'chain-connection';
+            
+            const worldRect = document.getElementById('world-container').getBoundingClientRect();
+            const x1 = act1.coordinates?.x || 0;
+            const y1 = act1.coordinates?.y || 0;
+            const x2 = act2.coordinates?.x || 0;
+            const y2 = act2.coordinates?.y || 0;
+            
+            const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+            
+            connection.style.width = `${length}px`;
+            connection.style.left = `${x1 + 20}px`;
+            connection.style.top = `${y1 + 10}px`;
+            connection.style.transform = `rotate(${angle}deg)`;
+            
+            globalChain.appendChild(connection);
+        }
+
+        // Show act details in modal
+        function showActDetails(act) {
+            modalTitle.textContent = `${act.category.charAt(0).toUpperCase() + act.category.slice(1)} Kindness`;
+            modalDescription.textContent = act.description;
+            modalCategory.textContent = `Category: ${act.category}`;
+            modalLocation.textContent = act.location ? `Location: ${act.location}` : '';
+            modalTime.textContent = `Time: ${new Date(act.timestamp).toLocaleString()}`;
+            
+            linkModal.style.display = 'flex';
+        }
+
+        // Update recent activity feed
+        function updateActivityFeed() {
+            activityFeed.innerHTML = '';
+            
+            // Show most recent acts first
+            const recentActs = [...kindnessActs]
+                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                .slice(0, 10);
+            
+            recentActs.forEach(act => {
+                const activityItem = document.createElement('div');
+                activityItem.className = 'activity-item';
+                
+                activityItem.innerHTML = `
+                    <div class="activity-description">${act.description}</div>
+                    <div class="activity-meta">
+                        <span class="activity-category category-${act.category}">
+                            ${act.category}
+                        </span>
+                        <span>${act.location || 'Unknown location'}</span>
+                        <span>${new Date(act.timestamp).toLocaleDateString()}</span>
+                    </div>
+                `;
+                
+                activityFeed.appendChild(activityItem);
+            });
+        }
+
+        // Update user statistics
+        function updateUserStats() {
+            yourStreak.textContent = userStats.streak;
+            yourContributions.textContent = userStats.contributions;
+            
+            // Simple global rank calculation (for demo)
+            yourImpact.textContent = `#${Math.max(1, Math.floor(Math.random() * 100) + 1)}`;
+            
+            localStorage.setItem('userStats', JSON.stringify(userStats));
+        }
+
+        // Render achievement badges
+        function renderAchievements() {
+            badgesContainer.innerHTML = '';
+            
+            achievements.forEach(achievement => {
+                const badge = document.createElement('div');
+                badge.className = `badge ${achievement.unlocked ? '' : 'locked'}`;
+                badge.innerHTML = `
+                    ${achievement.icon}
+                    <div class="badge-tooltip">
+                        ${achievement.name}: ${achievement.description}
+                    </div>
+                `;
+                
+                badgesContainer.appendChild(badge);
+            });
+        }
+
+        // Update milestone progress
+        function updateMilestones() {
+            const milestones = document.querySelectorAll('.milestone');
+            
+            milestones.forEach(milestone => {
+                const target = parseInt(milestone.dataset.target);
+                const progress = (kindnessActs.length / target) * 100;
+                const progressFill = milestone.querySelector('.progress-fill');
+                
+                progressFill.style.width = `${Math.min(progress, 100)}%`;
+                
+                // Add celebration when milestone is reached
+                if (progress >= 100 && !milestone.classList.contains('completed')) {
+                    milestone.classList.add('completed', 'celebrate');
+                    setTimeout(() => milestone.classList.remove('celebrate'), 1000);
+                }
+            });
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Form submission
+            kindnessForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const description = kindnessDescription.value.trim();
+                const category = kindnessCategory.value;
+                const location = locationInput.value.trim();
+                
+                if (!description) {
+                    alert('Please describe your act of kindness.');
+                    return;
+                }
+                
+                addKindnessAct(description, category, location);
+                
+                // Reset form
+                kindnessDescription.value = '';
+                locationInput.value = '';
+            });
+            
+            // Category filter
+            filterCategory.addEventListener('change', renderChain);
+            
+            // Modal close
+            closeModal.addEventListener('click', () => {
+                linkModal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside
+            linkModal.addEventListener('click', (e) => {
+                if (e.target === linkModal) {
+                    linkModal.style.display = 'none';
+                }
+            });
+            
+            // Chain controls (simplified for demo)
+            document.getElementById('zoom-in').addEventListener('click', () => {
+                alert('Zoom in functionality would be implemented here!');
+            });
+            
+            document.getElementById('zoom-out').addEventListener('click', () => {
+                alert('Zoom out functionality would be implemented here!');
+            });
+            
+            document.getElementById('reset-view').addEventListener('click', () => {
+                renderChain();
+            });
+        }
+
+        // Add a new kindness act
+        function addKindnessAct(description, category, location) {
+            const newAct = {
+                id: 'act' + Date.now(),
+                description: description,
+                category: category,
+                location: location || 'Anonymous location',
+                coordinates: {
+                    x: Math.random() * 700,
+                    y: Math.random() * 350
+                },
+                timestamp: new Date().toISOString()
+            };
+            
+            kindnessActs.unshift(newAct);
+            localStorage.setItem('kindnessActs', JSON.stringify(kindnessActs));
+            
+            // Update user stats
+            userStats.contributions++;
+            
+            // Update streak
+            const today = new Date().toDateString();
+            const lastContribution = userStats.lastContribution ? new Date(userStats.lastContribution).toDateString() : null;
+            
+            if (lastContribution === today) {
+                // Already contributed today, no streak change
+            } else if (!lastContribution || 
+                      new Date(userStats.lastContribution).toDateString() === 
+                      new Date(Date.now() - 86400000).toDateString()) {
+                userStats.streak++;
+            } else {
+                userStats.streak = 1;
+            }
+            
+            userStats.lastContribution = new Date().toISOString();
+            
+            // Check achievements
+            checkAchievements();
+            
+            // Update all displays
+            updateGlobalStats();
+            renderChain();
+            updateActivityFeed();
+            updateUserStats();
+            
+            // Show celebration
+            document.getElementById('kindness-chain-app').classList.add('celebrate');
+            setTimeout(() => {
+                document.getElementById('kindness-chain-app').classList.remove('celebrate');
+            }, 1000);
+        }
+
+        // Check and unlock achievements
+        function checkAchievements() {
+            // First kindness
+            if (userStats.contributions >= 1 && !achievements[0].unlocked) {
+                achievements[0].unlocked = true;
+                unlockAchievement(0);
+            }
+            
+            // 3-day streak
+            if (userStats.streak >= 3 && !achievements[1].unlocked) {
+                achievements[1].unlocked = true;
+                unlockAchievement(1);
+            }
+            
+            // 7-day streak
+            if (userStats.streak >= 7 && !achievements[2].unlocked) {
+                achievements[2].unlocked = true;
+                unlockAchievement(2);
+            }
+            
+            // All categories (simplified check)
+            const userCategories = [...new Set(kindnessActs.filter(act => 
+                act.id.startsWith('act') // Only count user's acts in real implementation
+            ).map(act => act.category))];
+            
+            if (userCategories.length >= 5 && !achievements[3].unlocked) {
+                achievements[3].unlocked = true;
+                unlockAchievement(3);
+            }
+            
+            // 10 contributions
+            if (userStats.contributions >= 10 && !achievements[4].unlocked) {
+                achievements[4].unlocked = true;
+                unlockAchievement(4);
+            }
+            
+            renderAchievements();
+        }
+
+        // Show achievement unlocked notification
+        function unlockAchievement(index) {
+            const achievement = achievements[index];
+            alert(`🎉 Achievement Unlocked: ${achievement.name}!\n${achievement.description}`);
+        }
+
+        // Initialize the app when the page loads
+        window.onload = init;
+    </script>
+</body>
+</html>
