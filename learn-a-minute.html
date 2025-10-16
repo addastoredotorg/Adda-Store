@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn-a-Minute: Master new knowledge in 60-second bursts! Quick micro-learning sessions with visuals and quizzes. Perfect for busy learners who want to expand their mind one minute at a time.">
+    <title>Learn-a-Minute - 60-Second Micro-Learning Game</title>
+    <meta name="keywords" content="micro-learning, education, quick learning, knowledge, facts, vocabulary, trivia, brain training, short lessons, educational game">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #learn-a-minute-app {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        #user-stats {
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Category Selection Styles */
+        #category-select h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #444;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .category-card {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .category-card h3 {
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        .category-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        #random-start {
+            display: block;
+            margin: 0 auto;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        #random-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Learning Session Styles */
+        #timer-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        #timer-circle {
+            position: relative;
+            width: 100px;
+            height: 100px;
+        }
+
+        #timer-progress {
+            fill: none;
+            stroke: #667eea;
+            stroke-width: 5;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            transition: stroke-dashoffset 1s linear;
+        }
+
+        #time-left {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        #content-area {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #concept-title {
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        #concept-visual {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 4rem;
+        }
+
+        #concept-description {
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        #quiz-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        #quiz-section h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        #quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .quiz-option {
+            padding: 15px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .quiz-option:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .quiz-option.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        #session-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        #session-controls button {
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        #session-controls button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        #session-controls button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results Screen Styles */
+        #results-screen {
+            text-align: center;
+        }
+
+        #results-screen h2 {
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        #score-display {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        #fact-summary {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        #fact-summary h3 {
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        #learned-fact {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        #next-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        #next-actions button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        #learn-another {
+            background: #667eea;
+            color: white;
+        }
+
+        #share-result {
+            background: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        #next-actions button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Progress Panel Styles */
+        #progress-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        #daily-goal h4, #recent-facts h4 {
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .goal-progress {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        #fact-list {
+            list-style: none;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        #fact-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Ready Screen Styles */
+        #ready-screen {
+            text-align: center;
+        }
+
+        #ready-screen h2 {
+            color: #444;
+            margin-bottom: 30px;
+        }
+
+        #countdown {
+            font-size: 4rem;
+            color: #667eea;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+
+        #session-preview {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #learn-a-minute-app {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            #progress-panel {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            #next-actions {
+                flex-direction: column;
+            }
+            
+            #content-area {
+                padding: 20px;
+                min-height: 250px;
+            }
+        }
+
+        /* Achievement Badges */
+        .achievement-badge {
+            display: inline-block;
+            background: gold;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="learn-a-minute-app">
+        <header>
+            <h1>Learn-a-Minute</h1>
+            <div id="user-stats">
+                <span id="points">0</span> pts • 
+                <span id="streak">0</span> day streak •
+                <span id="facts-learned">0</span> facts
+            </div>
+        </header>
+
+        <main>
+            <!-- Category Selection -->
+            <section id="category-select" class="active">
+                <h2>What would you like to learn?</h2>
+                <div class="category-grid">
+                    <div class="category-card" data-category="vocabulary">
+                        <div class="category-icon">📚</div>
+                        <h3>Vocabulary</h3>
+                        <p>Expand your word power</p>
+                    </div>
+                    <div class="category-card" data-category="science">
+                        <div class="category-icon">🔬</div>
+                        <h3>Science Facts</h3>
+                        <p>Discover amazing scientific concepts</p>
+                    </div>
+                    <div class="category-card" data-category="history">
+                        <div class="category-icon">📜</div>
+                        <h3>Historical Moments</h3>
+                        <p>Learn from the past</p>
+                    </div>
+                    <div class="category-card" data-category="culture">
+                        <div class="category-icon">🌍</div>
+                        <h3>Cultural Insights</h3>
+                        <p>Explore world traditions</p>
+                    </div>
+                    <div class="category-card" data-category="math">
+                        <div class="category-icon">🧮</div>
+                        <h3>Math Concepts</h3>
+                        <p>Master mathematical principles</p>
+                    </div>
+                </div>
+                <button id="random-start">Surprise Me!</button>
+            </section>
+
+            <!-- Ready Screen -->
+            <section id="ready-screen">
+                <h2>Get Ready to Learn!</h2>
+                <div id="session-preview">
+                    <p>Next up: <span id="preview-text">Loading...</span></p>
+                </div>
+                <div id="countdown">3</div>
+                <p>Session starts in...</p>
+            </section>
+
+            <!-- Learning Session -->
+            <section id="learning-session">
+                <!-- Timer Display -->
+                <div id="timer-container">
+                    <div id="timer-circle">
+                        <svg width="100" height="100">
+                            <circle id="timer-progress" cx="50" cy="50" r="45"></circle>
+                        </svg>
+                        <span id="time-left">60</span>
+                    </div>
+                </div>
+
+                <!-- Content Area -->
+                <div id="content-area">
+                    <div id="main-concept">
+                        <h2 id="concept-title">Concept Title</h2>
+                        <div id="concept-visual"></div>
+                        <p id="concept-description">Detailed explanation appears here</p>
+                    </div>
+
+                    <!-- Quiz Section -->
+                    <div id="quiz-section" class="hidden">
+                        <h3>Quick Check</h3>
+                        <div id="quiz-options">
+                            <!-- Dynamic quiz content -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div id="session-controls">
+                    <button id="reveal-next">Next</button>
+                    <button id="submit-quiz" class="hidden">Submit Answers</button>
+                </div>
+            </section>
+
+            <!-- Results Screen -->
+            <section id="results-screen">
+                <h2>Great Job!</h2>
+                <div id="score-display">
+                    You earned <span id="points-earned">0</span> points!
+                </div>
+                <div id="fact-summary">
+                    <h3>You learned:</h3>
+                    <p id="learned-fact">The fact you just learned</p>
+                </div>
+                <div id="next-actions">
+                    <button id="learn-another">Learn Another</button>
+                    <button id="share-result">Share Achievement</button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Progress & Achievements -->
+        <section id="progress-panel">
+            <div id="daily-goal">
+                <h4>Daily Goal <span id="daily-badge" class="achievement-badge hidden">✓</span></h4>
+                <div class="goal-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <span id="daily-progress">0/3 sessions</span>
+                </div>
+            </div>
+            
+            <div id="recent-facts">
+                <h4>Recently Learned</h4>
+                <ul id="fact-list"></ul>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Learning Units Database
+        const learningUnits = [
+            // Vocabulary
+            {
+                id: "vocab-001",
+                category: "vocabulary",
+                title: "Ephemeral",
+                visual: "🦋",
+                segments: [
+                    {
+                        time: 5,
+                        content: "Lasting for a very short time",
+                        type: "definition"
+                    },
+                    {
+                        time: 15, 
+                        content: "From Greek 'ephemeros' meaning 'lasting a day'",
+                        type: "etymology"
+                    },
+                    {
+                        time: 25,
+                        content: "Like a mayfly that lives for only one day, or morning dew that evaporates by noon",
+                        type: "analogy"
+                    }
+                ],
+                quiz: {
+                    question: "Which situation best describes something ephemeral?",
+                    options: [
+                        "A mountain range that has existed for millions of years",
+                        "A sandcastle at high tide that washes away quickly", 
+                        "A family heirloom passed down through generations",
+                        "A lifelong friendship that lasts decades"
+                    ],
+                    correct: 1,
+                    explanation: "Sandcastles are temporary creations washed away quickly, making them ephemeral."
+                },
+                difficulty: "beginner"
+            },
+            {
+                id: "vocab-002",
+                category: "vocabulary",
+                title: "Ubiquitous",
+                visual: "🌐",
+                segments: [
+                    {
+                        time: 5,
+                        content: "Present, appearing, or found everywhere",
+                        type: "definition"
+                    },
+                    {
+                        time: 15,
+                        content: "From Latin 'ubique' meaning 'everywhere'",
+                        type: "etymology"
+                    },
+                    {
+                        time: 25,
+                        content: "Like smartphones in modern society - you see them absolutely everywhere",
+                        type: "analogy"
+                    }
+                ],
+                quiz: {
+                    question: "Which of these is most ubiquitous in modern cities?",
+                    options: [
+                        "Horse-drawn carriages",
+                        "Pay phones",
+                        "Smartphones",
+                        "Typewriters"
+                    ],
+                    correct: 2,
+                    explanation: "Smartphones are found nearly everywhere in modern urban environments."
+                },
+                difficulty: "beginner"
+            },
+            // Science Facts
+            {
+                id: "science-001",
+                category: "science",
+                title: "Photosynthesis",
+                visual: "🌿☀️",
+                segments: [
+                    {
+                        time: 5,
+                        content: "The process plants use to convert sunlight into energy",
+                        type: "definition"
+                    },
+                    {
+                        time: 15,
+                        content: "Plants take in carbon dioxide and water, using sunlight to create glucose and oxygen",
+                        type: "process"
+                    },
+                    {
+                        time: 25,
+                        content: "This process produces the oxygen we breathe and removes CO2 from the atmosphere",
+                        type: "importance"
+                    }
+                ],
+                quiz: {
+                    question: "What gas do plants release during photosynthesis?",
+                    options: [
+                        "Carbon dioxide",
+                        "Nitrogen",
+                        "Oxygen",
+                        "Hydrogen"
+                    ],
+                    correct: 2,
+                    explanation: "Plants release oxygen as a byproduct of photosynthesis."
+                },
+                difficulty: "beginner"
+            },
+            // Historical Moments
+            {
+                id: "history-001",
+                category: "history",
+                title: "Moon Landing",
+                visual: "🚀🌕",
+                segments: [
+                    {
+                        time: 5,
+                        content: "July 20, 1969 - First humans walk on the Moon",
+                        type: "event"
+                    },
+                    {
+                        time: 15,
+                        content: "Apollo 11 mission with astronauts Neil Armstrong and Buzz Aldrin",
+                        type: "details"
+                    },
+                    {
+                        time: 25,
+                        content: "Armstrong's famous words: 'That's one small step for man, one giant leap for mankind'",
+                        type: "significance"
+                    }
+                ],
+                quiz: {
+                    question: "Who was the first person to walk on the Moon?",
+                    options: [
+                        "Buzz Aldrin",
+                        "Yuri Gagarin",
+                        "Neil Armstrong",
+                        "John Glenn"
+                    ],
+                    correct: 2,
+                    explanation: "Neil Armstrong was the first to step onto the lunar surface."
+                },
+                difficulty: "beginner"
+            },
+            // Cultural Insights
+            {
+                id: "culture-001",
+                category: "culture",
+                title: "Japanese Tea Ceremony",
+                visual: "🍵🎎",
+                segments: [
+                    {
+                        time: 5,
+                        content: "A traditional ritual influenced by Zen Buddhism",
+                        type: "definition"
+                    },
+                    {
+                        time: 15,
+                        content: "Emphasizes harmony, respect, purity, and tranquility",
+                        type: "principles"
+                    },
+                    {
+                        time: 25,
+                        content: "Every movement is precise and meaningful - it's about mindfulness, not just drinking tea",
+                        type: "significance"
+                    }
+                ],
+                quiz: {
+                    question: "What is NOT one of the core principles of the Japanese tea ceremony?",
+                    options: [
+                        "Harmony",
+                        "Speed",
+                        "Respect",
+                        "Purity"
+                    ],
+                    correct: 1,
+                    explanation: "The ceremony emphasizes slow, deliberate movements, not speed."
+                },
+                difficulty: "intermediate"
+            },
+            // Math Concepts
+            {
+                id: "math-001",
+                category: "math",
+                title: "Fibonacci Sequence",
+                visual: "🐚📐",
+                segments: [
+                    {
+                        time: 5,
+                        content: "A series where each number is the sum of the two preceding ones",
+                        type: "definition"
+                    },
+                    {
+                        time: 15,
+                        content: "Starts with 0, 1, 1, 2, 3, 5, 8, 13, 21, and continues infinitely",
+                        type: "pattern"
+                    },
+                    {
+                        time: 25,
+                        content: "Appears in nature: sunflower seeds, pinecones, hurricanes, and galaxy spirals",
+                        type: "application"
+                    }
+                ],
+                quiz: {
+                    question: "What number comes after 8 in the Fibonacci sequence?",
+                    options: [
+                        "9",
+                        "11",
+                        "13",
+                        "16"
+                    ],
+                    correct: 2,
+                    explanation: "5 + 8 = 13, so 13 comes after 8 in the sequence."
+                },
+                difficulty: "beginner"
+            }
+        ];
+
+        // Game State
+        let userStats = {
+            points: 0,
+            streak: 0,
+            factsLearned: 0,
+            dailySessions: 0,
+            lastSessionDate: null
+        };
+
+        let currentSession = {
+            unit: null,
+            currentSegment: 0,
+            timeLeft: 60,
+            timerInterval: null,
+            selectedAnswer: null,
+            segmentsRevealed: 0,
+            quizAnswered: false
+        };
+
+        // DOM Elements
+        const categorySelect = document.getElementById('category-select');
+        const readyScreen = document.getElementById('ready-screen');
+        const learningSession = document.getElementById('learning-session');
+        const resultsScreen = document.getElementById('results-screen');
+        const categoryCards = document.querySelectorAll('.category-card');
+        const randomStartBtn = document.getElementById('random-start');
+        const previewText = document.getElementById('preview-text');
+        const countdownEl = document.getElementById('countdown');
+        const timerProgress = document.getElementById('timer-progress');
+        const timeLeftEl = document.getElementById('time-left');
+        const conceptTitle = document.getElementById('concept-title');
+        const conceptVisual = document.getElementById('concept-visual');
+        const conceptDescription = document.getElementById('concept-description');
+        const quizSection = document.getElementById('quiz-section');
+        const quizOptions = document.getElementById('quiz-options');
+        const revealNextBtn = document.getElementById('reveal-next');
+        const submitQuizBtn = document.getElementById('submit-quiz');
+        const pointsEarned = document.getElementById('points-earned');
+        const learnedFact = document.getElementById('learned-fact');
+        const learnAnotherBtn = document.getElementById('learn-another');
+        const shareResultBtn = document.getElementById('share-result');
+        const pointsDisplay = document.getElementById('points');
+        const streakDisplay = document.getElementById('streak');
+        const factsLearnedDisplay = document.getElementById('facts-learned');
+        const dailyProgress = document.getElementById('daily-progress');
+        const progressFill = document.querySelector('.progress-fill');
+        const factList = document.getElementById('fact-list');
+        const dailyBadge = document.getElementById('daily-badge');
+
+        // Initialize the game
+        function init() {
+            loadUserStats();
+            updateStatsDisplay();
+            setupEventListeners();
+        }
+
+        // Load user stats from localStorage
+        function loadUserStats() {
+            const savedStats = localStorage.getItem('learnAMinuteStats');
+            if (savedStats) {
+                userStats = JSON.parse(savedStats);
+                
+                // Check if streak should be reset
+                const today = new Date().toDateString();
+                if (userStats.lastSessionDate !== today) {
+                    const yesterday = new Date();
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    
+                    if (userStats.lastSessionDate !== yesterday.toDateString()) {
+                        userStats.streak = 0;
+                    }
+                    userStats.dailySessions = 0;
+                }
+            }
+        }
+
+        // Save user stats to localStorage
+        function saveUserStats() {
+            localStorage.setItem('learnAMinuteStats', JSON.stringify(userStats));
+        }
+
+        // Update stats display
+        function updateStatsDisplay() {
+            pointsDisplay.textContent = userStats.points;
+            streakDisplay.textContent = userStats.streak;
+            factsLearnedDisplay.textContent = userStats.factsLearned;
+            dailyProgress.textContent = `${userStats.dailySessions}/3 sessions`;
+            progressFill.style.width = `${(userStats.dailySessions / 3) * 100}%`;
+            
+            // Show/hide daily badge
+            if (userStats.dailySessions >= 3) {
+                dailyBadge.classList.remove('hidden');
+            } else {
+                dailyBadge.classList.add('hidden');
+            }
+            
+            updateRecentFacts();
+        }
+
+        // Update recent facts list
+        function updateRecentFacts() {
+            const recentFacts = JSON.parse(localStorage.getItem('recentFacts') || '[]');
+            factList.innerHTML = '';
+            
+            recentFacts.slice(0, 5).forEach(fact => {
+                const li = document.createElement('li');
+                li.textContent = fact;
+                factList.appendChild(li);
+            });
+        }
+
+        // Add fact to recent facts
+        function addToRecentFacts(fact) {
+            let recentFacts = JSON.parse(localStorage.getItem('recentFacts') || '[]');
+            recentFacts.unshift(fact);
+            
+            // Keep only the 10 most recent facts
+            if (recentFacts.length > 10) {
+                recentFacts = recentFacts.slice(0, 10);
+            }
+            
+            localStorage.setItem('recentFacts', JSON.stringify(recentFacts));
+            updateRecentFacts();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Category selection
+            categoryCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const category = card.dataset.category;
+                    startSession(category);
+                });
+            });
+            
+            randomStartBtn.addEventListener('click', () => {
+                const categories = ['vocabulary', 'science', 'history', 'culture', 'math'];
+                const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+                startSession(randomCategory);
+            });
+            
+            // Session controls
+            revealNextBtn.addEventListener('click', revealNextSegment);
+            submitQuizBtn.addEventListener('click', submitQuiz);
+            
+            // Results screen
+            learnAnotherBtn.addEventListener('click', () => {
+                showScreen(categorySelect);
+            });
+            
+            shareResultBtn.addEventListener('click', shareResult);
+        }
+
+        // Start a new learning session
+        function startSession(category) {
+            // Filter units by category and get a random one
+            const categoryUnits = learningUnits.filter(unit => unit.category === category);
+            currentSession.unit = categoryUnits[Math.floor(Math.random() * categoryUnits.length)];
+            
+            // Show preview and start countdown
+            previewText.textContent = currentSession.unit.title;
+            showScreen(readyScreen);
+            
+            let countdown = 3;
+            countdownEl.textContent = countdown;
+            
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                countdownEl.textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    startLearningSession();
+                }
+            }, 1000);
+        }
+
+        // Start the actual learning session
+        function startLearningSession() {
+            showScreen(learningSession);
+            
+            // Reset session state
+            currentSession.currentSegment = 0;
+            currentSession.timeLeft = 60;
+            currentSession.selectedAnswer = null;
+            currentSession.segmentsRevealed = 0;
+            currentSession.quizAnswered = false;
+            
+            // Set up initial content
+            conceptTitle.textContent = currentSession.unit.title;
+            conceptVisual.textContent = currentSession.unit.visual;
+            conceptDescription.textContent = '';
+            quizSection.classList.add('hidden');
+            submitQuizBtn.classList.add('hidden');
+            revealNextBtn.disabled = false;
+            
+            // Set up timer
+            updateTimerDisplay();
+            startTimer();
+            
+            // Reveal first segment immediately
+            revealNextSegment();
+        }
+
+        // Start the 60-second timer
+        function startTimer() {
+            if (currentSession.timerInterval) {
+                clearInterval(currentSession.timerInterval);
+            }
+            
+            currentSession.timerInterval = setInterval(() => {
+                currentSession.timeLeft--;
+                updateTimerDisplay();
+                
+                if (currentSession.timeLeft <= 0) {
+                    endSession();
+                }
+            }, 1000);
+        }
+
+        // Update timer display
+        function updateTimerDisplay() {
+            timeLeftEl.textContent = currentSession.timeLeft;
+            
+            // Update circular progress
+            const circumference = 2 * Math.PI * 45;
+            const offset = circumference - (currentSession.timeLeft / 60) * circumference;
+            timerProgress.style.strokeDasharray = `${circumference} ${circumference}`;
+            timerProgress.style.strokeDashoffset = offset;
+            
+            // Change color when time is running out
+            if (currentSession.timeLeft <= 10) {
+                timerProgress.style.stroke = '#ff6b6b';
+            } else {
+                timerProgress.style.stroke = '#667eea';
+            }
+        }
+
+        // Reveal the next segment of information
+        function revealNextSegment() {
+            if (currentSession.currentSegment < currentSession.unit.segments.length) {
+                const segment = currentSession.unit.segments[currentSession.currentSegment];
+                conceptDescription.textContent = segment.content;
+                currentSession.currentSegment++;
+                currentSession.segmentsRevealed++;
+                
+                // If all segments are revealed, show quiz
+                if (currentSession.currentSegment >= currentSession.unit.segments.length) {
+                    revealNextBtn.disabled = true;
+                    showQuiz();
+                }
+            }
+        }
+
+        // Show the quiz section
+        function showQuiz() {
+            quizSection.classList.remove('hidden');
+            submitQuizBtn.classList.remove('hidden');
+            
+            const quiz = currentSession.unit.quiz;
+            quizOptions.innerHTML = '';
+            
+            // Create quiz question
+            const questionEl = document.createElement('p');
+            questionEl.textContent = quiz.question;
+            questionEl.style.marginBottom = '15px';
+            questionEl.style.fontWeight = 'bold';
+            quizOptions.appendChild(questionEl);
+            
+            // Create answer options
+            quiz.options.forEach((option, index) => {
+                const optionEl = document.createElement('button');
+                optionEl.className = 'quiz-option';
+                optionEl.textContent = option;
+                optionEl.dataset.index = index;
+                
+                optionEl.addEventListener('click', () => {
+                    // Deselect all options
+                    document.querySelectorAll('.quiz-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Select this option
+                    optionEl.classList.add('selected');
+                    currentSession.selectedAnswer = index;
+                });
+                
+                quizOptions.appendChild(optionEl);
+            });
+        }
+
+        // Submit quiz answers
+        function submitQuiz() {
+            if (currentSession.selectedAnswer === null) {
+                alert('Please select an answer before submitting.');
+                return;
+            }
+            
+            currentSession.quizAnswered = true;
+            endSession();
+        }
+
+        // End the current session
+        function endSession() {
+            clearInterval(currentSession.timerInterval);
+            
+            // Calculate score
+            let score = 0;
+            let timeBonus = 0;
+            
+            // Base points for completion
+            if (currentSession.segmentsRevealed >= currentSession.unit.segments.length) {
+                score += 5;
+            }
+            
+            // Quiz points
+            if (currentSession.quizAnswered) {
+                const isCorrect = currentSession.selectedAnswer === currentSession.unit.quiz.correct;
+                if (isCorrect) {
+                    score += 5;
+                }
+                
+                // Time bonus
+                if (currentSession.timeLeft > 10) {
+                    timeBonus = 2;
+                    score += timeBonus;
+                }
+            }
+            
+            // Update user stats
+            userStats.points += score;
+            userStats.factsLearned++;
+            userStats.dailySessions++;
+            
+            // Update streak
+            const today = new Date().toDateString();
+            if (userStats.lastSessionDate !== today) {
+                if (userStats.lastSessionDate === new Date(Date.now() - 86400000).toDateString()) {
+                    userStats.streak++;
+                } else {
+                    userStats.streak = 1;
+                }
+                userStats.lastSessionDate = today;
+            }
+            
+            // Save and update display
+            saveUserStats();
+            updateStatsDisplay();
+            
+            // Add to recent facts
+            addToRecentFacts(currentSession.unit.title);
+            
+            // Show results
+            pointsEarned.textContent = score;
+            learnedFact.textContent = `${currentSession.unit.title}: ${currentSession.unit.segments[0].content}`;
+            showScreen(resultsScreen);
+        }
+
+        // Share results
+        function shareResult() {
+            const text = `I just learned about "${currentSession.unit.title}" on Learn-a-Minute and earned ${pointsEarned.textContent} points!`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Learn-a-Minute Achievement',
+                    text: text,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(text)
+                    .then(() => alert('Results copied to clipboard!'))
+                    .catch(err => console.error('Failed to copy: ', err));
+            }
+        }
+
+        // Helper function to show a specific screen
+        function showScreen(screen) {
+            document.querySelectorAll('section').forEach(s => {
+                s.classList.remove('active');
+            });
+            screen.classList.add('active');
+        }
+
+        // Initialize the game when the page loads
+        window.onload = init;
+    </script>
+</body>
+</html>
