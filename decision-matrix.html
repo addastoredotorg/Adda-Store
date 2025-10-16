@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Matrix Helper - Make Better Choices with Data-Driven Analysis</title>
+    <meta name="description" content="Use our Decision Matrix Helper to make tough choices easier. Assign weights to factors and rate options for a calculated recommendation.">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        .tagline {
+            color: var(--gray);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .wizard-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .wizard-header {
+            display: flex;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .wizard-step {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            opacity: 0.6;
+            transition: var(--transition);
+        }
+
+        .wizard-step.active {
+            opacity: 1;
+            border-bottom: 3px solid white;
+        }
+
+        .wizard-step.completed {
+            opacity: 0.8;
+        }
+
+        .wizard-content {
+            padding: 30px;
+            min-height: 400px;
+        }
+
+        .wizard-navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary {
+            background-color: var(--gray);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .factors-list, .options-list {
+            margin-top: 20px;
+        }
+
+        .factor-item, .option-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+        }
+
+        .factor-name, .option-name {
+            flex: 1;
+        }
+
+        .factor-weight, .option-rating {
+            width: 120px;
+            margin-left: 15px;
+        }
+
+        .add-item {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .add-item input {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .matrix-table th, .matrix-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+
+        .matrix-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .matrix-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .rating-cell {
+            width: 80px;
+        }
+
+        .rating-cell select {
+            width: 100%;
+            padding: 5px;
+        }
+
+        .results-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .winner-card {
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .winner-name {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .winner-score {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .score-breakdown {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .score-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 10px;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: var(--shadow);
+        }
+
+        .score-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .rules-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+
+        .rules-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .rule-item {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .rule-item:before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .delete-btn {
+            background-color: transparent;
+            color: var(--warning);
+            padding: 5px 10px;
+            margin-left: 10px;
+            border: 1px solid var(--warning);
+            border-radius: 4px;
+        }
+
+        .delete-btn:hover {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--success);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .wizard-step-content {
+            display: none;
+        }
+
+        .wizard-step-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .wizard-header {
+                flex-direction: column;
+            }
+            
+            .wizard-step {
+                margin-bottom: 5px;
+            }
+            
+            .factor-item, .option-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .factor-weight, .option-rating {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 10px;
+            }
+            
+            .score-breakdown {
+                flex-direction: column;
+            }
+            
+            .matrix-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Decision Matrix Helper</h1>
+            <p class="tagline">Make tough decisions easier with our data-driven approach</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </header>
+
+        <div class="wizard-container">
+            <div class="wizard-header">
+                <div class="wizard-step active" id="step-1">1. Define Decision</div>
+                <div class="wizard-step" id="step-2">2. Identify Factors</div>
+                <div class="wizard-step" id="step-3">3. Weight Factors</div>
+                <div class="wizard-step" id="step-4">4. Add Options</div>
+                <div class="wizard-step" id="step-5">5. Rate Options</div>
+                <div class="wizard-step" id="step-6">6. Results</div>
+            </div>
+
+            <div class="wizard-content">
+                <!-- Step 1: Define Decision -->
+                <div class="wizard-step-content active" id="step-content-1">
+                    <h2>What decision are you trying to make?</h2>
+                    <p>Clearly define the choice you're facing. This could be about your career, housing, relationships, or any important life decision.</p>
+                    
+                    <div class="form-group">
+                        <label for="decision-title">Decision Title</label>
+                        <input type="text" id="decision-title" placeholder="e.g., Which job offer should I accept?">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="decision-description">Decision Description (Optional)</label>
+                        <textarea id="decision-description" placeholder="Provide more context about your decision..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 2: Identify Factors -->
+                <div class="wizard-step-content" id="step-content-2">
+                    <h2>What factors are important for this decision?</h2>
+                    <p>List all the criteria that matter to you. These could be salary, location, work-life balance, growth opportunities, etc.</p>
+                    
+                    <div class="factors-list" id="factors-list">
+                        <!-- Factors will be added here dynamically -->
+                    </div>
+                    
+                    <div class="add-item">
+                        <input type="text" id="new-factor" placeholder="Enter a new factor (e.g., Salary, Location, Culture)">
+                        <button class="btn-primary" id="add-factor">Add Factor</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Weight Factors -->
+                <div class="wizard-step-content" id="step-content-3">
+                    <h2>How important is each factor?</h2>
+                    <p>Assign a weight to each factor based on its importance to your decision (1 = Not Important, 5 = Very Important).</p>
+                    
+                    <div id="weighting-factors">
+                        <!-- Factors with weight sliders will be added here dynamically -->
+                    </div>
+                </div>
+
+                <!-- Step 4: Add Options -->
+                <div class="wizard-step-content" id="step-content-4">
+                    <h2>What are your options?</h2>
+                    <p>List all the choices you're considering. These could be job offers, apartments, schools, etc.</p>
+                    
+                    <div class="options-list" id="options-list">
+                        <!-- Options will be added here dynamically -->
+                    </div>
+                    
+                    <div class="add-item">
+                        <input type="text" id="new-option" placeholder="Enter a new option (e.g., Job at Company A, Apartment in Downtown)">
+                        <button class="btn-primary" id="add-option">Add Option</button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Rate Options -->
+                <div class="wizard-step-content" id="step-content-5">
+                    <h2>Rate each option against your factors</h2>
+                    <p>For each option, rate how well it satisfies each factor (1 = Poor, 5 = Excellent).</p>
+                    
+                    <div id="rating-matrix">
+                        <!-- Rating matrix will be added here dynamically -->
+                    </div>
+                </div>
+
+                <!-- Step 6: Results -->
+                <div class="wizard-step-content" id="step-content-6">
+                    <div class="results-container">
+                        <h2>Your Decision Matrix Results</h2>
+                        <p>Based on your weighted factors and ratings, here's our data-driven recommendation:</p>
+                        
+                        <div class="winner-card" id="winner-card">
+                            <div class="winner-name" id="winner-name">Option Name</div>
+                            <div class="winner-score" id="winner-score">Score: 0</div>
+                        </div>
+                        
+                        <div class="score-breakdown" id="score-breakdown">
+                            <!-- Score cards will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard-navigation">
+                <button class="btn-secondary" id="prev-btn" disabled>Previous</button>
+                <button class="btn-primary" id="next-btn">Next</button>
+            </div>
+        </div>
+
+        <div class="rules-section">
+            <h2>How the Decision Matrix Works</h2>
+            <div class="rule-item">Define your decision clearly to establish context</div>
+            <div class="rule-item">Identify all factors that influence your decision</div>
+            <div class="rule-item">Weight each factor by importance (1-5 scale)</div>
+            <div class="rule-item">List all options you're considering</div>
+            <div class="rule-item">Rate each option against every factor (1-5 scale)</div>
+            <div class="rule-item">The matrix calculates weighted scores for each option</div>
+            <div class="rule-item">The option with the highest score is your data-driven recommendation</div>
+            <div class="rule-item">Use the results as guidance, but trust your intuition too</div>
+        </div>
+    </div>
+
+    <script>
+        // Application state
+        const state = {
+            currentStep: 1,
+            decision: {
+                title: '',
+                description: ''
+            },
+            factors: [],
+            options: [],
+            ratings: {}
+        };
+
+        // DOM elements
+        const stepElements = document.querySelectorAll('.wizard-step');
+        const stepContentElements = document.querySelectorAll('.wizard-step-content');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressFill = document.getElementById('progress-fill');
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up event listeners
+            prevBtn.addEventListener('click', goToPreviousStep);
+            nextBtn.addEventListener('click', goToNextStep);
+            
+            // Step 2: Add factor
+            document.getElementById('add-factor').addEventListener('click', addFactor);
+            document.getElementById('new-factor').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') addFactor();
+            });
+            
+            // Step 4: Add option
+            document.getElementById('add-option').addEventListener('click', addOption);
+            document.getElementById('new-option').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') addOption();
+            });
+            
+            // Update progress bar
+            updateProgressBar();
+        });
+
+        // Navigation functions
+        function goToPreviousStep() {
+            if (state.currentStep > 1) {
+                state.currentStep--;
+                updateStepDisplay();
+            }
+        }
+
+        function goToNextStep() {
+            if (validateCurrentStep()) {
+                if (state.currentStep < 6) {
+                    state.currentStep++;
+                    updateStepDisplay();
+                } else {
+                    // If we're on the last step, restart the wizard
+                    restartWizard();
+                }
+            }
+        }
+
+        function validateCurrentStep() {
+            switch(state.currentStep) {
+                case 1:
+                    const title = document.getElementById('decision-title').value.trim();
+                    if (!title) {
+                        alert('Please enter a decision title');
+                        return false;
+                    }
+                    state.decision.title = title;
+                    state.decision.description = document.getElementById('decision-description').value;
+                    break;
+                    
+                case 2:
+                    if (state.factors.length === 0) {
+                        alert('Please add at least one factor');
+                        return false;
+                    }
+                    break;
+                    
+                case 4:
+                    if (state.options.length === 0) {
+                        alert('Please add at least one option');
+                        return false;
+                    }
+                    break;
+                    
+                case 5:
+                    // Check if all ratings are filled
+                    const allRated = Object.keys(state.ratings).length === state.options.length * state.factors.length;
+                    if (!allRated) {
+                        alert('Please rate all options against all factors');
+                        return false;
+                    }
+                    calculateResults();
+                    break;
+            }
+            return true;
+        }
+
+        function updateStepDisplay() {
+            // Update step indicators
+            stepElements.forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                if (index + 1 === state.currentStep) {
+                    step.classList.add('active');
+                } else if (index + 1 < state.currentStep) {
+                    step.classList.add('completed');
+                }
+            });
+            
+            // Update step content
+            stepContentElements.forEach((content, index) => {
+                content.classList.remove('active');
+                if (index + 1 === state.currentStep) {
+                    content.classList.add('active');
+                    
+                    // Load step-specific content
+                    loadStepContent(index + 1);
+                }
+            });
+            
+            // Update navigation buttons
+            prevBtn.disabled = state.currentStep === 1;
+            nextBtn.textContent = state.currentStep === 6 ? 'Start Over' : 'Next';
+            
+            // Update progress bar
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const progress = (state.currentStep - 1) / 5 * 100;
+            progressFill.style.width = `${progress}%`;
+        }
+
+        function loadStepContent(step) {
+            switch(step) {
+                case 2:
+                    loadFactorsList();
+                    break;
+                case 3:
+                    loadWeightingFactors();
+                    break;
+                case 4:
+                    loadOptionsList();
+                    break;
+                case 5:
+                    loadRatingMatrix();
+                    break;
+                case 6:
+                    displayResults();
+                    break;
+            }
+        }
+
+        // Step 2: Factors management
+        function addFactor() {
+            const factorInput = document.getElementById('new-factor');
+            const factorName = factorInput.value.trim();
+            
+            if (factorName) {
+                state.factors.push({
+                    id: Date.now().toString(),
+                    name: factorName,
+                    weight: 3 // Default weight
+                });
+                
+                factorInput.value = '';
+                loadFactorsList();
+            } else {
+                alert('Please enter a factor name');
+            }
+        }
+
+        function loadFactorsList() {
+            const factorsList = document.getElementById('factors-list');
+            factorsList.innerHTML = '';
+            
+            if (state.factors.length === 0) {
+                factorsList.innerHTML = '<p>No factors added yet. Add your first factor above.</p>';
+                return;
+            }
+            
+            state.factors.forEach(factor => {
+                const factorElement = document.createElement('div');
+                factorElement.className = 'factor-item';
+                factorElement.innerHTML = `
+                    <div class="factor-name">${factor.name}</div>
+                    <button class="delete-btn" data-factor-id="${factor.id}">Delete</button>
+                `;
+                
+                factorsList.appendChild(factorElement);
+            });
+            
+            // Add event listeners to delete buttons
+            document.querySelectorAll('.delete-btn[data-factor-id]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const factorId = this.getAttribute('data-factor-id');
+                    state.factors = state.factors.filter(f => f.id !== factorId);
+                    loadFactorsList();
+                });
+            });
+        }
+
+        // Step 3: Weight factors
+        function loadWeightingFactors() {
+            const weightingContainer = document.getElementById('weighting-factors');
+            weightingContainer.innerHTML = '';
+            
+            if (state.factors.length === 0) {
+                weightingContainer.innerHTML = '<p>No factors to weight. Please go back and add factors first.</p>';
+                return;
+            }
+            
+            state.factors.forEach(factor => {
+                const factorElement = document.createElement('div');
+                factorElement.className = 'factor-item';
+                factorElement.innerHTML = `
+                    <div class="factor-name">${factor.name}</div>
+                    <div class="factor-weight">
+                        <select class="weight-select" data-factor-id="${factor.id}">
+                            <option value="1" ${factor.weight === 1 ? 'selected' : ''}>1 - Not Important</option>
+                            <option value="2" ${factor.weight === 2 ? 'selected' : ''}>2 - Slightly Important</option>
+                            <option value="3" ${factor.weight === 3 ? 'selected' : ''}>3 - Moderately Important</option>
+                            <option value="4" ${factor.weight === 4 ? 'selected' : ''}>4 - Important</option>
+                            <option value="5" ${factor.weight === 5 ? 'selected' : ''}>5 - Very Important</option>
+                        </select>
+                    </div>
+                `;
+                
+                weightingContainer.appendChild(factorElement);
+            });
+            
+            // Add event listeners to weight selects
+            document.querySelectorAll('.weight-select').forEach(select => {
+                select.addEventListener('change', function() {
+                    const factorId = this.getAttribute('data-factor-id');
+                    const weight = parseInt(this.value);
+                    
+                    const factor = state.factors.find(f => f.id === factorId);
+                    if (factor) {
+                        factor.weight = weight;
+                    }
+                });
+            });
+        }
+
+        // Step 4: Options management
+        function addOption() {
+            const optionInput = document.getElementById('new-option');
+            const optionName = optionInput.value.trim();
+            
+            if (optionName) {
+                state.options.push({
+                    id: Date.now().toString(),
+                    name: optionName
+                });
+                
+                optionInput.value = '';
+                loadOptionsList();
+            } else {
+                alert('Please enter an option name');
+            }
+        }
+
+        function loadOptionsList() {
+            const optionsList = document.getElementById('options-list');
+            optionsList.innerHTML = '';
+            
+            if (state.options.length === 0) {
+                optionsList.innerHTML = '<p>No options added yet. Add your first option above.</p>';
+                return;
+            }
+            
+            state.options.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option-item';
+                optionElement.innerHTML = `
+                    <div class="option-name">${option.name}</div>
+                    <button class="delete-btn" data-option-id="${option.id}">Delete</button>
+                `;
+                
+                optionsList.appendChild(optionElement);
+            });
+            
+            // Add event listeners to delete buttons
+            document.querySelectorAll('.delete-btn[data-option-id]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const optionId = this.getAttribute('data-option-id');
+                    state.options = state.options.filter(o => o.id !== optionId);
+                    
+                    // Also remove any ratings for this option
+                    Object.keys(state.ratings).forEach(key => {
+                        if (key.startsWith(optionId)) {
+                            delete state.ratings[key];
+                        }
+                    });
+                    
+                    loadOptionsList();
+                });
+            });
+        }
+
+        // Step 5: Rating matrix
+        function loadRatingMatrix() {
+            const matrixContainer = document.getElementById('rating-matrix');
+            matrixContainer.innerHTML = '';
+            
+            if (state.factors.length === 0 || state.options.length === 0) {
+                matrixContainer.innerHTML = '<p>Please add factors and options first.</p>';
+                return;
+            }
+            
+            // Create table
+            const table = document.createElement('table');
+            table.className = 'matrix-table';
+            
+            // Create header row
+            const headerRow = document.createElement('tr');
+            headerRow.innerHTML = '<th>Options / Factors</th>';
+            
+            state.factors.forEach(factor => {
+                headerRow.innerHTML += `<th>${factor.name} (Weight: ${factor.weight})</th>`;
+            });
+            
+            table.appendChild(headerRow);
+            
+            // Create data rows
+            state.options.forEach(option => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td><strong>${option.name}</strong></td>`;
+                
+                state.factors.forEach(factor => {
+                    const cell = document.createElement('td');
+                    cell.className = 'rating-cell';
+                    
+                    const select = document.createElement('select');
+                    select.setAttribute('data-option-id', option.id);
+                    select.setAttribute('data-factor-id', factor.id);
+                    
+                    // Set current rating if exists
+                    const currentRating = state.ratings[`${option.id}-${factor.id}`] || 3;
+                    
+                    for (let i = 1; i <= 5; i++) {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = i;
+                        optionElement.textContent = i;
+                        if (i === currentRating) {
+                            optionElement.selected = true;
+                        }
+                        select.appendChild(optionElement);
+                    }
+                    
+                    select.addEventListener('change', function() {
+                        const optionId = this.getAttribute('data-option-id');
+                        const factorId = this.getAttribute('data-factor-id');
+                        const rating = parseInt(this.value);
+                        
+                        state.ratings[`${optionId}-${factorId}`] = rating;
+                    });
+                    
+                    cell.appendChild(select);
+                    row.appendChild(cell);
+                });
+                
+                table.appendChild(row);
+            });
+            
+            matrixContainer.appendChild(table);
+        }
+
+        // Step 6: Results calculation and display
+        function calculateResults() {
+            // Calculate scores for each option
+            state.options.forEach(option => {
+                option.score = 0;
+                
+                state.factors.forEach(factor => {
+                    const rating = state.ratings[`${option.id}-${factor.id}`] || 0;
+                    option.score += rating * factor.weight;
+                });
+            });
+            
+            // Sort options by score (descending)
+            state.options.sort((a, b) => b.score - a.score);
+        }
+
+        function displayResults() {
+            const winner = state.options[0];
+            
+            // Update winner card
+            document.getElementById('winner-name').textContent = winner.name;
+            document.getElementById('winner-score').textContent = `Score: ${winner.score}`;
+            
+            // Create score breakdown
+            const breakdownContainer = document.getElementById('score-breakdown');
+            breakdownContainer.innerHTML = '';
+            
+            state.options.forEach(option => {
+                const scoreCard = document.createElement('div');
+                scoreCard.className = 'score-card';
+                scoreCard.innerHTML = `
+                    <h3>${option.name}</h3>
+                    <div class="score-value">${option.score}</div>
+                    <p>Total Weighted Score</p>
+                `;
+                
+                breakdownContainer.appendChild(scoreCard);
+            });
+        }
+
+        function restartWizard() {
+            // Reset state
+            state.currentStep = 1;
+            state.decision = { title: '', description: '' };
+            state.factors = [];
+            state.options = [];
+            state.ratings = {};
+            
+            // Reset form fields
+            document.getElementById('decision-title').value = '';
+            document.getElementById('decision-description').value = '';
+            
+            // Update display
+            updateStepDisplay();
+        }
+    </script>
+</body>
+</html>
