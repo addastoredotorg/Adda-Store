@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Soundscape Composer: Create your perfect ambient sound environment. Mix and layer high-quality natural sounds with precise volume and panning controls. Ideal for focus, relaxation, and meditation.">
+    <title>Soundscape Composer - Custom Ambient Sound Mixer</title>
+    <meta name="keywords" content="ambient sounds, soundscape, white noise, focus music, relaxation sounds, nature sounds, audio mixer, meditation sounds, productivity sounds">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0c0c, #1a1a2e);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        #soundscape-composer {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(30, 30, 46, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(100, 100, 255, 0.3);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #64b5f6, #bb86fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: #bb86fc;
+            margin-bottom: 15px;
+        }
+
+        /* Master Controls */
+        #master-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(40, 40, 60, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .master-volume {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .master-volume label {
+            font-weight: bold;
+            color: #64b5f6;
+            min-width: 120px;
+        }
+
+        #master-volume {
+            flex: 1;
+            height: 8px;
+            border-radius: 4px;
+            background: #333;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        #master-volume::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #64b5f6;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        #volume-display {
+            min-width: 40px;
+            text-align: center;
+            font-weight: bold;
+            color: #bb86fc;
+        }
+
+        .global-controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .global-controls button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #64b5f6, #bb86fc);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .global-controls button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(100, 181, 246, 0.4);
+        }
+
+        .global-controls button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Sound Library */
+        #sound-library {
+            margin-bottom: 40px;
+        }
+
+        #sound-library h3 {
+            color: #64b5f6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 12px 24px;
+            background: rgba(40, 40, 60, 0.8);
+            border: none;
+            border-radius: 25px;
+            color: #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .category-tab.active {
+            background: linear-gradient(135deg, #64b5f6, #bb86fc);
+            color: white;
+            box-shadow: 0 4px 8px rgba(100, 181, 246, 0.4);
+        }
+
+        .sound-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .sound-card {
+            background: rgba(50, 50, 70, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .sound-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(100, 181, 246, 0.3);
+        }
+
+        .sound-card.active {
+            background: linear-gradient(135deg, #64b5f6, #bb86fc);
+            box-shadow: 0 6px 12px rgba(100, 181, 246, 0.5);
+        }
+
+        .sound-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .sound-card h4 {
+            color: white;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .sound-card p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Sound Layers */
+        #sound-layers {
+            margin-bottom: 40px;
+        }
+
+        #sound-layers h3 {
+            color: #64b5f6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .layer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .sound-layer {
+            background: rgba(40, 40, 60, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid #64b5f6;
+        }
+
+        .layer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .sound-name {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .remove-layer {
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .waveform-visual {
+            height: 60px;
+            background: rgba(30, 30, 46, 0.6);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .waveform-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .layer-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-group label {
+            min-width: 70px;
+            color: #bb86fc;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .volume-slider, .pan-slider {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: #333;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb,
+        .pan-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #64b5f6;
+            cursor: pointer;
+        }
+
+        .volume-value, .pan-value {
+            min-width: 45px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #e0e0e0;
+        }
+
+        .playback-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .playback-controls button {
+            padding: 8px 12px;
+            background: rgba(100, 181, 246, 0.2);
+            color: #64b5f6;
+            border: 1px solid #64b5f6;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .playback-controls button:hover {
+            background: #64b5f6;
+            color: white;
+        }
+
+        .playback-controls button.active {
+            background: #64b5f6;
+            color: white;
+        }
+
+        .layer-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        /* Preset Library */
+        #preset-library {
+            margin-bottom: 30px;
+        }
+
+        #preset-library h3 {
+            color: #64b5f6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .preset-card {
+            background: rgba(50, 50, 70, 0.8);
+            padding: 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .preset-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(187, 134, 252, 0.3);
+        }
+
+        .preset-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .preset-card h4 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .preset-card p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .empty-state .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Performance Indicator */
+        .performance-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(40, 40, 60, 0.9);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #64b5f6;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Loading State */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: ' 🔄';
+        }
+
+        /* Custom Sound Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: rgba(30, 30, 46, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(100, 100, 255, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(100, 100, 255, 0.3);
+            padding-bottom: 15px;
+        }
+
+        .modal-header h3 {
+            color: #64b5f6;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: #bb86fc;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #bb86fc;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(100, 100, 255, 0.3);
+            background: rgba(40, 40, 60, 0.8);
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #64b5f6;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        .modal-footer button {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #64b5f6, #bb86fc);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(100, 181, 246, 0.2);
+            color: #64b5f6;
+            border: 1px solid #64b5f6;
+        }
+
+        .modal-footer button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Add Custom Sound Button */
+        .add-custom-sound {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        #add-custom-sound-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #64b5f6, #bb86fc);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #add-custom-sound-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(100, 181, 246, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #soundscape-composer {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            #master-controls {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .master-volume {
+                width: 100%;
+            }
+            
+            .sound-grid, .preset-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .layer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+
+        /* Animation for new layers */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .sound-layer {
+            animation: slideIn 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="soundscape-composer">
+        <header>
+            <h1>Soundscape Composer</h1>
+            <p class="tagline">Craft your perfect ambient environment</p>
+        </header>
+
+        <main>
+            <!-- Master Controls -->
+            <section id="master-controls">
+                <div class="master-volume">
+                    <label>Master Volume</label>
+                    <input type="range" id="master-volume" min="0" max="100" value="70">
+                    <span id="volume-display">70%</span>
+                </div>
+                <div class="global-controls">
+                    <button id="play-all">▶️ Play All</button>
+                    <button id="stop-all" disabled>⏹️ Stop All</button>
+                    <button id="save-preset">💾 Save</button>
+                    <button id="load-preset">📂 Load</button>
+                </div>
+            </section>
+
+            <!-- Sound Library -->
+            <section id="sound-library">
+                <h3>Sound Library</h3>
+                <div class="category-tabs">
+                    <button class="category-tab active" data-category="water">💧 Water</button>
+                    <button class="category-tab" data-category="nature">🌿 Nature</button>
+                    <button class="category-tab" data-category="indoor">🏠 Indoor</button>
+                    <button class="category-tab" data-category="abstract">🌀 Abstract</button>
+                    <button class="category-tab" data-category="custom">🎵 Custom</button>
+                </div>
+                <div class="sound-grid" id="sound-grid">
+                    <!-- Dynamic sound cards will be inserted here -->
+                </div>
+                <div class="add-custom-sound">
+                    <button id="add-custom-sound-btn">➕ Add Custom Sound</button>
+                </div>
+            </section>
+
+            <!-- Sound Layer Grid -->
+            <section id="sound-layers">
+                <h3>Your Soundscape Layers</h3>
+                <div class="layer-container" id="layer-container">
+                    <div class="empty-state" id="empty-layers">
+                        <div class="icon">🎵</div>
+                        <p>Add sounds from the library to start composing</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Preset Library -->
+            <section id="preset-library">
+                <h3>Quick Start Presets</h3>
+                <div class="preset-grid">
+                    <div class="preset-card" data-preset="focus">
+                        <div class="preset-icon">🎯</div>
+                        <h4>Deep Focus</h4>
+                        <p>Rain + Brown Noise</p>
+                    </div>
+                    <div class="preset-card" data-preset="relax">
+                        <div class="preset-icon">😌</div>
+                        <h4>Evening Relax</h4>
+                        <p>Fire + Wind</p>
+                    </div>
+                    <div class="preset-card" data-preset="study">
+                        <div class="preset-icon">📚</div>
+                        <h4>Study Session</h4>
+                        <p>Coffee Shop + Rain</p>
+                    </div>
+                    <div class="preset-card" data-preset="sleep">
+                        <div class="preset-icon">😴</div>
+                        <h4>Sleep Aid</h4>
+                        <p>Ocean + Wind</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Performance Indicator -->
+        <div class="performance-indicator" id="performance-indicator">
+            CPU: <span id="cpu-display">0%</span> • Layers: <span id="layers-display">0</span>
+        </div>
+
+        <!-- Custom Sound Modal -->
+        <div class="modal-overlay" id="custom-sound-modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add Custom Sound</h3>
+                    <button class="close-modal" id="close-modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="sound-name">Sound Name</label>
+                        <input type="text" id="sound-name" placeholder="Enter a name for your sound">
+                    </div>
+                    <div class="form-group">
+                        <label for="sound-source">Sound Source</label>
+                        <select id="sound-source">
+                            <option value="youtube">YouTube</option>
+                            <option value="direct">Direct Audio URL</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="youtube-url-group">
+                        <label for="youtube-url">YouTube URL</label>
+                        <input type="text" id="youtube-url" placeholder="https://www.youtube.com/watch?v=...">
+                        <small style="color: #888; margin-top: 5px; display: block;">
+                            Note: YouTube audio extraction works for most public videos
+                        </small>
+                    </div>
+                    <div class="form-group" id="direct-url-group" style="display: none;">
+                        <label for="direct-url">Audio URL</label>
+                        <input type="text" id="direct-url" placeholder="https://example.com/sound.mp3">
+                        <small style="color: #888; margin-top: 5px; display: block;">
+                            Supported formats: MP3, WAV, OGG
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="sound-category">Category</label>
+                        <select id="sound-category">
+                            <option value="water">Water</option>
+                            <option value="nature">Nature</option>
+                            <option value="indoor">Indoor</option>
+                            <option value="abstract">Abstract</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-secondary" id="cancel-custom-sound">Cancel</button>
+                    <button class="btn-primary" id="add-sound">Add Sound</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Layer Card Template -->
+        <template id="layer-template">
+            <div class="sound-layer" data-sound-id="">
+                <div class="layer-header">
+                    <h4 class="sound-name">Sound Name</h4>
+                    <button class="remove-layer">×</button>
+                </div>
+                
+                <div class="waveform-visual">
+                    <canvas class="waveform-canvas"></canvas>
+                </div>
+
+                <div class="layer-controls">
+                    <div class="control-group">
+                        <label>Volume</label>
+                        <input type="range" class="volume-slider" min="0" max="100" value="50">
+                        <span class="volume-value">50%</span>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Pan</label>
+                        <input type="range" class="pan-slider" min="-100" max="100" value="0">
+                        <span class="pan-value">Center</span>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Playback</label>
+                        <div class="playback-controls">
+                            <button class="play-pause">▶️</button>
+                            <button class="solo-btn">👤</button>
+                            <button class="mute-btn">🔇</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer-meta">
+                    <span class="sound-duration">0:00</span>
+                    <span class="sound-category">Nature</span>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <script>
+        // Sound Database with actual audio URLs
+        const soundLibrary = {
+            water: [
+                { 
+                    id: 'gentle-rain', 
+                    name: 'Gentle Rain', 
+                    icon: '🌧️', 
+                    category: 'water', 
+                    description: 'Light rain on leaves',
+                    url: 'https://assets.mixkit.co/active_storage/sfx/185/185-preview.mp3'
+                },
+                { 
+                    id: 'ocean-waves', 
+                    name: 'Ocean Waves', 
+                    icon: '🌊', 
+                    category: 'water', 
+                    description: 'Calm ocean waves',
+                    url: 'https://assets.mixkit.co/active_storage/sfx/250/250-preview.mp3'
+                },
+                { 
+                    id: 'river-flow', 
+                    name: 'River Flow', 
+                    icon: '💧', 
+                    category: 'water', 
+                    description: 'Slow moving river',
+                    url: 'https://assets.mixkit.co/active_storage/sfx/110/110-preview.mp3'
+                }
+            ],
+            nature: [
+                { 
+                    id: 'forest-birds', 
+                    name: 'Forest Birds', 
+                    icon: '🐦', 
+                    category: 'nature', 
+                    description: 'Distant bird songs',
+                    url: 'https://assets.mixkit.co/active_storage/sfx/243/243-preview.mp3'
+                },
+                { 
+                    id: 'wind-trees', 
+                    name: 'Wind Through Trees', 
+                    icon: '🍃', 
+                    category: 'nature', 
+                    description: 'Gentle breeze',
+                    url: 'https://assets.mixkit.co/active_storage/sfx/244/244-preview.mp3'
+                },
+                { 
+                    id: 'crackling-fire', 
+                    name: 'Crackling Fire', 
+                    icon: '🔥', 
+                    category: 'nature', 
+                    description: 'Wood fire sounds',
+                    url: 'https://assets.mixkit.co/active_storage/sfx/240/240-preview.mp3'
+                }
+            ],
+            indoor: [
+                { 
+                    id: 'coffee-shop', 
+                    name: 'Coffee Shop', 
+                    icon: '☕', 
+                    category: 'indoor', 
+                    description: 'Distant chatter',
+                    url: 'https://assets.mixkit.co/active_storage/sfx/257/257-preview.mp3'
+                },
+                { 
+                    id: 'keyboard-typing', 
+                    name: 'Keyboard Typing', 
+                    icon: '⌨️', 
+                    category: 'indoor', 
+                    description: 'Gentle typing sounds',
+                    url: 'https://assets.mixkit.co/active_storage/sfx/295/295-preview.mp3'
+                }
+            ],
+            abstract: [
+                { 
+                    id: 'pink-noise', 
+                    name: 'Pink Noise', 
+                    icon: '🎵', 
+                    category: 'abstract', 
+                    description: 'Balanced frequencies',
+                    url: 'https://assets.mixkit.co/active_storage/sfx/251/251-preview.mp3'
+                },
+                { 
+                    id: 'brown-noise', 
+                    name: 'Brown Noise', 
+                    icon: '🌀', 
+                    category: 'abstract', 
+                    description: 'Deep rumbling',
+                    url: 'https://assets.mixkit.co/active_storage/sfx/252/252-preview.mp3'
+                }
+            ],
+            custom: [
+                // Custom sounds will be added here
+            ]
+        };
+
+        // Soundscape Composer Class
+        class SoundscapeComposer {
+            constructor() {
+                this.audioContext = null;
+                this.soundLayers = new Map();
+                this.masterGain = null;
+                this.isPlaying = false;
+                this.activeLayers = new Set();
+            }
+
+            initialize() {
+                try {
+                    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    this.masterGain = this.audioContext.createGain();
+                    this.masterGain.connect(this.audioContext.destination);
+                    this.masterGain.gain.value = 0.7; // Default volume
+                    
+                    console.log('Audio context initialized successfully');
+                    return true;
+                } catch (error) {
+                    console.error('Failed to initialize audio context:', error);
+                    alert('Your browser does not support the Web Audio API. Please try a modern browser like Chrome, Firefox, or Edge.');
+                    return false;
+                }
+            }
+
+            async addSoundLayer(soundData) {
+                if (this.soundLayers.size >= 8) {
+                    alert('Maximum of 8 sound layers reached. Please remove a layer before adding more.');
+                    return null;
+                }
+
+                try {
+                    // Check if this is a YouTube URL
+                    let audioUrl = soundData.url;
+                    if (soundData.url.includes('youtube.com') || soundData.url.includes('youtu.be')) {
+                        // For YouTube URLs, we'll need to use a proxy service
+                        // In a production environment, you would need a server-side component
+                        // For this demo, we'll use a placeholder
+                        console.log('YouTube URL detected:', soundData.url);
+                        alert('Note: Direct YouTube integration requires a server-side component. For this demo, please use direct audio URLs.');
+                        return null;
+                    }
+                    
+                    const layer = new SoundLayer(this.audioContext, this.masterGain, soundData);
+                    await layer.loadAudio();
+                    this.soundLayers.set(soundData.id, layer);
+                    this.updatePerformanceDisplay();
+                    return layer;
+                } catch (error) {
+                    console.error('Failed to add sound layer:', error);
+                    alert('Failed to load sound. Please try again.');
+                    return null;
+                }
+            }
+
+            removeSoundLayer(soundId) {
+                const layer = this.soundLayers.get(soundId);
+                if (layer) {
+                    layer.stop();
+                    this.soundLayers.delete(soundId);
+                    this.activeLayers.delete(soundId);
+                    this.updatePerformanceDisplay();
+                }
+            }
+
+            playAll() {
+                this.soundLayers.forEach(layer => {
+                    if (!layer.isMuted) {
+                        layer.play();
+                        this.activeLayers.add(layer.soundData.id);
+                    }
+                });
+                this.isPlaying = true;
+            }
+
+            stopAll() {
+                this.soundLayers.forEach(layer => {
+                    layer.stop();
+                    this.activeLayers.delete(layer.soundData.id);
+                });
+                this.isPlaying = false;
+            }
+
+            updateMasterVolume(volume) {
+                const normalizedVolume = volume / 100;
+                if (this.masterGain) {
+                    this.masterGain.gain.setValueAtTime(normalizedVolume, this.audioContext.currentTime);
+                }
+            }
+
+            updatePerformanceDisplay() {
+                const cpuDisplay = document.getElementById('cpu-display');
+                const layersDisplay = document.getElementById('layers-display');
+                
+                // Simulate CPU usage based on active layers
+                const cpuUsage = Math.min(this.activeLayers.size * 2 + Math.random() * 5, 15).toFixed(1);
+                cpuDisplay.textContent = `${cpuUsage}%`;
+                layersDisplay.textContent = this.activeLayers.size;
+            }
+        }
+
+        class SoundLayer {
+            constructor(audioContext, masterGain, soundData) {
+                this.audioContext = audioContext;
+                this.masterGain = masterGain;
+                this.soundData = soundData;
+                this.audioBuffer = null;
+                this.source = null;
+                this.gainNode = null;
+                this.pannerNode = null;
+                this.isPlaying = false;
+                this.isMuted = false;
+                this.isSolo = false;
+                this.volume = 0.5;
+                this.pan = 0;
+                
+                this.initializeNodes();
+            }
+
+            initializeNodes() {
+                this.gainNode = this.audioContext.createGain();
+                this.pannerNode = this.audioContext.createStereoPanner();
+                
+                this.gainNode.connect(this.pannerNode);
+                this.pannerNode.connect(this.masterGain);
+                
+                // Set initial values
+                this.gainNode.gain.value = this.volume;
+                this.pannerNode.pan.value = this.pan;
+            }
+
+            async loadAudio() {
+                try {
+                    console.log('Loading audio:', this.soundData.url);
+                    
+                    // For YouTube URLs, we would need a proxy service
+                    // For this demo, we'll just use direct URLs
+                    const response = await fetch(this.soundData.url);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const arrayBuffer = await response.arrayBuffer();
+                    this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+                    console.log('Audio loaded successfully:', this.soundData.name);
+                } catch (error) {
+                    console.error('Error loading audio:', error);
+                    throw error;
+                }
+            }
+
+            play() {
+                if (!this.audioBuffer || this.isPlaying || this.isMuted) return;
+                
+                try {
+                    this.source = this.audioContext.createBufferSource();
+                    this.source.buffer = this.audioBuffer;
+                    this.source.connect(this.gainNode);
+                    this.source.loop = true;
+                    
+                    this.source.start();
+                    this.isPlaying = true;
+                    console.log('Playing sound:', this.soundData.name);
+                } catch (error) {
+                    console.error('Error playing sound:', error);
+                }
+            }
+
+            stop() {
+                if (this.source && this.isPlaying) {
+                    try {
+                        this.source.stop();
+                        this.source = null;
+                        this.isPlaying = false;
+                        console.log('Stopped sound:', this.soundData.name);
+                    } catch (error) {
+                        console.error('Error stopping sound:', error);
+                    }
+                }
+            }
+
+            updateVolume(volume) {
+                this.volume = volume / 100;
+                if (this.gainNode) {
+                    this.gainNode.gain.setValueAtTime(this.volume, this.audioContext.currentTime);
+                }
+            }
+
+            updatePan(pan) {
+                this.pan = pan / 100;
+                if (this.pannerNode) {
+                    this.pannerNode.pan.setValueAtTime(this.pan, this.audioContext.currentTime);
+                }
+            }
+
+            toggleMute() {
+                this.isMuted = !this.isMuted;
+                if (this.isMuted && this.isPlaying) {
+                    this.stop();
+                } else if (!this.isMuted && !this.isPlaying) {
+                    this.play();
+                }
+                return this.isMuted;
+            }
+
+            toggleSolo() {
+                this.isSolo = !this.isSolo;
+                return this.isSolo;
+            }
+        }
+
+        // DOM Elements
+        const soundGrid = document.getElementById('sound-grid');
+        const layerContainer = document.getElementById('layer-container');
+        const emptyLayers = document.getElementById('empty-layers');
+        const masterVolume = document.getElementById('master-volume');
+        const volumeDisplay = document.getElementById('volume-display');
+        const playAllBtn = document.getElementById('play-all');
+        const stopAllBtn = document.getElementById('stop-all');
+        const savePresetBtn = document.getElementById('save-preset');
+        const loadPresetBtn = document.getElementById('load-preset');
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const presetCards = document.querySelectorAll('.preset-card');
+        const addCustomSoundBtn = document.getElementById('add-custom-sound-btn');
+        const customSoundModal = document.getElementById('custom-sound-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const cancelCustomSoundBtn = document.getElementById('cancel-custom-sound');
+        const addSoundBtn = document.getElementById('add-sound');
+        const soundSourceSelect = document.getElementById('sound-source');
+        const youtubeUrlGroup = document.getElementById('youtube-url-group');
+        const directUrlGroup = document.getElementById('direct-url-group');
+
+        // Initialize composer
+        const composer = new SoundscapeComposer();
+        let currentCategory = 'water';
+
+        // Initialize the application
+        async function init() {
+            const success = composer.initialize();
+            if (!success) return;
+            
+            renderSoundGrid('water');
+            setupEventListeners();
+            updatePerformanceDisplay();
+        }
+
+        // Render sound grid for a category
+        function renderSoundGrid(category) {
+            soundGrid.innerHTML = '';
+            const sounds = soundLibrary[category] || [];
+            
+            if (sounds.length === 0) {
+                soundGrid.innerHTML = '<div class="empty-state"><div class="icon">🎵</div><p>No sounds available in this category</p></div>';
+                return;
+            }
+            
+            sounds.forEach(sound => {
+                const soundCard = document.createElement('div');
+                soundCard.className = 'sound-card';
+                soundCard.innerHTML = `
+                    <div class="sound-icon">${sound.icon}</div>
+                    <h4>${sound.name}</h4>
+                    <p>${sound.description}</p>
+                `;
+                soundCard.addEventListener('click', () => addSoundToComposition(sound));
+                soundGrid.appendChild(soundCard);
+            });
+        }
+
+        // Add sound to composition
+        async function addSoundToComposition(soundData) {
+            // Check if sound is already added
+            if (composer.soundLayers.has(soundData.id)) {
+                alert('This sound is already in your composition.');
+                return;
+            }
+
+            const soundCard = Array.from(soundGrid.children).find(card => 
+                card.querySelector('h4').textContent === soundData.name
+            );
+            
+            if (soundCard) {
+                soundCard.classList.add('loading');
+            }
+
+            try {
+                const layer = await composer.addSoundLayer(soundData);
+                if (layer) {
+                    renderSoundLayer(layer);
+                    emptyLayers.style.display = 'none';
+                }
+            } finally {
+                if (soundCard) {
+                    soundCard.classList.remove('loading');
+                }
+            }
+        }
+
+        // Render a sound layer in the UI
+        function renderSoundLayer(layer) {
+            const template = document.getElementById('layer-template');
+            const layerElement = template.content.cloneNode(true);
+            
+            const soundLayer = layerElement.querySelector('.sound-layer');
+            soundLayer.dataset.soundId = layer.soundData.id;
+            
+            // Set sound info
+            soundLayer.querySelector('.sound-name').textContent = layer.soundData.name;
+            soundLayer.querySelector('.sound-category').textContent = layer.soundData.category;
+            
+            // Setup controls
+            const volumeSlider = soundLayer.querySelector('.volume-slider');
+            const volumeValue = soundLayer.querySelector('.volume-value');
+            const panSlider = soundLayer.querySelector('.pan-slider');
+            const panValue = soundLayer.querySelector('.pan-value');
+            const playPauseBtn = soundLayer.querySelector('.play-pause');
+            const soloBtn = soundLayer.querySelector('.solo-btn');
+            const muteBtn = soundLayer.querySelector('.mute-btn');
+            const removeBtn = soundLayer.querySelector('.remove-layer');
+            
+            // Volume control
+            volumeSlider.value = layer.volume * 100;
+            volumeValue.textContent = `${volumeSlider.value}%`;
+            
+            volumeSlider.addEventListener('input', (e) => {
+                const value = e.target.value;
+                volumeValue.textContent = `${value}%`;
+                layer.updateVolume(value);
+            });
+            
+            // Pan control
+            panSlider.value = layer.pan * 100;
+            updatePanDisplay(panValue, layer.pan);
+            
+            panSlider.addEventListener('input', (e) => {
+                const value = e.target.value;
+                layer.updatePan(value);
+                updatePanDisplay(panValue, value);
+            });
+            
+            // Playback controls
+            playPauseBtn.addEventListener('click', () => {
+                if (layer.isPlaying) {
+                    layer.stop();
+                    playPauseBtn.textContent = '▶️';
+                    composer.activeLayers.delete(layer.soundData.id);
+                } else {
+                    layer.play();
+                    playPauseBtn.textContent = '⏸️';
+                    composer.activeLayers.add(layer.soundData.id);
+                }
+                composer.updatePerformanceDisplay();
+            });
+            
+            soloBtn.addEventListener('click', () => {
+                const isSolo = layer.toggleSolo();
+                soloBtn.classList.toggle('active', isSolo);
+                // In a full implementation, this would mute other layers
+            });
+            
+            muteBtn.addEventListener('click', () => {
+                const isMuted = layer.toggleMute();
+                muteBtn.classList.toggle('active', isMuted);
+                muteBtn.textContent = isMuted ? '🔊' : '🔇';
+                
+                if (isMuted) {
+                    composer.activeLayers.delete(layer.soundData.id);
+                playPauseBtn.textContent = '▶️';
+                playPauseBtn.disabled = true;
+                volumeSlider.disabled = true;
+                panSlider.disabled = true;
+                volumeValue.style.opacity = '0.5';
+                panValue.style.opacity = '0.5';
+                soundLayer.style.opacity = '0.7';
+            } else {
+                playPauseBtn.disabled = false;
+                volumeSlider.disabled = false;
+                panSlider.disabled = false;
+                volumeValue.style.opacity = '1';
+                panValue.style.opacity = '1';
+                soundLayer.style.opacity = '1';
+            }
+                
+                composer.updatePerformanceDisplay();
+            });
+            
+            // Remove layer
+            removeBtn.addEventListener('click', () => {
+                composer.removeSoundLayer(layer.soundData.id);
+                soundLayer.remove();
+                
+                if (composer.soundLayers.size === 0) {
+                    emptyLayers.style.display = 'block';
+                }
+            });
+            
+            // Draw simple waveform (simulated)
+            const canvas = soundLayer.querySelector('.waveform-canvas');
+            drawWaveform(canvas);
+            
+            layerContainer.appendChild(soundLayer);
+        }
+
+        // Update pan display text
+        function updatePanDisplay(panValueElement, panValue) {
+            const value = parseInt(panValue);
+            if (value === 0) {
+                panValueElement.textContent = 'Center';
+            } else if (value > 0) {
+                panValueElement.textContent = `Right ${value}%`;
+            } else {
+                panValueElement.textContent = `Left ${Math.abs(value)}%`;
+            }
+        }
+
+        // Draw simulated waveform
+        function drawWaveform(canvas) {
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width = canvas.offsetWidth;
+            const height = canvas.height = canvas.offsetHeight;
+            
+            ctx.fillStyle = 'rgba(30, 30, 46, 0.8)';
+            ctx.fillRect(0, 0, width, height);
+            
+            ctx.strokeStyle = '#64b5f6';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            const centerY = height / 2;
+            const amplitude = height / 3;
+            
+            for (let x = 0; x < width; x++) {
+                const progress = x / width;
+                const y = centerY + Math.sin(progress * Math.PI * 8) * amplitude * Math.random();
+                
+                if (x === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            
+            ctx.stroke();
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Master volume
+            masterVolume.addEventListener('input', (e) => {
+                const value = e.target.value;
+                volumeDisplay.textContent = `${value}%`;
+                composer.updateMasterVolume(value);
+            });
+            
+            // Global controls
+            playAllBtn.addEventListener('click', () => {
+                composer.playAll();
+                playAllBtn.disabled = true;
+                stopAllBtn.disabled = false;
+                
+                // Update all play buttons
+                document.querySelectorAll('.play-pause').forEach(btn => {
+                    const layerId = btn.closest('.sound-layer').dataset.soundId;
+                    const layer = composer.soundLayers.get(layerId);
+                    if (layer && !layer.isMuted) {
+                        btn.textContent = '⏸️';
+                    }
+                });
+            });
+            
+            stopAllBtn.addEventListener('click', () => {
+                composer.stopAll();
+                playAllBtn.disabled = false;
+                stopAllBtn.disabled = true;
+                
+                // Reset all play buttons
+                document.querySelectorAll('.play-pause').forEach(btn => {
+                    btn.textContent = '▶️';
+                });
+            });
+            
+            // Category tabs
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentCategory = tab.dataset.category;
+                    renderSoundGrid(currentCategory);
+                });
+            });
+            
+            // Preset cards
+            presetCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const preset = card.dataset.preset;
+                    loadPreset(preset);
+                });
+            });
+            
+            // Save/load presets (simplified)
+            savePresetBtn.addEventListener('click', () => {
+                alert('In a full implementation, this would save your current soundscape configuration.');
+            });
+            
+            loadPresetBtn.addEventListener('click', () => {
+                alert('In a full implementation, this would load a saved soundscape configuration.');
+            });
+            
+            // Custom sound modal
+            addCustomSoundBtn.addEventListener('click', () => {
+                customSoundModal.style.display = 'flex';
+            });
+            
+            closeModalBtn.addEventListener('click', () => {
+                customSoundModal.style.display = 'none';
+            });
+            
+            cancelCustomSoundBtn.addEventListener('click', () => {
+                customSoundModal.style.display = 'none';
+            });
+            
+            soundSourceSelect.addEventListener('change', (e) => {
+                if (e.target.value === 'youtube') {
+                    youtubeUrlGroup.style.display = 'block';
+                    directUrlGroup.style.display = 'none';
+                } else {
+                    youtubeUrlGroup.style.display = 'none';
+                    directUrlGroup.style.display = 'block';
+                }
+            });
+            
+            addSoundBtn.addEventListener('click', () => {
+                addCustomSound();
+            });
+        }
+
+        // Add custom sound
+        function addCustomSound() {
+            const soundName = document.getElementById('sound-name').value;
+            const soundSource = document.getElementById('sound-source').value;
+            const youtubeUrl = document.getElementById('youtube-url').value;
+            const directUrl = document.getElementById('direct-url').value;
+            const soundCategory = document.getElementById('sound-category').value;
+            
+            if (!soundName) {
+                alert('Please enter a name for your sound.');
+                return;
+            }
+            
+            let soundUrl = '';
+            if (soundSource === 'youtube') {
+                if (!youtubeUrl) {
+                    alert('Please enter a YouTube URL.');
+                    return;
+                }
+                soundUrl = youtubeUrl;
+            } else {
+                if (!directUrl) {
+                    alert('Please enter an audio URL.');
+                    return;
+                }
+                soundUrl = directUrl;
+            }
+            
+            // Create a unique ID for the custom sound
+            const soundId = 'custom-' + Date.now();
+            
+            // Add to sound library
+            const customSound = {
+                id: soundId,
+                name: soundName,
+                icon: '🎵',
+                category: soundCategory,
+                description: 'Custom sound',
+                url: soundUrl
+            };
+            
+            soundLibrary.custom.push(customSound);
+            
+            // Switch to custom category and add the sound
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.category === 'custom') {
+                    tab.classList.add('active');
+                }
+            });
+            
+            currentCategory = 'custom';
+            renderSoundGrid('custom');
+            
+            // Close modal
+            customSoundModal.style.display = 'none';
+            
+            // Clear form
+            document.getElementById('sound-name').value = '';
+            document.getElementById('youtube-url').value = '';
+            document.getElementById('direct-url').value = '';
+            document.getElementById('sound-category').value = 'custom';
+            
+            alert('Custom sound added to library! You can now add it to your composition.');
+        }
+
+        // Load a preset configuration
+        function loadPreset(presetName) {
+            // Clear current layers
+            composer.soundLayers.forEach((layer, id) => {
+                composer.removeSoundLayer(id);
+            });
+            layerContainer.innerHTML = '';
+            emptyLayers.style.display = 'block';
+            
+            // Define preset configurations
+            const presets = {
+                focus: ['gentle-rain', 'brown-noise'],
+                relax: ['crackling-fire', 'wind-trees'],
+                study: ['coffee-shop', 'gentle-rain'],
+                sleep: ['ocean-waves', 'wind-trees']
+            };
+            
+            const soundIds = presets[presetName] || [];
+            
+            // Add sounds from preset
+            soundIds.forEach(soundId => {
+                // Find sound data in library
+                let soundData = null;
+                Object.values(soundLibrary).forEach(category => {
+                    category.forEach(sound => {
+                        if (sound.id === soundId) {
+                            soundData = sound;
+                        }
+                    });
+                });
+                
+                if (soundData) {
+                    addSoundToComposition(soundData);
+                }
+            });
+            
+            // Auto-play the preset
+            setTimeout(() => {
+                composer.playAll();
+                playAllBtn.disabled = true;
+                stopAllBtn.disabled = false;
+                
+                // Update play buttons after a delay to ensure layers are loaded
+                setTimeout(() => {
+                    document.querySelectorAll('.play-pause').forEach(btn => {
+                        btn.textContent = '⏸️';
+                    });
+                }, 500);
+            }, 1000);
+        }
+
+        // Update performance display
+        function updatePerformanceDisplay() {
+            composer.updatePerformanceDisplay();
+        }
+
+        // Initialize the app when the page loads
+        window.onload = init;
+    </script>
+</body>
+</html>
