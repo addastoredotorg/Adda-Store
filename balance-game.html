@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Balance Game: Discover Your Core Values | A Free Introspective Tool</title>
+    <meta name="description" content="Explore your personal values with The Balance Game. Choose between pairs like 'Security vs Freedom' and 'Work vs Love' to build a unique values map. A minimalist, conversation-starting game for self-awareness.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 40px;
+            margin: 20px 0;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        h2 {
+            color: #34495e;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        p {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        .screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .value-pair {
+            width: 100%;
+            margin: 30px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .value-btn {
+            background-color: white;
+            border: 2px solid #3498db;
+            color: #3498db;
+            padding: 18px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 350px;
+            font-weight: 500;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .value-btn:hover {
+            background-color: #3498db;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .value-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .primary-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .primary-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .progress-container {
+            width: 100%;
+            margin: 30px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #3498db;
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .counter {
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        #results-list {
+            list-style: none;
+            width: 100%;
+            max-width: 500px;
+            margin: 30px auto;
+        }
+
+        #results-list li {
+            background: white;
+            margin: 15px 0;
+            padding: 18px 20px;
+            border-left: 5px solid #3498db;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .value-name {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .value-count {
+            color: #3498db;
+            font-weight: 500;
+            background-color: #ebf5fb;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .rules-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .rules-section h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .rules-list {
+            list-style-type: none;
+            counter-reset: rule-counter;
+        }
+
+        .rules-list li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+            text-align: left;
+        }
+
+        .rules-list li:before {
+            counter-increment: rule-counter;
+            content: counter(rule-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #3498db;
+            color: white;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .value-btn {
+                padding: 16px 20px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- INTRO SCREEN -->
+        <div id="intro-screen" class="screen">
+            <h1>The Balance Game</h1>
+            <p>What do you truly value? In this minimalist game, you'll be presented with pairs of core values. There are no right or wrong answers—only your choices.</p>
+            <p>Your goal is to build a personal "values map" that reflects what is most important to <strong>you</strong>.</p>
+            <button id="start-btn" class="primary-btn">Begin Your Journey</button>
+            
+            <div class="rules-section">
+                <h3>How to Play</h3>
+                <ol class="rules-list">
+                    <li>Click "Begin Your Journey" to start the game</li>
+                    <li>You'll see pairs of values (e.g., "Security vs Freedom")</li>
+                    <li>Select the value that resonates more with you</li>
+                    <li>Complete 10 choices to see your personal values map</li>
+                    <li>Reflect on your results and share with others</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- GAME SCREEN -->
+        <div id="game-screen" class="screen hidden">
+            <h2>Which do you lean towards?</h2>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar-fill"></div>
+                </div>
+                <p class="counter">Choice <span id="choice-counter">1</span> of <span id="total-choices">10</span></p>
+            </div>
+            <div id="current-pair" class="value-pair">
+                <!-- Value pairs will be injected here by JavaScript -->
+            </div>
+        </div>
+
+        <!-- RESULTS SCREEN -->
+        <div id="results-screen" class="screen hidden">
+            <h1>Your Personal Values Map</h1>
+            <p>Based on your choices, here is a snapshot of the values that guide you.</p>
+            <ul id="results-list">
+                <!-- Results will be injected here by JavaScript -->
+            </ul>
+            <button id="restart-btn" class="primary-btn">Explore Again</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>The Balance Game &copy; 2023 - A tool for self-reflection and personal growth</p>
+    </footer>
+
+    <script>
+        // GAME CONFIGURATION: Define at least 15 value pairs for variety.
+        const valuePairs = [
+            { value1: "Security", value2: "Freedom" },
+            { value1: "Work", value2: "Love" },
+            { value1: "Adventure", value2: "Comfort" },
+            { value1: "Wealth", value2: "Wellness" },
+            { value1: "Tradition", value2: "Progress" },
+            { value1: "Independence", value2: "Community" },
+            { value1: "Fame", value2: "Privacy" },
+            { value1: "Knowledge", value2: "Wisdom" },
+            { value1: "Justice", value2: "Mercy" },
+            { value1: "Creativity", value2: "Efficiency" },
+            { value1: "Spirituality", value2: "Logic" },
+            { value1: "Honesty", value2: "Loyalty" },
+            { value1: "Passion", value2: "Peace" },
+            { value1: "Ambition", value2: "Contentment" },
+            { value1: "Legacy", value2: "Enjoyment" }
+        ];
+
+        // GAME STATE
+        let userSelections = [];
+        let currentRound = 0;
+        const totalRounds = 10; // How many choices the user makes.
+        let usedPairs = []; // Track used pairs to avoid repetition
+
+        // DOM ELEMENTS
+        const introScreen = document.getElementById('intro-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const currentPairDiv = document.getElementById('current-pair');
+        const choiceCounterSpan = document.getElementById('choice-counter');
+        const totalChoicesSpan = document.getElementById('total-choices');
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        const resultsList = document.getElementById('results-list');
+        const startBtn = document.getElementById('start-btn');
+        const restartBtn = document.getElementById('restart-btn');
+
+        // INITIALIZATION
+        totalChoicesSpan.textContent = totalRounds;
+
+        // FUNCTION: Start the game.
+        function startGame() {
+            introScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+            userSelections = [];
+            currentRound = 0;
+            usedPairs = [];
+            showNextPair();
+        }
+
+        // FUNCTION: Get a random value pair that hasn't been used yet
+        function getRandomPair() {
+            // Reset used pairs if we've used them all
+            if (usedPairs.length >= valuePairs.length) {
+                usedPairs = [];
+            }
+            
+            let availablePairs = valuePairs.filter((pair, index) => !usedPairs.includes(index));
+            
+            if (availablePairs.length === 0) {
+                // Fallback if something goes wrong
+                availablePairs = valuePairs;
+            }
+            
+            const randomIndex = Math.floor(Math.random() * availablePairs.length);
+            const selectedPair = availablePairs[randomIndex];
+            
+            // Find the original index to mark it as used
+            const originalIndex = valuePairs.findIndex(pair => 
+                pair.value1 === selectedPair.value1 && pair.value2 === selectedPair.value2);
+            usedPairs.push(originalIndex);
+            
+            return selectedPair;
+        }
+
+        // FUNCTION: Randomly select and display a new value pair.
+        function showNextPair() {
+            if (currentRound >= totalRounds) {
+                endGame();
+                return;
+            }
+
+            currentRound++;
+            choiceCounterSpan.textContent = currentRound;
+            progressBarFill.style.width = `${(currentRound / totalRounds) * 100}%`;
+
+            const pair = getRandomPair();
+            currentPairDiv.innerHTML = `
+                <button class="value-btn" onclick="selectValue('${pair.value1}')">${pair.value1}</button>
+                <button class="value-btn" onclick="selectValue('${pair.value2}')">${pair.value2}</button>
+            `;
+        }
+
+        // FUNCTION: Handle user's value selection.
+        function selectValue(selectedValue) {
+            userSelections.push(selectedValue);
+            showNextPair();
+        }
+
+        // FUNCTION: End the game and display results.
+        function endGame() {
+            gameScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            // Tally the results
+            const valueTally = {};
+            userSelections.forEach(value => {
+                valueTally[value] = (valueTally[value] || 0) + 1;
+            });
+
+            // Sort values by frequency (descending)
+            const sortedValues = Object.keys(valueTally).sort((a, b) => valueTally[b] - valueTally[a]);
+
+            // Display the results
+            resultsList.innerHTML = '';
+            sortedValues.forEach(value => {
+                const count = valueTally[value];
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span class="value-name">${value}</span>
+                    <span class="value-count">${count} time${count > 1 ? 's' : ''}</span>
+                `;
+                resultsList.appendChild(li);
+            });
+        }
+
+        // FUNCTION: Restart the game.
+        function restartGame() {
+            resultsScreen.classList.add('hidden');
+            introScreen.classList.remove('hidden');
+        }
+
+        // EVENT LISTENERS
+        startBtn.addEventListener('click', startGame);
+        restartBtn.addEventListener('click', restartGame);
+    </script>
+</body>
+</html>
