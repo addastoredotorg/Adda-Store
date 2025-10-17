@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Memory Palace Builder: Train your memory using the ancient Method of Loci technique. Create virtual memory palaces, place items to remember, and strengthen your cognitive skills through spatial memorization.">
+    <meta name="keywords" content="memory palace, method of loci, memory technique, cognitive training, memory game, brain training, memorization, spatial memory">
+    <title>Memory Palace Builder | Master the Method of Loci Memory Technique</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles & Variables */
+        :root {
+            --primary: #2c5e7a;
+            --secondary: #d4a574;
+            --accent: #8c6d46;
+            --background: #f5f2eb;
+            --text: #333333;
+            --light-gray: #e8e2d9;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            margin-top: 2rem;
+        }
+        
+        h3 {
+            font-size: 1.6rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1e4559 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            font-style: italic;
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 3rem 0;
+            text-align: center;
+            background-color: white;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .hero h2 {
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Game Setup */
+        .game-setup {
+            background-color: var(--light-gray);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .difficulty-selection {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+        }
+        
+        .difficulty-option {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 30%;
+            box-shadow: var(--shadow);
+        }
+        
+        .difficulty-option:hover {
+            transform: translateY(-5px);
+        }
+        
+        .difficulty-option.selected {
+            border: 3px solid var(--accent);
+            background-color: #f5efe6;
+        }
+        
+        .difficulty-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            background-color: #c69564;
+            transform: translateY(-2px);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: #1e4559;
+        }
+        
+        /* Game Area */
+        .game-area {
+            display: none;
+            padding: 2rem 0;
+        }
+        
+        .game-container {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .palace-view {
+            flex: 2;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .items-panel {
+            flex: 1;
+            background: var(--light-gray);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .game-controls {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        /* Palace Elements */
+        .palace-room {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(to bottom, #e8e2d9, #d8d0c2);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+        }
+        
+        .palace-object {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            font-size: 1.8rem;
+        }
+        
+        .palace-object:hover {
+            transform: scale(1.1);
+        }
+        
+        .palace-object.placed {
+            cursor: default;
+        }
+        
+        .room-feature {
+            position: absolute;
+            background-color: var(--accent);
+            border-radius: 4px;
+        }
+        
+        .door {
+            width: 80px;
+            height: 120px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(to bottom, #8c6d46, #6d5435);
+        }
+        
+        .window {
+            width: 60px;
+            height: 80px;
+            top: 50px;
+            right: 50px;
+            background: linear-gradient(to bottom, #a8d8f0, #7bb8d8);
+        }
+        
+        .fireplace {
+            width: 100px;
+            height: 80px;
+            bottom: 20px;
+            left: 50px;
+            background: linear-gradient(to bottom, #8c6d46, #6d5435);
+        }
+        
+        /* Items Panel */
+        .items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .item-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            cursor: grab;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .item-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .item-icon {
+            font-size: 1.8rem;
+            margin-right: 1rem;
+            color: var(--primary);
+        }
+        
+        /* Recall Phase */
+        .recall-phase {
+            display: none;
+            padding: 2rem 0;
+        }
+        
+        .recall-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .recall-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .recall-input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .results {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+        }
+        
+        .score-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            padding: 4rem 0;
+            background-color: white;
+        }
+        
+        .steps-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .step {
+            flex: 0 0 48%;
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .step:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-icon {
+            font-size: 2.8rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        /* Rules Section */
+        .rules {
+            padding: 3rem 0;
+            background-color: var(--light-gray);
+        }
+        
+        .rules-list {
+            list-style-type: none;
+            margin-top: 1.5rem;
+        }
+        
+        .rules-list li {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .rules-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        /* Benefits Section */
+        .benefits {
+            padding: 3rem 0;
+            background-color: white;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .benefit-card {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+        }
+        
+        footer a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+            color: #e0e0e0;
+        }
+        
+        .copyright {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .steps-container {
+                flex-direction: column;
+            }
+            
+            .step {
+                flex: 0 0 100%;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .difficulty-selection {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .difficulty-option {
+                width: 90%;
+                margin-bottom: 1rem;
+            }
+            
+            .game-container {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .recall-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Success Animation */
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .celebrate {
+            animation: celebrate 0.5s ease 3;
+        }
+        
+        /* Memory Palace Specific Styles */
+        .navigation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .room-indicator {
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .timer {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-landmark"></i> Memory Palace Builder</h1>
+            <p class="tagline">Master the ancient Method of Loci to dramatically improve your memory</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h2>Build Palaces for Your Memories</h2>
+                <p>Transform abstract information into memorable spatial experiences. The Memory Palace technique, used for thousands of years, leverages your brain's natural spatial memory to dramatically improve recall.</p>
+                
+                <!-- Game Setup -->
+                <div class="game-setup" id="gameSetup">
+                    <h3>Start Building Your Memory Palace</h3>
+                    <p>Choose your difficulty level to begin training your memory with the ancient Method of Loci.</p>
+                    
+                    <div class="difficulty-selection">
+                        <div class="difficulty-option" id="beginnerOption">
+                            <i class="fas fa-seedling difficulty-icon"></i>
+                            <h3>Beginner</h3>
+                            <p>5 items to remember</p>
+                            <p>Simple palace layout</p>
+                            <p>3 minutes study time</p>
+                        </div>
+                        <div class="difficulty-option" id="intermediateOption">
+                            <i class="fas fa-tree difficulty-icon"></i>
+                            <h3>Intermediate</h3>
+                            <p>8 items to remember</p>
+                            <p>Medium palace layout</p>
+                            <p>2 minutes study time</p>
+                        </div>
+                        <div class="difficulty-option" id="advancedOption">
+                            <i class="fas fa-mountain difficulty-icon"></i>
+                            <h3>Advanced</h3>
+                            <p>12 items to remember</p>
+                            <p>Complex palace layout</p>
+                            <p>1 minute study time</p>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button class="btn btn-primary" id="startGameBtn"><i class="fas fa-play"></i> Start Training</button>
+                        <button class="btn" id="howToPlayBtn"><i class="fas fa-question-circle"></i> How It Works</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Area -->
+        <section class="game-area" id="gameArea">
+            <div class="container">
+                <div class="game-info">
+                    <div>
+                        <span id="itemsToPlace">Items to place: 0/0</span>
+                    </div>
+                    <div>
+                        <span class="timer" id="studyTimer">Study Time: 3:00</span>
+                    </div>
+                    <div>
+                        <span id="currentRoom">Room: Entrance Hall</span>
+                    </div>
+                </div>
+                
+                <div class="game-container">
+                    <div class="palace-view">
+                        <div class="room-indicator" id="roomIndicator">Entrance Hall</div>
+                        <div class="palace-room" id="palaceRoom">
+                            <div class="room-feature door"></div>
+                            <div class="room-feature window"></div>
+                            <div class="room-feature fireplace"></div>
+                            <!-- Items will be placed here by the user -->
+                        </div>
+                        
+                        <div class="navigation-controls">
+                            <button class="btn" id="prevRoomBtn"><i class="fas fa-arrow-left"></i> Previous Room</button>
+                            <button class="btn" id="nextRoomBtn">Next Room <i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="items-panel">
+                        <h3>Items to Remember</h3>
+                        <div class="items-list" id="itemsList">
+                            <!-- Items will be populated by JavaScript -->
+                        </div>
+                        
+                        <div class="game-controls">
+                            <button class="btn btn-primary" id="startRecallBtn"><i class="fas fa-brain"></i> I'm Ready to Recall</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recall Phase -->
+        <section class="recall-phase" id="recallPhase">
+            <div class="container">
+                <div class="recall-container">
+                    <h2>Recall the Items</h2>
+                    <p>Walk through your memory palace in your mind and recall the items you placed in each location. Enter them in the correct order.</p>
+                    
+                    <div class="recall-inputs" id="recallInputs">
+                        <!-- Inputs will be generated by JavaScript -->
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn btn-primary" id="submitRecallBtn"><i class="fas fa-check"></i> Submit Answers</button>
+                    </div>
+                </div>
+                
+                <div class="results" id="results">
+                    <h2>Memory Test Results</h2>
+                    <div class="score-display" id="scoreDisplay">0/0</div>
+                    <p id="resultsMessage">Your memory palace needs some reinforcement!</p>
+                    <button class="btn" id="tryAgainBtn"><i class="fas fa-redo"></i> Try Again</button>
+                    <button class="btn btn-primary" id="newPalaceBtn"><i class="fas fa-plus"></i> Build New Palace</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <div class="container">
+                <h2>How the Memory Palace Technique Works</h2>
+                <div class="steps-container">
+                    <div class="step">
+                        <i class="fas fa-drafting-compass step-icon"></i>
+                        <h3><span class="step-number">1</span> Design Your Palace</h3>
+                        <p>Create a mental image of a familiar place - your home, a route you know well, or an imaginary location. This becomes your "memory palace."</p>
+                    </div>
+                    <div class="step">
+                        <i class="fas fa-map-marker-alt step-icon"></i>
+                        <h3><span class="step-number">2</span> Identify Key Locations</h3>
+                        <p>Select distinct locations within your palace where you'll "place" the items you want to remember. The more vivid and unusual the locations, the better.</p>
+                    </div>
+                    <div class="step">
+                        <i class="fas fa-cube step-icon"></i>
+                        <h3><span class="step-number">3</span> Place Your Items</h3>
+                        <p>Associate each item with a specific location in your palace. Create vivid, exaggerated mental images to make the associations memorable.</p>
+                    </div>
+                    <div class="step">
+                        <i class="fas fa-walking step-icon"></i>
+                        <h3><span class="step-number">4</span> Take a Mental Walk</h3>
+                        <p>When you need to recall the items, mentally walk through your palace, visiting each location and retrieving the associated item.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rules Section -->
+        <section class="rules">
+            <div class="container">
+                <h2>Memory Palace Guidelines</h2>
+                <p>To build effective memory palaces that dramatically improve your recall, follow these principles:</p>
+                <ul class="rules-list">
+                    <li><strong>Use familiar locations:</strong> Your memory palace should be based on a place you know well, like your home or daily commute route.</li>
+                    <li><strong>Create vivid images:</strong> The more unusual, exaggerated, or emotional your mental images, the more memorable they will be.</li>
+                    <li><strong>Engage multiple senses:</strong> Incorporate sounds, smells, textures, and even tastes into your mental images for stronger recall.</li>
+                    <li><strong>Follow a consistent path:</strong> Always navigate your palace in the same order to maintain the sequence of items.</li>
+                    <li><strong>Use action and interaction:</strong> Create scenes where items interact with their locations in dynamic, memorable ways.</li>
+                    <li><strong>Practice regularly:</strong> Like any skill, the Method of Loci becomes more effective with consistent practice.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits">
+            <div class="container">
+                <h2>Benefits of the Memory Palace Technique</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <i class="fas fa-brain benefit-icon"></i>
+                        <h3>Enhanced Memory</h3>
+                        <p>Dramatically improve your ability to remember lists, sequences, and complex information.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-lightbulb benefit-icon"></i>
+                        <h3>Creative Thinking</h3>
+                        <p>Develop your imagination and creative association skills through vivid mental imagery.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-graduation-cap benefit-icon"></i>
+                        <h3>Academic Success</h3>
+                        <p>Excel in studies by memorizing facts, dates, formulas, and concepts more effectively.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-chart-line benefit-icon"></i>
+                        <h3>Cognitive Health</h3>
+                        <p>Exercise your brain and maintain cognitive function through regular memory training.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <a href="#"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+            <a href="#"><i class="fas fa-book"></i> Resources</a>
+            <p class="copyright">&copy; 2023 Memory Palace Builder. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Game state
+            let gameState = {
+                difficulty: 'beginner',
+                items: [],
+                placedItems: {},
+                currentRoom: 0,
+                rooms: ['Entrance Hall', 'Living Room', 'Kitchen', 'Bedroom', 'Study'],
+                studyTime: 180, // 3 minutes in seconds
+                studyTimer: null,
+                recallAnswers: []
+            };
+            
+            // DOM elements
+            const gameSetup = document.getElementById('gameSetup');
+            const gameArea = document.getElementById('gameArea');
+            const recallPhase = document.getElementById('recallPhase');
+            const results = document.getElementById('results');
+            const beginnerOption = document.getElementById('beginnerOption');
+            const intermediateOption = document.getElementById('intermediateOption');
+            const advancedOption = document.getElementById('advancedOption');
+            const startGameBtn = document.getElementById('startGameBtn');
+            const howToPlayBtn = document.getElementById('howToPlayBtn');
+            const prevRoomBtn = document.getElementById('prevRoomBtn');
+            const nextRoomBtn = document.getElementById('nextRoomBtn');
+            const startRecallBtn = document.getElementById('startRecallBtn');
+            const submitRecallBtn = document.getElementById('submitRecallBtn');
+            const tryAgainBtn = document.getElementById('tryAgainBtn');
+            const newPalaceBtn = document.getElementById('newPalaceBtn');
+            const palaceRoom = document.getElementById('palaceRoom');
+            const itemsList = document.getElementById('itemsList');
+            const itemsToPlace = document.getElementById('itemsToPlace');
+            const studyTimer = document.getElementById('studyTimer');
+            const roomIndicator = document.getElementById('roomIndicator');
+            const currentRoom = document.getElementById('currentRoom');
+            const recallInputs = document.getElementById('recallInputs');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const resultsMessage = document.getElementById('resultsMessage');
+            
+            // Difficulty selection
+            beginnerOption.addEventListener('click', function() {
+                selectDifficulty('beginner');
+            });
+            
+            intermediateOption.addEventListener('click', function() {
+                selectDifficulty('intermediate');
+            });
+            
+            advancedOption.addEventListener('click', function() {
+                selectDifficulty('advanced');
+            });
+            
+            // Default to beginner
+            selectDifficulty('beginner');
+            
+            // Start game
+            startGameBtn.addEventListener('click', function() {
+                gameSetup.style.display = 'none';
+                gameArea.style.display = 'block';
+                initializeGame();
+            });
+            
+            // How to play
+            howToPlayBtn.addEventListener('click', function() {
+                alert('The Memory Palace technique (Method of Loci) uses spatial memory to improve recall. You will place items in a virtual palace, then try to remember them by mentally walking through the palace. The more vivid and unusual your mental images, the better you will remember!');
+            });
+            
+            // Room navigation
+            prevRoomBtn.addEventListener('click', function() {
+                if (gameState.currentRoom > 0) {
+                    gameState.currentRoom--;
+                    updateRoomDisplay();
+                }
+            });
+            
+            nextRoomBtn.addEventListener('click', function() {
+                if (gameState.currentRoom < gameState.rooms.length - 1) {
+                    gameState.currentRoom++;
+                    updateRoomDisplay();
+                }
+            });
+            
+            // Start recall phase
+            startRecallBtn.addEventListener('click', function() {
+                // Clear the study timer
+                clearInterval(gameState.studyTimer);
+                
+                // Switch to recall phase
+                gameArea.style.display = 'none';
+                recallPhase.style.display = 'block';
+                
+                // Set up recall inputs
+                setupRecallInputs();
+            });
+            
+            // Submit recall answers
+            submitRecallBtn.addEventListener('click', function() {
+                checkAnswers();
+            });
+            
+            // Try again
+            tryAgainBtn.addEventListener('click', function() {
+                results.style.display = 'none';
+                recallPhase.style.display = 'block';
+                setupRecallInputs();
+            });
+            
+            // New palace
+            newPalaceBtn.addEventListener('click', function() {
+                results.style.display = 'none';
+                gameArea.style.display = 'block';
+                initializeGame();
+            });
+            
+            // Select difficulty
+            function selectDifficulty(level) {
+                // Update UI
+                beginnerOption.classList.remove('selected');
+                intermediateOption.classList.remove('selected');
+                advancedOption.classList.remove('selected');
+                
+                if (level === 'beginner') {
+                    beginnerOption.classList.add('selected');
+                    gameState.difficulty = 'beginner';
+                    gameState.studyTime = 180; // 3 minutes
+                } else if (level === 'intermediate') {
+                    intermediateOption.classList.add('selected');
+                    gameState.difficulty = 'intermediate';
+                    gameState.studyTime = 120; // 2 minutes
+                } else if (level === 'advanced') {
+                    advancedOption.classList.add('selected');
+                    gameState.difficulty = 'advanced';
+                    gameState.studyTime = 60; // 1 minute
+                }
+            }
+            
+            // Initialize the game
+            function initializeGame() {
+                // Reset game state
+                gameState.items = [];
+                gameState.placedItems = {};
+                gameState.currentRoom = 0;
+                gameState.recallAnswers = [];
+                
+                // Generate items based on difficulty
+                const itemCount = gameState.difficulty === 'beginner' ? 5 : 
+                                 gameState.difficulty === 'intermediate' ? 8 : 12;
+                
+                const itemIcons = [
+                    'fa-apple-alt', 'fa-book', 'fa-crown', 'fa-dragon', 'fa-feather',
+                    'fa-gem', 'fa-heart', 'fa-key', 'fa-leaf', 'fa-music',
+                    'fa-puzzle-piece', 'fa-rocket', 'fa-star', 'fa-umbrella', 'fa-volleyball'
+                ];
+                
+                const itemNames = [
+                    'Golden Apple', 'Ancient Book', 'Royal Crown', 'Fire Dragon', 'Magic Feather',
+                    'Shining Gem', 'Crystal Heart', 'Golden Key', 'Enchanted Leaf', 'Musical Instrument',
+                    'Mystery Puzzle', 'Space Rocket', 'Shooting Star', 'Colorful Umbrella', 'Bouncing Ball'
+                ];
+                
+                // Shuffle and select items
+                const shuffledIcons = [...itemIcons].sort(() => 0.5 - Math.random());
+                const shuffledNames = [...itemNames].sort(() => 0.5 - Math.random());
+                
+                for (let i = 0; i < itemCount; i++) {
+                    gameState.items.push({
+                        id: i,
+                        name: shuffledNames[i],
+                        icon: shuffledIcons[i],
+                        room: null,
+                        position: null
+                    });
+                }
+                
+                // Update UI
+                updateItemsDisplay();
+                updateRoomDisplay();
+                startStudyTimer();
+                
+                // Set up drag and drop
+                setupDragAndDrop();
+            }
+            
+            // Update items display
+            function updateItemsDisplay() {
+                itemsList.innerHTML = '';
+                
+                gameState.items.forEach(item => {
+                    if (!item.room) { // Only show items that haven't been placed
+                        const itemCard = document.createElement('div');
+                        itemCard.className = 'item-card';
+                        itemCard.draggable = true;
+                        itemCard.dataset.id = item.id;
+                        
+                        itemCard.innerHTML = `
+                            <i class="fas ${item.icon} item-icon"></i>
+                            <span>${item.name}</span>
+                        `;
+                        
+                        itemsList.appendChild(itemCard);
+                    }
+                });
+                
+                // Update items to place counter
+                const placedCount = gameState.items.filter(item => item.room !== null).length;
+                itemsToPlace.textContent = `Items to place: ${placedCount}/${gameState.items.length}`;
+                
+                // Enable/disable recall button
+                startRecallBtn.disabled = placedCount < gameState.items.length;
+            }
+            
+            // Update room display
+            function updateRoomDisplay() {
+                roomIndicator.textContent = gameState.rooms[gameState.currentRoom];
+                currentRoom.textContent = `Room: ${gameState.rooms[gameState.currentRoom]}`;
+                
+                // Clear the room
+                palaceRoom.innerHTML = `
+                    <div class="room-feature door"></div>
+                    <div class="room-feature window"></div>
+                    <div class="room-feature fireplace"></div>
+                `;
+                
+                // Add items placed in this room
+                gameState.items.forEach(item => {
+                    if (item.room === gameState.currentRoom && item.position) {
+                        const itemElement = document.createElement('div');
+                        itemElement.className = 'palace-object placed';
+                        itemElement.style.left = `${item.position.x}px`;
+                        itemElement.style.top = `${item.position.y}px`;
+                        itemElement.style.backgroundColor = getColorForItem(item.id);
+                        
+                        itemElement.innerHTML = `<i class="fas ${item.icon}"></i>`;
+                        
+                        palaceRoom.appendChild(itemElement);
+                    }
+                });
+            }
+            
+            // Set up drag and drop
+            function setupDragAndDrop() {
+                // Allow drop in palace room
+                palaceRoom.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                });
+                
+                palaceRoom.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    
+                    const itemId = e.dataTransfer.getData('text/plain');
+                    if (itemId) {
+                        const rect = palaceRoom.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        // Place the item
+                        placeItem(parseInt(itemId), x, y);
+                    }
+                });
+                
+                // Make items draggable
+                document.addEventListener('dragstart', function(e) {
+                    if (e.target.classList.contains('item-card')) {
+                        e.dataTransfer.setData('text/plain', e.target.dataset.id);
+                    }
+                });
+            }
+            
+            // Place an item in the palace
+            function placeItem(itemId, x, y) {
+                const item = gameState.items.find(i => i.id === itemId);
+                if (item) {
+                    item.room = gameState.currentRoom;
+                    item.position = { x: x - 30, y: y - 30 }; // Center the item
+                    
+                    // Update displays
+                    updateItemsDisplay();
+                    updateRoomDisplay();
+                }
+            }
+            
+            // Start study timer
+            function startStudyTimer() {
+                let timeLeft = gameState.studyTime;
+                
+                gameState.studyTimer = setInterval(function() {
+                    timeLeft--;
+                    
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    
+                    studyTimer.textContent = `Study Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(gameState.studyTimer);
+                        startRecallBtn.click(); // Automatically start recall when time is up
+                    }
+                }, 1000);
+            }
+            
+            // Set up recall inputs
+            function setupRecallInputs() {
+                recallInputs.innerHTML = '';
+                
+                for (let i = 0; i < gameState.items.length; i++) {
+                    const inputGroup = document.createElement('div');
+                    inputGroup.className = 'recall-input-group';
+                    
+                    const label = document.createElement('label');
+                    label.textContent = `Item ${i + 1}:`;
+                    
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'recall-input';
+                    input.placeholder = 'Enter the item you remember';
+                    input.dataset.index = i;
+                    
+                    inputGroup.appendChild(label);
+                    inputGroup.appendChild(input);
+                    recallInputs.appendChild(inputGroup);
+                }
+            }
+            
+            // Check answers
+            function checkAnswers() {
+                const inputs = document.querySelectorAll('.recall-input');
+                let correctCount = 0;
+                
+                inputs.forEach(input => {
+                    const index = parseInt(input.dataset.index);
+                    const userAnswer = input.value.trim().toLowerCase();
+                    const correctAnswer = gameState.items[index].name.toLowerCase();
+                    
+                    if (userAnswer === correctAnswer) {
+                        correctCount++;
+                        input.style.backgroundColor = '#e8f5e8';
+                    } else {
+                        input.style.backgroundColor = '#fde8e8';
+                        input.title = `Correct answer: ${gameState.items[index].name}`;
+                    }
+                });
+                
+                // Show results
+                recallPhase.style.display = 'none';
+                results.style.display = 'block';
+                
+                scoreDisplay.textContent = `${correctCount}/${gameState.items.length}`;
+                
+                // Set results message based on performance
+                const percentage = (correctCount / gameState.items.length) * 100;
+                if (percentage >= 90) {
+                    resultsMessage.textContent = 'Outstanding! Your memory palace is incredibly effective!';
+                } else if (percentage >= 70) {
+                    resultsMessage.textContent = 'Great job! Your memory palace is working well.';
+                } else if (percentage >= 50) {
+                    resultsMessage.textContent = 'Good effort! With more practice, your memory will improve.';
+                } else {
+                    resultsMessage.textContent = 'Keep practicing! Try creating more vivid mental images.';
+                }
+            }
+            
+            // Helper function to generate colors for items
+            function getColorForItem(itemId) {
+                const colors = [
+                    '#FF6B6B', '#4ECDC4', '#FFD166', '#06D6A0', '#118AB2',
+                    '#EF476F', '#7BDFF2', '#B2F7EF', '#EFF7F6', '#F7D6E0',
+                    '#E2CFEA', '#F2B5D4', '#B5EAD7', '#C7CEEA', '#FFDAC1'
+                ];
+                
+                return colors[itemId % colors.length];
+            }
+        });
+    </script>
+</body>
+</html>
