@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One-Minute Masterpiece - Quick Drawing Game</title>
+    <meta name="description" content="One-Minute Masterpiece: A fun, simple drawing game where you capture the essence of common objects in just 60 seconds. No artistic skills required!">
+    <meta name="keywords" content="drawing game, quick drawing, art game, timer game, creative game, simple drawing, fun game">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 15px;
+        }
+        
+        .info-box {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .info-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .timer {
+            color: #ffeb3b;
+            font-size: 2rem !important;
+        }
+        
+        .canvas-container {
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        #drawingCanvas {
+            display: block;
+            width: 100%;
+            height: 400px;
+            cursor: crosshair;
+            touch-action: none;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        #startBtn {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        #startBtn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+        
+        #resetBtn {
+            background: #f44336;
+            color: white;
+        }
+        
+        #resetBtn:hover {
+            background: #da190b;
+            transform: translateY(-2px);
+        }
+        
+        #newObjectBtn {
+            background: #2196F3;
+            color: white;
+        }
+        
+        #newObjectBtn:hover {
+            background: #0b7dda;
+            transform: translateY(-2px);
+        }
+        
+        .tools {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 15px;
+            width: 100%;
+        }
+        
+        .tool-btn {
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+        }
+        
+        .tool-btn.active {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        .brush-size {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 10px;
+        }
+        
+        .brush-size label {
+            font-size: 0.9rem;
+        }
+        
+        .brush-size input {
+            width: 80px;
+        }
+        
+        .color-palette {
+            display: flex;
+            gap: 5px;
+            margin-left: 10px;
+        }
+        
+        .color-option {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .color-option.active {
+            border-color: white;
+            transform: scale(1.2);
+        }
+        
+        .rules-section {
+            margin-top: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 20px 0 10px;
+        }
+        
+        p, ul {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .highlight {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        .game-over {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            border-radius: 15px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        
+        .game-over.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .game-over h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffeb3b;
+        }
+        
+        .game-over p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .share-section {
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .share-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #ffeb3b;
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .whatsapp {
+            background: #25D366;
+        }
+        
+        .facebook {
+            background: #3b5998;
+        }
+        
+        .twitter {
+            background: #1DA1F2;
+        }
+        
+        .instagram {
+            background: #E1306C;
+        }
+        
+        .reddit {
+            background: #FF5700;
+        }
+        
+        .link {
+            background: #6c757d;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .game-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            #drawingCanvas {
+                height: 300px;
+            }
+            
+            .controls {
+                flex-wrap: wrap;
+            }
+            
+            .tools {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .brush-size, .color-palette {
+                margin-left: 0;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-btn {
+                width: 200px;
+                justify-content: center;
+            }
+        }
+        
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+        
+        .download-btn {
+            background: #9C27B0;
+            color: white;
+            margin-top: 15px;
+        }
+        
+        .download-btn:hover {
+            background: #7B1FA2;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>One-Minute Masterpiece</h1>
+            <p class="tagline">Capture the essence of common objects in just 60 seconds!</p>
+        </header>
+        
+        <section class="game-area">
+            <div class="game-info">
+                <div class="info-box">
+                    <div class="info-label">Object to Draw</div>
+                    <div class="info-value" id="objectDisplay">a cup</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Time Remaining</div>
+                    <div class="info-value timer" id="timerDisplay">60s</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Status</div>
+                    <div class="info-value" id="statusDisplay">Ready to Start</div>
+                </div>
+            </div>
+            
+            <div class="canvas-container">
+                <canvas id="drawingCanvas"></canvas>
+                <div class="game-over" id="gameOverScreen">
+                    <h2>Time's Up!</h2>
+                    <p>Your masterpiece is complete!</p>
+                    <button id="playAgainBtn">Play Again</button>
+                    
+                    <div class="share-section">
+                        <div class="share-title">Share Your Masterpiece</div>
+                        <div class="share-buttons">
+                            <a href="#" class="share-btn whatsapp" id="whatsappShare">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <a href="#" class="share-btn facebook" id="facebookShare">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
+                            <a href="#" class="share-btn twitter" id="twitterShare">
+                                <i class="fab fa-twitter"></i> Twitter
+                            </a>
+                            <a href="#" class="share-btn instagram" id="instagramShare">
+                                <i class="fab fa-instagram"></i> Instagram
+                            </a>
+                            <a href="#" class="share-btn reddit" id="redditShare">
+                                <i class="fab fa-reddit-alien"></i> Reddit
+                            </a>
+                            <a href="#" class="share-btn link" id="copyLink">
+                                <i class="fas fa-link"></i> Copy Link
+                            </a>
+                        </div>
+                        <button class="download-btn" id="downloadBtn">
+                            <i class="fas fa-download"></i> Download Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tools">
+                <button class="tool-btn active" id="penTool">Pen</button>
+                <button class="tool-btn" id="eraserTool">Eraser</button>
+                
+                <div class="brush-size">
+                    <label for="brushSize">Size:</label>
+                    <input type="range" id="brushSize" min="1" max="30" value="3">
+                </div>
+                
+                <div class="color-palette">
+                    <div class="color-option active" style="background-color: #000000;" data-color="#000000"></div>
+                    <div class="color-option" style="background-color: #ff0000;" data-color="#ff0000"></div>
+                    <div class="color-option" style="background-color: #0000ff;" data-color="#0000ff"></div>
+                    <div class="color-option" style="background-color: #008000;" data-color="#008000"></div>
+                    <div class="color-option" style="background-color: #ffa500;" data-color="#ffa500"></div>
+                    <div class="color-option" style="background-color: #800080;" data-color="#800080"></div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="startBtn">Start Drawing</button>
+                <button id="resetBtn">Clear Canvas</button>
+                <button id="newObjectBtn">New Object</button>
+            </div>
+        </section>
+        
+        <section class="rules-section">
+            <h2>How to Play One-Minute Masterpiece</h2>
+            
+            <h3>Game Rules</h3>
+            <ul>
+                <li>You'll be given a random, common object to draw (like "a key", "a cup", or "a leaf").</li>
+                <li>You have exactly <span class="highlight">60 seconds</span> to draw the object.</li>
+                <li>The goal is <span class="highlight">not perfection</span> but to capture the object's essence.</li>
+                <li>Focus on the most recognizable features rather than details.</li>
+                <li>When time runs out, your drawing is complete - no additions allowed!</li>
+                <li>Share your creation with friends and compare interpretations!</li>
+            </ul>
+            
+            <h3>Why It's Fun</h3>
+            <p>One-Minute Masterpiece removes the pressure of "being good at art" and makes drawing about energy, intuition, and fun. The time constraint forces you to focus on what's truly important about each object, often leading to surprisingly creative results!</p>
+            
+            <h3>Tips for Success</h3>
+            <ul>
+                <li>Start with the basic shape - don't worry about details at first</li>
+                <li>Think about what makes the object recognizable at a glance</li>
+                <li>Use bold, confident strokes rather than hesitant lines</li>
+                <li>Remember: it's about the essence, not perfection!</li>
+            </ul>
+        </section>
+        
+        <footer>
+            <p>One-Minute Masterpiece &copy; 2023 - The fun drawing game for everyone!</p>
+        </footer>
+    </div>
+
+    <script>
+        // Canvas setup
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth;
+            canvas.height = 400;
+            
+            // Set a white background
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        
+        // Initialize canvas
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Game state
+        let timer = 60;
+        let timerInterval = null;
+        let isDrawing = false;
+        let currentTool = 'pen';
+        let currentColor = '#000000';
+        let brushSize = 3;
+        let lastX = 0;
+        let lastY = 0;
+        
+        // Drawing objects
+        const drawingObjects = [
+            "a key", "a cup", "a leaf", "a shoe", "a book", "a pencil", 
+            "a cloud", "a tree", "a house", "a car", "a fish", "a flower",
+            "a clock", "a star", "a heart", "a sun", "a moon", "a hat",
+            "a guitar", "a phone", "a lamp", "a chair", "an apple", "a banana",
+            "a butterfly", "a candle", "a pair of glasses", "a teapot", "a umbrella"
+        ];
+        
+        // DOM elements
+        const objectDisplay = document.getElementById('objectDisplay');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const statusDisplay = document.getElementById('statusDisplay');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const newObjectBtn = document.getElementById('newObjectBtn');
+        const penTool = document.getElementById('penTool');
+        const eraserTool = document.getElementById('eraserTool');
+        const brushSizeInput = document.getElementById('brushSize');
+        const colorOptions = document.querySelectorAll('.color-option');
+        const gameOverScreen = document.getElementById('gameOverScreen');
+        const playAgainBtn = document.getElementById('playAgainBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        
+        // Share buttons
+        const whatsappShare = document.getElementById('whatsappShare');
+        const facebookShare = document.getElementById('facebookShare');
+        const twitterShare = document.getElementById('twitterShare');
+        const instagramShare = document.getElementById('instagramShare');
+        const redditShare = document.getElementById('redditShare');
+        const copyLink = document.getElementById('copyLink');
+        
+        // Initialize with a random object
+        let currentObject = getRandomObject();
+        objectDisplay.textContent = currentObject;
+        
+        // Event listeners
+        startBtn.addEventListener('click', startGame);
+        resetBtn.addEventListener('click', resetCanvas);
+        newObjectBtn.addEventListener('click', newObject);
+        playAgainBtn.addEventListener('click', playAgain);
+        downloadBtn.addEventListener('click', downloadImage);
+        
+        penTool.addEventListener('click', () => setTool('pen'));
+        eraserTool.addEventListener('click', () => setTool('eraser'));
+        
+        brushSizeInput.addEventListener('input', (e) => {
+            brushSize = parseInt(e.target.value);
+        });
+        
+        colorOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+                e.target.classList.add('active');
+                currentColor = e.target.getAttribute('data-color');
+            });
+        });
+        
+        // Share button event listeners
+        whatsappShare.addEventListener('click', shareOnWhatsApp);
+        facebookShare.addEventListener('click', shareOnFacebook);
+        twitterShare.addEventListener('click', shareOnTwitter);
+        instagramShare.addEventListener('click', shareOnInstagram);
+        redditShare.addEventListener('click', shareOnReddit);
+        copyLink.addEventListener('click', copyShareLink);
+        
+        // Canvas event listeners
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+        
+        // Touch events for mobile
+        canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+        canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+        canvas.addEventListener('touchend', stopDrawing);
+        
+        // Functions
+        function getRandomObject() {
+            return drawingObjects[Math.floor(Math.random() * drawingObjects.length)];
+        }
+        
+        function startGame() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            
+            resetCanvas();
+            timer = 60;
+            updateTimerDisplay();
+            statusDisplay.textContent = "Drawing in progress!";
+            startBtn.disabled = true;
+            gameOverScreen.classList.remove('active');
+            
+            timerInterval = setInterval(() => {
+                timer--;
+                updateTimerDisplay();
+                
+                if (timer <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+        
+        function endGame() {
+            clearInterval(timerInterval);
+            statusDisplay.textContent = "Time's up! Your masterpiece is complete.";
+            startBtn.disabled = false;
+            gameOverScreen.classList.add('active');
+        }
+        
+        function updateTimerDisplay() {
+            timerDisplay.textContent = `${timer}s`;
+            
+            // Change color when time is running out
+            if (timer <= 10) {
+                timerDisplay.style.color = '#ff5252';
+                timerDisplay.style.animation = 'pulse 0.5s infinite alternate';
+            } else {
+                timerDisplay.style.color = '#ffeb3b';
+                timerDisplay.style.animation = 'none';
+            }
+        }
+        
+        function newObject() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            
+            currentObject = getRandomObject();
+            objectDisplay.textContent = currentObject;
+            statusDisplay.textContent = "Ready to Start";
+            timer = 60;
+            updateTimerDisplay();
+            startBtn.disabled = false;
+            gameOverScreen.classList.remove('active');
+            resetCanvas();
+        }
+        
+        function playAgain() {
+            newObject();
+            startGame();
+        }
+        
+        function resetCanvas() {
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        
+        function setTool(tool) {
+            currentTool = tool;
+            
+            if (tool === 'pen') {
+                penTool.classList.add('active');
+                eraserTool.classList.remove('active');
+            } else if (tool === 'eraser') {
+                eraserTool.classList.add('active');
+                penTool.classList.remove('active');
+            }
+        }
+        
+        function startDrawing(e) {
+            if (timer <= 0) return; // Don't allow drawing after time is up
+            
+            isDrawing = true;
+            
+            // Get position
+            const pos = getMousePos(canvas, e);
+            lastX = pos.x;
+            lastY = pos.y;
+            
+            // Start a new path
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+        }
+        
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            e.preventDefault();
+            
+            // Get position
+            const pos = getMousePos(canvas, e);
+            const currentX = pos.x;
+            const currentY = pos.y;
+            
+            // Set drawing style based on tool
+            if (currentTool === 'pen') {
+                ctx.strokeStyle = currentColor;
+                ctx.lineWidth = brushSize;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+            } else if (currentTool === 'eraser') {
+                ctx.strokeStyle = '#FFFFFF';
+                ctx.lineWidth = brushSize * 3;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+            }
+            
+            // Draw line
+            ctx.lineTo(currentX, currentY);
+            ctx.stroke();
+            
+            // Update last position
+            lastX = currentX;
+            lastY = currentY;
+        }
+        
+        function stopDrawing() {
+            isDrawing = false;
+        }
+        
+        function getMousePos(canvas, evt) {
+            const rect = canvas.getBoundingClientRect();
+            let clientX, clientY;
+            
+            if (evt.type.includes('touch')) {
+                clientX = evt.touches[0].clientX;
+                clientY = evt.touches[0].clientY;
+            } else {
+                clientX = evt.clientX;
+                clientY = evt.clientY;
+            }
+            
+            return {
+                x: clientX - rect.left,
+                y: clientY - rect.top
+            };
+        }
+        
+        function handleTouchStart(e) {
+            e.preventDefault();
+            if (timer <= 0) return;
+            
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent('mousedown', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }
+        
+        function handleTouchMove(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent('mousemove', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }
+        
+        // Share functionality
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'one-minute-masterpiece.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        function shareOnWhatsApp(e) {
+            e.preventDefault();
+            const canvasData = canvas.toDataURL('image/png');
+            const text = `Check out my One-Minute Masterpiece! I drew "${currentObject}" in just 60 seconds!`;
+            const url = `https://api.whatsapp.com://send?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        }
+        
+        function shareOnFacebook(e) {
+            e.preventDefault();
+            const text = `Check out my One-Minute Masterpiece! I drew "${currentObject}" in just 60 seconds!`;
+            const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(text)}`;
+            window.open(url, '_blank', 'width=600,height=400');
+        }
+        
+        function shareOnTwitter(e) {
+            e.preventDefault();
+            const text = `Check out my One-Minute Masterpiece! I drew "${currentObject}" in just 60 seconds!`;
+            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`;
+            window.open(url, '_blank', 'width=600,height=400');
+        }
+        
+        function shareOnInstagram(e) {
+            e.preventDefault();
+            // Instagram doesn't have a direct sharing API, so we download the image
+            downloadImage();
+            alert('Your drawing has been downloaded. You can now share it on Instagram!');
+        }
+        
+        function shareOnReddit(e) {
+            e.preventDefault();
+            const text = `Check out my One-Minute Masterpiece! I drew "${currentObject}" in just 60 seconds!`;
+            const url = `https://www.reddit.com/submit?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(text)}`;
+            window.open(url, '_blank', 'width=600,height=600');
+        }
+        
+        function copyShareLink(e) {
+            e.preventDefault();
+            const text = `Check out my One-Minute Masterpiece! I drew "${currentObject}" in just 60 seconds! Play at: ${window.location.href}`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                // Show feedback
+                const originalText = copyLink.innerHTML;
+                copyLink.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    copyLink.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy link to clipboard');
+            });
+        }
+        
+        // Initialize
+        updateTimerDisplay();
+    </script>
+</body>
+</html>
