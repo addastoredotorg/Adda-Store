@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Silent Duet: A two-player cooperative puzzle game where players solve abstract challenges together using only cursor movements. Experience non-verbal collaboration and strengthen empathy through unique gameplay.">
+    <meta name="keywords" content="cooperative game, non-verbal communication, puzzle game, empathy game, browser game, two-player game, silent collaboration">
+    <title>Silent Duet | Non-Verbal Cooperative Puzzle Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles & Variables */
+        :root {
+            --primary: #5d4e75;
+            --secondary: #e8a598;
+            --accent: #4c8b8b;
+            --background: #f8f5f2;
+            --text: #333333;
+            --light-gray: #e8e2dc;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            margin-top: 2rem;
+        }
+        
+        h3 {
+            font-size: 1.6rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Layout */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #4a3d65 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            font-style: italic;
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 3rem 0;
+            text-align: center;
+            background-color: white;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .hero h2 {
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Game Setup */
+        .game-setup {
+            background-color: var(--light-gray);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .player-selection {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+        }
+        
+        .player-option {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 45%;
+            box-shadow: var(--shadow);
+        }
+        
+        .player-option:hover {
+            transform: translateY(-5px);
+        }
+        
+        .player-option.selected {
+            border: 3px solid var(--accent);
+            background-color: #f0f7f7;
+        }
+        
+        .player-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            background-color: #3a6b6b;
+            transform: translateY(-2px);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: #4a3d65;
+        }
+        
+        /* Game Area */
+        .game-area {
+            display: none;
+            padding: 2rem 0;
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .player-indicator {
+            display: flex;
+            align-items: center;
+        }
+        
+        .player-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .player1-color {
+            background-color: #e8a598;
+        }
+        
+        .player2-color {
+            background-color: #4c8b8b;
+        }
+        
+        .game-container {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        /* Puzzle Elements */
+        .node {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 10;
+        }
+        
+        .node:hover {
+            transform: scale(1.2);
+        }
+        
+        .connection {
+            position: absolute;
+            height: 4px;
+            background-color: var(--primary);
+            transform-origin: 0 0;
+            z-index: 5;
+        }
+        
+        .cursor {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 100;
+            transition: transform 0.1s ease;
+        }
+        
+        .player1-cursor {
+            background-color: rgba(232, 165, 152, 0.7);
+            border: 2px solid #e8a598;
+        }
+        
+        .player2-cursor {
+            background-color: rgba(76, 139, 139, 0.7);
+            border: 2px solid #4c8b8b;
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            padding: 4rem 0;
+            background-color: white;
+        }
+        
+        .steps-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .step {
+            flex: 0 0 48%;
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .step:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-icon {
+            font-size: 2.8rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .step-number {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        /* Rules Section */
+        .rules {
+            padding: 3rem 0;
+            background-color: var(--light-gray);
+        }
+        
+        .rules-list {
+            list-style-type: none;
+            margin-top: 1.5rem;
+        }
+        
+        .rules-list li {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .rules-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        /* Benefits Section */
+        .benefits {
+            padding: 3rem 0;
+            background-color: white;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .benefit-card {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+        }
+        
+        footer a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+            color: #e0e0e0;
+        }
+        
+        .copyright {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .steps-container {
+                flex-direction: column;
+            }
+            
+            .step {
+                flex: 0 0 100%;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .player-selection {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .player-option {
+                width: 90%;
+                margin-bottom: 1rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .game-container {
+                height: 400px;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Success Animation */
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .celebrate {
+            animation: celebrate 0.5s ease 3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-handshake"></i> Silent Duet</h1>
+            <p class="tagline">A cooperative puzzle game where communication happens through movement, not words</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h2>Connect Without Words</h2>
+                <p>Experience a unique form of collaboration in this two-player puzzle game. Solve challenges together using only cursor movements to communicate, building empathy and understanding through non-verbal cooperation.</p>
+                
+                <!-- Game Setup -->
+                <div class="game-setup" id="gameSetup">
+                    <h3>Start Your Silent Duet</h3>
+                    <p>Choose your player role and begin the experience. Each player will see the same puzzle from a different perspective.</p>
+                    
+                    <div class="player-selection">
+                        <div class="player-option" id="player1Option">
+                            <i class="fas fa-user player-icon"></i>
+                            <h3>Player 1</h3>
+                            <p>See the puzzle from the standard view</p>
+                            <div class="player-color player1-color"></div>
+                        </div>
+                        <div class="player-option" id="player2Option">
+                            <i class="fas fa-user-friends player-icon"></i>
+                            <h3>Player 2</h3>
+                            <p>See the puzzle from a rotated perspective</p>
+                            <div class="player-color player2-color"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button class="btn btn-primary" id="startGameBtn"><i class="fas fa-play"></i> Start Game</button>
+                        <button class="btn" id="howToPlayBtn"><i class="fas fa-question-circle"></i> How to Play</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Area -->
+        <section class="game-area" id="gameArea">
+            <div class="container">
+                <div class="game-info">
+                    <div class="player-indicator">
+                        <div class="player-color player1-color"></div>
+                        <span>Player 1 (You)</span>
+                    </div>
+                    <div class="player-indicator">
+                        <div class="player-color player2-color"></div>
+                        <span>Player 2</span>
+                    </div>
+                    <div>
+                        <span id="puzzleStatus">Puzzle: Connecting Nodes</span>
+                    </div>
+                </div>
+                
+                <div class="game-container" id="gameContainer">
+                    <!-- Game elements will be generated here -->
+                </div>
+                
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <button class="btn" id="resetPuzzleBtn"><i class="fas fa-redo"></i> Reset Puzzle</button>
+                    <button class="btn" id="newPuzzleBtn"><i class="fas fa-plus"></i> New Puzzle</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <div class="container">
+                <h2>How Silent Duet Works</h2>
+                <div class="steps-container">
+                    <div class="step">
+                        <i class="fas fa-window-restore step-icon"></i>
+                        <h3><span class="step-number">1</span> Open Two Windows</h3>
+                        <p>Each player opens the game in a separate browser window. Player 1 selects "Player 1" and Player 2 selects "Player 2".</p>
+                    </div>
+                    <div class="step">
+                        <i class="fas fa-puzzle-piece step-icon"></i>
+                        <h3><span class="step-number">2</span> Different Perspectives</h3>
+                        <p>Both players see the same abstract puzzle but from different angles. Player 2's view is rotated or mirrored.</p>
+                    </div>
+                    <div class="step">
+                        <i class="fas fa-mouse-pointer step-icon"></i>
+                        <h3><span class="step-number">3</span> Non-Verbal Communication</h3>
+                        <p>Players can see each other's cursor movements but cannot chat or use voice communication.</p>
+                    </div>
+                    <div class="step">
+                        <i class="fas fa-handshake step-icon"></i>
+                        <h3><span class="step-number">4</span> Solve Together</h3>
+                        <p>Work together to solve the puzzle by observing cursor movements and understanding your partner's intentions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rules Section -->
+        <section class="rules">
+            <div class="container">
+                <h2>Game Rules</h2>
+                <p>To ensure the best Silent Duet experience, follow these guidelines:</p>
+                <ul class="rules-list">
+                    <li><strong>No verbal communication:</strong> Do not use chat, voice, or any other form of verbal communication during gameplay.</li>
+                    <li><strong>Observe cursor movements:</strong> Pay attention to your partner's cursor to understand their intentions and strategy.</li>
+                    <li><strong>Different perspectives:</strong> Remember that your partner sees the puzzle from a different angle than you do.</li>
+                    <li><strong>Patience is key:</strong> Non-verbal collaboration takes time. Be patient with your partner and yourself.</li>
+                    <li><strong>Focus on collaboration:</strong> The goal is to work together, not to solve the puzzle as quickly as possible.</li>
+                    <li><strong>Respect the silence:</strong> Embrace the unique experience of communicating without words.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits">
+            <div class="container">
+                <h2>Benefits of Silent Collaboration</h2>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <i class="fas fa-brain benefit-icon"></i>
+                        <h3>Enhanced Empathy</h3>
+                        <p>Learn to understand others' perspectives and intentions without relying on words.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-eye benefit-icon"></i>
+                        <h3>Improved Observation</h3>
+                        <p>Sharpen your ability to notice subtle cues and non-verbal communication.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-users benefit-icon"></i>
+                        <h3>Deeper Connection</h3>
+                        <p>Build unique bonds through shared non-verbal problem-solving experiences.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-lightbulb benefit-icon"></i>
+                        <h3>Creative Thinking</h3>
+                        <p>Develop innovative approaches to communication and collaboration.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <a href="#"><i class="fas fa-envelope"></i> Contact Us</a>
+            <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+            <a href="#"><i class="fas fa-share-alt"></i> Share</a>
+            <p class="copyright">&copy; 2023 Silent Duet. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Game state
+            let gameState = {
+                player: null,
+                puzzle: null,
+                nodes: [],
+                connections: [],
+                playerCursors: {
+                    player1: { x: 0, y: 0, visible: false },
+                    player2: { x: 0, y: 0, visible: false }
+                },
+                selectedNode: null
+            };
+            
+            // DOM elements
+            const gameSetup = document.getElementById('gameSetup');
+            const gameArea = document.getElementById('gameArea');
+            const gameContainer = document.getElementById('gameContainer');
+            const player1Option = document.getElementById('player1Option');
+            const player2Option = document.getElementById('player2Option');
+            const startGameBtn = document.getElementById('startGameBtn');
+            const resetPuzzleBtn = document.getElementById('resetPuzzleBtn');
+            const newPuzzleBtn = document.getElementById('newPuzzleBtn');
+            const howToPlayBtn = document.getElementById('howToPlayBtn');
+            const puzzleStatus = document.getElementById('puzzleStatus');
+            
+            // Player selection
+            player1Option.addEventListener('click', function() {
+                player1Option.classList.add('selected');
+                player2Option.classList.remove('selected');
+                gameState.player = 1;
+            });
+            
+            player2Option.addEventListener('click', function() {
+                player2Option.classList.add('selected');
+                player1Option.classList.remove('selected');
+                gameState.player = 2;
+            });
+            
+            // Default to Player 1
+            player1Option.click();
+            
+            // Start game
+            startGameBtn.addEventListener('click', function() {
+                if (!gameState.player) {
+                    alert('Please select a player role first.');
+                    return;
+                }
+                
+                gameSetup.style.display = 'none';
+                gameArea.style.display = 'block';
+                generatePuzzle();
+                setupGameEvents();
+            });
+            
+            // How to play
+            howToPlayBtn.addEventListener('click', function() {
+                alert('Silent Duet is a two-player cooperative puzzle game. Each player sees the same puzzle from a different perspective. Work together using only cursor movements to solve the puzzle. No talking or typing allowed!');
+            });
+            
+            // Reset puzzle
+            resetPuzzleBtn.addEventListener('click', function() {
+                resetPuzzle();
+            });
+            
+            // New puzzle
+            newPuzzleBtn.addEventListener('click', function() {
+                generatePuzzle();
+            });
+            
+            // Generate a new puzzle
+            function generatePuzzle() {
+                // Clear previous puzzle
+                gameContainer.innerHTML = '';
+                gameState.nodes = [];
+                gameState.connections = [];
+                gameState.selectedNode = null;
+                
+                // Puzzle configuration
+                const nodeCount = 6;
+                const containerWidth = gameContainer.offsetWidth;
+                const containerHeight = gameContainer.offsetHeight;
+                const margin = 80;
+                
+                // Create nodes
+                for (let i = 0; i < nodeCount; i++) {
+                    const node = document.createElement('div');
+                    node.className = 'node';
+                    node.dataset.id = i;
+                    
+                    // Position nodes in a circular pattern
+                    const angle = (i / nodeCount) * 2 * Math.PI;
+                    const radius = Math.min(containerWidth, containerHeight) / 2 - margin;
+                    const centerX = containerWidth / 2;
+                    const centerY = containerHeight / 2;
+                    
+                    const x = centerX + radius * Math.cos(angle);
+                    const y = centerY + radius * Math.sin(angle);
+                    
+                    node.style.left = `${x}px`;
+                    node.style.top = `${y}px`;
+                    
+                    // Assign colors in a pattern
+                    const hue = (i * 60) % 360;
+                    node.style.backgroundColor = `hsl(${hue}, 70%, 60%)`;
+                    
+                    gameContainer.appendChild(node);
+                    gameState.nodes.push({
+                        id: i,
+                        element: node,
+                        x: x,
+                        y: y,
+                        connectedTo: []
+                    });
+                    
+                    // Add click event to nodes
+                    node.addEventListener('click', function() {
+                        handleNodeClick(i);
+                    });
+                }
+                
+                // Set up the goal connections (create a hexagon)
+                const goalConnections = [
+                    [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0]
+                ];
+                
+                gameState.puzzle = {
+                    goalConnections: goalConnections,
+                    currentConnections: []
+                };
+                
+                puzzleStatus.textContent = 'Puzzle: Connect all nodes in a hexagon pattern';
+                
+                // Create cursors
+                createCursors();
+            }
+            
+            // Create player cursors
+            function createCursors() {
+                const cursor1 = document.createElement('div');
+                cursor1.className = 'cursor player1-cursor';
+                cursor1.id = 'player1Cursor';
+                cursor1.style.display = 'none';
+                gameContainer.appendChild(cursor1);
+                
+                const cursor2 = document.createElement('div');
+                cursor2.className = 'cursor player2-cursor';
+                cursor2.id = 'player2Cursor';
+                cursor2.style.display = 'none';
+                gameContainer.appendChild(cursor2);
+            }
+            
+            // Set up game events
+            function setupGameEvents() {
+                // Track mouse movement for cursor display
+                gameContainer.addEventListener('mousemove', function(e) {
+                    const rect = gameContainer.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    // Update current player's cursor
+                    const cursorId = `player${gameState.player}Cursor`;
+                    const cursor = document.getElementById(cursorId);
+                    cursor.style.left = `${x}px`;
+                    cursor.style.top = `${y}px`;
+                    cursor.style.display = 'block';
+                    
+                    // In a real implementation, this would send the cursor position to the other player
+                    // For this demo, we'll simulate the other player's cursor
+                    simulateOtherPlayerCursor();
+                });
+                
+                gameContainer.addEventListener('mouseleave', function() {
+                    const cursorId = `player${gameState.player}Cursor`;
+                    const cursor = document.getElementById(cursorId);
+                    cursor.style.display = 'none';
+                });
+            }
+            
+            // Handle node clicks
+            function handleNodeClick(nodeId) {
+                if (gameState.selectedNode === null) {
+                    // First node selected
+                    gameState.selectedNode = nodeId;
+                    gameState.nodes[nodeId].element.style.transform = 'scale(1.3)';
+                    gameState.nodes[nodeId].element.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+                } else {
+                    // Second node selected - create connection
+                    if (gameState.selectedNode !== nodeId) {
+                        createConnection(gameState.selectedNode, nodeId);
+                    }
+                    
+                    // Reset selection
+                    gameState.nodes[gameState.selectedNode].element.style.transform = '';
+                    gameState.nodes[gameState.selectedNode].element.style.boxShadow = '';
+                    gameState.selectedNode = null;
+                    
+                    // Check if puzzle is solved
+                    checkPuzzleSolved();
+                }
+            }
+            
+            // Create a connection between two nodes
+            function createConnection(node1Id, node2Id) {
+                // Check if connection already exists
+                const connectionExists = gameState.puzzle.currentConnections.some(conn => 
+                    (conn[0] === node1Id && conn[1] === node2Id) || 
+                    (conn[0] === node2Id && conn[1] === node1Id)
+                );
+                
+                if (connectionExists) return;
+                
+                // Add to current connections
+                gameState.puzzle.currentConnections.push([node1Id, node2Id]);
+                
+                // Create visual connection
+                const node1 = gameState.nodes[node1Id];
+                const node2 = gameState.nodes[node2Id];
+                
+                const connection = document.createElement('div');
+                connection.className = 'connection';
+                
+                const length = Math.sqrt(
+                    Math.pow(node2.x - node1.x, 2) + 
+                    Math.pow(node2.y - node1.y, 2)
+                );
+                
+                const angle = Math.atan2(node2.y - node1.y, node2.x - node1.x) * 180 / Math.PI;
+                
+                connection.style.width = `${length}px`;
+                connection.style.left = `${node1.x}px`;
+                connection.style.top = `${node1.y}px`;
+                connection.style.transform = `rotate(${angle}deg)`;
+                
+                gameContainer.appendChild(connection);
+                gameState.connections.push(connection);
+            }
+            
+            // Check if the puzzle is solved
+            function checkPuzzleSolved() {
+                // Check if all goal connections are made
+                const allConnectionsMade = gameState.puzzle.goalConnections.every(goalConn => {
+                    return gameState.puzzle.currentConnections.some(currentConn => 
+                        (currentConn[0] === goalConn[0] && currentConn[1] === goalConn[1]) ||
+                        (currentConn[0] === goalConn[1] && currentConn[1] === goalConn[0])
+                    );
+                });
+                
+                if (allConnectionsMade) {
+                    puzzleStatus.textContent = 'Puzzle Solved! Great collaboration!';
+                    gameContainer.classList.add('celebrate');
+                    
+                    // Remove celebration class after animation
+                    setTimeout(() => {
+                        gameContainer.classList.remove('celebrate');
+                    }, 1500);
+                }
+            }
+            
+            // Reset the puzzle
+            function resetPuzzle() {
+                // Remove all connections
+                gameState.connections.forEach(conn => {
+                    gameContainer.removeChild(conn);
+                });
+                
+                // Reset nodes
+                gameState.nodes.forEach(node => {
+                    node.element.style.transform = '';
+                    node.element.style.boxShadow = '';
+                });
+                
+                // Reset game state
+                gameState.connections = [];
+                gameState.puzzle.currentConnections = [];
+                gameState.selectedNode = null;
+                
+                puzzleStatus.textContent = 'Puzzle: Connect all nodes in a hexagon pattern';
+            }
+            
+            // Simulate other player's cursor (for demo purposes)
+            function simulateOtherPlayerCursor() {
+                const otherPlayer = gameState.player === 1 ? 2 : 1;
+                const cursorId = `player${otherPlayer}Cursor`;
+                const cursor = document.getElementById(cursorId);
+                
+                // In a real game, this would come from the other player's browser
+                // For demo, we'll create random movement
+                if (Math.random() > 0.7) {
+                    const x = Math.random() * gameContainer.offsetWidth;
+                    const y = Math.random() * gameContainer.offsetHeight;
+                    
+                    cursor.style.left = `${x}px`;
+                    cursor.style.top = `${y}px`;
+                    cursor.style.display = 'block';
+                    
+                    // Hide after a random time
+                    setTimeout(() => {
+                        cursor.style.display = 'none';
+                    }, 1000);
+                }
+            }
+            
+            // Apply perspective based on player role
+            function applyPlayerPerspective() {
+                if (gameState.player === 2) {
+                    // Rotate the game container for Player 2
+                    gameContainer.style.transform = 'rotate(180deg)';
+                    
+                    // Adjust node positions for the rotated view
+                    gameState.nodes.forEach(node => {
+                        const rect = gameContainer.getBoundingClientRect();
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        
+                        // Calculate new position relative to center
+                        const newX = centerX - (node.x - centerX);
+                        const newY = centerY - (node.y - centerY);
+                        
+                        node.element.style.left = `${newX}px`;
+                        node.element.style.top = `${newY}px`;
+                        node.x = newX;
+                        node.y = newY;
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
