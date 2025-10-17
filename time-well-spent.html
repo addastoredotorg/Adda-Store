@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Well Spent - Visualize Your Day as Emotional Time Flowers</title>
+    <meta name="description" content="Track and visualize how you spend your time with emotional time flowers. See the balance between work, rest, and joy in your daily life.">
+    <meta name="keywords" content="time tracking, productivity, work-life balance, time management, emotional visualization, daily activities">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #4a4a4a;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #6c757d;
+        }
+        
+        .phase {
+            display: none;
+            margin-bottom: 30px;
+        }
+        
+        .phase.active {
+            display: block;
+        }
+        
+        .input-section {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .activity-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .activity-field {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .activity-field:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+        
+        .category-select {
+            flex: 0.7;
+            min-width: 150px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            background-color: white;
+            cursor: pointer;
+        }
+        
+        .duration-input {
+            flex: 0.5;
+            min-width: 120px;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, #6c757d 0%, #495057 100%);
+        }
+        
+        .activities-list {
+            margin: 25px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .activity-details {
+            display: flex;
+            flex: 1;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .activity-name {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .activity-category {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .activity-work {
+            background-color: #ffeaa7;
+            color: #e17055;
+        }
+        
+        .activity-rest {
+            background-color: #a29bfe;
+            color: white;
+        }
+        
+        .activity-joy {
+            background-color: #fd79a8;
+            color: white;
+        }
+        
+        .activity-duration {
+            font-weight: bold;
+            color: #495057;
+            margin-left: 15px;
+        }
+        
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-left: 15px;
+            transition: all 0.2s ease;
+        }
+        
+        .delete-btn:hover {
+            transform: scale(1.2);
+        }
+        
+        .visualization-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .flower-container {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .time-flower {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .flower-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+        
+        .petal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: 0 0;
+            border-radius: 50% 50% 0 50%;
+            opacity: 0.9;
+            transition: all 0.5s ease;
+        }
+        
+        .petal:hover {
+            opacity: 1;
+            transform: scale(1.05);
+            z-index: 5;
+        }
+        
+        .stats-container {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            text-align: left;
+        }
+        
+        .stat-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #495057;
+            font-weight: 600;
+        }
+        
+        .stat-bar {
+            height: 12px;
+            background-color: #e9ecef;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .stat-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1s ease;
+        }
+        
+        .stat-work {
+            background: linear-gradient(to right, #ffeaa7, #fdcb6e);
+        }
+        
+        .stat-rest {
+            background: linear-gradient(to right, #a29bfe, #6c5ce7);
+        }
+        
+        .stat-joy {
+            background: linear-gradient(to right, #fd79a8, #e84393);
+        }
+        
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .insights {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            text-align: left;
+        }
+        
+        .insight-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #495057;
+            text-align: center;
+        }
+        
+        .insight-item {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .insight-item:before {
+            content: "•";
+            color: #667eea;
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        
+        .instructions h3 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .instructions li:before {
+            content: "•";
+            color: #667eea;
+            position: absolute;
+            left: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .activity-input {
+                flex-direction: column;
+            }
+            
+            .activity-field, .category-select, .duration-input {
+                min-width: 100%;
+            }
+            
+            .visualization-section {
+                flex-direction: column;
+            }
+            
+            .flower-container, .stats-container {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Time Well Spent</h1>
+        <p class="subtitle">Visualize your day as emotional time flowers</p>
+        
+        <!-- Phase 1: Input Activities -->
+        <div class="phase active" id="phase-1">
+            <h2>How did you spend your time today?</h2>
+            <p>Add your activities to create your personal time flower</p>
+            
+            <div class="input-section">
+                <div class="activity-input">
+                    <input type="text" class="activity-field" id="activity-name" placeholder="What did you do?">
+                    <select class="category-select" id="activity-category">
+                        <option value="work">Work / Productive</option>
+                        <option value="rest">Rest / Self-care</option>
+                        <option value="joy">Joy / Fun</option>
+                    </select>
+                    <input type="number" class="duration-input" id="activity-duration" placeholder="Hours" min="0.1" step="0.1" max="24">
+                </div>
+                <button class="btn" id="add-activity">Add Activity</button>
+            </div>
+            
+            <div class="activities-list" id="activities-list">
+                <!-- Activities will be listed here -->
+                <div class="no-activities" id="no-activities">
+                    <p>No activities added yet. Start by adding your first activity above!</p>
+                </div>
+            </div>
+            
+            <button class="btn" id="generate-flower">Generate Time Flower</button>
+        </div>
+        
+        <!-- Phase 2: Visualization -->
+        <div class="phase" id="phase-2">
+            <h2>Your Time Flower</h2>
+            <p>A visual representation of how you spent your day</p>
+            
+            <div class="visualization-section">
+                <div class="flower-container">
+                    <div class="time-flower" id="time-flower">
+                        <!-- Flower will be generated here -->
+                        <div class="flower-center" id="total-hours">0h</div>
+                    </div>
+                </div>
+                
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-title">Work / Productive Time</div>
+                        <div class="stat-bar">
+                            <div class="stat-fill stat-work" id="work-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="stat-value" id="work-value">0 hours (0%)</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-title">Rest / Self-care Time</div>
+                        <div class="stat-bar">
+                            <div class="stat-fill stat-rest" id="rest-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="stat-value" id="rest-value">0 hours (0%)</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-title">Joy / Fun Time</div>
+                        <div class="stat-bar">
+                            <div class="stat-fill stat-joy" id="joy-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="stat-value" id="joy-value">0 hours (0%)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="insights">
+                <div class="insight-title">Your Daily Insights</div>
+                <div id="insights-content">
+                    <!-- Insights will be generated here -->
+                </div>
+            </div>
+            
+            <button class="btn" id="back-to-input">Add More Activities</button>
+            <button class="btn btn-secondary" id="new-day">Start New Day</button>
+        </div>
+        
+        <div class="instructions">
+            <h3>How Time Well Spent Works</h3>
+            <ul>
+                <li><strong>Add Activities:</strong> Enter what you did today, categorize it, and specify how long it took</li>
+                <li><strong>Categorize:</strong> Classify activities as Work (productive tasks), Rest (self-care, relaxation), or Joy (fun, hobbies)</li>
+                <li><strong>Visualize:</strong> See your day represented as a "time flower" where each petal is an activity</li>
+                <li><strong>Understand:</strong> Get insights about your work-rest-joy balance and emotional time investment</li>
+                <li><strong>Reflect:</strong> Use the visualization to understand patterns and make intentional choices about your time</li>
+            </ul>
+            <p style="margin-top: 15px; font-style: italic;">Time Well Spent helps you visualize time emotionally, not just as charts or statistics. See the true balance in your daily life.</p>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const phase1 = document.getElementById('phase-1');
+        const phase2 = document.getElementById('phase-2');
+        const activityName = document.getElementById('activity-name');
+        const activityCategory = document.getElementById('activity-category');
+        const activityDuration = document.getElementById('activity-duration');
+        const addActivityBtn = document.getElementById('add-activity');
+        const activitiesList = document.getElementById('activities-list');
+        const noActivities = document.getElementById('no-activities');
+        const generateFlowerBtn = document.getElementById('generate-flower');
+        const backToInputBtn = document.getElementById('back-to-input');
+        const newDayBtn = document.getElementById('new-day');
+        const timeFlower = document.getElementById('time-flower');
+        const totalHours = document.getElementById('total-hours');
+        const workBar = document.getElementById('work-bar');
+        const restBar = document.getElementById('rest-bar');
+        const joyBar = document.getElementById('joy-bar');
+        const workValue = document.getElementById('work-value');
+        const restValue = document.getElementById('rest-value');
+        const joyValue = document.getElementById('joy-value');
+        const insightsContent = document.getElementById('insights-content');
+        
+        // Application State
+        let activities = [];
+        let categoryColors = {
+            work: '#fdcb6e',
+            rest: '#6c5ce7',
+            joy: '#e84393'
+        };
+        let categoryNames = {
+            work: 'Work / Productive',
+            rest: 'Rest / Self-care',
+            joy: 'Joy / Fun'
+        };
+        
+        // Initialize the application
+        function initApp() {
+            // Set up event listeners
+            addActivityBtn.addEventListener('click', addActivity);
+            generateFlowerBtn.addEventListener('click', generateFlower);
+            backToInputBtn.addEventListener('click', backToInput);
+            newDayBtn.addEventListener('click', newDay);
+            
+            // Allow adding activity with Enter key
+            activityName.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addActivity();
+                }
+            });
+            
+            activityDuration.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addActivity();
+                }
+            });
+        }
+        
+        // Add a new activity
+        function addActivity() {
+            const name = activityName.value.trim();
+            const category = activityCategory.value;
+            const duration = parseFloat(activityDuration.value);
+            
+            // Validate inputs
+            if (!name) {
+                alert('Please enter an activity name.');
+                return;
+            }
+            
+            if (!duration || duration <= 0) {
+                alert('Please enter a valid duration (greater than 0).');
+                return;
+            }
+            
+            // Add activity to the list
+            activities.push({
+                id: Date.now(),
+                name: name,
+                category: category,
+                duration: duration
+            });
+            
+            // Clear input fields
+            activityName.value = '';
+            activityDuration.value = '';
+            activityName.focus();
+            
+            // Update activities list
+            renderActivitiesList();
+        }
+        
+        // Render the activities list
+        function renderActivitiesList() {
+            // Hide "no activities" message if there are activities
+            if (activities.length > 0) {
+                noActivities.style.display = 'none';
+            } else {
+                noActivities.style.display = 'block';
+            }
+            
+            // Clear current list
+            activitiesList.innerHTML = '';
+            
+            // Add each activity to the list
+            activities.forEach(activity => {
+                const activityElement = document.createElement('div');
+                activityElement.className = 'activity-item';
+                activityElement.dataset.id = activity.id;
+                
+                activityElement.innerHTML = `
+                    <div class="activity-details">
+                        <div class="activity-name">${activity.name}</div>
+                        <div>
+                            <span class="activity-category activity-${activity.category}">${categoryNames[activity.category]}</span>
+                            <span class="activity-duration">${activity.duration}h</span>
+                        </div>
+                    </div>
+                    <button class="delete-btn" data-id="${activity.id}">×</button>
+                `;
+                
+                activitiesList.appendChild(activityElement);
+            });
+            
+            // Add event listeners to delete buttons
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.dataset.id);
+                    deleteActivity(id);
+                });
+            });
+        }
+        
+        // Delete an activity
+        function deleteActivity(id) {
+            activities = activities.filter(activity => activity.id !== id);
+            renderActivitiesList();
+        }
+        
+        // Generate the time flower visualization
+        function generateFlower() {
+            if (activities.length === 0) {
+                alert('Please add at least one activity before generating your time flower.');
+                return;
+            }
+            
+            // Calculate totals by category
+            const totals = {
+                work: 0,
+                rest: 0,
+                joy: 0
+            };
+            
+            activities.forEach(activity => {
+                totals[activity.category] += activity.duration;
+            });
+            
+            const totalHoursValue = totals.work + totals.rest + totals.joy;
+            
+            // Update the total hours display
+            totalHours.textContent = `${totalHoursValue.toFixed(1)}h`;
+            
+            // Update progress bars and values
+            updateProgressBars(totals, totalHoursValue);
+            
+            // Generate the flower visualization
+            generateFlowerVisualization(totals, totalHoursValue);
+            
+            // Generate insights
+            generateInsights(totals, totalHoursValue);
+            
+            // Switch to visualization phase
+            phase1.classList.remove('active');
+            phase2.classList.add('active');
+        }
+        
+        // Update the progress bars
+        function updateProgressBars(totals, totalHours) {
+            // Calculate percentages
+            const workPercent = totalHours > 0 ? (totals.work / totalHours) * 100 : 0;
+            const restPercent = totalHours > 0 ? (totals.rest / totalHours) * 100 : 0;
+            const joyPercent = totalHours > 0 ? (totals.joy / totalHours) * 100 : 0;
+            
+            // Update bars
+            workBar.style.width = `${workPercent}%`;
+            restBar.style.width = `${restPercent}%`;
+            joyBar.style.width = `${joyPercent}%`;
+            
+            // Update values
+            workValue.textContent = `${totals.work.toFixed(1)} hours (${workPercent.toFixed(1)}%)`;
+            restValue.textContent = `${totals.rest.toFixed(1)} hours (${restPercent.toFixed(1)}%)`;
+            joyValue.textContent = `${totals.joy.toFixed(1)} hours (${joyPercent.toFixed(1)}%)`;
+        }
+        
+        // Generate the flower visualization
+        function generateFlowerVisualization(totals, totalHours) {
+            // Clear previous flower
+            timeFlower.innerHTML = '<div class="flower-center" id="total-hours">' + totalHours.toFixed(1) + 'h</div>';
+            
+            // Calculate angles and sizes for petals
+            let currentAngle = 0;
+            
+            activities.forEach(activity => {
+                // Calculate the angle for this petal based on its proportion of total time
+                const angle = (activity.duration / totalHours) * 360;
+                
+                // Create a petal element
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.backgroundColor = categoryColors[activity.category];
+                petal.style.width = `${Math.min(activity.duration * 20, 150)}px`;
+                petal.style.height = `${Math.min(activity.duration * 20, 150)}px`;
+                petal.style.transform = `translate(-50%, -50%) rotate(${currentAngle}deg)`;
+                petal.title = `${activity.name}: ${activity.duration}h (${categoryNames[activity.category]})`;
+                
+                // Add the petal to the flower
+                timeFlower.appendChild(petal);
+                
+                // Update the current angle for the next petal
+                currentAngle += angle;
+            });
+        }
+        
+        // Generate insights based on the time distribution
+        function generateInsights(totals, totalHours) {
+            let insightsHTML = '';
+            const workPercent = (totals.work / totalHours) * 100;
+            const restPercent = (totals.rest / totalHours) * 100;
+            const joyPercent = (totals.joy / totalHours) * 100;
+            
+            // Work insights
+            if (workPercent > 60) {
+                insightsHTML += '<div class="insight-item">Your day was heavily focused on work. Consider adding more balance with rest and joy activities.</div>';
+            } else if (workPercent < 20) {
+                insightsHTML += '<div class="insight-item">You had a light work day. This could be a good opportunity for rest or pursuing personal interests.</div>';
+            } else {
+                insightsHTML += '<div class="insight-item">You maintained a reasonable balance between work and other activities.</div>';
+            }
+            
+            // Rest insights
+            if (restPercent > 40) {
+                insightsHTML += '<div class="insight-item">You prioritized rest and self-care today. This is important for long-term wellbeing.</div>';
+            } else if (restPercent < 10) {
+                insightsHTML += '<div class="insight-item">Consider adding more rest activities to recharge your energy.</div>';
+            }
+            
+            // Joy insights
+            if (joyPercent > 30) {
+                insightsHTML += '<div class="insight-item">You made time for joy and fun activities. This contributes to overall happiness.</div>';
+            } else if (joyPercent < 10) {
+                insightsHTML += '<div class="insight-item">Your day had limited joy activities. Try to incorporate small moments of happiness.</div>';
+            }
+            
+            // Balance insight
+            const maxPercent = Math.max(workPercent, restPercent, joyPercent);
+            const minPercent = Math.min(workPercent, restPercent, joyPercent);
+            
+            if (maxPercent - minPercent > 50) {
+                insightsHTML += '<div class="insight-item">Your time distribution is quite uneven. Aim for more balance across different life areas.</div>';
+            } else if (maxPercent - minPercent < 20) {
+                insightsHTML += '<div class="insight-item">You achieved a well-balanced distribution of time across different activities.</div>';
+            }
+            
+            // Total hours insight
+            if (totalHours < 8) {
+                insightsHTML += '<div class="insight-item">You tracked fewer than 8 hours of activities. Did you miss recording some parts of your day?</div>';
+            } else if (totalHours > 16) {
+                insightsHTML += '<div class="insight-item">You tracked a very full day! Make sure to leave time for adequate rest.</div>';
+            }
+            
+            insightsContent.innerHTML = insightsHTML;
+        }
+        
+        // Go back to input phase
+        function backToInput() {
+            phase2.classList.remove('active');
+            phase1.classList.add('active');
+        }
+        
+        // Start a new day
+        function newDay() {
+            activities = [];
+            renderActivitiesList();
+            phase2.classList.remove('active');
+            phase1.classList.add('active');
+        }
+        
+        // Initialize the application when the page loads
+        window.addEventListener('load', initApp);
+    </script>
+</body>
+</html>
