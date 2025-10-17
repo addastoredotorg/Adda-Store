@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Lore Archivist | Preserve Your Family Stories & Memories</title>
+    <meta name="description" content="Family Lore Archivist: A simple, private website for preserving your family stories. Record memories with guided prompts, tag family members, and create a beautiful, shareable family story archive. Strengthen family bonds through storytelling.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #D2B48C;
+            --accent-color: #A0522D;
+            --light-color: #F5F5DC;
+            --dark-color: #5D4037;
+            --text-color: #3E2723;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary-color);
+            box-shadow: var(--shadow);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sidebar {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .sidebar h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .filter-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-section h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background-color: var(--secondary-color);
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tag:hover {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .tag.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .content-area {
+            min-height: 500px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .story-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .story-header {
+            padding: 1.5rem;
+            background-color: var(--secondary-color);
+        }
+
+        .story-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        .story-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .story-body {
+            padding: 1.5rem;
+        }
+
+        .story-excerpt {
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .story-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .story-tag {
+            background-color: var(--light-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .prompt-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .prompt-option {
+            background-color: var(--light-color);
+            padding: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .prompt-option:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .prompt-option.selected {
+            border-color: var(--primary-color);
+            background-color: var(--secondary-color);
+        }
+
+        .tag-input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-height: 50px;
+            align-items: center;
+        }
+
+        .tag-input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            padding: 0.3rem;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .story-view {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .story-view-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .story-content {
+            font-family: 'Georgia', serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .story-media {
+            margin: 2rem 0;
+        }
+
+        .media-placeholder {
+            background-color: var(--light-color);
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            color: var(--dark-color);
+        }
+
+        .export-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .timeline-view {
+            margin-top: 2rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .timeline-date {
+            min-width: 120px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .timeline-content {
+            flex-grow: 1;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .timeline-content:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background-color: var(--secondary-color);
+        }
+
+        .timeline-content:after {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 5px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="app-container">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <div>
+                    <h1>Family Lore Archivist</h1>
+                    <p class="tagline">Preserve your family stories for generations to come</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <div class="main-content">
+            <aside class="sidebar">
+                <h2>Your Family Archive</h2>
+                
+                <div class="filter-section">
+                    <h3>Search Stories</h3>
+                    <input type="text" class="search-box" id="searchBox" placeholder="Search by title, content, or tags...">
+                </div>
+                
+                <div class="filter-section">
+                    <h3>Filter by People</h3>
+                    <div class="filter-tags" id="peopleFilter">
+                        <div class="tag">Grandma Mary</div>
+                        <div class="tag">Uncle Joe</div>
+                        <div class="tag">Cousin Sarah</div>
+                        <div class="tag active">All People</div>
+                    </div>
+                </div>
+                
+                <div class="filter-section">
+                    <h3>Filter by Theme</h3>
+                    <div class="filter-tags" id="themeFilter">
+                        <div class="tag">Childhood</div>
+                        <div class="tag">Holidays</div>
+                        <div class="tag">Life Lessons</div>
+                        <div class="tag active">All Themes</div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-block" id="newStoryBtn">
+                    <i class="fas fa-plus"></i> Record New Story
+                </button>
+                
+                <div class="view-options" style="margin-top: 1.5rem;">
+                    <h3>View Options</h3>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                        <button class="btn" id="cardViewBtn" style="flex: 1;">Cards</button>
+                        <button class="btn btn-secondary" id="timelineViewBtn" style="flex: 1;">Timeline</button>
+                    </div>
+                </div>
+                
+                <div class="export-options" style="margin-top: 1.5rem;">
+                    <button class="btn btn-secondary" id="exportBtn" style="width: 100%;">
+                        <i class="fas fa-download"></i> Export Archive
+                    </button>
+                </div>
+            </aside>
+
+            <main class="content-area">
+                <!-- Dashboard View -->
+                <section id="dashboardView">
+                    <div class="dashboard" id="storiesContainer">
+                        <!-- Story cards will be dynamically inserted here -->
+                    </div>
+                    
+                    <div class="empty-state hidden" id="emptyState">
+                        <i class="fas fa-book"></i>
+                        <h2>No Stories Yet</h2>
+                        <p>Start preserving your family memories by recording your first story.</p>
+                        <button class="btn" id="emptyStateBtn" style="margin-top: 1.5rem;">
+                            <i class="fas fa-plus"></i> Record Your First Story
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Story Form View -->
+                <section id="storyFormView" class="hidden">
+                    <div class="form-container">
+                        <h2>Record a New Family Story</h2>
+                        <form id="storyForm">
+                            <div class="form-group">
+                                <label for="storyTitle">Story Title</label>
+                                <input type="text" id="storyTitle" placeholder="Give your story a meaningful title" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Story Prompt (Optional)</label>
+                                <div class="prompt-options">
+                                    <div class="prompt-option">Childhood Memories</div>
+                                    <div class="prompt-option">Family Traditions</div>
+                                    <div class="prompt-option">Life Lessons</div>
+                                    <div class="prompt-option">Funny Moments</div>
+                                    <div class="prompt-option">Historical Events</div>
+                                    <div class="prompt-option">Custom Prompt</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="storyContent">Your Story</label>
+                                <textarea id="storyContent" placeholder="Tell your story here... Take your time and include as much detail as you'd like." required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="storyDate">Approximate Date/Time Period</label>
+                                <input type="text" id="storyDate" placeholder="e.g., Summer of 1995, Christmas 1980s">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Tag Family Members</label>
+                                <div class="tag-input-container" id="peopleTagsContainer">
+                                    <!-- Tags will be added here dynamically -->
+                                    <input type="text" class="tag-input" id="peopleInput" placeholder="Type a name and press Enter">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Add Themes/Tags</label>
+                                <div class="tag-input-container" id="themeTagsContainer">
+                                    <!-- Tags will be added here dynamically -->
+                                    <input type="text" class="tag-input" id="themeInput" placeholder="Type a theme and press Enter">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Add Media (Optional)</label>
+                                <div class="media-placeholder">
+                                    <i class="fas fa-camera" style="font-size: 2rem; margin-right: 1rem;"></i>
+                                    <span>Add photos or recordings to accompany your story</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                                <button type="submit" class="btn">Save Story</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Story View -->
+                <section id="storyView" class="hidden">
+                    <div class="story-view">
+                        <div class="story-view-header">
+                            <h2 id="viewStoryTitle">Story Title</h2>
+                            <div class="story-meta">
+                                <span id="viewStoryDate">Date</span>
+                                <span id="viewStoryPeople">People</span>
+                            </div>
+                        </div>
+                        
+                        <div class="story-content" id="viewStoryContent">
+                            <!-- Story content will be inserted here -->
+                        </div>
+                        
+                        <div class="story-tags" id="viewStoryTags">
+                            <!-- Tags will be inserted here -->
+                        </div>
+                        
+                        <div class="export-options">
+                            <button class="btn" id="printStoryBtn">
+                                <i class="fas fa-print"></i> Print Story
+                            </button>
+                            <button class="btn btn-secondary" id="backToStoriesBtn">
+                                <i class="fas fa-arrow-left"></i> Back to Stories
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Timeline View -->
+                <section id="timelineView" class="hidden">
+                    <div class="form-container">
+                        <h2>Family Stories Timeline</h2>
+                        <div class="timeline-view" id="timelineContainer">
+                            <!-- Timeline items will be inserted here -->
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <div class="app-container">
+            <p>Family Lore Archivist &copy; 2023 | Preserving your family's legacy, one story at a time</p>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">Your stories are stored privately in your browser</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const dashboardView = document.getElementById('dashboardView');
+            const storyFormView = document.getElementById('storyFormView');
+            const storyView = document.getElementById('storyView');
+            const timelineView = document.getElementById('timelineView');
+            const storiesContainer = document.getElementById('storiesContainer');
+            const emptyState = document.getElementById('emptyState');
+            const timelineContainer = document.getElementById('timelineContainer');
+            
+            // Buttons
+            const newStoryBtn = document.getElementById('newStoryBtn');
+            const emptyStateBtn = document.getElementById('emptyStateBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const backToStoriesBtn = document.getElementById('backToStoriesBtn');
+            const cardViewBtn = document.getElementById('cardViewBtn');
+            const timelineViewBtn = document.getElementById('timelineViewBtn');
+            const exportBtn = document.getElementById('exportBtn');
+            const printStoryBtn = document.getElementById('printStoryBtn');
+            
+            // Form Elements
+            const storyForm = document.getElementById('storyForm');
+            const storyTitle = document.getElementById('storyTitle');
+            const storyContent = document.getElementById('storyContent');
+            const storyDate = document.getElementById('storyDate');
+            const peopleInput = document.getElementById('peopleInput');
+            const themeInput = document.getElementById('themeInput');
+            const peopleTagsContainer = document.getElementById('peopleTagsContainer');
+            const themeTagsContainer = document.getElementById('themeTagsContainer');
+            
+            // Story View Elements
+            const viewStoryTitle = document.getElementById('viewStoryTitle');
+            const viewStoryDate = document.getElementById('viewStoryDate');
+            const viewStoryPeople = document.getElementById('viewStoryPeople');
+            const viewStoryContent = document.getElementById('viewStoryContent');
+            const viewStoryTags = document.getElementById('viewStoryTags');
+            
+            // App State
+            let stories = [];
+            let currentView = 'dashboard';
+            let peopleTags = [];
+            let themeTags = [];
+            let currentStoryId = null;
+            
+            // Initialize the app
+            function init() {
+                loadStories();
+                setupEventListeners();
+                renderStories();
+                updateUI();
+            }
+            
+            // Load stories from localStorage
+            function loadStories() {
+                const savedStories = localStorage.getItem('familyStories');
+                if (savedStories) {
+                    stories = JSON.parse(savedStories);
+                } else {
+                    // Add sample data for demonstration
+                    stories = [
+                        {
+                            id: 1,
+                            title: "Grandma's Apple Pie Recipe",
+                            content: "I remember every Sunday, Grandma would wake up at 5 AM to start her famous apple pie. The smell would fill the entire house by 7...",
+                            date: "1950s-1980s",
+                            people: ["Grandma Mary"],
+                            themes: ["Recipes", "Traditions", "Childhood"],
+                            createdAt: new Date('2023-01-15').toISOString()
+                        },
+                        {
+                            id: 2,
+                            title: "The Great Camping Trip of '78",
+                            content: "It was supposed to be a simple weekend camping trip, but when Uncle Joe forgot the tent poles, we had to get creative...",
+                            date: "Summer 1978",
+                            people: ["Uncle Joe", "Cousin Sarah"],
+                            themes: ["Adventures", "Funny Moments"],
+                            createdAt: new Date('2023-02-20').toISOString()
+                        }
+                    ];
+                    saveStories();
+                }
+            }
+            
+            // Save stories to localStorage
+            function saveStories() {
+                localStorage.setItem('familyStories', JSON.stringify(stories));
+            }
+            
+            // Set up event listeners
+            function setupEventListeners() {
+                newStoryBtn.addEventListener('click', showStoryForm);
+                emptyStateBtn.addEventListener('click', showStoryForm);
+                cancelBtn.addEventListener('click', showDashboard);
+                backToStoriesBtn.addEventListener('click', showDashboard);
+                cardViewBtn.addEventListener('click', () => switchView('dashboard'));
+                timelineViewBtn.addEventListener('click', () => switchView('timeline'));
+                exportBtn.addEventListener('click', exportStories);
+                printStoryBtn.addEventListener('click', printStory);
+                
+                storyForm.addEventListener('submit', saveStory);
+                
+                // Tag input handlers
+                peopleInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addPeopleTag(this.value);
+                        this.value = '';
+                    }
+                });
+                
+                themeInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        addThemeTag(this.value);
+                        this.value = '';
+                    }
+                });
+                
+                // Prompt selection
+                document.querySelectorAll('.prompt-option').forEach(option => {
+                    option.addEventListener('click', function() {
+                        document.querySelectorAll('.prompt-option').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        this.classList.add('selected');
+                        
+                        // Set placeholder text based on selected prompt
+                        if (this.textContent !== 'Custom Prompt') {
+                            storyContent.placeholder = `Tell us about ${this.textContent.toLowerCase()}...`;
+                        } else {
+                            storyContent.placeholder = "Tell your story here...";
+                        }
+                    });
+                });
+            }
+            
+            // Show the story form
+            function showStoryForm() {
+                hideAllViews();
+                storyFormView.classList.remove('hidden');
+                currentView = 'form';
+                
+                // Reset form
+                storyForm.reset();
+                peopleTags = [];
+                themeTags = [];
+                updateTagDisplays();
+            }
+            
+            // Show the dashboard
+            function showDashboard() {
+                hideAllViews();
+                dashboardView.classList.remove('hidden');
+                currentView = 'dashboard';
+                renderStories();
+            }
+            
+            // Show a specific story
+            function showStory(id) {
+                const story = stories.find(s => s.id === id);
+                if (!story) return;
+                
+                currentStoryId = id;
+                viewStoryTitle.textContent = story.title;
+                viewStoryDate.textContent = story.date || 'No date specified';
+                viewStoryPeople.textContent = story.people.join(', ');
+                viewStoryContent.textContent = story.content;
+                
+                // Clear and add tags
+                viewStoryTags.innerHTML = '';
+                [...story.people, ...story.themes].forEach(tag => {
+                    const tagElement = document.createElement('span');
+                    tagElement.className = 'story-tag';
+                    tagElement.textContent = tag;
+                    viewStoryTags.appendChild(tagElement);
+                });
+                
+                hideAllViews();
+                storyView.classList.remove('hidden');
+                currentView = 'story';
+            }
+            
+            // Show timeline view
+            function showTimelineView() {
+                hideAllViews();
+                timelineView.classList.remove('hidden');
+                currentView = 'timeline';
+                renderTimeline();
+            }
+            
+            // Hide all views
+            function hideAllViews() {
+                dashboardView.classList.add('hidden');
+                storyFormView.classList.add('hidden');
+                storyView.classList.add('hidden');
+                timelineView.classList.add('hidden');
+            }
+            
+            // Switch between card and timeline views
+            function switchView(view) {
+                if (view === 'dashboard') {
+                    cardViewBtn.classList.remove('btn-secondary');
+                    cardViewBtn.classList.add('btn');
+                    timelineViewBtn.classList.remove('btn');
+                    timelineViewBtn.classList.add('btn-secondary');
+                    showDashboard();
+                } else if (view === 'timeline') {
+                    timelineViewBtn.classList.remove('btn-secondary');
+                    timelineViewBtn.classList.add('btn');
+                    cardViewBtn.classList.remove('btn');
+                    cardViewBtn.classList.add('btn-secondary');
+                    showTimelineView();
+                }
+            }
+            
+            // Render stories in the dashboard
+            function renderStories() {
+                storiesContainer.innerHTML = '';
+                
+                if (stories.length === 0) {
+                    emptyState.classList.remove('hidden');
+                    return;
+                }
+                
+                emptyState.classList.add('hidden');
+                
+                stories.forEach(story => {
+                    const storyCard = document.createElement('div');
+                    storyCard.className = 'story-card';
+                    storyCard.addEventListener('click', () => showStory(story.id));
+                    
+                    storyCard.innerHTML = `
+                        <div class="story-header">
+                            <h3 class="story-title">${story.title}</h3>
+                            <div class="story-meta">
+                                <span>${story.date || 'No date'}</span>
+                                <span>${story.people.join(', ')}</span>
+                            </div>
+                        </div>
+                        <div class="story-body">
+                            <p class="story-excerpt">${story.content.substring(0, 150)}...</p>
+                            <div class="story-tags">
+                                ${[...story.people, ...story.themes].map(tag => 
+                                    `<span class="story-tag">${tag}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    `;
+                    
+                    storiesContainer.appendChild(storyCard);
+                });
+            }
+            
+            // Render timeline view
+            function renderTimeline() {
+                timelineContainer.innerHTML = '';
+                
+                // Sort stories by date if available, otherwise by creation date
+                const sortedStories = [...stories].sort((a, b) => {
+                    return new Date(a.createdAt) - new Date(b.createdAt);
+                });
+                
+                sortedStories.forEach(story => {
+                    const timelineItem = document.createElement('div');
+                    timelineItem.className = 'timeline-item';
+                    
+                    timelineItem.innerHTML = `
+                        <div class="timeline-date">${story.date || 'Unknown Date'}</div>
+                        <div class="timeline-content">
+                            <h3>${story.title}</h3>
+                            <p>${story.people.join(', ')}</p>
+                            <p class="story-excerpt">${story.content.substring(0, 100)}...</p>
+                            <button class="btn" style="margin-top: 0.5rem;" data-id="${story.id}">Read Full Story</button>
+                        </div>
+                    `;
+                    
+                    timelineContainer.appendChild(timelineItem);
+                });
+                
+                // Add event listeners to timeline buttons
+                document.querySelectorAll('.timeline-content button').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const storyId = parseInt(this.getAttribute('data-id'));
+                        showStory(storyId);
+                    });
+                });
+            }
+            
+            // Add a people tag
+            function addPeopleTag(tag) {
+                if (tag.trim() && !peopleTags.includes(tag.trim())) {
+                    peopleTags.push(tag.trim());
+                    updateTagDisplays();
+                }
+            }
+            
+            // Add a theme tag
+            function addThemeTag(tag) {
+                if (tag.trim() && !themeTags.includes(tag.trim())) {
+                    themeTags.push(tag.trim());
+                    updateTagDisplays();
+                }
+            }
+            
+            // Update the tag displays
+            function updateTagDisplays() {
+                // Update people tags display
+                peopleTagsContainer.querySelectorAll('.tag-display').forEach(el => el.remove());
+                peopleTags.forEach(tag => {
+                    const tagElement = document.createElement('span');
+                    tagElement.className = 'tag-display';
+                    tagElement.textContent = tag;
+                    tagElement.style.cssText = 'background-color: var(--secondary-color); padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.9rem;';
+                    peopleTagsContainer.insertBefore(tagElement, peopleInput);
+                });
+                
+                // Update theme tags display
+                themeTagsContainer.querySelectorAll('.tag-display').forEach(el => el.remove());
+                themeTags.forEach(tag => {
+                    const tagElement = document.createElement('span');
+                    tagElement.className = 'tag-display';
+                    tagElement.textContent = tag;
+                    tagElement.style.cssText = 'background-color: var(--secondary-color); padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.9rem;';
+                    themeTagsContainer.insertBefore(tagElement, themeInput);
+                });
+            }
+            
+            // Save a new story
+            function saveStory(e) {
+                e.preventDefault();
+                
+                const newStory = {
+                    id: stories.length > 0 ? Math.max(...stories.map(s => s.id)) + 1 : 1,
+                    title: storyTitle.value,
+                    content: storyContent.value,
+                    date: storyDate.value,
+                    people: peopleTags,
+                    themes: themeTags,
+                    createdAt: new Date().toISOString()
+                };
+                
+                stories.push(newStory);
+                saveStories();
+                showDashboard();
+            }
+            
+            // Export stories
+            function exportStories() {
+                const dataStr = JSON.stringify(stories, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(dataBlob);
+                link.download = 'family-stories-archive.json';
+                link.click();
+            }
+            
+            // Print current story
+            function printStory() {
+                const story = stories.find(s => s.id === currentStoryId);
+                if (!story) return;
+                
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <html>
+                    <head>
+                        <title>${story.title}</title>
+                        <style>
+                            body { font-family: Georgia, serif; line-height: 1.6; padding: 2rem; max-width: 800px; margin: 0 auto; }
+                            h1 { color: #5D4037; border-bottom: 2px solid #D2B48C; padding-bottom: 0.5rem; }
+                            .meta { color: #666; margin-bottom: 2rem; }
+                            .tags { margin: 2rem 0; }
+                            .tag { display: inline-block; background: #D2B48C; padding: 0.3rem 0.7rem; border-radius: 15px; margin-right: 0.5rem; font-size: 0.9rem; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>${story.title}</h1>
+                        <div class="meta">
+                            <strong>Date:</strong> ${story.date || 'Not specified'} | 
+                            <strong>People:</strong> ${story.people.join(', ')}
+                        </div>
+                        <div class="content">
+                            ${story.content.replace(/\n/g, '<br>')}
+                        </div>
+                        <div class="tags">
+                            ${[...story.people, ...story.themes].map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <p><em>Exported from Family Lore Archivist on ${new Date().toLocaleDateString()}</em></p>
+                    </body>
+                    </html>
+                `);
+                printWindow.document.close();
+                printWindow.print();
+            }
+            
+            // Update UI based on current state
+            function updateUI() {
+                // Update filter tags
+                document.querySelectorAll('#peopleFilter .tag, #themeFilter .tag').forEach(tag => {
+                    tag.addEventListener('click', function() {
+                        this.parentElement.querySelectorAll('.tag').forEach(t => {
+                            t.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                        // In a real app, we would filter stories here
+                    });
+                });
+            }
+            
+            // Initialize the application
+            init();
+        });
+    </script>
+</body>
+</html>
