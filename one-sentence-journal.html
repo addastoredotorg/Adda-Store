@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Sentence Journal - A Minimalist Mindfulness Game</title>
+    <meta name="description" content="One Sentence Journal: The mindfulness game for everyone. Write one sentence daily. Build a beautiful, poetic timeline of your year. Minimal effort, profound emotional payoff. Start your journey today.">
+    <meta name="keywords" content="one sentence journal, daily journal, mindfulness game, micro-journaling, mental health tool, daily writing, habit formation, memory keeping, digital diary, simple journal">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cbc;
+            --accent-color: #ff7e5f;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --text-color: #333;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .btn:hover {
+            background-color: #ff6b4a;
+            transform: translateY(-2px);
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #eaeaea;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 600px;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-color);
+        }
+
+        .current-date {
+            font-size: 1rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .journal-textarea {
+            width: 100%;
+            height: 120px;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 0.5rem;
+        }
+
+        .journal-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+        }
+
+        .char-counter {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        /* Timeline Styles */
+        .timeline-container {
+            margin-top: 1rem;
+        }
+
+        .journal-entry {
+            background-color: var(--light-color);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .journal-entry:hover {
+            transform: translateX(5px);
+        }
+
+        .entry-date {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .entry-sentence {
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .empty-timeline {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Rules Section */
+        .rules-list {
+            padding-left: 1.5rem;
+        }
+
+        .rules-list li {
+            margin-bottom: 1rem;
+        }
+
+        .rules-list strong {
+            color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #eaeaea;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>One Sentence Journal</h1>
+        <p class="tagline">Your Year in Moments. One Sentence at a Time.</p>
+        <button id="startBtn" class="btn">Write Today's Sentence</button>
+    </header>
+
+    <main>
+        <section id="timeline-section">
+            <h2>Your Sentence Timeline</h2>
+            <div id="timeline" class="timeline-container">
+                <div class="empty-timeline">Your timeline is empty. Write your first sentence to start the story!</div>
+                <!-- Journal entries will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <section id="rules-section">
+            <h2>How to Play the Mindfulness Game</h2>
+            <ol class="rules-list">
+                <li><strong>The Daily Commitment:</strong> Visit this page once a day. Just once.</li>
+                <li><strong>The One Sentence Rule:</strong> Write exactly one sentence about your day. It can be a feeling, an achievement, a simple observation, or a memory.</li>
+                <li><strong>Embrace Imperfection:</strong> Don't overthink it. The first thought is often the most genuine. There are no wrong answers.</li>
+                <li><strong>Watch Your Story Unfold:</strong> Over time, your collection of sentences will form a unique, personal timeline—a poetic summary of your year.</li>
+                <li><strong>Reflect, Don't Edit:</strong> The rule is to write and save. You can't edit past entries, teaching you to accept and value each day as it was.</li>
+            </ol>
+        </section>
+    </main>
+
+    <!-- Writing Interface Modal -->
+    <div id="writingModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Today's Journal Entry</h3>
+                <button id="closeModal" class="close-btn">&times;</button>
+            </div>
+            <div id="currentDate" class="current-date">Wednesday, October 26, 2023</div>
+            <textarea id="journalEntry" class="journal-textarea" maxlength="250" placeholder="e.g., Found joy in the quiet rain, or Finally finished that big project."></textarea>
+            <div class="char-counter"><span id="charCount">0</span>/250 characters</div>
+            <div class="modal-actions">
+                <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                <button id="saveBtn" class="btn">Save Sentence</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>One Sentence Journal &copy; 2023 - A tool for mindfulness and memory keeping</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const startBtn = document.getElementById('startBtn');
+            const writingModal = document.getElementById('writingModal');
+            const closeModal = document.getElementById('closeModal');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const journalEntry = document.getElementById('journalEntry');
+            const charCount = document.getElementById('charCount');
+            const currentDate = document.getElementById('currentDate');
+            const timeline = document.getElementById('timeline');
+            
+            // Set current date
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            currentDate.textContent = now.toLocaleDateString('en-US', options);
+            
+            // Load existing entries from localStorage
+            loadEntries();
+            
+            // Event Listeners
+            startBtn.addEventListener('click', openModal);
+            closeModal.addEventListener('click', closeModalFunc);
+            cancelBtn.addEventListener('click', closeModalFunc);
+            
+            journalEntry.addEventListener('input', function() {
+                const count = journalEntry.value.length;
+                charCount.textContent = count;
+                
+                // Change color when approaching limit
+                if (count > 200) {
+                    charCount.style.color = '#ff7e5f';
+                } else {
+                    charCount.style.color = '#666';
+                }
+            });
+            
+            saveBtn.addEventListener('click', saveEntry);
+            
+            // Modal background click to close
+            writingModal.addEventListener('click', function(e) {
+                if (e.target === writingModal) {
+                    closeModalFunc();
+                }
+            });
+            
+            // Functions
+            function openModal() {
+                writingModal.style.display = 'flex';
+                journalEntry.focus();
+            }
+            
+            function closeModalFunc() {
+                writingModal.style.display = 'none';
+                journalEntry.value = '';
+                charCount.textContent = '0';
+                charCount.style.color = '#666';
+            }
+            
+            function saveEntry() {
+                const entryText = journalEntry.value.trim();
+                
+                if (entryText === '') {
+                    alert('Please write something before saving.');
+                    return;
+                }
+                
+                // Check if entry already exists for today
+                const today = now.toDateString();
+                const existingEntries = getEntries();
+                
+                if (existingEntries.some(entry => entry.date === today)) {
+                    if (!confirm('You already have an entry for today. Do you want to replace it?')) {
+                        return;
+                    }
+                }
+                
+                // Create entry object
+                const entry = {
+                    date: today,
+                    displayDate: now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                    text: entryText
+                };
+                
+                // Save to localStorage
+                saveEntryToStorage(entry);
+                
+                // Update UI
+                loadEntries();
+                
+                // Close modal and reset
+                closeModalFunc();
+                
+                // Show success message
+                alert('Your sentence has been saved!');
+            }
+            
+            function getEntries() {
+                const entriesJSON = localStorage.getItem('oneSentenceJournalEntries');
+                return entriesJSON ? JSON.parse(entriesJSON) : [];
+            }
+            
+            function saveEntryToStorage(entry) {
+                const entries = getEntries();
+                
+                // Remove existing entry for today if it exists
+                const filteredEntries = entries.filter(e => e.date !== entry.date);
+                
+                // Add new entry and sort by date (newest first)
+                filteredEntries.push(entry);
+                filteredEntries.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                localStorage.setItem('oneSentenceJournalEntries', JSON.stringify(filteredEntries));
+            }
+            
+            function loadEntries() {
+                const entries = getEntries();
+                
+                if (entries.length === 0) {
+                    timeline.innerHTML = '<div class="empty-timeline">Your timeline is empty. Write your first sentence to start the story!</div>';
+                    return;
+                }
+                
+                // Clear timeline
+                timeline.innerHTML = '';
+                
+                // Add each entry to the timeline
+                entries.forEach(entry => {
+                    const entryElement = document.createElement('div');
+                    entryElement.className = 'journal-entry';
+                    entryElement.innerHTML = `
+                        <p class="entry-date">${entry.displayDate}</p>
+                        <p class="entry-sentence">${entry.text}</p>
+                    `;
+                    timeline.appendChild(entryElement);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
