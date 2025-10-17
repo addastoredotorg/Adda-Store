@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>The 5-Minute Gardener: Relaxing Virtual Garden Sim Game</title>
+    <meta name="title" content="The 5-Minute Gardener: Relaxing Virtual Garden Sim Game">
+    <meta name="description" content="Find daily calm with our 5-minute virtual garden simulator. Water, weed, and harvest plants that grow in real-time. Perfect for stress relief and mindfulness. No time commitment needed.">
+    
+    <!-- Keywords -->
+    <meta name="keywords" content="virtual garden, gardening simulator, relaxing game, mindfulness app, stress relief, 5-minute game, browser game, casual gaming, plant growing simulator, daily routine game">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-website.com/">
+    <meta property="og:title" content="The 5-Minute Gardener: Relaxing Virtual Garden">
+    <meta property="og:description" content="Tend your virtual garden in just 5 minutes daily. A calming escape that respects your time.">
+    <meta property="og:image" content="https://your-website.com/5-minute-gardener-preview.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://your-website.com/">
+    <meta property="twitter:title" content="The 5-Minute Gardener: Relaxing Virtual Garden">
+    <meta property="twitter:description" content="Tend your virtual garden in just 5 minutes daily. A calming escape that respects your time.">
+    <meta property="twitter:image" content="https://your-website.com/5-minute-gardener-preview.jpg">
+    
+    <style>
+        :root {
+            --earth-brown: #8B7355;
+            --soil-dark: #5D4037;
+            --leaf-green: #4CAF50;
+            --leaf-light: #81C784;
+            --flower-yellow: #FFD54F;
+            --flower-purple: #BA68C8;
+            --flower-pink: #F48FB1;
+            --water-blue: #4FC3F7;
+            --sky-blue: #E3F2FD;
+            --text-dark: #3E2723;
+            --text-light: #FAFAFA;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Neue', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--sky-blue) 0%, #B3E5FC 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: var(--leaf-green);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--earth-brown);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .intro {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 25px 0 15px;
+            color: var(--leaf-green);
+            border-bottom: 2px solid var(--flower-yellow);
+            padding-bottom: 8px;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 20px 0 10px;
+            color: var(--earth-brown);
+        }
+        
+        .game-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .game-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--flower-yellow);
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            padding-left: 5px;
+        }
+        
+        .mindful-tips {
+            background: #E8F5E9;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid var(--leaf-green);
+        }
+        
+        .garden-area {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        #gardenContainer {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 480px) {
+            #gardenContainer {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .garden-plot {
+            background: var(--soil-dark);
+            border-radius: 10px;
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .garden-plot:hover {
+            transform: translateY(-3px);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3), 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .plant {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            transition: var(--transition);
+        }
+        
+        .water-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--water-blue);
+            opacity: 0.7;
+        }
+        
+        .water-indicator.dry {
+            background: #FF8A65;
+        }
+        
+        .weed-indicator {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .progress-bar {
+            width: 80%;
+            height: 8px;
+            background: #E0E0E0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--leaf-green);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .toolbar {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .tool-btn {
+            background: white;
+            border: 2px solid var(--earth-brown);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.8rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .tool-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .tool-btn.active {
+            background: var(--flower-yellow);
+            border-color: var(--earth-brown);
+        }
+        
+        .seeds-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .seed-packets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .seed-packet {
+            background: white;
+            border: 2px solid var(--leaf-green);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            flex: 1;
+            min-width: 80px;
+            box-shadow: var(--shadow);
+        }
+        
+        .seed-packet:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .seed-packet.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .status-panel {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--earth-brown);
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .points-display {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--flower-purple);
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .plant-catalog {
+            margin-top: 20px;
+        }
+        
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .catalog-item {
+            background: white;
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #BDBDBD;
+            font-size: 0.9rem;
+            color: var(--earth-brown);
+        }
+        
+        .mindfulness-reminder {
+            margin-bottom: 10px;
+            font-style: italic;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Animations */
+        @keyframes grow {
+            0% { transform: scale(0.8); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .grow-animation {
+            animation: grow 0.5s ease;
+        }
+        
+        @keyframes water {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(20px); opacity: 0; }
+        }
+        
+        .water-animation {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: water 0.7s ease;
+            color: var(--water-blue);
+        }
+        
+        /* Empty plot styling */
+        .empty-plot {
+            color: #A1887F;
+            font-size: 2rem;
+        }
+        
+        /* Plant stage colors */
+        .plant-seed { color: #8D6E63; }
+        .plant-sprout { color: #7CB342; }
+        .plant-growing { color: #689F38; }
+        .plant-mature { color: #33691E; }
+    </style>
+    
+    <!-- Load Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>The 5-Minute Gardener</h1>
+            <p class="subtitle">Your Daily Moment of Calm</p>
+            <p class="intro">Tend your virtual garden in just 5 minutes per day. Plants grow in real-time while you're away.</p>
+        </header>
+        
+        <section class="instructions">
+            <h2>How to Play The 5-Minute Gardener</h2>
+            <h3>Daily Routine (5 Minutes Maximum)</h3>
+            <ol>
+                <li><strong>Check Your Garden:</strong> Visit once per day to see how your plants have grown</li>
+                <li><strong>Water Plants:</strong> Click on dry plants to water them (each plant needs water once per day)</li>
+                <li><strong>Remove Weeds:</strong> Click on weeds to remove them (prevents plant growth)</li>
+                <li><strong>Harvest Ready Plants:</strong> Collect mature plants to earn gardening points</li>
+                <li><strong>Plant New Seeds:</strong> Use points to plant new varieties in empty garden spots</li>
+            </ol>
+            
+            <div class="mindful-tips">
+                <h3>Mindful Gardening Tips</h3>
+                <ul>
+                    <li>Use your 5-minute session as a mindfulness practice</li>
+                    <li>Focus on the calming routine rather than maximizing efficiency</li>
+                    <li>Appreciate the simple satisfaction of nurturing growth</li>
+                    <li>Let the game be a digital sanctuary from daily stress</li>
+                </ul>
+            </div>
+        </section>
+        
+        <div class="game-container">
+            <div class="garden-area">
+                <h2>Your Garden</h2>
+                <div id="gardenContainer">
+                    <!-- Garden plots will be generated here -->
+                </div>
+                
+                <div class="toolbar">
+                    <div class="tool-btn active" id="waterTool" title="Water Plants">💧</div>
+                    <div class="tool-btn" id="weedTool" title="Remove Weeds">🧤</div>
+                    <div class="tool-btn" id="harvestTool" title="Harvest Plants">🧺</div>
+                </div>
+                
+                <div class="seeds-section">
+                    <h3>Seed Packets</h3>
+                    <div class="seed-packets" id="seedPackets">
+                        <!-- Seed packets will be generated here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="status-panel">
+                <h2>Garden Status</h2>
+                
+                <div class="points-display" id="pointsDisplay">Points: 0</div>
+                
+                <div class="timer" id="dailyTimer">05:00</div>
+                
+                <div class="status-item">
+                    <span>Daily Streak:</span>
+                    <span id="streakCounter">0 days</span>
+                </div>
+                
+                <div class="status-item">
+                    <span>Plants Harvested:</span>
+                    <span id="plantsHarvested">0</span>
+                </div>
+                
+                <div class="status-item">
+                    <span>Next Check-in:</span>
+                    <span id="nextCheckin">Tomorrow</span>
+                </div>
+                
+                <div class="plant-catalog">
+                    <h3>Plant Catalog</h3>
+                    <div class="catalog-grid" id="plantCatalog">
+                        <!-- Plant catalog will be generated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p class="mindfulness-reminder">Take a deep breath and enjoy your gardening moment</p>
+            <p>&copy; 2023 The 5-Minute Gardener. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Plant database
+        const plantDatabase = {
+            tomato: {
+                name: "Tomato",
+                growthDays: 3,
+                value: 10,
+                stages: ["🌱", "🪴", "🌿", "🍅", "🍅"],
+                stageNames: ["seed", "sprout", "small", "medium", "mature"],
+                stageClasses: ["plant-seed", "plant-sprout", "plant-growing", "plant-growing", "plant-mature"],
+                description: "Juicy and rewarding to grow",
+                cost: 5
+            },
+            lavender: {
+                name: "Lavender",
+                growthDays: 5,
+                value: 25,
+                stages: ["🌱", "🪴", "💮", "🌼", "🪻"],
+                stageNames: ["seed", "sprout", "budding", "flowering", "mature"],
+                stageClasses: ["plant-seed", "plant-sprout", "plant-growing", "plant-growing", "plant-mature"],
+                description: "Calming fragrance for your garden",
+                cost: 15
+            },
+            sunflower: {
+                name: "Sunflower",
+                growthDays: 4,
+                value: 15,
+                stages: ["🌱", "🪴", "🌿", "🌻", "🌻"],
+                stageNames: ["seed", "sprout", "stem", "bud", "flowering"],
+                stageClasses: ["plant-seed", "plant-sprout", "plant-growing", "plant-growing", "plant-mature"],
+                description: "Brings sunshine to your garden",
+                cost: 10
+            },
+            carrot: {
+                name: "Carrot",
+                growthDays: 2,
+                value: 5,
+                stages: ["🌱", "🪴", "🥕", "🥕", "🥕"],
+                stageNames: ["seed", "sprout", "small", "medium", "mature"],
+                stageClasses: ["plant-seed", "plant-sprout", "plant-growing", "plant-growing", "plant-mature"],
+                description: "Quick to grow and harvest",
+                cost: 3
+            }
+        };
+
+        // Initial game state
+        let gameState = {
+            lastVisit: Date.now(),
+            gardenPlots: Array(6).fill(null).map(() => ({
+                plantType: null,
+                plantedAt: null,
+                lastWatered: null,
+                hasWeeds: false,
+                growthStage: 0
+            })),
+            playerStats: {
+                gardeningPoints: 20,
+                dailyStreak: 0,
+                plantsHarvested: 0,
+                unlockedPlants: ["tomato", "carrot"]
+            },
+            settings: {
+                soundEnabled: true,
+                dailyReminder: false
+            },
+            currentTool: "water",
+            sessionStartTime: Date.now()
+        };
+
+        // DOM elements
+        const gardenContainer = document.getElementById('gardenContainer');
+        const seedPackets = document.getElementById('seedPackets');
+        const pointsDisplay = document.getElementById('pointsDisplay');
+        const dailyTimer = document.getElementById('dailyTimer');
+        const streakCounter = document.getElementById('streakCounter');
+        const plantsHarvested = document.getElementById('plantsHarvested');
+        const nextCheckin = document.getElementById('nextCheckin');
+        const plantCatalog = document.getElementById('plantCatalog');
+        const waterTool = document.getElementById('waterTool');
+        const weedTool = document.getElementById('weedTool');
+        const harvestTool = document.getElementById('harvestTool');
+
+        // Initialize the game
+        function initGame() {
+            loadGameState();
+            calculateGrowth();
+            renderGarden();
+            renderSeedPackets();
+            updateStatusPanel();
+            startTimer();
+            
+            // Set up tool selection
+            waterTool.addEventListener('click', () => selectTool('water'));
+            weedTool.addEventListener('click', () => selectTool('weed'));
+            harvestTool.addEventListener('click', () => selectTool('harvest'));
+            
+            // Auto-save every 30 seconds
+            setInterval(saveGameState, 30000);
+            
+            // Update growth every minute
+            setInterval(updateGrowth, 60000);
+        }
+
+        // Load game state from localStorage
+        function loadGameState() {
+            const savedState = localStorage.getItem('fiveMinuteGardener');
+            if (savedState) {
+                const parsedState = JSON.parse(savedState);
+                
+                // Calculate time since last visit
+                const timeSinceLastVisit = Date.now() - parsedState.lastVisit;
+                const daysSinceLastVisit = Math.floor(timeSinceLastVisit / (1000 * 60 * 60 * 24));
+                
+                // Update streak
+                if (daysSinceLastVisit <= 1) {
+                    // Played yesterday or today, continue streak
+                    gameState.playerStats.dailyStreak = parsedState.playerStats.dailyStreak;
+                } else if (daysSinceLastVisit === 1) {
+                    // Missed one day, continue streak
+                    gameState.playerStats.dailyStreak = parsedState.playerStats.dailyStreak;
+                } else {
+                    // Missed more than one day, reset streak
+                    gameState.playerStats.dailyStreak = 0;
+                }
+                
+                // Merge saved state with current state
+                gameState = {
+                    ...gameState,
+                    ...parsedState,
+                    lastVisit: Date.now(),
+                    sessionStartTime: Date.now()
+                };
+            }
+        }
+
+        // Save game state to localStorage
+        function saveGameState() {
+            gameState.lastVisit = Date.now();
+            localStorage.setItem('fiveMinuteGardener', JSON.stringify(gameState));
+        }
+
+        // Calculate plant growth based on time elapsed
+        function calculateGrowth() {
+            const now = Date.now();
+            
+            gameState.gardenPlots.forEach(plot => {
+                if (plot.plantType && plot.plantedAt) {
+                    const plantInfo = plantDatabase[plot.plantType];
+                    const growthRate = plantInfo.growthDays * 24 * 60 * 60 * 1000; // Convert days to milliseconds
+                    
+                    // Calculate growth progress (0 to 1)
+                    const growthProgress = Math.min(1, (now - plot.plantedAt) / growthRate);
+                    
+                    // Convert to growth stage (0 to 4)
+                    plot.growthStage = Math.floor(growthProgress * 4);
+                    
+                    // Check if plant needs water (once per day)
+                    if (plot.lastWatered) {
+                        const hoursSinceWatered = (now - plot.lastWatered) / (1000 * 60 * 60);
+                        if (hoursSinceWatered > 24) {
+                            plot.lastWatered = null;
+                        }
+                    }
+                    
+                    // Random chance for weeds to appear
+                    if (!plot.hasWeeds && Math.random() < 0.1) {
+                        plot.hasWeeds = true;
+                    }
+                }
+            });
+        }
+
+        // Update growth periodically
+        function updateGrowth() {
+            calculateGrowth();
+            renderGarden();
+        }
+
+        // Render the garden plots
+        function renderGarden() {
+            gardenContainer.innerHTML = '';
+            
+            gameState.gardenPlots.forEach((plot, index) => {
+                const plotElement = document.createElement('div');
+                plotElement.className = 'garden-plot';
+                plotElement.dataset.index = index;
+                
+                if (plot.plantType) {
+                    const plantInfo = plantDatabase[plot.plantType];
+                    const plantEmoji = plantInfo.stages[plot.growthStage];
+                    const plantClass = plantInfo.stageClasses[plot.growthStage];
+                    
+                    plotElement.innerHTML = `
+                        <div class="plant ${plantClass}">${plantEmoji}</div>
+                        <div class="water-indicator ${plot.lastWatered ? '' : 'dry'}"></div>
+                        ${plot.hasWeeds ? '<div class="weed-indicator">🌿</div>' : ''}
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${(plot.growthStage / 4) * 100}%"></div>
+                        </div>
+                    `;
+                    
+                    // Add click event
+                    plotElement.addEventListener('click', () => handlePlotClick(index));
+                } else {
+                    plotElement.innerHTML = `
+                        <div class="empty-plot">+</div>
+                        <div>Empty Plot</div>
+                    `;
+                    
+                    // Add click event for planting
+                    plotElement.addEventListener('click', () => handlePlotClick(index));
+                }
+                
+                gardenContainer.appendChild(plotElement);
+            });
+        }
+
+        // Render seed packets
+        function renderSeedPackets() {
+            seedPackets.innerHTML = '';
+            
+            Object.entries(plantDatabase).forEach(([plantId, plantInfo]) => {
+                const seedPacket = document.createElement('div');
+                const isUnlocked = gameState.playerStats.unlockedPlants.includes(plantId);
+                const canAfford = gameState.playerStats.gardeningPoints >= plantInfo.cost;
+                
+                seedPacket.className = `seed-packet ${isUnlocked ? '' : 'locked'}`;
+                seedPacket.innerHTML = `
+                    <div style="font-size: 1.5rem;">${plantInfo.stages[0]}</div>
+                    <div>${plantInfo.name}</div>
+                    <div style="font-size: 0.8rem;">${plantInfo.cost} pts</div>
+                `;
+                
+                if (isUnlocked && canAfford) {
+                    seedPacket.addEventListener('click', () => selectPlant(plantId));
+                }
+                
+                seedPackets.appendChild(seedPacket);
+            });
+        }
+
+        // Update status panel
+        function updateStatusPanel() {
+            pointsDisplay.textContent = `Points: ${gameState.playerStats.gardeningPoints}`;
+            streakCounter.textContent = `${gameState.playerStats.dailyStreak} days`;
+            plantsHarvested.textContent = gameState.playerStats.plantsHarvested;
+            
+            // Calculate next check-in time
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(0, 0, 0, 0);
+            
+            nextCheckin.textContent = `Tomorrow at ${tomorrow.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+            
+            // Update plant catalog
+            renderPlantCatalog();
+        }
+
+        // Render plant catalog
+        function renderPlantCatalog() {
+            plantCatalog.innerHTML = '';
+            
+            Object.entries(plantDatabase).forEach(([plantId, plantInfo]) => {
+                const isUnlocked = gameState.playerStats.unlockedPlants.includes(plantId);
+                
+                const catalogItem = document.createElement('div');
+                catalogItem.className = 'catalog-item';
+                catalogItem.innerHTML = `
+                    <div style="font-size: 1.2rem;">${plantInfo.stages[4]}</div>
+                    <div>${plantInfo.name}</div>
+                    <div style="font-size: 0.7rem; color: ${isUnlocked ? 'green' : 'gray'}">
+                        ${isUnlocked ? 'Unlocked' : 'Locked'}
+                    </div>
+                `;
+                
+                plantCatalog.appendChild(catalogItem);
+            });
+        }
+
+        // Select a tool
+        function selectTool(tool) {
+            gameState.currentTool = tool;
+            
+            // Update active tool button
+            waterTool.classList.toggle('active', tool === 'water');
+            weedTool.classList.toggle('active', tool === 'weed');
+            harvestTool.classList.toggle('active', tool === 'harvest');
+        }
+
+        // Select a plant for planting
+        function selectPlant(plantId) {
+            gameState.selectedPlant = plantId;
+            selectTool('plant');
+        }
+
+        // Handle plot click based on current tool
+        function handlePlotClick(plotIndex) {
+            const plot = gameState.gardenPlots[plotIndex];
+            
+            switch (gameState.currentTool) {
+                case 'water':
+                    if (plot.plantType && !plot.lastWatered) {
+                        waterPlant(plotIndex);
+                    }
+                    break;
+                case 'weed':
+                    if (plot.hasWeeds) {
+                        removeWeeds(plotIndex);
+                    }
+                    break;
+                case 'harvest':
+                    if (plot.plantType && plot.growthStage === 4) {
+                        harvestPlant(plotIndex);
+                    }
+                    break;
+                case 'plant':
+                    if (!plot.plantType && gameState.selectedPlant) {
+                        plantSeed(plotIndex, gameState.selectedPlant);
+                    }
+                    break;
+            }
+        }
+
+        // Water a plant
+        function waterPlant(plotIndex) {
+            const plot = gameState.gardenPlots[plotIndex];
+            plot.lastWatered = Date.now();
+            
+            // Visual feedback
+            const plotElement = document.querySelector(`.garden-plot[data-index="${plotIndex}"]`);
+            const waterEffect = document.createElement('div');
+            waterEffect.className = 'water-animation';
+            waterEffect.textContent = '💧';
+            plotElement.appendChild(waterEffect);
+            
+            setTimeout(() => {
+                waterEffect.remove();
+            }, 700);
+            
+            renderGarden();
+            saveGameState();
+        }
+
+        // Remove weeds from a plot
+        function removeWeeds(plotIndex) {
+            gameState.gardenPlots[plotIndex].hasWeeds = false;
+            gameState.playerStats.gardeningPoints += 2;
+            
+            renderGarden();
+            updateStatusPanel();
+            saveGameState();
+        }
+
+        // Harvest a mature plant
+        function harvestPlant(plotIndex) {
+            const plot = gameState.gardenPlots[plotIndex];
+            const plantInfo = plantDatabase[plot.plantType];
+            
+            // Add points
+            gameState.playerStats.gardeningPoints += plantInfo.value;
+            gameState.playerStats.plantsHarvested += 1;
+            
+            // Reset plot
+            plot.plantType = null;
+            plot.plantedAt = null;
+            plot.lastWatered = null;
+            plot.hasWeeds = false;
+            plot.growthStage = 0;
+            
+            // Check for plant unlocks
+            if (gameState.playerStats.plantsHarvested >= 5 && !gameState.playerStats.unlockedPlants.includes('sunflower')) {
+                gameState.playerStats.unlockedPlants.push('sunflower');
+            }
+            if (gameState.playerStats.plantsHarvested >= 10 && !gameState.playerStats.unlockedPlants.includes('lavender')) {
+                gameState.playerStats.unlockedPlants.push('lavender');
+            }
+            
+            renderGarden();
+            renderSeedPackets();
+            updateStatusPanel();
+            saveGameState();
+        }
+
+        // Plant a seed in an empty plot
+        function plantSeed(plotIndex, plantId) {
+            const plantInfo = plantDatabase[plantId];
+            
+            // Check if player can afford it
+            if (gameState.playerStats.gardeningPoints >= plantInfo.cost) {
+                // Deduct cost
+                gameState.playerStats.gardeningPoints -= plantInfo.cost;
+                
+                // Plant the seed
+                gameState.gardenPlots[plotIndex] = {
+                    plantType: plantId,
+                    plantedAt: Date.now(),
+                    lastWatered: Date.now(),
+                    hasWeeds: false,
+                    growthStage: 0
+                };
+                
+                // Visual feedback
+                const plotElement = document.querySelector(`.garden-plot[data-index="${plotIndex}"]`);
+                plotElement.classList.add('grow-animation');
+                setTimeout(() => {
+                    plotElement.classList.remove('grow-animation');
+                }, 500);
+                
+                renderGarden();
+                renderSeedPackets();
+                updateStatusPanel();
+                saveGameState();
+            }
+        }
+
+        // Start the 5-minute daily timer
+        function startTimer() {
+            const startTime = gameState.sessionStartTime;
+            const fiveMinutes = 5 * 60 * 1000; // 5 minutes in milliseconds
+            
+            function updateTimer() {
+                const now = Date.now();
+                const elapsed = now - startTime;
+                const remaining = Math.max(0, fiveMinutes - elapsed);
+                
+                const minutes = Math.floor(remaining / 60000);
+                const seconds = Math.floor((remaining % 60000) / 1000);
+                
+                dailyTimer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (remaining > 0) {
+                    requestAnimationFrame(updateTimer);
+                } else {
+                    dailyTimer.textContent = "Time's up!";
+                    dailyTimer.style.color = "red";
+                }
+            }
+            
+            updateTimer();
+        }
+
+        // Initialize the game when the page loads
+        window.addEventListener('load', initGame);
+    </script>
+</body>
+</html>
