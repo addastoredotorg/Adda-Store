@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WikiWalk Game - Navigate Wikipedia Articles</title>
+    <meta name="description" content="WikiWalk Game - Navigate from random Wikipedia articles to target topics using only hyperlinks! Test your knowledge and discover surprising connections in this educational browser game. Free to play, no downloads needed.">
+    <style>
+        :root {
+            --wikipedia-blue: #3366cc;
+            --wikipedia-light-blue: #eaf3ff;
+            --wikipedia-border: #a7d7f9;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --text-color: #202122;
+            --light-gray: #f8f9fa;
+            --medium-gray: #eaecf0;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Lato, sans-serif;
+            background: var(--light-gray);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .game-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header.game-header {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .header-content {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        h1 {
+            color: var(--wikipedia-blue);
+            font-size: 2.2rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .tagline {
+            color: #54595d;
+            font-size: 1.1rem;
+        }
+        
+        .game-stats {
+            display: flex;
+            gap: 1.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .stat-item {
+            background: var(--wikipedia-light-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            border: 1px solid var(--wikipedia-border);
+        }
+        
+        main.game-area {
+            display: flex;
+            flex: 1;
+            min-height: 70vh;
+        }
+        
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+        
+        .game-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: var(--wikipedia-blue);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2a55a5;
+        }
+        
+        .btn-secondary {
+            background: var(--medium-gray);
+            color: var(--text-color);
+        }
+        
+        .btn-secondary:hover {
+            background: #d0d4d9;
+        }
+        
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+        
+        .difficulty-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .difficulty-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--wikipedia-border);
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .difficulty-btn.active {
+            background: var(--wikipedia-blue);
+            color: white;
+            border-color: var(--wikipedia-blue);
+        }
+        
+        .target-display {
+            background: var(--wikipedia-light-blue);
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--wikipedia-border);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .target-label {
+            font-weight: 600;
+        }
+        
+        .target-article {
+            font-weight: 700;
+            color: var(--wikipedia-blue);
+            font-size: 1.2rem;
+        }
+        
+        .wikipedia-frame {
+            border: 1px solid var(--wikipedia-border);
+            background: white;
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .article-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .article-body {
+            line-height: 1.7;
+        }
+        
+        .article-body p {
+            margin-bottom: 1rem;
+        }
+        
+        .wiki-link {
+            color: var(--wikipedia-blue);
+            text-decoration: none;
+        }
+        
+        .wiki-link:hover {
+            text-decoration: underline;
+        }
+        
+        .path-history {
+            background: var(--light-gray);
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid var(--medium-gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .path-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .breadcrumb-item:not(:last-child)::after {
+            content: "→";
+            margin-left: 0.5rem;
+            color: #72777d;
+        }
+        
+        .breadcrumb-link {
+            color: var(--wikipedia-blue);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .breadcrumb-link:hover {
+            text-decoration: underline;
+        }
+        
+        .current-article {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        aside.game-sidebar {
+            width: 300px;
+            background: var(--light-gray);
+            border-left: 1px solid var(--medium-gray);
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+        
+        .sidebar-section h3 {
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--medium-gray);
+            color: var(--wikipedia-blue);
+        }
+        
+        .rules-list {
+            list-style-type: none;
+        }
+        
+        .rules-list li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .rules-list li::before {
+            content: "•";
+            color: var(--wikipedia-blue);
+            position: absolute;
+            left: 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 0.8rem;
+            border-radius: 4px;
+            border: 1px solid var(--medium-gray);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--wikipedia-blue);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #54595d;
+        }
+        
+        .hint-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 4px;
+            border: 1px solid var(--warning-color);
+            margin-top: 1rem;
+        }
+        
+        .victory-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .victory-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .victory-title {
+            color: var(--success-color);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .performance-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .performance-stat {
+            background: var(--light-gray);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        
+        .performance-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--wikipedia-blue);
+        }
+        
+        .custom-target {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .custom-target input {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--wikipedia-blue);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 900px) {
+            main.game-area {
+                flex-direction: column;
+            }
+            
+            aside.game-sidebar {
+                width: 100%;
+                border-left: none;
+                border-top: 1px solid var(--medium-gray);
+            }
+            
+            header.game-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .game-stats {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .game-controls {
+                flex-direction: column;
+            }
+            
+            .performance-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <div class="header-content">
+                <h1>WikiWalk: The Wikipedia Navigation Game</h1>
+                <p class="tagline">Discover surprising connections between topics</p>
+            </div>
+            <div class="game-stats">
+                <div class="stat-item" id="click-counter">Moves: 0</div>
+                <div class="stat-item" id="timer">Time: 0:00</div>
+                <div class="stat-item" id="target-display">Target: <span id="target-name">Mona Lisa</span></div>
+            </div>
+        </header>
+        
+        <main class="game-area">
+            <div class="content-area">
+                <div class="game-controls">
+                    <button class="btn btn-primary" id="new-game-btn">
+                        <span>🎮</span> New Game
+                    </button>
+                    <button class="btn btn-secondary" id="back-btn" disabled>
+                        <span>←</span> Back
+                    </button>
+                    <button class="btn btn-warning" id="hint-btn">
+                        <span>💡</span> Get Hint
+                    </button>
+                    <div class="difficulty-selector">
+                        <span>Difficulty:</span>
+                        <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+                        <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                        <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+                    </div>
+                </div>
+                
+                <div class="target-display">
+                    <span class="target-label">Your Target:</span>
+                    <span class="target-article" id="current-target">Mona Lisa</span>
+                </div>
+                
+                <div class="path-history">
+                    <div class="path-title">Your Path:</div>
+                    <div class="breadcrumb" id="path-display">
+                        <!-- Breadcrumb path will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="wikipedia-frame" id="article-container">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Loading Wikipedia article...</p>
+                    </div>
+                </div>
+                
+                <div class="custom-target">
+                    <input type="text" id="custom-target-input" placeholder="Or enter a custom target article...">
+                    <button class="btn btn-secondary" id="set-custom-target">Set Target</button>
+                </div>
+            </div>
+            
+            <aside class="game-sidebar">
+                <div class="sidebar-section">
+                    <h3>How to Play</h3>
+                    <ul class="rules-list">
+                        <li>Start from a random Wikipedia article</li>
+                        <li>Navigate to the target using only Wikipedia links</li>
+                        <li>Click on any blue link in the article to move</li>
+                        <li>Fewer clicks = better score!</li>
+                        <li>Use the Back button if you make a wrong turn</li>
+                        <li>Get hints if you're stuck</li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3>Your Stats</h3>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-value" id="games-played">0</div>
+                            <div class="stat-label">Games Played</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="best-score">-</div>
+                            <div class="stat-label">Best Score</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="avg-clicks">-</div>
+                            <div class="stat-label">Avg. Clicks</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="success-rate">0%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3>Hint System</h3>
+                    <p>Stuck? Get a hint to guide your next move.</p>
+                    <div class="hint-box" id="hint-box">
+                        Hints will appear here when you click "Get Hint"
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <div class="victory-screen" id="victory-screen">
+        <div class="victory-content">
+            <h2 class="victory-title">Congratulations!</h2>
+            <p>You successfully reached the target article!</p>
+            
+            <div class="performance-stats">
+                <div class="performance-stat">
+                    <div class="performance-value" id="final-clicks">0</div>
+                    <div class="stat-label">Total Clicks</div>
+                </div>
+                <div class="performance-stat">
+                    <div class="performance-value" id="final-time">0:00</div>
+                    <div class="stat-label">Time</div>
+                </div>
+            </div>
+            
+            <div class="game-controls">
+                <button class="btn btn-primary" id="play-again-btn">Play Again</button>
+                <button class="btn btn-secondary" id="share-results-btn">Share Results</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        const gameState = {
+            currentArticle: null,
+            targetArticle: "Mona Lisa",
+            articleHistory: [],
+            currentIndex: -1,
+            clickCount: 0,
+            startTime: null,
+            timerInterval: null,
+            difficulty: "easy",
+            gamesPlayed: 0,
+            gamesWon: 0,
+            bestScore: null,
+            totalClicks: 0
+        };
+
+        // DOM Elements
+        const articleContainer = document.getElementById('article-container');
+        const clickCounter = document.getElementById('click-counter');
+        const timerDisplay = document.getElementById('timer');
+        const targetDisplay = document.getElementById('current-target');
+        const pathDisplay = document.getElementById('path-display');
+        const newGameBtn = document.getElementById('new-game-btn');
+        const backBtn = document.getElementById('back-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        const victoryScreen = document.getElementById('victory-screen');
+        const finalClicks = document.getElementById('final-clicks');
+        const finalTime = document.getElementById('final-time');
+        const playAgainBtn = document.getElementById('play-again-btn');
+        const shareResultsBtn = document.getElementById('share-results-btn');
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        const customTargetInput = document.getElementById('custom-target-input');
+        const setCustomTargetBtn = document.getElementById('set-custom-target');
+        const hintBox = document.getElementById('hint-box');
+        
+        // Stats elements
+        const gamesPlayedStat = document.getElementById('games-played');
+        const bestScoreStat = document.getElementById('best-score');
+        const avgClicksStat = document.getElementById('avg-clicks');
+        const successRateStat = document.getElementById('success-rate');
+
+        // Initialize the game
+        function initGame() {
+            loadStats();
+            setupEventListeners();
+            startNewGame();
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            newGameBtn.addEventListener('click', startNewGame);
+            backBtn.addEventListener('click', goBack);
+            hintBtn.addEventListener('click', getHint);
+            playAgainBtn.addEventListener('click', startNewGame);
+            shareResultsBtn.addEventListener('click', shareResults);
+            
+            difficultyBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    difficultyBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    gameState.difficulty = btn.dataset.difficulty;
+                });
+            });
+            
+            setCustomTargetBtn.addEventListener('click', setCustomTarget);
+        }
+
+        // Start a new game
+        function startNewGame() {
+            // Reset game state
+            gameState.articleHistory = [];
+            gameState.currentIndex = -1;
+            gameState.clickCount = 0;
+            gameState.startTime = new Date();
+            
+            // Update UI
+            clickCounter.textContent = `Moves: 0`;
+            updateTimer();
+            victoryScreen.style.display = 'none';
+            
+            // Clear any existing timer
+            if (gameState.timerInterval) {
+                clearInterval(gameState.timerInterval);
+            }
+            
+            // Start timer
+            gameState.timerInterval = setInterval(updateTimer, 1000);
+            
+            // Set target based on difficulty
+            setTargetArticle();
+            
+            // Load starting article
+            loadRandomArticle();
+            
+            // Update games played
+            gameState.gamesPlayed++;
+            updateStats();
+            saveStats();
+        }
+
+        // Set target article based on difficulty
+        function setTargetArticle() {
+            const targets = {
+                easy: ["Cat", "Pizza", "Coffee", "Beach", "Guitar"],
+                medium: ["Quantum mechanics", "Renaissance", "Artificial intelligence", "Global warming", "Shakespeare"],
+                hard: ["Kuiper belt", "Transcendentalism", "Photosynthesis", "Mona Lisa", "Big Bang"]
+            };
+            
+            const targetList = targets[gameState.difficulty];
+            gameState.targetArticle = targetList[Math.floor(Math.random() * targetList.length)];
+            targetDisplay.textContent = gameState.targetArticle;
+        }
+
+        // Set custom target article
+        function setCustomTarget() {
+            const customTarget = customTargetInput.value.trim();
+            if (customTarget) {
+                gameState.targetArticle = customTarget;
+                targetDisplay.textContent = gameState.targetArticle;
+                customTargetInput.value = '';
+            }
+        }
+
+        // Load a random Wikipedia article
+        function loadRandomArticle() {
+            showLoading();
+            
+            // In a real implementation, this would use the Wikipedia API
+            // For this demo, we'll simulate with a timeout and predefined articles
+            setTimeout(() => {
+                const randomArticles = [
+                    "Mathematics", "Physics", "Biology", "Chemistry", "History", 
+                    "Geography", "Literature", "Music", "Art", "Technology"
+                ];
+                
+                const randomArticle = randomArticles[Math.floor(Math.random() * randomArticles.length)];
+                navigateToArticle(randomArticle, true);
+            }, 1000);
+        }
+
+        // Navigate to a specific article
+        function navigateToArticle(articleTitle, isInitial = false) {
+            showLoading();
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // If we're navigating forward (not using back button)
+                if (!isInitial && gameState.currentIndex < gameState.articleHistory.length - 1) {
+                    // We've gone back in history and are now making a new branch
+                    gameState.articleHistory = gameState.articleHistory.slice(0, gameState.currentIndex + 1);
+                }
+                
+                // Add to history if not initial load
+                if (!isInitial) {
+                    gameState.articleHistory.push(articleTitle);
+                    gameState.currentIndex = gameState.articleHistory.length - 1;
+                    gameState.clickCount++;
+                    clickCounter.textContent = `Moves: ${gameState.clickCount}`;
+                } else {
+                    gameState.articleHistory = [articleTitle];
+                    gameState.currentIndex = 0;
+                }
+                
+                // Update back button state
+                backBtn.disabled = gameState.currentIndex <= 0;
+                
+                // Display the article
+                displayArticle(articleTitle);
+                
+                // Update path display
+                updatePathDisplay();
+                
+                // Check for victory
+                if (articleTitle === gameState.targetArticle) {
+                    victory();
+                }
+            }, 800);
+        }
+
+        // Display article content
+        function displayArticle(title) {
+            // In a real implementation, this would fetch and parse Wikipedia content
+            // For this demo, we'll create simulated content
+            
+            const articleHTML = `
+                <div class="article-content">
+                    <h1 class="article-title">${title}</h1>
+                    <div class="article-body">
+                        <p>${title} is a fascinating topic with many connections to other subjects. 
+                        Wikipedia provides a wealth of information about ${title} and its relationship to various fields of study.</p>
+                        
+                        <p>As you explore this article, you'll find links to related topics that might help you reach your target: 
+                        <strong>${gameState.targetArticle}</strong>. Think strategically about which links might bring you closer to your goal.</p>
+                        
+                        <p>Some related topics you might find interesting:</p>
+                        <ul>
+                            <li><a href="#" class="wiki-link" data-article="Science">Science</a></li>
+                            <li><a href="#" class="wiki-link" data-article="History">History</a></li>
+                            <li><a href="#" class="wiki-link" data-article="Culture">Culture</a></li>
+                            <li><a href="#" class="wiki-link" data-article="Technology">Technology</a></li>
+                            <li><a href="#" class="wiki-link" data-article="Art">Art</a></li>
+                            <li><a href="#" class="wiki-link" data-article="Philosophy">Philosophy</a></li>
+                            <li><a href="#" class="wiki-link" data-article="Mathematics">Mathematics</a></li>
+                            <li><a href="#" class="wiki-link" data-article="Geography">Geography</a></li>
+                        </ul>
+                        
+                        <p>Remember, your goal is to reach <strong>${gameState.targetArticle}</strong> in as few clicks as possible. 
+                        Good luck with your WikiWalk!</p>
+                    </div>
+                </div>
+            `;
+            
+            articleContainer.innerHTML = articleHTML;
+            
+            // Add click handlers to links
+            const links = articleContainer.querySelectorAll('.wiki-link');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const article = this.getAttribute('data-article');
+                    navigateToArticle(article);
+                });
+            });
+        }
+
+        // Show loading state
+        function showLoading() {
+            articleContainer.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading Wikipedia article...</p>
+                </div>
+            `;
+        }
+
+        // Go back to previous article
+        function goBack() {
+            if (gameState.currentIndex > 0) {
+                gameState.currentIndex--;
+                const previousArticle = gameState.articleHistory[gameState.currentIndex];
+                displayArticle(previousArticle);
+                updatePathDisplay();
+                backBtn.disabled = gameState.currentIndex <= 0;
+            }
+        }
+
+        // Update the path display
+        function updatePathDisplay() {
+            pathDisplay.innerHTML = '';
+            
+            gameState.articleHistory.forEach((article, index) => {
+                const item = document.createElement('div');
+                item.className = 'breadcrumb-item';
+                
+                const link = document.createElement('a');
+                link.className = index === gameState.currentIndex ? 'breadcrumb-link current-article' : 'breadcrumb-link';
+                link.textContent = article;
+                link.href = '#';
+                
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Jump to this point in history
+                    gameState.currentIndex = index;
+                    displayArticle(article);
+                    updatePathDisplay();
+                    backBtn.disabled = gameState.currentIndex <= 0;
+                });
+                
+                item.appendChild(link);
+                pathDisplay.appendChild(item);
+            });
+        }
+
+        // Update the timer display
+        function updateTimer() {
+            if (!gameState.startTime) return;
+            
+            const now = new Date();
+            const diff = Math.floor((now - gameState.startTime) / 1000);
+            const minutes = Math.floor(diff / 60);
+            const seconds = diff % 60;
+            
+            timerDisplay.textContent = `Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Get a hint
+        function getHint() {
+            const hints = [
+                "Try exploring categories related to your target.",
+                "Look for broad topics that might connect to your target.",
+                "Consider historical or cultural connections.",
+                "Scientific concepts often have surprising links.",
+                "Art and philosophy can be bridges between topics.",
+                "Geographical locations might help you navigate.",
+                "Think about time periods associated with your target."
+            ];
+            
+            const randomHint = hints[Math.floor(Math.random() * hints.length)];
+            hintBox.textContent = randomHint;
+        }
+
+        // Victory condition
+        function victory() {
+            clearInterval(gameState.timerInterval);
+            
+            // Update game stats
+            gameState.gamesWon++;
+            if (gameState.bestScore === null || gameState.clickCount < gameState.bestScore) {
+                gameState.bestScore = gameState.clickCount;
+            }
+            gameState.totalClicks += gameState.clickCount;
+            
+            updateStats();
+            saveStats();
+            
+            // Show victory screen
+            finalClicks.textContent = gameState.clickCount;
+            finalTime.textContent = timerDisplay.textContent.replace('Time: ', '');
+            victoryScreen.style.display = 'flex';
+        }
+
+        // Update stats display
+        function updateStats() {
+            gamesPlayedStat.textContent = gameState.gamesPlayed;
+            bestScoreStat.textContent = gameState.bestScore === null ? '-' : gameState.bestScore;
+            
+            const avgClicks = gameState.gamesWon > 0 ? 
+                Math.round(gameState.totalClicks / gameState.gamesWon) : '-';
+            avgClicksStat.textContent = avgClicks;
+            
+            const successRate = gameState.gamesPlayed > 0 ? 
+                Math.round((gameState.gamesWon / gameState.gamesPlayed) * 100) : 0;
+            successRateStat.textContent = `${successRate}%`;
+        }
+
+        // Save stats to localStorage
+        function saveStats() {
+            const stats = {
+                gamesPlayed: gameState.gamesPlayed,
+                gamesWon: gameState.gamesWon,
+                bestScore: gameState.bestScore,
+                totalClicks: gameState.totalClicks
+            };
+            
+            localStorage.setItem('wikiwalkStats', JSON.stringify(stats));
+        }
+
+        // Load stats from localStorage
+        function loadStats() {
+            const savedStats = localStorage.getItem('wikiwalkStats');
+            if (savedStats) {
+                const stats = JSON.parse(savedStats);
+                gameState.gamesPlayed = stats.gamesPlayed || 0;
+                gameState.gamesWon = stats.gamesWon || 0;
+                gameState.bestScore = stats.bestScore || null;
+                gameState.totalClicks = stats.totalClicks || 0;
+                
+                updateStats();
+            }
+        }
+
+        // Share results
+        function shareResults() {
+            const text = `I reached "${gameState.targetArticle}" in ${gameState.clickCount} moves on WikiWalk! Can you beat my score?`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'WikiWalk Game',
+                    text: text,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('Results copied to clipboard!');
+                });
+            }
+        }
+
+        // Initialize the game when the page loads
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
