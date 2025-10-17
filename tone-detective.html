@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tone Detective - Test Your Emotional Intelligence</title>
+    <meta name="description" content="Play Tone Detective, a fun and free online game. Can you guess the true emotion behind ambiguous messages like 'Fine. Whatever.'? Improve your digital communication skills and emotional intelligence today!">
+    <meta name="keywords" content="emotional intelligence game, tone interpreter, online puzzle, context game, digital communication, fun quiz, free web game, sarcasm detector game">
+    <style>
+        :root {
+            --dark-blue: #1a237e;
+            --medium-blue: #283593;
+            --light-blue: #5c6bc0;
+            --gold: #ffb300;
+            --light-gold: #ffd54f;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #424242;
+            --correct: #4caf50;
+            --incorrect: #f44336;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--dark-blue);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--gold);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .intro {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .intro h2 {
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 5px;
+        }
+        
+        .benefits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .benefit {
+            flex: 1;
+            min-width: 200px;
+            background-color: var(--light-blue);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .rules {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .rules h2 {
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 5px;
+        }
+        
+        .rules ol {
+            margin-left: 20px;
+        }
+        
+        .rules li {
+            margin-bottom: 10px;
+        }
+        
+        .game-container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .score-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--dark-blue);
+        }
+        
+        .message-display {
+            background-color: var(--medium-gray);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-align: center;
+            border: 2px solid var(--dark-blue);
+        }
+        
+        .message-display::before {
+            content: "💬";
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .tone-btn {
+            padding: 15px;
+            background-color: var(--medium-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .tone-btn:hover:not(:disabled) {
+            background-color: var(--light-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tone-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .tone-btn.correct {
+            background-color: var(--correct);
+        }
+        
+        .tone-btn.incorrect {
+            background-color: var(--incorrect);
+        }
+        
+        .feedback-container {
+            min-height: 100px;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .feedback-correct {
+            background-color: rgba(76, 175, 80, 0.1);
+            border: 2px solid var(--correct);
+            color: var(--correct);
+        }
+        
+        .feedback-incorrect {
+            background-color: rgba(244, 67, 54, 0.1);
+            border: 2px solid var(--incorrect);
+            color: var(--incorrect);
+        }
+        
+        .explanation {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: var(--dark-gray);
+        }
+        
+        .next-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--gold);
+            color: var(--dark-blue);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .next-btn:hover:not(:disabled) {
+            background-color: var(--light-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .next-btn:disabled {
+            background-color: var(--medium-gray);
+            color: var(--dark-gray);
+            cursor: not-allowed;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .message-display {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🔍 Tone Detective</h1>
+        <p class="subtitle">Can You Decode the Message?</p>
+    </header>
+    
+    <section class="intro">
+        <h2>Sharpen Your Emotional Intelligence</h2>
+        <p>In a world of texts, DMs, and emails, tone is everything—and it's often lost in translation. Tone Detective is a fun, low-stakes game that challenges you to identify the true emotion behind short, ambiguous messages.</p>
+        
+        <div class="benefits">
+            <div class="benefit">Boost Your EQ</div>
+            <div class="benefit">Improve Digital Communication</div>
+            <div class="benefit">Fun & Addictive</div>
+        </div>
+    </section>
+    
+    <section class="rules">
+        <h2>How to Play</h2>
+        <ol>
+            <li>You will be presented with a short, ambiguous message (e.g., "Oh, great." or "Thanks a lot.").</li>
+            <li>Analyze the message and select what you believe is the correct tone from four multiple-choice options.</li>
+            <li>Click on the button corresponding to your chosen tone (e.g., Sarcastic, Genuine, Angry, Playful).</li>
+            <li>Get instant feedback showing if you were correct or not, along with a brief explanation of the context.</li>
+            <li>Each correct guess earns you 1 point.</li>
+            <li>Click "Next Mystery" to receive a new message and continue playing. See how high you can score!</li>
+        </ol>
+    </section>
+    
+    <main class="game-container">
+        <div class="score-container">
+            <div class="score">Score: <span id="score">0</span></div>
+            <div class="progress">Message: <span id="message-count">1</span></div>
+        </div>
+        
+        <div class="message-display" id="message-display">
+            <!-- Message will appear here -->
+        </div>
+        
+        <div class="options-container" id="options-container">
+            <!-- Tone buttons will appear here -->
+        </div>
+        
+        <div class="feedback-container" id="feedback-container">
+            <!-- Feedback will appear here -->
+        </div>
+        
+        <button class="next-btn" id="next-btn" disabled>Next Mystery 🔍</button>
+    </main>
+    
+    <footer>
+        <p>Tone Detective - A fun way to practice emotional intelligence and contextual understanding</p>
+    </footer>
+
+    <script>
+        // Game data
+        const messages = [
+            {
+                message: "Fine. Whatever.",
+                options: ["Sarcastic", "Genuine", "Annoyed", "Sad"],
+                correctIndex: 0,
+                explanation: "Your friend cancelled plans for the third time this week."
+            },
+            {
+                message: "Oh, great. Just what I needed.",
+                options: ["Sarcastic", "Excited", "Grateful", "Indifferent"],
+                correctIndex: 0,
+                explanation: "Your computer just crashed right before you saved your important document."
+            },
+            {
+                message: "Thanks a lot.",
+                options: ["Sarcastic", "Genuine", "Angry", "Playful"],
+                correctIndex: 1,
+                explanation: "Your coworker just covered your shift so you could attend your child's school play."
+            },
+            {
+                message: "I'm fine.",
+                options: ["Genuine", "Sad", "Angry", "Anxious"],
+                correctIndex: 1,
+                explanation: "After asking what's wrong multiple times, your partner gives this short response."
+            },
+            {
+                message: "Wow, you're really smart.",
+                options: ["Sarcastic", "Genuine", "Jealous", "Playful"],
+                correctIndex: 0,
+                explanation: "You just stated something incredibly obvious that everyone already knew."
+            },
+            {
+                message: "No, go ahead. I don't mind.",
+                options: ["Genuine", "Passive-aggressive", "Indifferent", "Excited"],
+                correctIndex: 1,
+                explanation: "Your sibling just took the last piece of cake you were clearly about to eat."
+            },
+            {
+                message: "That's an interesting outfit choice.",
+                options: ["Judgmental", "Genuine", "Curious", "Admiring"],
+                correctIndex: 0,
+                explanation: "Your friend is wearing clashing patterns and unusual accessories."
+            }
+        ];
+
+        // Game state
+        let currentMessageIndex = -1;
+        let score = 0;
+        let totalAnswered = 0;
+        let lastMessageIndex = -1;
+
+        // DOM elements
+        const messageDisplay = document.getElementById('message-display');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackContainer = document.getElementById('feedback-container');
+        const nextBtn = document.getElementById('next-btn');
+        const scoreElement = document.getElementById('score');
+        const messageCountElement = document.getElementById('message-count');
+
+        // Initialize game
+        function initGame() {
+            score = 0;
+            totalAnswered = 0;
+            updateScore();
+            loadRandomMessage();
+        }
+
+        // Load a random message that's not the immediate previous one
+        function loadRandomMessage() {
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * messages.length);
+            } while (randomIndex === lastMessageIndex && messages.length > 1);
+            
+            lastMessageIndex = currentMessageIndex;
+            currentMessageIndex = randomIndex;
+            
+            const currentMessage = messages[currentMessageIndex];
+            
+            // Display message
+            messageDisplay.textContent = `"${currentMessage.message}"`;
+            
+            // Clear options
+            optionsContainer.innerHTML = '';
+            
+            // Create tone buttons
+            currentMessage.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'tone-btn';
+                button.textContent = option;
+                button.addEventListener('click', () => checkAnswer(index));
+                optionsContainer.appendChild(button);
+            });
+            
+            // Clear feedback
+            feedbackContainer.innerHTML = '';
+            feedbackContainer.className = 'feedback-container';
+            
+            // Disable next button
+            nextBtn.disabled = true;
+        }
+
+        // Check if the selected answer is correct
+        function checkAnswer(selectedIndex) {
+            const currentMessage = messages[currentMessageIndex];
+            const isCorrect = selectedIndex === currentMessage.correctIndex;
+            const correctOption = currentMessage.options[currentMessage.correctIndex];
+            
+            // Update score
+            if (isCorrect) {
+                score++;
+            }
+            totalAnswered++;
+            updateScore();
+            
+            // Disable all buttons
+            const buttons = document.querySelectorAll('.tone-btn');
+            buttons.forEach(button => {
+                button.disabled = true;
+            });
+            
+            // Highlight correct and incorrect answers
+            buttons.forEach((button, index) => {
+                if (index === currentMessage.correctIndex) {
+                    button.classList.add('correct');
+                } else if (index === selectedIndex && !isCorrect) {
+                    button.classList.add('incorrect');
+                }
+            });
+            
+            // Show feedback
+            feedbackContainer.innerHTML = `
+                <div>${isCorrect ? '✅ Correct!' : '❌ Incorrect!'}</div>
+                <div class="explanation">Context: ${currentMessage.explanation}</div>
+                <div class="explanation">The correct tone was: ${correctOption}</div>
+            `;
+            
+            feedbackContainer.className = `feedback-container ${isCorrect ? 'feedback-correct' : 'feedback-incorrect'}`;
+            
+            // Enable next button
+            nextBtn.disabled = false;
+        }
+
+        // Update score display
+        function updateScore() {
+            scoreElement.textContent = score;
+            messageCountElement.textContent = totalAnswered + 1;
+        }
+
+        // Event listeners
+        nextBtn.addEventListener('click', loadRandomMessage);
+
+        // Initialize the game when the page loads
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
