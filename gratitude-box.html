@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gratitude Box | 30-Day Happiness & Gratitude Game</title>
+    <meta name="description" content="The Gratitude Box is a free, interactive micro-game for your mental well-being. Practice daily gratitude by writing one thing you're thankful for. After 30 days, unlock a beautiful animated collage of your entries. Start your journey to positivity and happiness today.">
+    <style>
+        :root {
+            --primary-color: #4a7b9d;
+            --secondary-color: #f4a261;
+            --accent-color: #e76f51;
+            --light-color: #f8f9fa;
+            --dark-color: #264653;
+            --success-color: #2a9d8f;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
+            color: var(--dark-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            transition: var(--transition);
+        }
+
+        .day-counter {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .box-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            perspective: 1000px;
+        }
+
+        .box {
+            width: 200px;
+            height: 150px;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 1.5s ease;
+        }
+
+        .box.closed {
+            transform: rotateX(0deg);
+        }
+
+        .box.open {
+            transform: rotateX(-90deg);
+        }
+
+        .box-top, .box-bottom {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: var(--secondary-color);
+            border: 5px solid var(--accent-color);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            backface-visibility: hidden;
+        }
+
+        .box-top {
+            transform: translateZ(75px);
+            background: linear-gradient(to bottom, #d4a574, #b07d4e);
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .box-bottom {
+            transform: rotateX(90deg) translateZ(75px);
+            background: linear-gradient(to top, #d4a574, #b07d4e);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .input-section {
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 123, 157, 0.2);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: block;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #3a6a8d;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            margin-top: 1rem;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .message.success {
+            background-color: rgba(42, 157, 143, 0.1);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+
+        .message.error {
+            background-color: rgba(231, 111, 81, 0.1);
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+        }
+
+        .collage-container {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .collage {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+
+        .gratitude-card {
+            background-color: #fff9c4;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            transform: scale(0);
+            animation: cardAppear 0.5s forwards;
+            position: relative;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        @keyframes cardAppear {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background-color: var(--secondary-color);
+            top: 0;
+            opacity: 0;
+        }
+
+        .confetti-piece:nth-child(1) {
+            left: 7%;
+            transform: rotate(-40deg);
+            animation: makeItRain 1000ms infinite ease-out;
+            animation-delay: 182ms;
+            animation-duration: 1116ms;
+        }
+
+        .confetti-piece:nth-child(2) {
+            left: 14%;
+            transform: rotate(4deg);
+            animation: makeItRain 1000ms infinite ease-out;
+            animation-delay: 161ms;
+            animation-duration: 1076ms;
+        }
+
+        /* Additional confetti pieces would be defined here in a real implementation */
+
+        @keyframes makeItRain {
+            from {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        .reset-btn {
+            margin-top: 2rem;
+            background-color: var(--accent-color);
+            max-width: 200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reset-btn:hover {
+            background-color: #d65a3d;
+        }
+
+        .instructions {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: rgba(74, 123, 157, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .instructions h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            color: var(--dark-color);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1.5rem;
+            }
+            
+            .box {
+                width: 150px;
+                height: 112px;
+            }
+            
+            .box-top, .box-bottom {
+                font-size: 2.5rem;
+            }
+            
+            .collage {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>The Gratitude Box</h1>
+        <p class="tagline">A 30-Day Journey to Positivity and Happiness</p>
+    </header>
+
+    <main class="container">
+        <div class="day-counter" id="dayCounter" aria-live="polite">Day 1 of 30</div>
+        
+        <div class="box-container">
+            <div class="box closed" id="gratitudeBox">
+                <div class="box-top">📦</div>
+                <div class="box-bottom">✨</div>
+            </div>
+        </div>
+
+        <section class="input-section" id="inputSection">
+            <div class="form-group">
+                <label for="gratitudeInput">What is one thing you're grateful for today?</label>
+                <input type="text" id="gratitudeInput" placeholder="Enter your gratitude here..." maxlength="100">
+            </div>
+            <button id="submitBtn">I'm Grateful</button>
+            <div class="message" id="message" aria-live="polite"></div>
+        </section>
+
+        <section class="collage-container" id="collageContainer">
+            <h2>Your Gratitude Collage</h2>
+            <p>Congratulations on completing your 30-day gratitude journey!</p>
+            <div class="collage" id="collage"></div>
+            <button class="reset-btn" id="resetBtn">Start a New Box</button>
+        </section>
+
+        <section class="instructions">
+            <h3>How It Works</h3>
+            <p>Write one thing you're grateful for each day. After 30 days, your gratitude box will open to reveal a beautiful collage of all your entries. Your progress is saved automatically.</p>
+        </section>
+    </main>
+
+    <div class="confetti" id="confetti"></div>
+
+    <footer>
+        <p>The Gratitude Box &copy; 2023 | A tool for mindfulness and positive thinking</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const dayCounter = document.getElementById('dayCounter');
+            const gratitudeBox = document.getElementById('gratitudeBox');
+            const gratitudeInput = document.getElementById('gratitudeInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const message = document.getElementById('message');
+            const inputSection = document.getElementById('inputSection');
+            const collageContainer = document.getElementById('collageContainer');
+            const collage = document.getElementById('collage');
+            const resetBtn = document.getElementById('resetBtn');
+            const confetti = document.getElementById('confetti');
+
+            // App State
+            let currentDay = 1;
+            let gratitudeEntries = [];
+            let lastEntryDate = null;
+
+            // Initialize the app
+            function init() {
+                loadFromStorage();
+                updateUI();
+                
+                // Set up event listeners
+                submitBtn.addEventListener('click', handleSubmission);
+                resetBtn.addEventListener('click', resetApp);
+                gratitudeInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        handleSubmission();
+                    }
+                });
+            }
+
+            // Load data from localStorage
+            function loadFromStorage() {
+                const savedData = localStorage.getItem('gratitudeBoxData');
+                
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    currentDay = data.currentDay || 1;
+                    gratitudeEntries = data.gratitudeEntries || [];
+                    lastEntryDate = data.lastEntryDate || null;
+                    
+                    // Check if user has already submitted today
+                    const today = new Date().toDateString();
+                    if (lastEntryDate === today) {
+                        gratitudeInput.disabled = true;
+                        submitBtn.disabled = true;
+                        gratitudeInput.placeholder = "You've already submitted your gratitude today!";
+                    }
+                    
+                    // If we have 30 entries, show the collage
+                    if (gratitudeEntries.length >= 30) {
+                        showCollage();
+                    }
+                }
+            }
+
+            // Save data to localStorage
+            function saveToStorage() {
+                const data = {
+                    currentDay: currentDay,
+                    gratitudeEntries: gratitudeEntries,
+                    lastEntryDate: lastEntryDate
+                };
+                localStorage.setItem('gratitudeBoxData', JSON.stringify(data));
+            }
+
+            // Update the UI based on current state
+            function updateUI() {
+                dayCounter.textContent = `Day ${currentDay} of 30`;
+                
+                // Update box appearance based on progress
+                if (currentDay >= 30) {
+                    gratitudeBox.classList.remove('closed');
+                    gratitudeBox.classList.add('open');
+                } else {
+                    gratitudeBox.classList.remove('open');
+                    gratitudeBox.classList.add('closed');
+                }
+            }
+
+            // Handle form submission
+            function handleSubmission() {
+                const gratitudeText = gratitudeInput.value.trim();
+                
+                if (!gratitudeText) {
+                    showMessage('Please enter something you are grateful for.', 'error');
+                    return;
+                }
+                
+                const today = new Date().toDateString();
+                
+                // Check if user has already submitted today
+                if (lastEntryDate === today) {
+                    showMessage('You have already submitted your gratitude for today. Come back tomorrow!', 'error');
+                    return;
+                }
+                
+                // Add the new entry
+                gratitudeEntries.push({
+                    text: gratitudeText,
+                    date: new Date().toISOString()
+                });
+                
+                // Update state
+                lastEntryDate = today;
+                currentDay = Math.min(30, gratitudeEntries.length);
+                
+                // Save and update UI
+                saveToStorage();
+                updateUI();
+                
+                // Clear input and show success message
+                gratitudeInput.value = '';
+                showMessage('Thank you for sharing your gratitude!', 'success');
+                
+                // Disable input for today
+                gratitudeInput.disabled = true;
+                submitBtn.disabled = true;
+                gratitudeInput.placeholder = "You've already submitted your gratitude today!";
+                
+                // Check if we've reached day 30
+                if (currentDay >= 30) {
+                    setTimeout(showCollage, 1000);
+                }
+            }
+
+            // Show message to user
+            function showMessage(text, type) {
+                message.textContent = text;
+                message.className = 'message ' + type;
+                
+                // Auto-hide success messages after 3 seconds
+                if (type === 'success') {
+                    setTimeout(() => {
+                        message.textContent = '';
+                        message.className = 'message';
+                    }, 3000);
+                }
+            }
+
+            // Show the gratitude collage
+            function showCollage() {
+                inputSection.style.display = 'none';
+                collageContainer.style.display = 'block';
+                
+                // Create confetti
+                createConfetti();
+                
+                // Open the box with animation
+                setTimeout(() => {
+                    gratitudeBox.classList.remove('closed');
+                    gratitudeBox.classList.add('open');
+                    
+                    // Populate the collage after a short delay
+                    setTimeout(populateCollage, 500);
+                }, 500);
+            }
+
+            // Populate the collage with gratitude entries
+            function populateCollage() {
+                collage.innerHTML = '';
+                
+                gratitudeEntries.forEach((entry, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'gratitude-card';
+                    card.textContent = entry.text;
+                    card.style.animationDelay = `${index * 0.1}s`;
+                    collage.appendChild(card);
+                });
+            }
+
+            // Create confetti animation
+            function createConfetti() {
+                confetti.style.display = 'block';
+                
+                // Create multiple confetti pieces
+                for (let i = 0; i < 50; i++) {
+                    const piece = document.createElement('div');
+                    piece.className = 'confetti-piece';
+                    
+                    // Randomize properties
+                    piece.style.left = `${Math.random() * 100}%`;
+                    piece.style.backgroundColor = getRandomColor();
+                    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    piece.style.animationDelay = `${Math.random() * 1000}ms`;
+                    piece.style.animationDuration = `${1000 + Math.random() * 1000}ms`;
+                    
+                    confetti.appendChild(piece);
+                }
+                
+                // Hide confetti after animation completes
+                setTimeout(() => {
+                    confetti.style.display = 'none';
+                    confetti.innerHTML = '';
+                }, 3000);
+            }
+
+            // Helper function to get random color for confetti
+            function getRandomColor() {
+                const colors = ['#4a7b9d', '#f4a261', '#e76f51', '#2a9d8f', '#e9c46a'];
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            // Reset the app
+            function resetApp() {
+                if (confirm('Are you sure you want to start a new gratitude box? Your current entries will be lost.')) {
+                    localStorage.removeItem('gratitudeBoxData');
+                    currentDay = 1;
+                    gratitudeEntries = [];
+                    lastEntryDate = null;
+                    
+                    // Reset UI
+                    inputSection.style.display = 'block';
+                    collageContainer.style.display = 'none';
+                    gratitudeInput.disabled = false;
+                    submitBtn.disabled = false;
+                    gratitudeInput.placeholder = "What is one thing you're grateful for today?";
+                    gratitudeInput.value = '';
+                    message.textContent = '';
+                    message.className = 'message';
+                    
+                    updateUI();
+                }
+            }
+
+            // Initialize the app
+            init();
+        });
+    </script>
+</body>
+</html>
