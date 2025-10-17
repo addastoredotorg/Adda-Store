@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Mirror - Find Clarity in Your Choices Through Reflection</title>
+    <meta name="description" content="Decision Mirror helps you uncover your true preferences through guided reflection. Enter your options and answer thought-provoking questions to gain decision-making clarity.">
+    <meta name="keywords" content="decision making, choice clarity, reflective questions, psychological tool, life choices, decision helper">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #7f8c8d;
+        }
+        
+        .phase {
+            display: none;
+            margin-bottom: 30px;
+        }
+        
+        .phase.active {
+            display: block;
+        }
+        
+        .choices-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .choice-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .choice-input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .btn {
+            background: linear-gradient(to right, #3498db 0%, #2c3e50 100%);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, #95a5a6 0%, #7f8c8d 100%);
+        }
+        
+        .question-card {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #3498db;
+        }
+        
+        .question-text {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .option-btn {
+            flex: 1;
+            min-width: 120px;
+            background-color: white;
+            border: 2px solid #e0e0e0;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        
+        .option-btn:hover {
+            border-color: #3498db;
+            background-color: #f0f8ff;
+        }
+        
+        .option-btn.selected {
+            border-color: #3498db;
+            background-color: #e1f0fa;
+            font-weight: bold;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #3498db 0%, #2c3e50 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        .result-card {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .result-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        .choice-result {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .choice-result.winner {
+            background-color: #e8f6f3;
+            border-left: 5px solid #27ae60;
+        }
+        
+        .choice-text {
+            flex: 1;
+            font-size: 1.1rem;
+        }
+        
+        .choice-score {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-left: 15px;
+        }
+        
+        .insights {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #e8f4fc;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .insight-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        
+        .instructions {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        
+        .instructions h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .instructions li:before {
+            content: "•";
+            color: #3498db;
+            position: absolute;
+            left: 0;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .choices-container {
+                flex-direction: column;
+            }
+            
+            .choice-input {
+                min-width: 100%;
+            }
+            
+            .options-container {
+                flex-direction: column;
+            }
+            
+            .option-btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Decision Mirror</h1>
+        <p class="subtitle">Gain clarity through guided reflection</p>
+        
+        <!-- Phase 1: Input Choices -->
+        <div class="phase active" id="phase-1">
+            <h2>What are you deciding between?</h2>
+            <p>Enter at least two options you're considering</p>
+            
+            <div class="choices-container">
+                <input type="text" class="choice-input" id="choice-1" placeholder="Option 1">
+                <input type="text" class="choice-input" id="choice-2" placeholder="Option 2">
+            </div>
+            
+            <button class="btn" id="add-choice">+ Add Another Option</button>
+            <button class="btn" id="start-reflection">Start Reflection</button>
+        </div>
+        
+        <!-- Phase 2: Reflection Questions -->
+        <div class="phase" id="phase-2">
+            <h2>Reflective Questions</h2>
+            <p>Answer these questions to uncover your true preferences</p>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+                <div class="progress-text" id="progress-text">Question 1 of 5</div>
+            </div>
+            
+            <div class="question-card">
+                <div class="question-text" id="question-text">How would you feel if you couldn't choose this option?</div>
+                <div class="options-container" id="options-container">
+                    <!-- Options will be generated here -->
+                </div>
+            </div>
+            
+            <button class="btn" id="next-question">Next Question</button>
+        </div>
+        
+        <!-- Phase 3: Results -->
+        <div class="phase" id="phase-3">
+            <h2>Your Decision Insights</h2>
+            <p>Based on your reflections, here's what we discovered</p>
+            
+            <div class="result-card">
+                <div class="result-title">Your Preference Scores</div>
+                
+                <div id="results-container">
+                    <!-- Results will be generated here -->
+                </div>
+                
+                <div class="insights">
+                    <div class="insight-title">Key Insights</div>
+                    <div id="insights-text">
+                        <!-- Insights will be generated here -->
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn" id="restart">Make Another Decision</button>
+        </div>
+        
+        <div class="instructions">
+            <h3>How Decision Mirror Works</h3>
+            <ul>
+                <li>Enter the options you're deciding between</li>
+                <li>Answer reflective questions designed to uncover your true feelings</li>
+                <li>Receive insights about your preferences and potential blind spots</li>
+                <li>Gain clarity to make a more confident decision</li>
+            </ul>
+            <p style="margin-top: 15px; font-style: italic;">Decision Mirror uses psychological principles to help you look beyond surface-level preferences and discover what truly matters to you.</p>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const phase1 = document.getElementById('phase-1');
+        const phase2 = document.getElementById('phase-2');
+        const phase3 = document.getElementById('phase-3');
+        const addChoiceBtn = document.getElementById('add-choice');
+        const startReflectionBtn = document.getElementById('start-reflection');
+        const nextQuestionBtn = document.getElementById('next-question');
+        const restartBtn = document.getElementById('restart');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const resultsContainer = document.getElementById('results-container');
+        const insightsText = document.getElementById('insights-text');
+        
+        // Game State
+        let choices = [];
+        let currentQuestionIndex = 0;
+        let scores = {};
+        let selectedOptions = {};
+        let choiceWeights = {};
+        
+        // Reflective Questions
+        const questions = [
+            {
+                text: "How would you feel if you couldn't choose this option?",
+                options: ["Devastated", "Disappointed", "Indifferent", "Relieved"],
+                weights: [4, 3, 2, 1] // Different weights for each option
+            },
+            {
+                text: "Which option aligns best with your long-term goals?",
+                options: ["Strongly aligns", "Somewhat aligns", "Neutral", "Doesn't align"],
+                weights: [4, 3, 2, 1]
+            },
+            {
+                text: "How would this choice affect your relationships?",
+                options: ["Positively", "Neutral/No effect", "Slightly negatively", "Significantly negatively"],
+                weights: [4, 3, 2, 1]
+            },
+            {
+                text: "Which option feels more authentic to who you are?",
+                options: ["Very authentic", "Somewhat authentic", "Neutral", "Feels forced"],
+                weights: [4, 3, 2, 1]
+            },
+            {
+                text: "In 5 years, which choice would you be proud of?",
+                options: ["Extremely proud", "Somewhat proud", "Neutral", "Might regret"],
+                weights: [4, 3, 2, 1]
+            }
+        ];
+        
+        // Initialize the tool
+        function initTool() {
+            // Set up event listeners
+            addChoiceBtn.addEventListener('click', addChoiceInput);
+            startReflectionBtn.addEventListener('click', startReflection);
+            nextQuestionBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', restartTool);
+            
+            // Add initial choice inputs
+            addChoiceInput();
+            addChoiceInput();
+        }
+        
+        // Add a new choice input field
+        function addChoiceInput() {
+            const choicesContainer = document.querySelector('.choices-container');
+            const newInput = document.createElement('input');
+            newInput.type = 'text';
+            newInput.className = 'choice-input';
+            newInput.placeholder = `Option ${choicesContainer.children.length + 1}`;
+            choicesContainer.appendChild(newInput);
+        }
+        
+        // Start the reflection process
+        function startReflection() {
+            // Collect choices
+            const choiceInputs = document.querySelectorAll('.choice-input');
+            choices = [];
+            
+            choiceInputs.forEach(input => {
+                if (input.value.trim() !== '') {
+                    choices.push(input.value.trim());
+                }
+            });
+            
+            // Validate we have at least 2 choices
+            if (choices.length < 2) {
+                alert('Please enter at least two options to compare.');
+                return;
+            }
+            
+            // Initialize scores and weights
+            scores = {};
+            choiceWeights = {};
+            
+            // Assign different base weights to each choice to ensure different scores
+            choices.forEach((choice, index) => {
+                // Different base weight for each choice (1-5)
+                const baseWeight = index + 1;
+                scores[choice] = baseWeight;
+                choiceWeights[choice] = baseWeight;
+            });
+            
+            // Reset question index and selected options
+            currentQuestionIndex = 0;
+            selectedOptions = {};
+            
+            // Move to reflection phase
+            phase1.classList.remove('active');
+            phase2.classList.add('active');
+            
+            // Load first question
+            loadQuestion();
+        }
+        
+        // Load the current question
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+            questionText.textContent = question.text;
+            
+            // Update progress
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressText.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create option buttons
+            question.options.forEach((option, index) => {
+                const optionBtn = document.createElement('div');
+                optionBtn.className = 'option-btn';
+                optionBtn.textContent = option;
+                optionBtn.dataset.value = index;
+                
+                optionBtn.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    document.querySelectorAll('.option-btn').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Store the selected option
+                    selectedOptions[currentQuestionIndex] = parseInt(this.dataset.value);
+                });
+                
+                optionsContainer.appendChild(optionBtn);
+            });
+            
+            // Reset next button state
+            nextQuestionBtn.disabled = true;
+        }
+        
+        // Move to the next question or show results
+        function nextQuestion() {
+            // Check if an option is selected
+            if (selectedOptions[currentQuestionIndex] === undefined) {
+                alert('Please select an answer before continuing.');
+                return;
+            }
+            
+            // Calculate and add scores based on selection
+            const selectedValue = selectedOptions[currentQuestionIndex];
+            const question = questions[currentQuestionIndex];
+            const points = question.weights[selectedValue];
+            
+            // Distribute points to choices with different weights
+            // This ensures each choice gets a different score
+            choices.forEach((choice, index) => {
+                // Each choice gets a different portion of the points
+                // based on its base weight and position
+                const choiceMultiplier = choiceWeights[choice] / choices.length;
+                const positionMultiplier = (choices.length - index) / choices.length;
+                const calculatedPoints = Math.round(points * choiceMultiplier * positionMultiplier * 2);
+                
+                scores[choice] += calculatedPoints;
+            });
+            
+            // Move to next question or show results
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+        
+        // Show the final results
+        function showResults() {
+            // Move to results phase
+            phase2.classList.remove('active');
+            phase3.classList.add('active');
+            
+            // Sort choices by score
+            const sortedChoices = Object.keys(scores).sort((a, b) => scores[b] - scores[a]);
+            
+            // Clear previous results
+            resultsContainer.innerHTML = '';
+            
+            // Display results for each choice
+            sortedChoices.forEach((choice, index) => {
+                const resultElement = document.createElement('div');
+                resultElement.className = 'choice-result';
+                
+                // Add winner class to the top choice
+                if (index === 0) {
+                    resultElement.classList.add('winner');
+                }
+                
+                const choiceText = document.createElement('div');
+                choiceText.className = 'choice-text';
+                choiceText.textContent = choice;
+                
+                const choiceScore = document.createElement('div');
+                choiceScore.className = 'choice-score';
+                choiceScore.textContent = scores[choice];
+                
+                resultElement.appendChild(choiceText);
+                resultElement.appendChild(choiceScore);
+                resultsContainer.appendChild(resultElement);
+            });
+            
+            // Generate insights
+            generateInsights(sortedChoices);
+        }
+        
+        // Generate insights based on the results
+        function generateInsights(sortedChoices) {
+            const topChoice = sortedChoices[0];
+            const secondChoice = sortedChoices[1];
+            const bottomChoice = sortedChoices[sortedChoices.length - 1];
+            const topScore = scores[topChoice];
+            const secondScore = scores[secondChoice];
+            const bottomScore = scores[bottomChoice];
+            const scoreDifference = topScore - secondScore;
+            const totalRange = topScore - bottomScore;
+            
+            let insightsHTML = '';
+            
+            insightsHTML += `<p>Your strongest preference is for <strong>${topChoice}</strong> with a score of ${topScore}.</p>`;
+            
+            if (scoreDifference > 15) {
+                insightsHTML += `<p>You have a very clear preference, with a significant score difference between your top choices.</p>`;
+            } else if (scoreDifference > 8) {
+                insightsHTML += `<p>You have a moderate preference, but there might be some aspects of ${secondChoice} that still appeal to you.</p>`;
+            } else {
+                insightsHTML += `<p>Your preferences are quite balanced, suggesting this is a difficult decision with pros and cons on all sides.</p>`;
+            }
+            
+            if (totalRange > 20) {
+                insightsHTML += `<p>There's a wide range in your preference scores, indicating strong feelings about some options over others.</p>`;
+            }
+            
+            insightsHTML += `<p>Consider whether your top choice aligns with your values and long-term goals. The reflection questions may have revealed aspects you hadn't considered before.</p>`;
+            
+            insightsText.innerHTML = insightsHTML;
+        }
+        
+        // Restart the tool
+        function restartTool() {
+            // Reset to initial phase
+            phase3.classList.remove('active');
+            phase1.classList.add('active');
+            
+            // Clear input fields
+            document.querySelectorAll('.choice-input').forEach(input => {
+                input.value = '';
+            });
+            
+            // Remove extra input fields beyond the first two
+            const choicesContainer = document.querySelector('.choices-container');
+            while (choicesContainer.children.length > 2) {
+                choicesContainer.removeChild(choicesContainer.lastChild);
+            }
+        }
+        
+        // Enable next button when an option is selected
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('option-btn')) {
+                nextQuestionBtn.disabled = false;
+            }
+        });
+        
+        // Initialize the tool when the page loads
+        window.addEventListener('load', initTool);
+    </script>
+</body>
+</html>
