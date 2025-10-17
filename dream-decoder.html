@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Dream Decoder: Analyze Your Dreams with Surreal Art | Free Dream Interpretation Game</title>
+    <meta name="title" content="Dream Decoder: Analyze Your Dreams with Surreal Art | Free Dream Interpretation Game">
+    <meta name="description" content="Unlock the secrets of your subconscious! Describe your dream and watch as the Dream Decoder transforms it into unique surreal art and a detailed symbol map. A fun, creative tool for self-reflection and dream analysis.">
+    
+    <!-- Keywords -->
+    <meta name="keywords" content="dream interpretation, dream analysis, surreal art generator, psychology tool, self-reflection game, dream symbols, subconscious, online game, what do my dreams mean, free dream decoder">
+    
+    <!-- Open Graph / Facebook & Twitter Cards (for social sharing) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-website.com/">
+    <meta property="og:title" content="Dream Decoder: Analyze Your Dreams with Surreal Art">
+    <meta property="og:description" content="Transform your dreams into surreal art and a symbol map. A free, fun tool for self-reflection.">
+    <meta property="og:image" content="https://your-website.com/preview-image.jpg">
+    
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://your-website.com/">
+    <meta property="twitter:title" content="Dream Decoder: Analyze Your Dreams with Surreal Art">
+    <meta property="twitter:description" content="Transform your dreams into surreal art and a symbol map. A free, fun tool for self-reflection.">
+    <meta property="twitter:image" content="https://your-website.com/preview-image.jpg">
+    
+    <style>
+        :root {
+            --bg-primary: #0f0f23;
+            --bg-secondary: #2d1b69;
+            --text-primary: #e0e0ff;
+            --text-secondary: #b8b8ff;
+            --accent: #9d4edd;
+            --accent-glow: rgba(157, 78, 221, 0.5);
+            --border: #4a3b8c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #e0e0ff, #b8b8ff, #9d4edd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 25px 0 15px;
+            color: var(--text-secondary);
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 20px 0 10px;
+            color: var(--text-secondary);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+        
+        .instructions {
+            background: rgba(45, 27, 105, 0.5);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            box-shadow: 0 0 15px rgba(157, 78, 221, 0.2);
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            background: rgba(15, 15, 35, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px var(--accent-glow);
+            transition: all 0.3s ease;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+        
+        button {
+            background: linear-gradient(135deg, var(--accent), #7b2cbf);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+        
+        #resultsSection {
+            display: none;
+            margin-top: 40px;
+            animation: fadeIn 1s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .dream-art {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        #dreamArtContainer {
+            margin-top: 15px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(157, 78, 221, 0.3);
+            border: 1px solid var(--border);
+        }
+        
+        #dreamArtContainer img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .symbol-map {
+            margin-top: 30px;
+        }
+        
+        .symbol-card {
+            background: rgba(45, 27, 105, 0.5);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+            box-shadow: 0 0 10px rgba(157, 78, 221, 0.2);
+        }
+        
+        .symbol-card strong {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+        
+        .no-symbols {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .disclaimer {
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Dream Decoder</h1>
+            <p class="subtitle">Unlock the Secrets of Your Subconscious</p>
+        </header>
+        
+        <section class="instructions">
+            <h2>How to Use the Dream Decoder</h2>
+            <ol>
+                <li><strong>Describe Your Dream:</strong> In the text box, write a detailed description of your dream. The more vivid and descriptive you are, the more unique your results will be!</li>
+                <li><strong>Summon the Decoder:</strong> Click the "Decode My Dream" button. Our algorithm will analyze your text for common dream archetypes and symbols.</li>
+                <li><strong>Witness the Art:</strong> Behold! A one-of-a-kind, surreal artwork inspired by your dream narrative will appear.</li>
+                <li><strong>Explore the Symbol Map:</strong> Below the art, you will find your personalized "Symbol Map." This breaks down the key elements from your dream and offers insights into their potential psychological meanings.</li>
+                <li><strong>Reflect & Share:</strong> Use the interpretations as a starting point for your own self-reflection.</li>
+            </ol>
+            <p><em>Remember: This tool is for creative and entertainment purposes. It is not a substitute for professional psychological advice.</em></p>
+        </section>
+        
+        <section class="input-section">
+            <label for="dreamInput">Describe Your Last Dream...</label>
+            <textarea id="dreamInput" placeholder="e.g., I was flying over a city made of glass, but I was being chased by a friendly shadow..."></textarea>
+            <button id="decodeButton">Decode My Dream</button>
+        </section>
+        
+        <section id="resultsSection">
+            <div class="dream-art">
+                <h2>Your Surreal Dreamscape</h2>
+                <div id="dreamArtContainer">
+                    <!-- Art will be generated here -->
+                </div>
+            </div>
+            
+            <div class="symbol-map">
+                <h2>Your Dream Symbol Map</h2>
+                <div id="symbolMapContainer">
+                    <!-- Symbols will be generated here -->
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p class="disclaimer">Dream Decoder is a tool for creativity and entertainment. Interpretations are based on common archetypes and are not a substitute for professional psychological advice.</p>
+            <p>&copy; 2023 Dream Decoder. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Symbol database
+        const symbolDatabase = [
+            {
+                symbol: "Flying",
+                keywords: ["flying", "flew", "soar", "soaring", "airborne", "floating", "levitate", "levitating"],
+                meaning: "Often represents a sense of freedom, breaking free from restrictions, or rising above a situation in your waking life. It can also indicate ambition or a desire to escape from reality."
+            },
+            {
+                symbol: "Falling",
+                keywords: ["falling", "fell", "drop", "dropping", "plummet", "plummeting", "trip", "tripping"],
+                meaning: "Typically symbolizes anxiety, loss of control, or fear of failure. It may reflect insecurities or a sense of being overwhelmed by circumstances in your life."
+            },
+            {
+                symbol: "Teeth",
+                keywords: ["teeth", "tooth", "dentist", "falling out", "loose", "crumbling", "broken"],
+                meaning: "Commonly associated with anxiety about appearance, communication issues, or feelings of powerlessness. It may also relate to concerns about aging or health."
+            },
+            {
+                symbol: "Water",
+                keywords: ["water", "ocean", "sea", "river", "lake", "swimming", "drowning", "waves", "flood"],
+                meaning: "Represents emotions, the unconscious mind, and spiritual renewal. Calm water suggests emotional peace, while turbulent water may indicate emotional turmoil."
+            },
+            {
+                symbol: "Chase",
+                keywords: ["chase", "chasing", "pursue", "pursuing", "running", "flee", "fleeing", "escape", "escaping"],
+                meaning: "Suggests you're avoiding a problem or situation in your waking life. Consider what you're running from and whether it's time to confront it."
+            },
+            {
+                symbol: "House",
+                keywords: ["house", "home", "apartment", "building", "room", "rooms", "mansion", "residence"],
+                meaning: "Represents the self or your mind. Different rooms may symbolize different aspects of your personality or life. An unfamiliar house might indicate unexplored potential."
+            },
+            {
+                symbol: "Car",
+                keywords: ["car", "vehicle", "driving", "driver", "passenger", "road", "highway", "crash", "accident"],
+                meaning: "Symbolizes your life's direction and sense of control. Who is driving and the condition of the car can reflect how you feel about your life path."
+            },
+            {
+                symbol: "Death",
+                keywords: ["death", "die", "died", "dead", "kill", "killed", "funeral", "grave", "coffin"],
+                meaning: "Rarely literal, usually represents transformation, endings, or significant change. It may symbolize the end of one phase of life and the beginning of another."
+            },
+            {
+                symbol: "Money",
+                keywords: ["money", "cash", "wealth", "rich", "poor", "coins", "dollars", "treasure", "fortune"],
+                meaning: "Often relates to self-worth, value, or resources (not necessarily financial). Finding money might indicate unrecognized talents, while losing it could reflect fears of inadequacy."
+            },
+            {
+                symbol: "Snake",
+                keywords: ["snake", "serpent", "reptile", "python", "cobra", "viper", "slither", "slithering"],
+                meaning: "A complex symbol representing transformation, healing, or hidden threats. It can also symbolize sexuality, wisdom, or subconscious fears."
+            },
+            {
+                symbol: "Test",
+                keywords: ["test", "exam", "school", "class", "teacher", "study", "studying", "fail", "failing"],
+                meaning: "Suggests feelings of being evaluated or tested in waking life. It may reflect anxiety about performance or fear of not meeting expectations."
+            },
+            {
+                symbol: "Nudity",
+                keywords: ["naked", "nude", "nudity", "bare", "exposed", "embarrassed", "clothes", "clothing"],
+                meaning: "Often represents vulnerability, authenticity, or fear of exposure. It may indicate concerns about how others perceive you or a desire to be your true self."
+            },
+            {
+                symbol: "Baby",
+                keywords: ["baby", "child", "infant", "newborn", "pregnant", "pregnancy", "birth"],
+                meaning: "Symbolizes new beginnings, innocence, or vulnerable aspects of yourself. It may also represent new ideas, projects, or responsibilities."
+            },
+            {
+                symbol: "Animal",
+                keywords: ["dog", "cat", "bird", "lion", "tiger", "bear", "wolf", "animal", "pet"],
+                meaning: "Animals often represent instinctual drives or primal aspects of your personality. The specific animal and its behavior provide additional meaning."
+            }
+        ];
+
+        // DOM elements
+        const dreamInput = document.getElementById('dreamInput');
+        const decodeButton = document.getElementById('decodeButton');
+        const resultsSection = document.getElementById('resultsSection');
+        const dreamArtContainer = document.getElementById('dreamArtContainer');
+        const symbolMapContainer = document.getElementById('symbolMapContainer');
+
+        // Event listener for the decode button
+        decodeButton.addEventListener('click', function() {
+            const dreamText = dreamInput.value.trim();
+            
+            // Validate input
+            if (!dreamText) {
+                alert('Please describe your dream before decoding.');
+                return;
+            }
+            
+            // Generate dream art (using placeholder service)
+            generateDreamArt(dreamText);
+            
+            // Generate symbol map
+            generateSymbolMap(dreamText);
+            
+            // Show results section
+            resultsSection.style.display = 'block';
+            
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Function to generate dream art using placeholder service
+        function generateDreamArt(dreamText) {
+            // Encode the dream text to create a unique seed for the image
+            const encodedText = encodeURIComponent(dreamText);
+            const imageUrl = `https://picsum.photos/seed/${encodedText}/600/400`;
+            
+            // Create and set the image
+            dreamArtContainer.innerHTML = `<img src="${imageUrl}" alt="Surreal visualization of your dream">`;
+        }
+
+        // Function to generate the symbol map
+        function generateSymbolMap(dreamText) {
+            // Clear previous results
+            symbolMapContainer.innerHTML = '';
+            
+            const lowerCaseDream = dreamText.toLowerCase();
+            const foundSymbols = [];
+            
+            // Check for matching symbols
+            symbolDatabase.forEach(symbol => {
+                const hasKeyword = symbol.keywords.some(keyword => 
+                    lowerCaseDream.includes(keyword.toLowerCase())
+                );
+                
+                if (hasKeyword) {
+                    foundSymbols.push(symbol);
+                }
+            });
+            
+            // Display results
+            if (foundSymbols.length > 0) {
+                foundSymbols.forEach(symbol => {
+                    const symbolCard = document.createElement('div');
+                    symbolCard.className = 'symbol-card';
+                    symbolCard.innerHTML = `
+                        <strong>${symbol.symbol}</strong>
+                        <p>${symbol.meaning}</p>
+                    `;
+                    symbolMapContainer.appendChild(symbolCard);
+                });
+            } else {
+                symbolMapContainer.innerHTML = `
+                    <div class="no-symbols">
+                        <p>Your dream is truly unique! Try using more descriptive words for common symbols like flying, water, or chasing.</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
