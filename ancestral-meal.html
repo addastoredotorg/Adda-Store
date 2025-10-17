@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ancestral Meal | Cook Historical Recipes & Experience Life Through Time</title>
+    <meta name="description" content="Experience history through food in Ancestral Meal. Cook authentic historical recipes while learning about the lives of people from different eras through immersive narratives.">
+    <style>
+        :root {
+            --primary: #8B4513;
+            --primary-light: #A0522D;
+            --secondary: #D2691E;
+            --accent: #CD853F;
+            --light: #FAF0E6;
+            --dark: #3E2723;
+            --text: #5D4037;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        
+        body {
+            background-color: #F5F5DC;
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%238B4513" stroke-width="2"/></svg>');
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 1px solid #E0C9A6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 Q70,70 50,90 T30,70 Q10,50 30,30 Z" fill="white"/></svg>');
+            background-size: 200px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            font-style: italic;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .era-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+            width: 100%;
+        }
+        
+        .era-card {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid #E0C9A6;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .era-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent);
+        }
+        
+        .era-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary);
+        }
+        
+        .era-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .era-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .era-description {
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        
+        .cooking-interface {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            width: 100%;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .cooking-interface {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .narrative-panel {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 25px;
+            border: 1px solid #E0C9A6;
+            height: 100%;
+        }
+        
+        .narrative-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 10px;
+        }
+        
+        .narrative-text {
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        
+        .character-info {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed #D7CCC8;
+        }
+        
+        .character-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .character-details {
+            flex: 1;
+        }
+        
+        .cooking-panel {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 25px;
+            border: 1px solid #E0C9A6;
+        }
+        
+        .recipe-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 10px;
+        }
+        
+        .ingredients-list {
+            margin-bottom: 20px;
+        }
+        
+        .ingredient {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 4px;
+        }
+        
+        .ingredient-checkbox {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        
+        .cooking-steps {
+            margin-top: 20px;
+        }
+        
+        .step {
+            margin-bottom: 15px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 4px;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .step-number {
+            font-weight: bold;
+            color: var(--primary);
+            margin-right: 5px;
+        }
+        
+        .game-controls {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            background-color: #BCAAA4;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .completion-screen {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .meal-image {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            border-radius: 50%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 5px solid var(--accent);
+            font-size: 4rem;
+            color: var(--primary);
+        }
+        
+        .completion-message {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            line-height: 1.7;
+        }
+        
+        .historical-facts {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 30px 0;
+            border: 1px solid #E0C9A6;
+        }
+        
+        .facts-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #E0C9A6;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        
+        .info-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #E0C9A6;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        
+        .game-rules {
+            background: var(--light);
+            padding: 25px;
+            border-radius: var(--radius);
+            margin-top: 20px;
+            border: 1px solid #E0C9A6;
+        }
+        
+        .rules-list {
+            list-style-type: none;
+            counter-reset: rule-counter;
+        }
+        
+        .rules-list li {
+            margin-bottom: 15px;
+            padding-left: 40px;
+            position: relative;
+            text-align: left;
+        }
+        
+        .rules-list li:before {
+            counter-increment: rule-counter;
+            content: counter(rule-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .historical-context {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .context-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            border: 1px solid #E0C9A6;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .context-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--text);
+            font-size: 0.9rem;
+            padding: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+        
+        .ingredient-checkbox:checked + span {
+            text-decoration: line-through;
+            color: #8D6E63;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Ancestral Meal</h1>
+            <p class="tagline">Experience history through food - cook authentic recipes from different eras while learning about the lives of people who ate them</p>
+        </header>
+        
+        <div class="content">
+            <!-- INTRO SCREEN -->
+            <div id="intro-screen" class="screen">
+                <h2>Travel Through Time with Food</h2>
+                <p>Step into the kitchen of history and prepare meals that nourished people across different eras and cultures. Each recipe tells a story of survival, culture, and daily life.</p>
+                
+                <div class="era-selection">
+                    <div class="era-card" data-era="roman">
+                        <div class="era-icon">⚔️</div>
+                        <h3 class="era-title">Roman Soldier</h3>
+                        <p class="era-description">Prepare a simple Roman soldier's ration on the frontier of the empire</p>
+                    </div>
+                    
+                    <div class="era-card" data-era="medieval">
+                        <div class="era-icon">🏰</div>
+                        <h3 class="era-title">Medieval Peasant</h3>
+                        <p class="era-description">Cook a humble stew in a medieval village</p>
+                    </div>
+                    
+                    <div class="era-card" data-era="vikings">
+                        <div class="era-icon">⚓</div>
+                        <h3 class="era-title">Viking Explorer</h3>
+                        <p class="era-description">Prepare a Norse meal during the age of exploration</p>
+                    </div>
+                </div>
+                
+                <button id="start-btn" class="btn" disabled>Select an Era to Begin</button>
+                
+                <div class="game-rules">
+                    <h2>How to Play</h2>
+                    <ol class="rules-list">
+                        <li>Select a historical era and character to begin your journey</li>
+                        <li>Read the narrative about your character's life and circumstances</li>
+                        <li>Follow the authentic recipe using the ingredients provided</li>
+                        <li>Check off ingredients and steps as you complete them</li>
+                        <li>Learn historical facts about food and daily life in that era</li>
+                        <li>Complete the meal to finish the story and unlock more eras</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <!-- GAME SCREEN -->
+            <div id="game-screen" class="screen hidden">
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar-fill"></div>
+                </div>
+                
+                <div class="cooking-interface">
+                    <div class="narrative-panel">
+                        <h3 class="narrative-title" id="narrative-title">The Roman Legionary</h3>
+                        <div class="narrative-text" id="narrative-text">
+                            You are Lucius, a legionary stationed along Hadrian's Wall in Britannia. The damp chill seeps into your bones as you stand watch. Tonight, you'll prepare your evening meal - a simple but filling wheat porridge with what little provisions you have. The rations are meager but must sustain you through long marches and cold nights. You think of warmer climates back home as you measure out your grain.
+                        </div>
+                        
+                        <div class="character-info">
+                            <div class="character-avatar" id="character-avatar">⚔️</div>
+                            <div class="character-details">
+                                <div><strong id="character-name">Lucius</strong></div>
+                                <div id="character-role">Roman Legionary</div>
+                                <div id="character-location">Hadrian's Wall, Britannia</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cooking-panel">
+                        <h3 class="recipe-title" id="recipe-title">Pulticula (Roman Soldier's Porridge)</h3>
+                        
+                        <div class="ingredients-list">
+                            <h4>Ingredients:</h4>
+                            <div class="ingredient">
+                                <input type="checkbox" class="ingredient-checkbox" id="ingredient1">
+                                <span>1 cup spelt or wheat grains</span>
+                            </div>
+                            <div class="ingredient">
+                                <input type="checkbox" class="ingredient-checkbox" id="ingredient2">
+                                <span>3 cups water</span>
+                            </div>
+                            <div class="ingredient">
+                                <input type="checkbox" class="ingredient-checkbox" id="ingredient3">
+                                <span>1 teaspoon salt</span>
+                            </div>
+                            <div class="ingredient">
+                                <input type="checkbox" class="ingredient-checkbox" id="ingredient4">
+                                <span>1 tablespoon olive oil or animal fat</span>
+                            </div>
+                            <div class="ingredient">
+                                <input type="checkbox" class="ingredient-checkbox" id="ingredient5">
+                                <span>Optional: dried vegetables or bits of meat</span>
+                            </div>
+                        </div>
+                        
+                        <div class="cooking-steps">
+                            <h4>Preparation:</h4>
+                            <div class="step">
+                                <span class="step-number">1.</span>
+                                <span>Rinse the grains thoroughly in cold water</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">2.</span>
+                                <span>Combine grains, water, and salt in your cooking pot</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">3.</span>
+                                <span>Bring to a boil, then reduce heat and simmer for 45 minutes, stirring occasionally</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">4.</span>
+                                <span>Stir in oil or fat until well combined</span>
+                            </div>
+                            <div class="step">
+                                <span class="step-number">5.</span>
+                                <span>Add any available vegetables or meat in the last 15 minutes of cooking</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="game-controls">
+                    <button id="back-btn" class="btn">← Back to Eras</button>
+                    <button id="next-step-btn" class="btn">Continue Story →</button>
+                </div>
+            </div>
+            
+            <!-- COMPLETION SCREEN -->
+            <div id="completion-screen" class="screen hidden">
+                <h2>Meal Complete!</h2>
+                <div class="meal-image">🍲</div>
+                <div class="completion-message" id="completion-message">
+                    You've successfully prepared a Roman soldier's meal! As you eat your warm porridge, you feel a connection to the thousands of legionaries who sustained themselves on similar fare across the empire.
+                </div>
+                
+                <div class="historical-facts">
+                    <h3 class="facts-title">Historical Context</h3>
+                    <p id="historical-facts">
+                        Roman soldiers typically received a grain ration of about 1 kg per day, which they would grind and cook themselves. A legionary's diet consisted mainly of wheat, supplemented with vegetables, cheese, and occasionally meat or fish. This simple but calorie-dense food provided the energy needed for marching 20-30 km per day while carrying heavy equipment.
+                    </p>
+                </div>
+                
+                <button id="cook-again-btn" class="btn">Cook Another Historical Meal</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Ancestral Meal &copy; 2023 | An educational experience connecting modern people to history through the universal language of food</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Game elements
+            const introScreen = document.getElementById('intro-screen');
+            const gameScreen = document.getElementById('game-screen');
+            const completionScreen = document.getElementById('completion-screen');
+            const startBtn = document.getElementById('start-btn');
+            const backBtn = document.getElementById('back-btn');
+            const nextStepBtn = document.getElementById('next-step-btn');
+            const cookAgainBtn = document.getElementById('cook-again-btn');
+            const eraCards = document.querySelectorAll('.era-card');
+            
+            // Narrative elements
+            const narrativeTitle = document.getElementById('narrative-title');
+            const narrativeText = document.getElementById('narrative-text');
+            const characterAvatar = document.getElementById('character-avatar');
+            const characterName = document.getElementById('character-name');
+            const characterRole = document.getElementById('character-role');
+            const characterLocation = document.getElementById('character-location');
+            const recipeTitle = document.getElementById('recipe-title');
+            const completionMessage = document.getElementById('completion-message');
+            const historicalFacts = document.getElementById('historical-facts');
+            const progressBar = document.getElementById('progress-bar-fill');
+            
+            // Game data
+            const gameData = {
+                roman: {
+                    title: "Roman Legionary",
+                    narrative: [
+                        "You are Lucius, a legionary stationed along Hadrian's Wall in Britannia. The damp chill seeps into your bones as you stand watch. Tonight, you'll prepare your evening meal - a simple but filling wheat porridge with what little provisions you have.",
+                        "As you grind your wheat grains, you think of the 30-kilogram pack you carried on today's march. The routine is relentless: march, build, fight, eat, sleep. But this simple meal means a moment of rest, a small comfort in a harsh land far from home.",
+                        "The fire crackles as your pot begins to simmer. You add a precious bit of salt from your ration - a luxury that makes the bland grains palatable. Some of the newer recruits from wealthy families complain about the simple fare, but you've learned to appreciate its sustaining power."
+                    ],
+                    character: {
+                        name: "Lucius",
+                        role: "Roman Legionary",
+                        location: "Hadrian's Wall, Britannia",
+                        avatar: "⚔️"
+                    },
+                    recipe: {
+                        title: "Pulticula (Roman Soldier's Porridge)",
+                        ingredients: [
+                            "1 cup spelt or wheat grains",
+                            "3 cups water",
+                            "1 teaspoon salt",
+                            "1 tablespoon olive oil or animal fat",
+                            "Optional: dried vegetables or bits of meat"
+                        ],
+                        steps: [
+                            "Rinse the grains thoroughly in cold water",
+                            "Combine grains, water, and salt in your cooking pot",
+                            "Bring to a boil, then reduce heat and simmer for 45 minutes, stirring occasionally",
+                            "Stir in oil or fat until well combined",
+                            "Add any available vegetables or meat in the last 15 minutes of cooking"
+                        ]
+                    },
+                    completion: "You've successfully prepared a Roman soldier's meal! As you eat your warm porridge, you feel a connection to the thousands of legionaries who sustained themselves on similar fare across the empire.",
+                    facts: "Roman soldiers typically received a grain ration of about 1 kg per day, which they would grind and cook themselves. A legionary's diet consisted mainly of wheat, supplemented with vegetables, cheese, and occasionally meat or fish. This simple but calorie-dense food provided the energy needed for marching 20-30 km per day while carrying heavy equipment."
+                },
+                medieval: {
+                    title: "Medieval Peasant",
+                    narrative: [
+                        "You are Elara, a peasant woman in a small English village during harvest time. The days are long and your body aches from working the lord's fields, but tonight your family will share a warm pottage made from the vegetables from your small garden.",
+                        "As you chop the onions and cabbages, you think of the barley harvest happening in the fields. Your family's survival through the winter depends on this harvest, and the portion you'll receive after the lord takes his share.",
+                        "You add the precious grains to the pot - a mixture of barley, oats, and if you're lucky, some rye. The scent of cooking vegetables fills your small home, a comforting smell that means another day survived, another meal shared with those you love."
+                    ],
+                    character: {
+                        name: "Elara",
+                        role: "Peasant Farmer",
+                        location: "English Countryside, 14th Century",
+                        avatar: "🏰"
+                    },
+                    recipe: {
+                        title: "Pottage (Medieval Peasant Stew)",
+                        ingredients: [
+                            "1 cup mixed grains (barley, oats, rye)",
+                            "4 cups water or broth",
+                            "2 onions, chopped",
+                            "2 carrots, chopped",
+                            "1 small cabbage, shredded",
+                            "Handful of peas or beans",
+                            "Salt and herbs (thyme, sage)"
+                        ],
+                        steps: [
+                            "Chop all vegetables into small pieces",
+                            "Combine grains, vegetables, and water in a large pot",
+                            "Bring to a boil, then simmer for 1-2 hours until grains are tender",
+                            "Season with salt and available herbs",
+                            "Serve in wooden bowls with coarse bread"
+                        ]
+                    },
+                    completion: "The hearty pottage warms your family on this cool evening. As you watch your children eat, you feel the deep satisfaction of providing nourishment from the land you work so hard to tend.",
+                    facts: "Medieval peasants ate a diet based on grains, vegetables, and legumes, with meat being a rare luxury. Pottage - a thick stew - was the most common meal, cooked slowly over the fire and varying daily based on available ingredients. Bread was the true staple, with peasants consuming about 2-3 pounds per person daily."
+                },
+                vikings: {
+                    title: "Viking Explorer",
+                    narrative: [
+                        "You are Ragnar, a Norse trader preparing a meal aboard your knarr during a trading voyage. The salted fish and hard bread from your provisions need something to make them palatable after weeks at sea. You'll make a simple stew with the dried peas and onions that have survived the journey.",
+                        "As the ship rocks gently in the North Sea swells, you carefully measure fresh water from your limited supply. The fire in the small clay hearth is tricky to maintain on the moving vessel, but the warmth and hot food are worth the effort.",
+                        "You add the stockfish - dried cod that has been pounded to tenderness. The smell reminds you of home, of fjords and family. This simple meal connects you to both your Norse traditions and the new lands you explore."
+                    ],
+                    character: {
+                        name: "Ragnar",
+                        role: "Norse Trader & Explorer",
+                        location: "North Sea, 10th Century",
+                        avatar: "⚓"
+                    },
+                    recipe: {
+                        title: "Norse Fisherman's Stew",
+                        ingredients: [
+                            "200g stockfish (dried cod)",
+                            "1 cup dried peas",
+                            "1 onion, chopped",
+                            "6 cups water",
+                            "Salt",
+                            "Dried dill or other herbs"
+                        ],
+                        steps: [
+                            "Soak stockfish in water for several hours, then pound with a mallet",
+                            "Combine soaked fish, peas, and onion in a cooking pot",
+                            "Add water and bring to a slow simmer",
+                            "Cook for 1-2 hours until peas are tender and fish flakes easily",
+                            "Season with salt and herbs before serving"
+                        ]
+                    },
+                    completion: "The hot stew warms you from within as you take watch under the stars. The familiar flavors comfort you on this long voyage, connecting you to the seafaring traditions of your people.",
+                    facts: "Viking diets varied by location but commonly included fish, meat, dairy, and grains. Dried and preserved foods were essential for long voyages. Archaeological evidence shows Vikings ate a relatively balanced diet with more vegetables than previously thought, including cabbages, onions, peas, and beans grown in their homelands."
+                }
+            };
+            
+            // Game state
+            let currentEra = null;
+            let currentStep = 0;
+            let selectedEra = null;
+            
+            // Initialize game
+            eraCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove selection from all cards
+                    eraCards.forEach(c => c.style.borderColor = '#E0C9A6');
+                    
+                    // Add selection to clicked card
+                    this.style.borderColor = 'var(--primary)';
+                    
+                    // Enable start button
+                    startBtn.disabled = false;
+                    startBtn.textContent = 'Begin Cooking Journey';
+                    
+                    // Store selected era
+                    selectedEra = this.getAttribute('data-era');
+                });
+            });
+            
+            // Start game
+            startBtn.addEventListener('click', function() {
+                if (!selectedEra) return;
+                
+                currentEra = selectedEra;
+                currentStep = 0;
+                
+                // Load era data
+                loadEraData(currentEra);
+                
+                // Show game screen
+                introScreen.classList.add('hidden');
+                gameScreen.classList.remove('hidden');
+            });
+            
+            // Back to eras
+            backBtn.addEventListener('click', function() {
+                gameScreen.classList.add('hidden');
+                introScreen.classList.remove('hidden');
+                
+                // Reset progress
+                progressBar.style.width = '0%';
+            });
+            
+            // Next step
+            nextStepBtn.addEventListener('click', function() {
+                currentStep++;
+                
+                if (currentStep < gameData[currentEra].narrative.length) {
+                    // Update narrative
+                    narrativeText.textContent = gameData[currentEra].narrative[currentStep];
+                    
+                    // Update progress
+                    const progress = ((currentStep + 1) / (gameData[currentEra].narrative.length + 1)) * 100;
+                    progressBar.style.width = `${progress}%`;
+                    
+                    // Change button text for last step
+                    if (currentStep === gameData[currentEra].narrative.length - 1) {
+                        nextStepBtn.textContent = 'Complete Meal →';
+                    }
+                } else {
+                    // Show completion screen
+                    showCompletionScreen();
+                }
+            });
+            
+            // Cook again
+            cookAgainBtn.addEventListener('click', function() {
+                completionScreen.classList.add('hidden');
+                introScreen.classList.remove('hidden');
+                
+                // Reset era selection
+                eraCards.forEach(c => c.style.borderColor = '#E0C9A6');
+                startBtn.disabled = true;
+                startBtn.textContent = 'Select an Era to Begin';
+                selectedEra = null;
+            });
+            
+            function loadEraData(era) {
+                const data = gameData[era];
+                
+                // Set narrative elements
+                narrativeTitle.textContent = data.title;
+                narrativeText.textContent = data.narrative[0];
+                characterAvatar.textContent = data.character.avatar;
+                characterName.textContent = data.character.name;
+                characterRole.textContent = data.character.role;
+                characterLocation.textContent = data.character.location;
+                recipeTitle.textContent = data.recipe.title;
+                
+                // Reset progress
+                progressBar.style.width = '0%';
+                
+                // Reset next button
+                nextStepBtn.textContent = 'Continue Story →';
+            }
+            
+            function showCompletionScreen() {
+                const data = gameData[currentEra];
+                
+                // Set completion elements
+                completionMessage.textContent = data.completion;
+                historicalFacts.textContent = data.facts;
+                
+                // Show completion screen
+                gameScreen.classList.add('hidden');
+                completionScreen.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
