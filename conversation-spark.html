@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Conversation Spark: Deep Question Generator for Meaningful Connections</title>
+    <meta name="title" content="Conversation Spark: Deep Question Generator for Meaningful Connections">
+    <meta name="description" content="Struggle with small talk? Generate deep, interesting questions for any social setting. Perfect for dinner parties, dates, friends, and family gatherings. Build authentic relationships with better conversations.">
+    
+    <!-- Keywords -->
+    <meta name="keywords" content="conversation starters, deep questions, meaningful conversations, social skills, communication tools, relationship building, dinner party questions, small talk alternatives, connection questions, conversation generator">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-website.com/">
+    <meta property="og:title" content="Conversation Spark: Deep Question Generator">
+    <meta property="og:description" content="Generate meaningful questions to move beyond small talk and build genuine connections.">
+    <meta property="og:image" content="https://your-website.com/conversation-spark-preview.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://your-website.com/">
+    <meta property="twitter:title" content="Conversation Spark: Deep Question Generator">
+    <meta property="twitter:description" content="Generate meaningful questions to move beyond small talk and build genuine connections.">
+    <meta property="twitter:image" content="https://your-website.com/conversation-spark-preview.jpg">
+    
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --primary-light: #6b8cbc;
+            --primary-dark: #3a5784;
+            --secondary: #ff9a76;
+            --accent: #6b5b95;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --success: #28a745;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .intro {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+            color: var(--gray);
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 25px 0 15px;
+            color: var(--primary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 20px 0 10px;
+            color: var(--primary-dark);
+        }
+        
+        .instructions {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            padding-left: 5px;
+        }
+        
+        .pro-tips {
+            background: #fff9f5;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .setting-selection {
+            margin-bottom: 30px;
+        }
+        
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .setting-btn {
+            background: white;
+            border: 2px solid var(--primary-light);
+            border-radius: var(--border-radius);
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            box-shadow: var(--shadow);
+        }
+        
+        .setting-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+        
+        .setting-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .actions {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            font-weight: 600;
+        }
+        
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background: #ff8a5c;
+        }
+        
+        .questions-section {
+            margin-top: 40px;
+        }
+        
+        #questionContainer {
+            min-height: 200px;
+            margin-top: 20px;
+        }
+        
+        .placeholder-text {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+            font-style: italic;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--accent);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .question-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .question-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--gray);
+            transition: var(--transition);
+            padding: 5px;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .icon-btn:hover {
+            background: #f0f0f0;
+            color: var(--primary);
+        }
+        
+        .favorite {
+            color: #ffc107;
+        }
+        
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .disclaimer {
+            margin-bottom: 10px;
+            font-style: italic;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Animation for new questions */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .settings-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .settings-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .question-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Conversation Spark</h1>
+            <p class="subtitle">Move Beyond Small Talk & Build Genuine Connections</p>
+            <p class="intro">Tired of superficial conversations? Our generator creates meaningful questions tailored to any social situation, helping you connect on a deeper level with friends, family, and new acquaintances.</p>
+        </header>
+        
+        <section class="instructions">
+            <h2>How to Use Conversation Spark</h2>
+            <ol>
+                <li><strong>Choose Your Setting:</strong> Select the social situation you're preparing for</li>
+                <li><strong>Generate Questions:</strong> Click the "Spark Conversation" button to get curated, open-ended questions</li>
+                <li><strong>Start the Conversation:</strong> Use these questions naturally in your interactions</li>
+                <li><strong>Listen Deeply:</strong> Pay attention to responses and ask follow-up questions</li>
+                <li><strong>Share Stories:</strong> Use questions as springboards to share personal experiences</li>
+                <li><strong>Respect Boundaries:</strong> If someone seems uncomfortable, gracefully move to another topic</li>
+            </ol>
+            
+            <div class="pro-tips">
+                <h3>Pro Tips</h3>
+                <ul>
+                    <li>The best conversations flow naturally - use these as starting points, not scripts</li>
+                    <li>Maintain eye contact and show genuine interest in responses</li>
+                    <li>Mix lighter and deeper questions based on the group's comfort level</li>
+                    <li>Remember that vulnerability builds connection - be willing to answer your own questions</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="setting-selection">
+            <h2>Choose Your Conversation Setting</h2>
+            <div class="settings-grid">
+                <div class="setting-btn active" data-setting="dinnerParty">Dinner Party</div>
+                <div class="setting-btn" data-setting="firstDate">First Date</div>
+                <div class="setting-btn" data-setting="roadTrip">Road Trip</div>
+                <div class="setting-btn" data-setting="coffeeFriend">Coffee with Friend</div>
+                <div class="setting-btn" data-setting="familyGathering">Family Gathering</div>
+                <div class="setting-btn" data-setting="teamBuilding">Team Building</div>
+                <div class="setting-btn" data-setting="deepDive">Deep Dive</div>
+                <div class="setting-btn" data-setting="randomMix">Random Mix</div>
+            </div>
+        </section>
+        
+        <div class="actions">
+            <button id="generateBtn" class="btn">Spark Conversation</button>
+        </div>
+        
+        <section class="questions-section">
+            <h2>Your Conversation Sparks</h2>
+            <div id="questionContainer">
+                <div class="placeholder-text">
+                    Select a setting and click "Spark Conversation" to generate meaningful questions
+                </div>
+            </div>
+            <div class="actions">
+                <button id="newQuestionsBtn" class="btn btn-secondary" style="display: none;">Generate New Questions</button>
+            </div>
+        </section>
+        
+        <footer>
+            <p class="disclaimer">Conversation Spark is designed to foster meaningful connections. Always be respectful of others' boundaries and comfort levels.</p>
+            <p>&copy; 2023 Conversation Spark. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Question database
+        const questionDatabase = {
+            dinnerParty: [
+                "What's a book, movie, or song that fundamentally changed your perspective?",
+                "If you could have dinner with any historical figure, who would it be and what would you ask them?",
+                "What's something you've unlearned in the past few years?",
+                "What does 'living a good life' mean to you?",
+                "What's a childhood dream you still think about?",
+                "What's a small moment from your past week that brought you genuine joy?",
+                "If you could instantly become an expert in something, what would it be?",
+                "What's a piece of advice you'd give to your younger self?",
+                "What's something you've changed your mind about recently?",
+                "What's a tradition you'd love to start with friends or family?"
+            ],
+            firstDate: [
+                "What are you most passionate about right now?",
+                "What's a lesson you learned the hard way?",
+                "What does your perfect day look like?",
+                "What's something you're secretly really good at?",
+                "What relationship in your life has taught you the most about yourself?",
+                "What's a trip or experience that shaped who you are today?",
+                "What's something you're looking forward to in the coming months?",
+                "What's a quality you admire in others that you're working on developing yourself?",
+                "What makes you feel truly alive and energized?",
+                "What's a small thing that always makes you smile?"
+            ],
+            roadTrip: [
+                "If you could instantly master any skill, what would it be and why?",
+                "What's a memory that always makes you smile?",
+                "If you wrote a book about your life, what would the title be?",
+                "What's the best advice you've ever received?",
+                "What's something you believe that most people disagree with?",
+                "What's a place you've visited that exceeded your expectations?",
+                "If you had a personal motto, what would it be?",
+                "What's a hobby or interest you'd like to pick up someday?",
+                "What's the most beautiful thing you've ever seen?",
+                "If you could time travel to any period for just one day, where would you go?"
+            ],
+            coffeeFriend: [
+                "What's been on your mind lately that you haven't had a chance to talk about?",
+                "What's something you're proud of that you haven't celebrated enough?",
+                "How have you changed in the past year?",
+                "What's a challenge you're currently facing?",
+                "What's bringing you joy these days?",
+                "Is there anything you need to get off your chest?",
+                "What's a dream you've put on hold that you'd like to revisit?",
+                "What's the best part of your week been so far?",
+                "What's a small win you've had recently?",
+                "What are you looking forward to in the near future?"
+            ],
+            familyGathering: [
+                "What's a favorite family memory that always makes you laugh?",
+                "What's something you've learned from an older family member?",
+                "If our family had a theme song, what would it be?",
+                "What's a family tradition you'd like to start or bring back?",
+                "What's something you appreciate about our family dynamic?",
+                "What's a challenge our family has overcome that made us stronger?",
+                "What's a piece of family history you find fascinating?",
+                "What values from our family do you hope to pass on?",
+                "What's a funny story from your childhood that newer family members might not know?",
+                "What does family mean to you now versus when you were younger?"
+            ],
+            teamBuilding: [
+                "What's a strength you bring to our team that others might not know about?",
+                "What's a professional accomplishment you're most proud of?",
+                "What's a skill you'd like to develop in the coming year?",
+                "What does ideal collaboration look like to you?",
+                "What's something outside of work that energizes or inspires you?",
+                "What's a challenge at work that you'd like us to tackle together?",
+                "What's a professional lesson you learned recently?",
+                "What's one thing we could do to improve our team culture?",
+                "What's a project or task that you find particularly fulfilling?",
+                "How do you prefer to receive feedback or recognition?"
+            ],
+            deepDive: [
+                "What do you think is the purpose of life?",
+                "If you could solve one world problem, what would it be and why?",
+                "What does it mean to live an authentic life?",
+                "How do you define happiness, and how has that definition changed over time?",
+                "What legacy would you like to leave behind?",
+                "What's a fundamental truth you believe about human nature?",
+                "If you knew you couldn't fail, what would you attempt?",
+                "What role does vulnerability play in meaningful connections?",
+                "How do you balance being true to yourself with adapting to different situations?",
+                "What gives your life meaning and purpose?"
+            ]
+        };
+
+        // DOM elements
+        const settingButtons = document.querySelectorAll('.setting-btn');
+        const generateBtn = document.getElementById('generateBtn');
+        const newQuestionsBtn = document.getElementById('newQuestionsBtn');
+        const questionContainer = document.getElementById('questionContainer');
+        
+        let currentSetting = 'dinnerParty';
+        let favorites = JSON.parse(localStorage.getItem('conversationFavorites')) || [];
+
+        // Event listeners
+        settingButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                settingButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                currentSetting = this.getAttribute('data-setting');
+            });
+        });
+
+        generateBtn.addEventListener('click', generateQuestions);
+        newQuestionsBtn.addEventListener('click', generateQuestions);
+
+        // Function to generate questions
+        function generateQuestions() {
+            let questions = [];
+            
+            if (currentSetting === 'randomMix') {
+                // Get questions from all categories
+                const allQuestions = Object.values(questionDatabase).flat();
+                questions = getRandomQuestions(allQuestions, 5);
+            } else {
+                questions = getRandomQuestions(questionDatabase[currentSetting], 5);
+            }
+            
+            displayQuestions(questions);
+            newQuestionsBtn.style.display = 'block';
+        }
+
+        // Function to get random questions from an array
+        function getRandomQuestions(questionArray, count) {
+            const shuffled = [...questionArray].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        // Function to display questions
+        function displayQuestions(questions) {
+            questionContainer.innerHTML = '';
+            
+            questions.forEach((question, index) => {
+                const isFavorite = favorites.includes(question);
+                
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card fade-in';
+                questionCard.style.animationDelay = `${index * 0.1}s`;
+                
+                questionCard.innerHTML = `
+                    <div class="question-text">${question}</div>
+                    <div class="question-actions">
+                        <button class="icon-btn favorite-btn ${isFavorite ? 'favorite' : ''}" data-question="${question}">
+                            ♥
+                        </button>
+                        <button class="icon-btn share-btn" data-question="${question}">
+                            ↷
+                        </button>
+                    </div>
+                `;
+                
+                questionContainer.appendChild(questionCard);
+            });
+            
+            // Add event listeners to favorite buttons
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const question = this.getAttribute('data-question');
+                    toggleFavorite(question, this);
+                });
+            });
+            
+            // Add event listeners to share buttons
+            document.querySelectorAll('.share-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const question = this.getAttribute('data-question');
+                    shareQuestion(question);
+                });
+            });
+        }
+
+        // Function to toggle favorite status
+        function toggleFavorite(question, button) {
+            if (favorites.includes(question)) {
+                favorites = favorites.filter(fav => fav !== question);
+                button.classList.remove('favorite');
+            } else {
+                favorites.push(question);
+                button.classList.add('favorite');
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('conversationFavorites', JSON.stringify(favorites));
+        }
+
+        // Function to share a question
+        function shareQuestion(question) {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Conversation Spark',
+                    text: question,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers that don't support the Web Share API
+                navigator.clipboard.writeText(question).then(() => {
+                    alert('Question copied to clipboard!');
+                });
+            }
+        }
+
+        // Initialize with a random setting
+        const randomSetting = Object.keys(questionDatabase)[
+            Math.floor(Math.random() * Object.keys(questionDatabase).length)
+        ];
+        
+        document.querySelector(`[data-setting="${randomSetting}"]`).click();
+    </script>
+</body>
+</html>
