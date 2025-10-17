@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Letter - Write Letters to Your Future Self</title>
+    <meta name="description" content="Future Letter: Write meaningful letters to your future self and schedule delivery. A powerful tool for self-reflection, motivation, and personal growth.">
+    <meta name="keywords" content="future self, time capsule, letter writing, self-reflection, motivation, personal growth, goal setting">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .letter-creation {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #ffb347;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #ff7e5f;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+        
+        .delivery-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .delivery-option {
+            flex: 1;
+            min-width: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .delivery-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .delivery-option.selected {
+            border-color: #ff7e5f;
+            background: rgba(255, 126, 95, 0.2);
+        }
+        
+        .delivery-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #ffb347;
+        }
+        
+        .delivery-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .delivery-desc {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        
+        .date-selection {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .date-input {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .time-input {
+            flex: 0 0 120px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.4);
+            display: block;
+            margin: 20px auto 0;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 126, 95, 0.6);
+        }
+        
+        .my-letters {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #ffb347;
+            text-align: center;
+        }
+        
+        .letters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .letter-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border-left: 4px solid #ff7e5f;
+        }
+        
+        .letter-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .letter-date {
+            font-size: 0.9rem;
+            color: #ffb347;
+            margin-bottom: 10px;
+        }
+        
+        .letter-preview {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .letter-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-scheduled {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+        
+        .status-delivered {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+        
+        .status-locked {
+            background: rgba(108, 117, 125, 0.2);
+            color: #6c757d;
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #ffb347;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 20px 0 10px;
+            color: #ffb347;
+        }
+        
+        p, ul {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .highlight {
+            color: #ffb347;
+            font-weight: bold;
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            opacity: 0.7;
+        }
+        
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #ffb347;
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            min-width: 70px;
+        }
+        
+        .countdown-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff7e5f;
+        }
+        
+        .countdown-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        .unlock-btn {
+            background: rgba(255, 126, 95, 0.2);
+            color: #ff7e5f;
+            border: 1px solid #ff7e5f;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .unlock-btn:hover {
+            background: rgba(255, 126, 95, 0.3);
+        }
+        
+        .unlock-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .delivery-options {
+                flex-direction: column;
+            }
+            
+            .date-selection {
+                flex-direction: column;
+            }
+            
+            .date-input, .time-input {
+                width: 100%;
+            }
+            
+            .letters-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Animation for new letter */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .new-letter {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        /* Confirmation modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-icon {
+            font-size: 4rem;
+            color: #ff7e5f;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #ffb347;
+        }
+        
+        .modal-message {
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .modal-btn {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 126, 95, 0.4);
+        }
+        
+        /* Social Sharing Styles */
+        .share-section {
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .share-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #ffb347;
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .whatsapp {
+            background: #25D366;
+        }
+        
+        .facebook {
+            background: #3b5998;
+        }
+        
+        .twitter {
+            background: #1DA1F2;
+        }
+        
+        .instagram {
+            background: #E1306C;
+        }
+        
+        .reddit {
+            background: #FF5700;
+        }
+        
+        .link {
+            background: #6c757d;
+        }
+        
+        .social-share-section {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .social-share-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #ffb347;
+        }
+        
+        .social-share-desc {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .social-share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .social-share-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+        }
+        
+        .social-share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .share-buttons, .social-share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-btn, .social-share-btn {
+                width: 200px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Future Letter</h1>
+            <p class="tagline">Write letters to your future self and schedule delivery for motivation and self-reflection</p>
+        </header>
+        
+        <section class="app-container">
+            <div class="letter-creation">
+                <h2 class="section-title">Write to Your Future Self</h2>
+                
+                <div class="form-group">
+                    <label for="letterTitle">Letter Title</label>
+                    <input type="text" id="letterTitle" placeholder="e.g., Goals for Next Year, Remember This Moment">
+                </div>
+                
+                <div class="form-group">
+                    <label for="letterContent">Your Message</label>
+                    <textarea id="letterContent" placeholder="Write about your current thoughts, goals, challenges, or anything you want your future self to remember..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Delivery Method</label>
+                    <div class="delivery-options">
+                        <div class="delivery-option selected" data-method="email">
+                            <div class="delivery-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="delivery-label">Email Delivery</div>
+                            <div class="delivery-desc">Get your letter via email on the scheduled date</div>
+                        </div>
+                        <div class="delivery-option" data-method="onsite">
+                            <div class="delivery-icon"><i class="fas fa-lock-open"></i></div>
+                            <div class="delivery-label">On-site Unlock</div>
+                            <div class="delivery-desc">Return to this site to unlock your letter</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="deliveryDate">Schedule Delivery For</label>
+                    <div class="date-selection">
+                        <input type="date" id="deliveryDate" class="date-input" min="">
+                        <input type="time" id="deliveryTime" class="time-input" value="09:00">
+                    </div>
+                </div>
+                
+                <button class="submit-btn" id="submitLetter">
+                    <i class="fas fa-time-circle"></i> Send to Future Me
+                </button>
+            </div>
+            
+            <div class="my-letters">
+                <h2 class="section-title">My Future Letters</h2>
+                <div class="letters-grid" id="lettersContainer">
+                    <!-- Letters will be dynamically added here -->
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="fas fa-envelope-open-text"></i></div>
+                        <p>You haven't written any future letters yet.</p>
+                        <p>Start by writing your first letter above!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="social-share-section">
+                <h3 class="social-share-title">Share the Experience</h3>
+                <p class="social-share-desc">Tell your friends about Future Letter and invite them to write to their future selves too!</p>
+                <div class="social-share-buttons">
+                    <a href="#" class="social-share-btn whatsapp" id="whatsappShare">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="#" class="social-share-btn facebook" id="facebookShare">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </a>
+                    <a href="#" class="social-share-btn twitter" id="twitterShare">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </a>
+                    <a href="#" class="social-share-btn instagram" id="instagramShare">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a href="#" class="social-share-btn reddit" id="redditShare">
+                        <i class="fab fa-reddit-alien"></i> Reddit
+                    </a>
+                </div>
+            </div>
+            
+            <div class="instructions">
+                <h2>How Future Letter Works</h2>
+                
+                <h3>Create Your Time Capsule</h3>
+                <ul>
+                    <li>Write a heartfelt letter to your future self</li>
+                    <li>Choose when you want to receive it - from days to years in the future</li>
+                    <li>Select delivery via email or on-site unlocking</li>
+                    <li>Your letter is securely stored until the delivery date</li>
+                </ul>
+                
+                <h3>Why It's Powerful</h3>
+                <p>Future Letter combines the emotional impact of time capsules with motivational gamification:</p>
+                <ul>
+                    <li><span class="highlight">Self-Reflection</span> - Capture your current thoughts and feelings</li>
+                    <li><span class="highlight">Goal Tracking</span> - Set future goals and check your progress</li>
+                    <li><span class="highlight">Motivation</span> - Receive encouragement from your past self</li>
+                    <li><span class="highlight">Personal Growth</span> - See how much you've changed over time</li>
+                </ul>
+                
+                <h3>Creative Ways to Use Future Letter</h3>
+                <ul>
+                    <li><span class="highlight">Birthday Messages</span> - Write to yourself on your next birthday</li>
+                    <li><span class="highlight">Goal Setting</span> - Set 1, 5, or 10-year goals and check progress</li>
+                    <li><span class="highlight">Milestone Markers</span> - Capture thoughts before big life events</li>
+                    <li><span class="highlight">Encouragement</span> - Write supportive messages for challenging times</li>
+                    <li><span class="highlight">Time Capsules</span> - Document current life for future reflection</li>
+                </ul>
+                
+                <h3>Tips for Meaningful Letters</h3>
+                <ul>
+                    <li>Be honest and authentic in your writing</li>
+                    <li>Include specific details about your current life</li>
+                    <li>Ask questions you'd like your future self to answer</li>
+                    <li>Share both challenges and successes</li>
+                    <li>Offer advice or encouragement for the future</li>
+                    <li>Consider including current photos or mementos (if available)</li>
+                </ul>
+            </div>
+        </section>
+        
+        <footer>
+            <p>Future Letter &copy; 2023 - Your personal time capsule for growth and reflection</p>
+        </footer>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmationModal">
+        <div class="modal-content">
+            <div class="modal-icon"><i class="fas fa-check-circle"></i></div>
+            <h2 class="modal-title">Letter Sent to Future You!</h2>
+            <p class="modal-message" id="modalMessage">Your letter has been scheduled for delivery. You'll receive it on the specified date.</p>
+            
+            <div class="share-section">
+                <div class="share-title">Share Your Achievement</div>
+                <div class="share-buttons">
+                    <a href="#" class="share-btn whatsapp" id="modalWhatsappShare">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="#" class="share-btn facebook" id="modalFacebookShare">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </a>
+                    <a href="#" class="share-btn twitter" id="modalTwitterShare">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </a>
+                    <a href="#" class="share-btn instagram" id="modalInstagramShare">
+                        <i class="fab fa-instagram"></i> Instagram
+                    </a>
+                    <a href="#" class="share-btn reddit" id="modalRedditShare">
+                        <i class="fab fa-reddit-alien"></i> Reddit
+                    </a>
+                    <a href="#" class="share-btn link" id="modalCopyLink">
+                        <i class="fas fa-link"></i> Copy Link
+                    </a>
+                </div>
+            </div>
+            
+            <button class="modal-btn" id="modalClose">Continue</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize delivery date to tomorrow as default
+        document.addEventListener('DOMContentLoaded', function() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const formattedDate = tomorrow.toISOString().split('T')[0];
+            document.getElementById('deliveryDate').min = formattedDate;
+            document.getElementById('deliveryDate').value = formattedDate;
+            
+            // Load any existing letters from localStorage
+            loadLetters();
+            
+            // Set up social sharing
+            setupSocialSharing();
+        });
+        
+        // Delivery method selection
+        const deliveryOptions = document.querySelectorAll('.delivery-option');
+        let selectedDeliveryMethod = 'email';
+        
+        deliveryOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                deliveryOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedDeliveryMethod = this.getAttribute('data-method');
+            });
+        });
+        
+        // Current letter for sharing
+        let currentLetter = null;
+        
+        // Submit letter
+        document.getElementById('submitLetter').addEventListener('click', function() {
+            const title = document.getElementById('letterTitle').value.trim();
+            const content = document.getElementById('letterContent').value.trim();
+            const date = document.getElementById('deliveryDate').value;
+            const time = document.getElementById('deliveryTime').value;
+            
+            if (!title || !content || !date) {
+                alert('Please fill in all required fields: title, content, and delivery date.');
+                return;
+            }
+            
+            // Create letter object
+            currentLetter = {
+                id: Date.now(),
+                title: title,
+                content: content,
+                deliveryDate: new Date(`${date}T${time}`),
+                deliveryMethod: selectedDeliveryMethod,
+                status: 'scheduled',
+                created: new Date()
+            };
+            
+            // Save to localStorage
+            saveLetter(currentLetter);
+            
+            // Show confirmation
+            showConfirmation(currentLetter);
+            
+            // Reset form
+            document.getElementById('letterTitle').value = '';
+            document.getElementById('letterContent').value = '';
+        });
+        
+        // Save letter to localStorage
+        function saveLetter(letter) {
+            let letters = JSON.parse(localStorage.getItem('futureLetters') || '[]');
+            letters.push(letter);
+            localStorage.setItem('futureLetters', JSON.stringify(letters));
+            
+            // Update UI
+            loadLetters();
+        }
+        
+        // Load letters from localStorage
+        function loadLetters() {
+            const lettersContainer = document.getElementById('lettersContainer');
+            let letters = JSON.parse(localStorage.getItem('futureLetters') || '[]');
+            
+            if (letters.length === 0) {
+                lettersContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="fas fa-envelope-open-text"></i></div>
+                        <p>You haven't written any future letters yet.</p>
+                        <p>Start by writing your first letter above!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort letters by delivery date
+            letters.sort((a, b) => new Date(a.deliveryDate) - new Date(b.deliveryDate));
+            
+            let lettersHTML = '';
+            
+            letters.forEach(letter => {
+                const deliveryDate = new Date(letter.deliveryDate);
+                const now = new Date();
+                const isDelivered = deliveryDate <= now;
+                const status = isDelivered ? 'delivered' : 'scheduled';
+                
+                // Calculate time until delivery
+                const timeDiff = deliveryDate - now;
+                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                let countdownHTML = '';
+                if (!isDelivered) {
+                    countdownHTML = `
+                        <div class="countdown">
+                            <div class="countdown-item">
+                                <div class="countdown-value">${days}</div>
+                                <div class="countdown-label">Days</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-value">${hours}</div>
+                                <div class="countdown-label">Hours</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-value">${minutes}</div>
+                                <div class="countdown-label">Minutes</div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                lettersHTML += `
+                    <div class="letter-card new-letter" data-id="${letter.id}">
+                        <div class="letter-date">Scheduled for: ${deliveryDate.toLocaleDateString()} at ${deliveryDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+                        <h3>${letter.title}</h3>
+                        <div class="letter-preview">${letter.content.substring(0, 100)}...</div>
+                        ${countdownHTML}
+                        <div class="letter-status status-${status}">${status === 'scheduled' ? 'Scheduled' : 'Delivered'}</div>
+                        ${!isDelivered && letter.deliveryMethod === 'onsite' ? 
+                          `<button class="unlock-btn" onclick="unlockLetter(${letter.id})" disabled>Unlock on ${deliveryDate.toLocaleDateString()}</button>` : 
+                          ''}
+                        ${isDelivered && letter.deliveryMethod === 'onsite' ? 
+                          `<button class="unlock-btn" onclick="unlockLetter(${letter.id})">Read Now</button>` : 
+                          ''}
+                    </div>
+                `;
+            });
+            
+            lettersContainer.innerHTML = lettersHTML;
+            
+            // Update countdowns every minute
+            if (!window.countdownInterval) {
+                window.countdownInterval = setInterval(loadLetters, 60000);
+            }
+        }
+        
+        // Show confirmation modal
+        function showConfirmation(letter) {
+            const modal = document.getElementById('confirmationModal');
+            const modalMessage = document.getElementById('modalMessage');
+            const deliveryDate = new Date(letter.deliveryDate);
+            
+            let message = `Your letter "<strong>${letter.title}</strong>" has been scheduled for delivery on <strong>${deliveryDate.toLocaleDateString()}</strong> at <strong>${deliveryDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</strong>.`;
+            
+            if (letter.deliveryMethod === 'email') {
+                message += " You'll receive it via email on that date.";
+            } else {
+                message += " You can return to this site to unlock and read it.";
+            }
+            
+            modalMessage.innerHTML = message;
+            modal.style.display = 'flex';
+            
+            // Update share URLs with current letter info
+            updateShareUrls(letter);
+        }
+        
+        // Close modal
+        document.getElementById('modalClose').addEventListener('click', function() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        });
+        
+        // Unlock letter (for on-site delivery)
+        function unlockLetter(letterId) {
+            let letters = JSON.parse(localStorage.getItem('futureLetters') || '[]');
+            const letter = letters.find(l => l.id === letterId);
+            
+            if (!letter) return;
+            
+            const deliveryDate = new Date(letter.deliveryDate);
+            const now = new Date();
+            
+            // Check if it's time to unlock
+            if (deliveryDate > now) {
+                alert(`This letter is scheduled to unlock on ${deliveryDate.toLocaleDateString()}. Please check back then!`);
+                return;
+            }
+            
+            // Show letter content
+            alert(`LETTER: ${letter.title}\n\n${letter.content}\n\n---\nWritten on: ${new Date(letter.created).toLocaleDateString()}`);
+            
+            // Mark as delivered if not already
+            if (letter.status !== 'delivered') {
+                letter.status = 'delivered';
+                localStorage.setItem('futureLetters', JSON.stringify(letters));
+                loadLetters();
+            }
+        }
+        
+        // Set up social sharing functionality
+        function setupSocialSharing() {
+            // General sharing buttons
+            document.getElementById('whatsappShare').addEventListener('click', function(e) {
+                e.preventDefault();
+                shareOnWhatsApp("Check out Future Letter - an amazing tool to write letters to your future self! I just wrote my first letter and it's such a powerful experience for self-reflection and personal growth. Try it out!");
+            });
+            
+            document.getElementById('facebookShare').addEventListener('click', function(e) {
+                e.preventDefault();
+                shareOnFacebook("Future Letter - Write to Your Future Self", "I just discovered this amazing tool for self-reflection and personal growth. Write letters to your future self and schedule delivery for motivation and personal insight!");
+            });
+            
+            document.getElementById('twitterShare').addEventListener('click', function(e) {
+                e.preventDefault();
+                shareOnTwitter("Just wrote my first letter to my future self using Future Letter! An amazing tool for self-reflection and personal growth. #FutureLetter #SelfReflection #PersonalGrowth");
+            });
+            
+            document.getElementById('instagramShare').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert("Instagram sharing: Take a screenshot of your letter or this page and share it on Instagram with #FutureLetter!");
+            });
+            
+            document.getElementById('redditShare').addEventListener('click', function(e) {
+                e.preventDefault();
+                shareOnReddit("Future Letter - Write Letters to Your Future Self", "I found this amazing tool that lets you write letters to your future self and schedule delivery. Perfect for self-reflection, goal tracking, and personal growth!");
+            });
+            
+            // Modal sharing buttons
+            document.getElementById('modalWhatsappShare').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentLetter) {
+                    shareOnWhatsApp(`I just wrote a letter to my future self titled "${currentLetter.title}" scheduled for ${new Date(currentLetter.deliveryDate).toLocaleDateString()}! Future Letter is an amazing tool for self-reflection and personal growth. Try it out!`);
+                }
+            });
+            
+            document.getElementById('modalFacebookShare').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentLetter) {
+                    shareOnFacebook(`Future Letter - I wrote to my future self!`, `I just wrote a letter to my future self titled "${currentLetter.title}" scheduled for ${new Date(currentLetter.deliveryDate).toLocaleDateString()}. Future Letter is an amazing tool for self-reflection and personal growth!`);
+                }
+            });
+            
+            document.getElementById('modalTwitterShare').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentLetter) {
+                    shareOnTwitter(`Just wrote a letter to my future self titled "${currentLetter.title}"! Using Future Letter for self-reflection and personal growth. #FutureLetter #SelfReflection #PersonalGrowth`);
+                }
+            });
+            
+            document.getElementById('modalInstagramShare').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert("Instagram sharing: Take a screenshot of your letter confirmation and share it on Instagram with #FutureLetter!");
+            });
+            
+            document.getElementById('modalRedditShare').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentLetter) {
+                    shareOnReddit(`Future Letter - I wrote to my future self!`, `I just wrote a letter to my future self titled "${currentLetter.title}" scheduled for ${new Date(currentLetter.deliveryDate).toLocaleDateString()}. Future Letter is an amazing tool for self-reflection and personal growth!`);
+                }
+            });
+            
+            document.getElementById('modalCopyLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                copyShareLink();
+            });
+        }
+        
+        // Update share URLs with current letter info
+        function updateShareUrls(letter) {
+            const shareText = `I just wrote a letter to my future self titled "${letter.title}" scheduled for ${new Date(letter.deliveryDate).toLocaleDateString()}! Future Letter is an amazing tool for self-reflection and personal growth.`;
+            const shareUrl = window.location.href;
+            
+            // Update modal share buttons
+            document.getElementById('modalWhatsappShare').href = `https://api.whatsapp.com://send?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+            document.getElementById('modalFacebookShare').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
+            document.getElementById('modalTwitterShare').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+            document.getElementById('modalRedditShare').href = `https://www.reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`;
+        }
+        
+        // Social sharing functions
+        function shareOnWhatsApp(message) {
+            const url = `https://api.whatsapp.com://send?text=${encodeURIComponent(message + ' ' + window.location.href)}`;
+            window.open(url, '_blank');
+        }
+        
+        function shareOnFacebook(title, description) {
+            const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(description)}`;
+            window.open(url, '_blank', 'width=600,height=400');
+        }
+        
+        function shareOnTwitter(text) {
+            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`;
+            window.open(url, '_blank', 'width=600,height=400');
+        }
+        
+        function shareOnReddit(title, text) {
+            const url = `https://www.reddit.com/submit?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(title + ' - ' + text)}`;
+            window.open(url, '_blank', 'width=600,height=600');
+        }
+        
+        function copyShareLink() {
+            const text = `Check out Future Letter - an amazing tool to write letters to your future self! I just wrote my first letter and it's such a powerful experience for self-reflection and personal growth. Try it out: ${window.location.href}`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                // Show feedback
+                const originalText = document.getElementById('modalCopyLink').innerHTML;
+                document.getElementById('modalCopyLink').innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    document.getElementById('modalCopyLink').innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy link to clipboard');
+            });
+        }
+    </script>
+</body>
+</html>
