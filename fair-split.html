@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fair Split Calculator - Equitably Split Bills with Roommates & Partners</title>
+    <meta name="description" content="The Fair Split Calculator helps roommates & couples split bills fairly. Go beyond 50/50! Calculate equitable splits based on income or assign fixed costs. Free, easy-to-use financial tool for harmonious living.">
+    <style>
+        :root {
+            --primary-color: #2c5aa0;
+            --secondary-color: #4CAF50;
+            --light-color: #f5f9ff;
+            --border-color: #ddd;
+            --text-color: #333;
+            --error-color: #e74c3c;
+            --success-color: #2ecc71;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f8f9fa;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .input-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .method-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .method-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .method-description {
+            background-color: var(--light-color);
+            padding: 0.8rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .person-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        @media (max-width: 600px) {
+            .person-details {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .person-column {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(44, 90, 160, 0.2);
+        }
+        
+        .expense-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+        
+        .expense-table th, .expense-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .expense-table th {
+            background-color: var(--light-color);
+            font-weight: 600;
+        }
+        
+        .expense-name {
+            width: 40%;
+        }
+        
+        .expense-amount {
+            width: 30%;
+        }
+        
+        .expense-assigned {
+            width: 20%;
+        }
+        
+        .expense-actions {
+            width: 10%;
+        }
+        
+        .btn {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: #3d8b40;
+        }
+        
+        .btn-remove {
+            background-color: #e74c3c;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+        }
+        
+        .btn-remove:hover {
+            background-color: #c0392b;
+        }
+        
+        .btn-large {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        
+        .results-section {
+            display: none;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .results-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        @media (max-width: 600px) {
+            .results-breakdown {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .person-result {
+            padding: 1rem;
+            background-color: var(--light-color);
+            border-radius: 6px;
+        }
+        
+        .person-result h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .final-transfer {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e8f5e9;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .help-text {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Fair Split Calculator</h1>
+        <p class="subtitle">Split shared bills equitably, not just equally. Perfect for roommates and couples.</p>
+    </header>
+
+    <main>
+        <section class="input-section">
+            <h2>Choose Your Fair Split Method</h2>
+            <div class="method-selector">
+                <div class="method-option">
+                    <input type="radio" id="income-method" name="method" value="income" checked>
+                    <label for="income-method">Income-Weighted Split</label>
+                </div>
+                <div class="method-option">
+                    <input type="radio" id="fixed-method" name="method" value="fixed">
+                    <label for="fixed-method">Fixed-Cost Split</label>
+                </div>
+            </div>
+            <div class="method-description" id="method-description">
+                Split all shared bills as a percentage of each person's income. The person who earns more pays a larger share.
+            </div>
+        </section>
+
+        <section class="input-section">
+            <h2>Person Details</h2>
+            <div class="person-details">
+                <div class="person-column">
+                    <label for="person1-name">Person 1 Name</label>
+                    <input type="text" id="person1-name" value="Person 1">
+                    
+                    <label for="person1-income">Monthly Income (USD)</label>
+                    <input type="number" id="person1-income" min="0" step="0.01" placeholder="0.00">
+                    <div class="error-message" id="person1-income-error">Please enter a valid income</div>
+                    <p class="help-text">Enter your gross monthly income before taxes.</p>
+                </div>
+                
+                <div class="person-column">
+                    <label for="person2-name">Person 2 Name</label>
+                    <input type="text" id="person2-name" value="Person 2">
+                    
+                    <label for="person2-income">Monthly Income (USD)</label>
+                    <input type="number" id="person2-income" min="0" step="0.01" placeholder="0.00">
+                    <div class="error-message" id="person2-income-error">Please enter a valid income</div>
+                    <p class="help-text">Enter your gross monthly income before taxes.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="input-section">
+            <h2>Expense Details</h2>
+            
+            <!-- Income-Weighted Expenses Section -->
+            <div id="income-expenses-section">
+                <table class="expense-table" id="income-expenses-table">
+                    <thead>
+                        <tr>
+                            <th class="expense-name">Expense Name</th>
+                            <th class="expense-amount">Total Amount (USD)</th>
+                            <th class="expense-actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="income-expenses-body">
+                        <tr>
+                            <td><input type="text" class="expense-name-input" placeholder="e.g., Rent" value="Rent"></td>
+                            <td><input type="number" class="expense-amount-input" min="0" step="0.01" placeholder="0.00" value="1500"></td>
+                            <td><button class="btn btn-remove" onclick="removeExpenseRow(this)">Remove</button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="expense-name-input" placeholder="e.g., Utilities" value="Utilities"></td>
+                            <td><input type="number" class="expense-amount-input" min="0" step="0.01" placeholder="0.00" value="200"></td>
+                            <td><button class="btn btn-remove" onclick="removeExpenseRow(this)">Remove</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn" onclick="addExpenseRow('income')">+ Add Another Expense</button>
+            </div>
+            
+            <!-- Fixed-Cost Expenses Section -->
+            <div id="fixed-expenses-section" class="hidden">
+                <h3>Fixed Costs (Assigned to one person)</h3>
+                <table class="expense-table" id="fixed-expenses-table">
+                    <thead>
+                        <tr>
+                            <th class="expense-name">Expense Name</th>
+                            <th class="expense-amount">Total Amount (USD)</th>
+                            <th class="expense-assigned">Assigned To</th>
+                            <th class="expense-actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fixed-expenses-body">
+                        <tr>
+                            <td><input type="text" class="expense-name-input" placeholder="e.g., Master Bedroom" value="Master Bedroom"></td>
+                            <td><input type="number" class="expense-amount-input" min="0" step="0.01" placeholder="0.00" value="200"></td>
+                            <td>
+                                <select class="expense-assigned-input">
+                                    <option value="person1">Person 1</option>
+                                    <option value="person2">Person 2</option>
+                                </select>
+                            </td>
+                            <td><button class="btn btn-remove" onclick="removeExpenseRow(this)">Remove</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn" onclick="addExpenseRow('fixed')">+ Add Another Fixed Cost</button>
+                
+                <h3 style="margin-top: 2rem;">Shared Flexible Costs (To be split)</h3>
+                <table class="expense-table" id="shared-expenses-table">
+                    <thead>
+                        <tr>
+                            <th class="expense-name">Expense Name</th>
+                            <th class="expense-amount">Total Amount (USD)</th>
+                            <th class="expense-actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shared-expenses-body">
+                        <tr>
+                            <td><input type="text" class="expense-name-input" placeholder="e.g., Groceries" value="Groceries"></td>
+                            <td><input type="number" class="expense-amount-input" min="0" step="0.01" placeholder="0.00" value="400"></td>
+                            <td><button class="btn btn-remove" onclick="removeExpenseRow(this)">Remove</button></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="expense-name-input" placeholder="e.g., Internet" value="Internet"></td>
+                            <td><input type="number" class="expense-amount-input" min="0" step="0.01" placeholder="0.00" value="80"></td>
+                            <td><button class="btn btn-remove" onclick="removeExpenseRow(this)">Remove</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn" onclick="addExpenseRow('shared')">+ Add Another Shared Expense</button>
+            </div>
+        </section>
+
+        <button class="btn btn-large" id="calculate-btn">Calculate Fair Split</button>
+
+        <section class="results-section" id="results-section">
+            <h2>Your Fair Split Summary</h2>
+            <div id="results-content">
+                <!-- Results will be populated here by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // DOM Elements
+        const incomeMethodRadio = document.getElementById('income-method');
+        const fixedMethodRadio = document.getElementById('fixed-method');
+        const methodDescription = document.getElementById('method-description');
+        const incomeExpensesSection = document.getElementById('income-expenses-section');
+        const fixedExpensesSection = document.getElementById('fixed-expenses-section');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const resultsSection = document.getElementById('results-section');
+        const resultsContent = document.getElementById('results-content');
+        
+        // Method descriptions
+        const methodDescriptions = {
+            income: "Split all shared bills as a percentage of each person's income. The person who earns more pays a larger share.",
+            fixed: "Assign specific fixed costs to one person (like a larger room), then split the remaining shared expenses 50/50."
+        };
+        
+        // Event Listeners
+        incomeMethodRadio.addEventListener('change', updateFormLayout);
+        fixedMethodRadio.addEventListener('change', updateFormLayout);
+        calculateBtn.addEventListener('click', calculateSplit);
+        
+        // Initialize the form
+        updateFormLayout();
+        
+        // Update form layout based on selected method
+        function updateFormLayout() {
+            const method = document.querySelector('input[name="method"]:checked').value;
+            methodDescription.textContent = methodDescriptions[method];
+            
+            if (method === 'income') {
+                incomeExpensesSection.classList.remove('hidden');
+                fixedExpensesSection.classList.add('hidden');
+            } else {
+                incomeExpensesSection.classList.add('hidden');
+                fixedExpensesSection.classList.remove('hidden');
+            }
+        }
+        
+        // Add a new expense row
+        function addExpenseRow(type) {
+            let tableBody, row;
+            
+            if (type === 'income') {
+                tableBody = document.getElementById('income-expenses-body');
+                row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input type="text" class="expense-name-input" placeholder="e.g., Rent"></td>
+                    <td><input type="number" class="expense-amount-input" min="0" step="0.01" placeholder="0.00"></td>
+                    <td><button class="btn btn-remove" onclick="removeExpenseRow(this)">Remove</button></td>
+                `;
+            } else if (type === 'fixed') {
+                tableBody = document.getElementById('fixed-expenses-body');
+                row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input type="text" class="expense-name-input" placeholder="e.g., Master Bedroom"></td>
+                    <td><input type="number" class="expense-amount-input" min="0" step="0.01" placeholder="0.00"></td>
+                    <td>
+                        <select class="expense-assigned-input">
+                            <option value="person1">Person 1</option>
+                            <option value="person2">Person 2</option>
+                        </select>
+                    </td>
+                    <td><button class="btn btn-remove" onclick="removeExpenseRow(this)">Remove</button></td>
+                `;
+            } else if (type === 'shared') {
+                tableBody = document.getElementById('shared-expenses-body');
+                row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input type="text" class="expense-name-input" placeholder="e.g., Groceries"></td>
+                    <td><input type="number" class="expense-amount-input" min="0" step="0.01" placeholder="0.00"></td>
+                    <td><button class="btn btn-remove" onclick="removeExpenseRow(this)">Remove</button></td>
+                `;
+            }
+            
+            tableBody.appendChild(row);
+        }
+        
+        // Remove an expense row
+        function removeExpenseRow(button) {
+            const row = button.closest('tr');
+            row.remove();
+        }
+        
+        // Validate inputs
+        function validateInputs() {
+            let isValid = true;
+            const person1Name = document.getElementById('person1-name').value.trim();
+            const person2Name = document.getElementById('person2-name').value.trim();
+            const person1Income = parseFloat(document.getElementById('person1-income').value);
+            const person2Income = parseFloat(document.getElementById('person2-income').value);
+            const method = document.querySelector('input[name="method"]:checked').value;
+            
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Validate names
+            if (!person1Name) {
+                document.getElementById('person1-name').focus();
+                alert('Please enter a name for Person 1');
+                return false;
+            }
+            
+            if (!person2Name) {
+                document.getElementById('person2-name').focus();
+                alert('Please enter a name for Person 2');
+                return false;
+            }
+            
+            // Validate incomes for income-weighted method
+            if (method === 'income') {
+                if (isNaN(person1Income) || person1Income <= 0) {
+                    document.getElementById('person1-income-error').style.display = 'block';
+                    document.getElementById('person1-income').focus();
+                    isValid = false;
+                }
+                
+                if (isNaN(person2Income) || person2Income <= 0) {
+                    document.getElementById('person2-income-error').style.display = 'block';
+                    document.getElementById('person2-income').focus();
+                    isValid = false;
+                }
+            }
+            
+            // Validate expenses
+            let hasExpenses = false;
+            if (method === 'income') {
+                const expenseAmounts = document.querySelectorAll('#income-expenses-body .expense-amount-input');
+                for (let input of expenseAmounts) {
+                    const value = parseFloat(input.value);
+                    if (!isNaN(value) && value > 0) {
+                        hasExpenses = true;
+                        break;
+                    }
+                }
+            } else {
+                const fixedExpenseAmounts = document.querySelectorAll('#fixed-expenses-body .expense-amount-input');
+                const sharedExpenseAmounts = document.querySelectorAll('#shared-expenses-body .expense-amount-input');
+                
+                for (let input of fixedExpenseAmounts) {
+                    const value = parseFloat(input.value);
+                    if (!isNaN(value) && value > 0) {
+                        hasExpenses = true;
+                        break;
+                    }
+                }
+                
+                if (!hasExpenses) {
+                    for (let input of sharedExpenseAmounts) {
+                        const value = parseFloat(input.value);
+                        if (!isNaN(value) && value > 0) {
+                            hasExpenses = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            if (!hasExpenses) {
+                alert('Please enter at least one expense with a positive amount');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+        
+        // Calculate the fair split
+        function calculateSplit() {
+            if (!validateInputs()) {
+                return;
+            }
+            
+            const method = document.querySelector('input[name="method"]:checked').value;
+            const person1Name = document.getElementById('person1-name').value.trim();
+            const person2Name = document.getElementById('person2-name').value.trim();
+            const person1Income = parseFloat(document.getElementById('person1-income').value) || 0;
+            const person2Income = parseFloat(document.getElementById('person2-income').value) || 0;
+            
+            let person1Total = 0;
+            let person2Total = 0;
+            let totalExpenses = 0;
+            let resultHTML = '';
+            
+            if (method === 'income') {
+                // Income-weighted calculation
+                const totalIncome = person1Income + person2Income;
+                const person1Percentage = person1Income / totalIncome;
+                const person2Percentage = person2Income / totalIncome;
+                
+                // Calculate total shared expenses
+                const expenseRows = document.querySelectorAll('#income-expenses-body tr');
+                let sharedExpenses = 0;
+                
+                expenseRows.forEach(row => {
+                    const amountInput = row.querySelector('.expense-amount-input');
+                    const amount = parseFloat(amountInput.value) || 0;
+                    sharedExpenses += amount;
+                });
+                
+                totalExpenses = sharedExpenses;
+                person1Total = sharedExpenses * person1Percentage;
+                person2Total = sharedExpenses * person2Percentage;
+                
+                resultHTML = `
+                    <p><strong>Total Shared Expenses: $${sharedExpenses.toFixed(2)}</strong></p>
+                    <div class="results-breakdown">
+                        <div class="person-result">
+                            <h3>${person1Name}'s Share</h3>
+                            <p>Amount Owed: <strong>$${person1Total.toFixed(2)}</strong></p>
+                            <p>Percentage of Total: <strong>${(person1Percentage * 100).toFixed(1)}%</strong></p>
+                        </div>
+                        <div class="person-result">
+                            <h3>${person2Name}'s Share</h3>
+                            <p>Amount Owed: <strong>$${person2Total.toFixed(2)}</strong></p>
+                            <p>Percentage of Total: <strong>${(person2Percentage * 100).toFixed(1)}%</strong></p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Fixed-cost calculation
+                let person1Fixed = 0;
+                let person2Fixed = 0;
+                let sharedExpenses = 0;
+                
+                // Calculate fixed costs
+                const fixedExpenseRows = document.querySelectorAll('#fixed-expenses-body tr');
+                fixedExpenseRows.forEach(row => {
+                    const amountInput = row.querySelector('.expense-amount-input');
+                    const assignedSelect = row.querySelector('.expense-assigned-input');
+                    const amount = parseFloat(amountInput.value) || 0;
+                    
+                    if (assignedSelect.value === 'person1') {
+                        person1Fixed += amount;
+                    } else {
+                        person2Fixed += amount;
+                    }
+                });
+                
+                // Calculate shared expenses
+                const sharedExpenseRows = document.querySelectorAll('#shared-expenses-body tr');
+                sharedExpenseRows.forEach(row => {
+                    const amountInput = row.querySelector('.expense-amount-input');
+                    const amount = parseFloat(amountInput.value) || 0;
+                    sharedExpenses += amount;
+                });
+                
+                totalExpenses = person1Fixed + person2Fixed + sharedExpenses;
+                person1Total = person1Fixed + (sharedExpenses / 2);
+                person2Total = person2Fixed + (sharedExpenses / 2);
+                
+                resultHTML = `
+                    <p><strong>Total Expenses: $${totalExpenses.toFixed(2)}</strong></p>
+                    <div class="results-breakdown">
+                        <div class="person-result">
+                            <h3>${person1Name}'s Share</h3>
+                            <p>Fixed Costs: <strong>$${person1Fixed.toFixed(2)}</strong></p>
+                            <p>Half of Shared Costs: <strong>$${(sharedExpenses / 2).toFixed(2)}</strong></p>
+                            <p>Total Amount Owed: <strong>$${person1Total.toFixed(2)}</strong></p>
+                        </div>
+                        <div class="person-result">
+                            <h3>${person2Name}'s Share</h3>
+                            <p>Fixed Costs: <strong>$${person2Fixed.toFixed(2)}</strong></p>
+                            <p>Half of Shared Costs: <strong>$${(sharedExpenses / 2).toFixed(2)}</strong></p>
+                            <p>Total Amount Owed: <strong>$${person2Total.toFixed(2)}</strong></p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Calculate who owes whom
+            const difference = person1Total - person2Total;
+            let transferMessage = '';
+            
+            if (Math.abs(difference) < 0.01) {
+                transferMessage = '<p>No money needs to be exchanged. The split is perfectly even!</p>';
+            } else if (difference > 0) {
+                transferMessage = `<p><strong>${person2Name} owes ${person1Name}: $${Math.abs(difference).toFixed(2)}</strong></p>`;
+            } else {
+                transferMessage = `<p><strong>${person1Name} owes ${person2Name}: $${Math.abs(difference).toFixed(2)}</strong></p>`;
+            }
+            
+            resultHTML += `<div class="final-transfer">${transferMessage}</div>`;
+            
+            // Display results
+            resultsContent.innerHTML = resultHTML;
+            resultsSection.style.display = 'block';
+            
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
