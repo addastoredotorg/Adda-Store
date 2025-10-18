@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palette of You | Discover Your Personality Color Palette</title>
+    <meta name="description" content="Take a fun personality quiz and unlock a unique color palette that represents you! Get inspired, share your colors, and use them for your next creative project.">
+    <meta name="keywords" content="personality quiz, color palette, color generator, aesthetic, self-expression, design inspiration, mood colors, creative tool, fun game, hex codes">
+    <meta property="og:title" content="Palette of You - Your Personal Color Palette">
+    <meta property="og:description" content="I just discovered my personal color palette! What's yours?">
+    <meta property="og:image" content="">
+    <meta property="og:url" content="">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4a4a4a;
+            --secondary-color: #6c63ff;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #28a745;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+        
+        section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: #5a52e0;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .btn-success {
+            background: var(--success-color);
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Quiz Section */
+        .progress-container {
+            width: 100%;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            height: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--secondary-color);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .question-number {
+            font-size: 1rem;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        
+        .question-text {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+        }
+        
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .answer-btn {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .answer-btn:hover {
+            border-color: var(--secondary-color);
+            background-color: #f8f9ff;
+        }
+        
+        .answer-btn.selected {
+            border-color: var(--secondary-color);
+            background-color: #f0f0ff;
+        }
+        
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* Results Section */
+        .palette-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+            justify-content: center;
+        }
+        
+        .color-swatch {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 10px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .color-swatch:hover {
+            transform: scale(1.05);
+        }
+        
+        .hex-code {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .color-swatch:hover .hex-code {
+            opacity: 1;
+        }
+        
+        .results-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .social-share {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .whatsapp { background-color: #25D366; }
+        .facebook { background-color: #3b5998; }
+        .instagram { 
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+        .twitter { background-color: #1DA1F2; }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            opacity: 1;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 0.9rem;
+            background: white;
+            margin-top: auto;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .color-swatch {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .results-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            section {
+                padding: 20px;
+            }
+            
+            .color-swatch {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .hex-code {
+                font-size: 0.8rem;
+                padding: 3px 6px;
+            }
+        }
+        
+        /* Palette Image for Sharing */
+        #palette-image {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            width: 600px;
+            height: 400px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .palette-image-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .palette-image-colors {
+            display: flex;
+            width: 100%;
+            height: 150px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .palette-image-color {
+            flex: 1;
+            height: 100%;
+        }
+        
+        .palette-image-footer {
+            font-size: 1.2rem;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <h1>What Color is Your Personality?</h1>
+            <p>Answer 5 simple questions and unlock a unique color palette that reflects your inner self. Express, inspire, and create.</p>
+            <button id="start-btn" class="btn">Start the Quiz →</button>
+        </section>
+        
+        <!-- Quiz Section -->
+        <section id="quiz" class="hidden">
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <div id="question-number" class="question-number">Question 1 of 5</div>
+            <h2 id="question-text" class="question-text"></h2>
+            <div id="answers-container" class="answers-container"></div>
+            <div class="quiz-navigation">
+                <button id="next-btn" class="btn hidden">Next Question</button>
+            </div>
+        </section>
+        
+        <!-- Results Section -->
+        <section id="results" class="hidden">
+            <h2>Your Personal Palette!</h2>
+            <p>This unique color combination reflects your personality based on your answers. Use it for inspiration in your creative projects!</p>
+            <div id="palette-container" class="palette-container"></div>
+            <div class="results-actions">
+                <button id="copy-btn" class="btn btn-success">Copy Palette</button>
+                <button id="share-btn" class="btn btn-secondary">Share My Palette</button>
+                <button id="restart-btn" class="btn">Try Again</button>
+            </div>
+            <div id="social-share" class="social-share hidden">
+                <a href="#" id="whatsapp-share" class="social-btn whatsapp" title="Share on WhatsApp">💚</a>
+                <a href="#" id="facebook-share" class="social-btn facebook" title="Share on Facebook">f</a>
+                <a href="#" id="instagram-share" class="social-btn instagram" title="Share on Instagram">📷</a>
+                <a href="#" id="twitter-share" class="social-btn twitter" title="Share on Twitter">🐦</a>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Hidden element for generating palette image -->
+    <div id="palette-image" class="hidden">
+        <div class="palette-image-title">My Personality Palette</div>
+        <div id="palette-image-colors" class="palette-image-colors"></div>
+        <div class="palette-image-footer">Generated by Palette of You</div>
+    </div>
+    
+    <!-- Notification -->
+    <div id="notification" class="notification">Palette copied to clipboard!</div>
+    
+    <footer>
+        <p>Palette of You is a creative tool for self-expression and design inspiration.</p>
+        <p>&copy; 2023 Palette of You. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Quiz questions and answer traits
+        const questions = [
+            {
+                question: "How do you recharge your energy?",
+                answers: [
+                    { text: "A quiet night in with a book or movie.", traits: { h: 240, s: -20, l: 10 } },
+                    { text: "A lively social gathering with friends.", traits: { h: 0, s: 20, l: 5 } },
+                    { text: "An adventure outdoors in nature.", traits: { h: 120, s: 0, l: 0 } }
+                ]
+            },
+            {
+                question: "What best describes your problem-solving style?",
+                answers: [
+                    { text: "Logical, step-by-step, and analytical.", traits: { h: 200, s: 10, l: -5 } },
+                    { text: "Intuitive, big-picture, and creative.", traits: { h: 300, s: 15, l: 5 } },
+                    { text: "Practical, hands-on, and immediate.", traits: { h: 40, s: 5, l: 0 } }
+                ]
+            },
+            {
+                question: "How would friends describe your personality?",
+                answers: [
+                    { text: "Calm, reliable, and thoughtful.", traits: { h: 180, s: -10, l: -5 } },
+                    { text: "Energetic, enthusiastic, and spontaneous.", traits: { h: 30, s: 25, l: 10 } },
+                    { text: "Balanced, adaptable, and easy-going.", traits: { h: 90, s: 5, l: 5 } }
+                ]
+            },
+            {
+                question: "What's your ideal weekend activity?",
+                answers: [
+                    { text: "Exploring a museum or art gallery.", traits: { h: 270, s: 15, l: 0 } },
+                    { text: "Trying a new restaurant or cooking a feast.", traits: { h: 10, s: 20, l: 5 } },
+                    { text: "Hiking, biking, or spending time in a park.", traits: { h: 140, s: 10, l: -5 } }
+                ]
+            },
+            {
+                question: "When facing a challenge, you tend to:",
+                answers: [
+                    { text: "Analyze all options carefully before deciding.", traits: { h: 220, s: -5, l: -10 } },
+                    { text: "Follow your instincts and adapt as you go.", traits: { h: 320, s: 10, l: 5 } },
+                    { text: "Seek practical solutions that have worked before.", traits: { h: 60, s: 15, l: 10 } }
+                ]
+            }
+        ];
+
+        // DOM Elements
+        const heroSection = document.getElementById('hero');
+        const quizSection = document.getElementById('quiz');
+        const resultsSection = document.getElementById('results');
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const questionNumber = document.getElementById('question-number');
+        const questionText = document.getElementById('question-text');
+        const answersContainer = document.getElementById('answers-container');
+        const progressBar = document.getElementById('progress-bar');
+        const paletteContainer = document.getElementById('palette-container');
+        const copyBtn = document.getElementById('copy-btn');
+        const shareBtn = document.getElementById('share-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const socialShare = document.getElementById('social-share');
+        const notification = document.getElementById('notification');
+        const paletteImage = document.getElementById('palette-image');
+        const paletteImageColors = document.getElementById('palette-image-colors');
+        const whatsappShare = document.getElementById('whatsapp-share');
+        const facebookShare = document.getElementById('facebook-share');
+        const instagramShare = document.getElementById('instagram-share');
+        const twitterShare = document.getElementById('twitter-share');
+
+        // Quiz State
+        let currentQuestion = 0;
+        let userAnswers = [];
+        let currentPalette = [];
+
+        // Initialize the quiz
+        function initQuiz() {
+            startBtn.addEventListener('click', startQuiz);
+            nextBtn.addEventListener('click', nextQuestion);
+            copyBtn.addEventListener('click', copyPalette);
+            shareBtn.addEventListener('click', toggleSocialShare);
+            restartBtn.addEventListener('click', resetQuiz);
+            whatsappShare.addEventListener('click', shareToWhatsApp);
+            facebookShare.addEventListener('click', shareToFacebook);
+            instagramShare.addEventListener('click', shareToInstagram);
+            twitterShare.addEventListener('click', shareToTwitter);
+        }
+
+        // Start the quiz
+        function startQuiz() {
+            heroSection.classList.add('hidden');
+            quizSection.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        // Load the current question
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            
+            // Update progress
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Update question number and text
+            questionNumber.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            questionText.textContent = question.question;
+            
+            // Clear previous answers
+            answersContainer.innerHTML = '';
+            
+            // Create answer buttons
+            question.answers.forEach((answer, index) => {
+                const answerBtn = document.createElement('button');
+                answerBtn.classList.add('answer-btn');
+                answerBtn.textContent = answer.text;
+                answerBtn.addEventListener('click', () => selectAnswer(index));
+                answersContainer.appendChild(answerBtn);
+            });
+            
+            // Hide next button initially
+            nextBtn.classList.add('hidden');
+        }
+
+        // Select an answer
+        function selectAnswer(answerIndex) {
+            // Remove selected class from all answers
+            const answerBtns = document.querySelectorAll('.answer-btn');
+            answerBtns.forEach(btn => btn.classList.remove('selected'));
+            
+            // Add selected class to clicked answer
+            answerBtns[answerIndex].classList.add('selected');
+            
+            // Store the answer
+            userAnswers[currentQuestion] = answerIndex;
+            
+            // Show next button
+            nextBtn.classList.remove('hidden');
+        }
+
+        // Move to next question or show results
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+                nextBtn.classList.add('hidden');
+            } else {
+                showResults();
+            }
+        }
+
+        // Generate color palette based on answers
+        function generatePalette() {
+            // Calculate average traits from all answers
+            let avgH = 0, avgS = 0, avgL = 0;
+            
+            userAnswers.forEach((answerIndex, questionIndex) => {
+                const traits = questions[questionIndex].answers[answerIndex].traits;
+                avgH += traits.h;
+                avgS += traits.s;
+                avgL += traits.l;
+            });
+            
+            avgH = avgH / questions.length;
+            avgS = avgS / questions.length;
+            avgL = avgL / questions.length;
+            
+            // Generate 5 colors with variations
+            const palette = [];
+            for (let i = 0; i < 5; i++) {
+                // Create variations for each color in the palette
+                const h = (avgH + (i - 2) * 30 + Math.random() * 20 - 10) % 360;
+                const s = Math.max(20, Math.min(80, 50 + avgS + Math.random() * 20 - 10));
+                const l = Math.max(20, Math.min(80, 50 + avgL + Math.random() * 20 - 10));
+                
+                palette.push(hslToHex(h, s, l));
+            }
+            
+            return palette;
+        }
+
+        // Convert HSL to Hex color
+        function hslToHex(h, s, l) {
+            h /= 360;
+            s /= 100;
+            l /= 100;
+            
+            let r, g, b;
+            
+            if (s === 0) {
+                r = g = b = l;
+            } else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1/6) return p + (q - p) * 6 * t;
+                    if (t < 1/2) return q;
+                    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                    return p;
+                };
+                
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                
+                r = hue2rgb(p, q, h + 1/3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1/3);
+            }
+            
+            const toHex = x => {
+                const hex = Math.round(x * 255).toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            };
+            
+            return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+        }
+
+        // Display results
+        function showResults() {
+            quizSection.classList.add('hidden');
+            resultsSection.classList.remove('hidden');
+            
+            currentPalette = generatePalette();
+            
+            // Clear previous palette
+            paletteContainer.innerHTML = '';
+            
+            // Create color swatches
+            currentPalette.forEach(color => {
+                const swatch = document.createElement('div');
+                swatch.classList.add('color-swatch');
+                swatch.style.backgroundColor = color;
+                
+                const hexCode = document.createElement('div');
+                hexCode.classList.add('hex-code');
+                hexCode.textContent = color;
+                
+                swatch.appendChild(hexCode);
+                paletteContainer.appendChild(swatch);
+            });
+            
+            // Hide social share buttons initially
+            socialShare.classList.add('hidden');
+        }
+
+        // Copy palette to clipboard
+        function copyPalette() {
+            const paletteText = currentPalette.join(', ');
+            
+            navigator.clipboard.writeText(paletteText)
+                .then(() => {
+                    showNotification('Palette copied to clipboard!');
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                    showNotification('Failed to copy palette. Please try again.');
+                });
+        }
+
+        // Toggle social share buttons
+        function toggleSocialShare() {
+            if (socialShare.classList.contains('hidden')) {
+                socialShare.classList.remove('hidden');
+                shareBtn.textContent = 'Hide Share Options';
+            } else {
+                socialShare.classList.add('hidden');
+                shareBtn.textContent = 'Share My Palette';
+            }
+        }
+
+        // Create and share palette image
+        function createPaletteImage() {
+            // Clear previous image colors
+            paletteImageColors.innerHTML = '';
+            
+            // Add colors to the image
+            currentPalette.forEach(color => {
+                const colorDiv = document.createElement('div');
+                colorDiv.classList.add('palette-image-color');
+                colorDiv.style.backgroundColor = color;
+                paletteImageColors.appendChild(colorDiv);
+            });
+            
+            // Generate the image
+            return new Promise((resolve) => {
+                html2canvas(paletteImage).then(canvas => {
+                    canvas.toBlob(blob => {
+                        resolve(blob);
+                    }, 'image/jpeg', 0.9);
+                });
+            });
+        }
+
+        // Share to WhatsApp
+        async function shareToWhatsApp(e) {
+            e.preventDefault();
+            const imageBlob = await createPaletteImage();
+            const file = new File([imageBlob], 'my-palette.jpg', { type: 'image/jpeg' });
+            
+            if (navigator.share && navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    files: [file],
+                    title: 'My Personality Color Palette',
+                    text: 'Check out my personality color palette generated by Palette of You!'
+                }).catch(err => console.error('Error sharing:', err));
+            } else {
+                // Fallback: open WhatsApp with text
+                const text = 'Check out my personality color palette! ' + window.location.href;
+                window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+            }
+        }
+
+        // Share to Facebook
+        async function shareToFacebook(e) {
+            e.preventDefault();
+            const imageBlob = await createPaletteImage();
+            const file = new File([imageBlob], 'my-palette.jpg', { type: 'image/jpeg' });
+            
+            if (navigator.share && navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    files: [file],
+                    title: 'My Personality Color Palette',
+                    text: 'Check out my personality color palette generated by Palette of You!'
+                }).catch(err => console.error('Error sharing:', err));
+            } else {
+                // Fallback: open Facebook share dialog
+                const url = encodeURIComponent(window.location.href);
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+            }
+        }
+
+        // Share to Instagram
+        async function shareToInstagram(e) {
+            e.preventDefault();
+            const imageBlob = await createPaletteImage();
+            
+            // Create a download link for the image
+            const url = URL.createObjectURL(imageBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'my-personality-palette.jpg';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('Palette image downloaded. You can now share it on Instagram!');
+        }
+
+        // Share to Twitter
+        async function shareToTwitter(e) {
+            e.preventDefault();
+            const text = 'Check out my personality color palette generated by Palette of You! ' + window.location.href;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        // Show notification
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Reset quiz
+        function resetQuiz() {
+            currentQuestion = 0;
+            userAnswers = [];
+            resultsSection.classList.add('hidden');
+            heroSection.classList.remove('hidden');
+            socialShare.classList.add('hidden');
+            shareBtn.textContent = 'Share My Palette';
+        }
+
+        // Initialize the quiz when page loads
+        document.addEventListener('DOMContentLoaded', initQuiz);
+    </script>
+</body>
+</html>
