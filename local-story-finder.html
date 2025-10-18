@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Story Finder | Uncover Hidden History Nearby</title>
+    <meta name="description" content="Discover the secret stories of your city. Enter your location and uncover short, fascinating tales of local history, culture, and lore. Be a part of your community's living story.">
+    <meta name="keywords" content="local history, community stories, hidden history, cultural stories, city lore, explore my city, storytelling, historical anecdotes, crowdsourced history">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Local Story Finder | Uncover Hidden History Nearby">
+    <meta property="og:description" content="Discover the secret stories of your city. Enter your location and uncover short, fascinating tales of local history, culture, and lore.">
+    <meta property="og:type" content="website">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Local Story Finder",
+      "description": "A tool to discover hidden local history and cultural stories based on location",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #fef9ec;
+            --accent: #e67e22;
+            --text: #333;
+            --light-text: #777;
+            --card-bg: #fff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --success: #27ae60;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--secondary);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        
+        header p {
+            font-style: italic;
+            opacity: 0.9;
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: #34495e;
+            padding: 1rem 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .nav-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-btn:hover, .nav-btn.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232c3e50"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23344a5f" stroke-width="2"/></svg>');
+            background-size: cover;
+            color: white;
+        }
+        
+        .hero h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* Input Section */
+        .input-section {
+            background-color: white;
+            padding: 3rem 0;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .input-container {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .location-input {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .location-input:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        
+        .find-stories-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        
+        .find-stories-btn:hover {
+            background-color: #d35400;
+        }
+        
+        .find-stories-btn.loading {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        /* Stories Section */
+        .stories-section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        
+        .stories-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .story-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--shadow);
+        }
+        
+        .story-header {
+            padding: 1.5rem 1.5rem 0;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .category-community {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .category-mystery {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .category-innovation {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .category-conflict {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .category-user {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        .story-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .story-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text);
+        }
+        
+        .story-footer {
+            padding: 1rem 1.5rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+        
+        .user-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--success);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        .no-stories {
+            text-align: center;
+            padding: 3rem;
+            color: var(--light-text);
+            font-style: italic;
+            grid-column: 1 / -1;
+        }
+        
+        /* Contribute Section */
+        .contribute-section {
+            background-color: var(--primary);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .contribute-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        
+        .contribute-section p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .share-story-btn {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .share-story-btn:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        /* Add Story Form */
+        .add-story-section {
+            padding: 4rem 0;
+            background-color: white;
+            display: none;
+        }
+        
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+            width: 100%;
+        }
+        
+        .submit-btn:hover {
+            background-color: #d35400;
+        }
+        
+        .success-message {
+            background-color: var(--success);
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a252f;
+            color: #95a5a6;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        footer a {
+            color: #ecf0f1;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .stories-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>Local Story Finder</h1>
+            <p>Every corner has a story. What's yours?</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <button class="nav-btn active" id="discover-btn">Discover Stories</button>
+            <button class="nav-btn" id="add-story-btn">Add Your Story</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Step into the Stories Beneath Your Feet</h2>
+            <p>This isn't a history book. It's a collection of forgotten whispers, strange coincidences, and the magic that makes your local area unique. Find a story, then go see the place for yourself.</p>
+        </div>
+    </section>
+
+    <!-- Input Section -->
+    <section class="input-section" id="discover-section">
+        <div class="container">
+            <div class="input-container">
+                <input type="text" class="location-input" placeholder="e.g., 'Central Park, NYC' or 'SW1A 1AA' or 'Your current location'">
+                <button class="find-stories-btn">Find Stories Nearby</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stories Display Section -->
+    <section class="stories-section" id="stories-section">
+        <div class="container">
+            <h2 class="section-title" id="stories-title">Your local stories are waiting</h2>
+            <div class="stories-container" id="stories-container">
+                <div class="no-stories">
+                    Enter a location above to begin the adventure.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Story Section -->
+    <section class="add-story-section" id="add-story-section">
+        <div class="container">
+            <h2 class="section-title">Share Your Local Story</h2>
+            <div class="form-container">
+                <form id="story-form">
+                    <div class="form-group">
+                        <label for="story-title">Story Title</label>
+                        <input type="text" id="story-title" class="form-control" placeholder="Give your story a compelling title" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="story-location">Location</label>
+                        <input type="text" id="story-location" class="form-control" placeholder="Where did this story happen?" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="story-category">Category</label>
+                        <select id="story-category" class="form-control" required>
+                            <option value="">Select a category</option>
+                            <option value="Community">Community</option>
+                            <option value="Mystery">Mystery</option>
+                            <option value="Innovation">Innovation</option>
+                            <option value="Conflict">Conflict</option>
+                            <option value="Personal">Personal Experience</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="story-content">Your Story</label>
+                        <textarea id="story-content" class="form-control" placeholder="Tell us your story... (150-500 words)" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="author-name">Your Name (optional)</label>
+                        <input type="text" id="author-name" class="form-control" placeholder="How would you like to be credited?">
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Share Your Story</button>
+                </form>
+                
+                <div class="success-message" id="success-message">
+                    Thank you for sharing your story! It's now part of our community collection.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contribute Section -->
+    <section class="contribute-section">
+        <div class="container">
+            <h3>Help Build Our Community Story Collection</h3>
+            <p>Every story shared adds another layer to our understanding of this place. Your memories and experiences matter.</p>
+            <button class="share-story-btn" id="contribute-btn">Share Your Story</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Local Story Finder. All rights reserved. | <a href="#">About</a> | <a href="#">How It Works</a> | <a href="#">Community Guidelines</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample stories data
+        const sampleStories = [
+            {
+                title: "The Whispering Elm of Oak Avenue",
+                content: "Until the 1950s, a massive Elm stood here where town criers weren't allowed to shout. Locals would instead leave notes pinned to its trunk, creating the city's first informal bulletin board. A secret network of information, lost to Dutch Elm disease.",
+                location: "Corner of Oak Ave & 4th St",
+                distance: "150 m",
+                category: "Community"
+            },
+            {
+                title: "The Rooftop Aviary Heist",
+                content: "In 1972, a famous jewel thief hid his loot in the rooftop aviary of this building, intending to retrieve it later. He was caught, but the birds, fascinated by the shiny gems, had incorporated them into their nests. The jewels were only recovered months later during a routine cleaning.",
+                location: "Top of the Grandview Apartments",
+                distance: "450 m",
+                category: "Mystery"
+            },
+            {
+                title: "Where the First Film Flickered",
+                content: "Long before the multiplex, a traveling inventor set up a makeshift 'kinetoscope' parlor in this very spot in 1897. For one week only, people paid a penny to peer into a box and see a 30-second film of a man sneezing—the first moving images many here had ever witnessed.",
+                location: "12b Market Square",
+                distance: "320 m",
+                category: "Innovation"
+            },
+            {
+                title: "The Treaty Under the Tea Room",
+                content: "The basement of what is now 'Anna's Tea Room' was once a neutral ground for two rival shipping magnates. In 1911, they met in secret over strong coffee and signed a merger agreement that reshaped the city's port industry, all while their bodyguards waited nervously upstairs.",
+                location: "Anna's Tea Room Basement",
+                distance: "600 m",
+                category: "Conflict"
+            }
+        ];
+
+        // User stories storage (in a real app, this would be a database)
+        let userStories = JSON.parse(localStorage.getItem('userStories')) || [];
+
+        // DOM Elements
+        const locationInput = document.querySelector('.location-input');
+        const findStoriesBtn = document.querySelector('.find-stories-btn');
+        const storiesContainer = document.getElementById('stories-container');
+        const storiesTitle = document.getElementById('stories-title');
+        const discoverBtn = document.getElementById('discover-btn');
+        const addStoryBtn = document.getElementById('add-story-btn');
+        const discoverSection = document.getElementById('discover-section');
+        const storiesSection = document.getElementById('stories-section');
+        const addStorySection = document.getElementById('add-story-section');
+        const storyForm = document.getElementById('story-form');
+        const successMessage = document.getElementById('success-message');
+        const contributeBtn = document.getElementById('contribute-btn');
+
+        // Event Listeners
+        findStoriesBtn.addEventListener('click', findStories);
+        discoverBtn.addEventListener('click', showDiscoverSection);
+        addStoryBtn.addEventListener('click', showAddStorySection);
+        storyForm.addEventListener('submit', addUserStory);
+        contributeBtn.addEventListener('click', showAddStorySection);
+
+        // Show Discover Section
+        function showDiscoverSection() {
+            discoverSection.style.display = 'block';
+            storiesSection.style.display = 'block';
+            addStorySection.style.display = 'none';
+            discoverBtn.classList.add('active');
+            addStoryBtn.classList.remove('active');
+        }
+
+        // Show Add Story Section
+        function showAddStorySection() {
+            discoverSection.style.display = 'none';
+            storiesSection.style.display = 'none';
+            addStorySection.style.display = 'block';
+            discoverBtn.classList.remove('active');
+            addStoryBtn.classList.add('active');
+        }
+
+        // Find Stories Function
+        function findStories() {
+            const location = locationInput.value.trim();
+            
+            if (!location) {
+                alert('Please enter a location to find stories.');
+                return;
+            }
+            
+            // Show loading state
+            findStoriesBtn.textContent = 'Discovering...';
+            findStoriesBtn.classList.add('loading');
+            findStoriesBtn.disabled = true;
+            
+            // Simulate API call with setTimeout
+            setTimeout(() => {
+                // Clear previous results
+                storiesContainer.innerHTML = '';
+                
+                // Update title
+                storiesTitle.textContent = `Stories Found Near "${location}"`;
+                
+                // Combine sample stories and user stories
+                const allStories = [...sampleStories, ...userStories];
+                
+                // Randomly select 3-5 stories
+                const numStories = Math.floor(Math.random() * 3) + 3; // 3-5 stories
+                const selectedStories = [];
+                
+                // Create a copy of the stories to avoid modifying the original
+                const availableStories = [...allStories];
+                
+                for (let i = 0; i < numStories && availableStories.length > 0; i++) {
+                    const randomIndex = Math.floor(Math.random() * availableStories.length);
+                    selectedStories.push(availableStories[randomIndex]);
+                    availableStories.splice(randomIndex, 1);
+                }
+                
+                // Sort by distance (convert to numbers for sorting)
+                selectedStories.sort((a, b) => {
+                    const aDist = parseInt(a.distance);
+                    const bDist = parseInt(b.distance);
+                    return aDist - bDist;
+                });
+                
+                // Display the stories
+                if (selectedStories.length === 0) {
+                    storiesContainer.innerHTML = '<div class="no-stories">No stories found for this location. Try another search or be the first to add a story!</div>';
+                } else {
+                    selectedStories.forEach(story => {
+                        const storyCard = createStoryCard(story);
+                        storiesContainer.appendChild(storyCard);
+                    });
+                }
+                
+                // Reset button state
+                findStoriesBtn.textContent = 'Find Stories Nearby';
+                findStoriesBtn.classList.remove('loading');
+                findStoriesBtn.disabled = false;
+            }, 800); // 800ms delay to simulate API call
+        }
+
+        // Create Story Card Function
+        function createStoryCard(story) {
+            const card = document.createElement('div');
+            card.className = 'story-card';
+            
+            // Determine category class
+            let categoryClass = 'category-community';
+            if (story.category === 'Mystery') categoryClass = 'category-mystery';
+            else if (story.category === 'Innovation') categoryClass = 'category-innovation';
+            else if (story.category === 'Conflict') categoryClass = 'category-conflict';
+            else if (story.category === 'Personal') categoryClass = 'category-user';
+            
+            // Check if it's a user story
+            const isUserStory = userStories.some(userStory => userStory.title === story.title);
+            
+            card.innerHTML = `
+                ${isUserStory ? '<div class="user-indicator">User Story</div>' : ''}
+                <div class="story-header">
+                    <span class="category-badge ${categoryClass}">${story.category}</span>
+                    <h3 class="story-title">${story.title}</h3>
+                </div>
+                <div class="story-content">
+                    <p>${story.content}</p>
+                </div>
+                <div class="story-footer">
+                    <span>${story.location}</span>
+                    <span>${story.distance} away</span>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Add User Story Function
+        function addUserStory(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('story-title').value;
+            const location = document.getElementById('story-location').value;
+            const category = document.getElementById('story-category').value;
+            const content = document.getElementById('story-content').value;
+            const author = document.getElementById('author-name').value || 'Anonymous';
+            
+            // Create new story object
+            const newStory = {
+                title: title,
+                location: location,
+                category: category,
+                content: content,
+                author: author,
+                distance: `${Math.floor(Math.random() * 900) + 100} m`, // Random distance for demo
+                isUserStory: true
+            };
+            
+            // Add to user stories array
+            userStories.push(newStory);
+            
+            // Save to localStorage
+            localStorage.setItem('userStories', JSON.stringify(userStories));
+            
+            // Show success message
+            successMessage.style.display = 'block';
+            
+            // Reset form
+            storyForm.reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
