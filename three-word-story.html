@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three Word Story Game - Collaborative Creative Storytelling | AddaStore.fun</title>
+    <meta name="description" content="Play Three Word Story - a collaborative storytelling game where 2-4 players build hilarious stories together by adding only three words at a time. Boost creativity and have fun with friends!">
+    <meta name="keywords" content="three word story game, collaborative storytelling, creative writing game, multiplayer word game, online story building, creative constraints game, fun with friends">
+    <meta name="author" content="AddaStore.fun">
+    
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:title" content="Three Word Story - Collaborative Creative Storytelling Game">
+    <meta property="og:description" content="Build hilarious stories with friends by adding only three words at a time. Play now for free!">
+    <meta property="og:image" content="https://addastore.fun/images/three-word-story-preview.jpg">
+    <meta property="og:url" content="https://addastore.fun/three-word-story">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Three Word Story - Collaborative Creative Storytelling Game">
+    <meta name="twitter:description" content="Build hilarious stories with friends by adding only three words at a time. Play now for free!">
+    <meta name="twitter:image" content="https://addastore.fun/images/three-word-story-preview.jpg">
+    
+    <style>
+        :root {
+            --primary: #4A6FA5;
+            --secondary: #6B8CBC;
+            --accent: #FF9F1C;
+            --light: #F8F9FA;
+            --dark: #2B2D42;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #F44336;
+            --whatsapp: #25D366;
+            --facebook: #3b5998;
+            --instagram: #E1306C;
+            --twitter: #1DA1F2;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background-color: var(--dark);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav li {
+            margin: 0 1rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: var(--accent);
+        }
+        
+        .game-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .game-area {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .info-area {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        
+        .story-display {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+            min-height: 200px;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .input-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+        
+        input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--secondary);
+        }
+        
+        button.accent {
+            background-color: var(--accent);
+        }
+        
+        button.accent:hover {
+            background-color: #e68a00;
+        }
+        
+        .players {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .player {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 10px 15px;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            transition: all 0.3s;
+        }
+        
+        .player.active {
+            border-color: var(--accent);
+            background-color: #fff9e6;
+        }
+        
+        .player-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .player-turn {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .rules-list {
+            list-style-type: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .rules-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f1f1;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .rules-list li:before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .benefit-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .benefit-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .seo-content {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .seo-content h2 {
+            color: var(--dark);
+        }
+        
+        .seo-content p {
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        
+        @media (max-width: 768px) {
+            .game-container {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .players {
+                flex-direction: column;
+            }
+            
+            .input-area {
+                flex-direction: column;
+            }
+        }
+        
+        .word-count {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        
+        .word-count.warning {
+            color: var(--warning);
+        }
+        
+        .word-count.error {
+            color: var(--danger);
+        }
+        
+        .game-status {
+            background: #e7f3ff;
+            border-left: 4px solid var(--primary);
+            padding: 12px 15px;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+        }
+        
+        /* Social Sharing Styles */
+        .social-sharing {
+            margin: 2rem 0;
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        
+        .whatsapp-btn {
+            background-color: var(--whatsapp);
+        }
+        
+        .facebook-btn {
+            background-color: var(--facebook);
+        }
+        
+        .instagram-btn {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+        
+        .twitter-btn {
+            background-color: var(--twitter);
+        }
+        
+        .link-btn {
+            background-color: var(--primary);
+        }
+        
+        .share-icon {
+            font-size: 1.2rem;
+        }
+        
+        .invite-section {
+            background: #f0f7ff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid #c2e0ff;
+        }
+        
+        .invite-link {
+            display: flex;
+            margin-top: 1rem;
+        }
+        
+        .invite-link input {
+            flex: 1;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        
+        .copy-btn {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            background-color: var(--secondary);
+        }
+        
+        .online-players {
+            display: flex;
+            gap: 15px;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .online-player {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .player-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .player-status {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .player-status.online {
+            color: var(--success);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .modal h3 {
+            margin-top: 0;
+        }
+        
+        .close-modal {
+            float: right;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6c757d;
+        }
+        
+        .social-connect {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-connect-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform 0.2s;
+        }
+        
+        .social-connect-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Three Word Story</h1>
+            <p>A collaborative storytelling game where creativity meets constraint</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="#play" class="active">Play Game</a></li>
+                <li><a href="#how-to-play">How to Play</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="game-container">
+            <div class="game-area">
+                <h2>Create Your Story</h2>
+                
+                <div class="game-status">
+                    <strong>Current Turn:</strong> <span id="currentPlayer">Player 1</span>
+                </div>
+                
+                <div class="story-display" id="storyDisplay">
+                    Once upon a time...
+                </div>
+                
+                <div class="input-area">
+                    <input type="text" id="wordInput" placeholder="Add exactly three words..." maxlength="50">
+                    <button id="addWordsBtn">Add Words</button>
+                </div>
+                
+                <div class="word-count" id="wordCount">Words added: 0/3</div>
+                
+                <div class="players">
+                    <div class="player active" id="player1">
+                        <div class="player-name">Player 1</div>
+                        <div class="player-turn">Your turn!</div>
+                    </div>
+                    <div class="player" id="player2">
+                        <div class="player-name">Player 2</div>
+                        <div class="player-turn">Waiting...</div>
+                    </div>
+                    <div class="player" id="player3">
+                        <div class="player-name">Player 3</div>
+                        <div class="player-turn">Waiting...</div>
+                    </div>
+                    <div class="player" id="player4">
+                        <div class="player-name">Player 4</div>
+                        <div class="player-turn">Waiting...</div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 1.5rem;">
+                    <button class="accent" id="newGameBtn">New Story</button>
+                    <button id="shareBtn">Share Story</button>
+                    <button id="inviteBtn">Invite Players</button>
+                </div>
+                
+                <!-- Social Sharing Section -->
+                <div class="social-sharing">
+                    <h3>Share Your Story</h3>
+                    <div class="share-buttons">
+                        <a href="#" class="share-btn whatsapp-btn" id="whatsappShare">
+                            <span class="share-icon">📱</span> WhatsApp
+                        </a>
+                        <a href="#" class="share-btn facebook-btn" id="facebookShare">
+                            <span class="share-icon">📘</span> Facebook
+                        </a>
+                        <a href="#" class="share-btn instagram-btn" id="instagramShare">
+                            <span class="share-icon">📷</span> Instagram
+                        </a>
+                        <a href="#" class="share-btn twitter-btn" id="twitterShare">
+                            <span class="share-icon">🐦</span> Twitter
+                        </a>
+                        <a href="#" class="share-btn link-btn" id="copyLink">
+                            <span class="share-icon">🔗</span> Copy Link
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Online Players Section -->
+                <div class="invite-section">
+                    <h3>Invite Friends to Play Online</h3>
+                    <p>Share the link below to invite friends to join your game:</p>
+                    
+                    <div class="invite-link">
+                        <input type="text" id="inviteLink" value="https://addastore.fun/three-word-story?game=abc123" readonly>
+                        <button class="copy-btn" id="copyInviteLink">Copy</button>
+                    </div>
+                    
+                    <h4 style="margin-top: 1.5rem;">Online Players</h4>
+                    <div class="online-players">
+                        <div class="online-player">
+                            <div class="player-avatar">P1</div>
+                            <div>
+                                <div class="player-name">Player 1 (You)</div>
+                                <div class="player-status online">Online</div>
+                            </div>
+                        </div>
+                        <div class="online-player">
+                            <div class="player-avatar">P2</div>
+                            <div>
+                                <div class="player-name">Waiting for player...</div>
+                                <div class="player-status">Offline</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-connect">
+                        <a href="#" class="social-connect-btn whatsapp-btn" id="whatsappInvite">
+                            <span class="share-icon">📱</span> Invite via WhatsApp
+                        </a>
+                        <a href="#" class="social-connect-btn facebook-btn" id="facebookInvite">
+                            <span class="share-icon">📘</span> Invite via Facebook
+                        </a>
+                        <a href="#" class="social-connect-btn instagram-btn" id="instagramInvite">
+                            <span class="share-icon">📷</span> Invite via Instagram
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-area">
+                <h2>How to Play</h2>
+                
+                <h3>Game Rules</h3>
+                <ul class="rules-list">
+                    <li><strong>2-4 players</strong> take turns building a story together</li>
+                    <li>Each player can add <strong>exactly three words</strong> on their turn</li>
+                    <li>You cannot add punctuation or change previous words</li>
+                    <li>The story continues until players decide it's complete</li>
+                    <li>Be creative and build on what others have written!</li>
+                </ul>
+                
+                <h3>Example Turn</h3>
+                <div class="story-display" style="font-style: italic; min-height: auto;">
+                    <p>Previous: "The brave knight rode his"</p>
+                    <p>Your turn: "trusty old horse"</p>
+                    <p>New story: "The brave knight rode his trusty old horse"</p>
+                </div>
+                
+                <h3>Benefits of Playing</h3>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">💡</div>
+                        <h4>Boosts Creativity</h4>
+                        <p>Constraints force innovative thinking</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">👥</div>
+                        <h4>Collaborative Fun</h4>
+                        <p>Build something amazing together</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">⚡</div>
+                        <h4>Quick Thinking</h4>
+                        <p>Develop rapid decision-making skills</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon">😄</div>
+                        <h4>Hilarious Results</h4>
+                        <p>Unexpected twists create laughter</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="seo-content">
+            <h2>Three Word Story - Collaborative Creative Storytelling Game</h2>
+            
+            <p><strong>Three Word Story</strong> is an innovative, web-based collaborative storytelling game where 2-4 players build a narrative together under a creative constraint: each participant can only add exactly three words at a time. This unique limitation transforms ordinary storytelling into an exciting challenge that sparks creativity, quick thinking, and hilarious results.</p>
+            
+            <h3>Connect with Friends Online</h3>
+            <p>With our integrated social sharing features, you can easily invite friends to play Three Word Story together online. Share your game link via WhatsApp, Facebook, Instagram, or other platforms and enjoy collaborative storytelling no matter where your friends are located. The game works seamlessly across all devices, making it perfect for virtual game nights, online classrooms, or remote team-building activities.</p>
+            
+            <h3>Why Three Word Story Stands Out</h3>
+            <p>Unlike traditional storytelling games, Three Word Story's extreme constraint forces players to think creatively within tight boundaries. The result is often surprising, humorous, and wonderfully unpredictable narratives that emerge from the collective imagination of all participants. The game beautifully demonstrates how limitations can actually enhance creativity rather than hinder it.</p>
+            
+            <h3>Perfect for Various Settings</h3>
+            <p>Three Word Story is ideal for icebreakers, team-building exercises, creative writing warm-ups, family game nights, or simply having fun with friends online. The game requires no special equipment or preparation - just a group of players ready to unleash their imagination.</p>
+            
+            <h3>Educational and Developmental Benefits</h3>
+            <p>Beyond entertainment, Three Word Story offers numerous cognitive benefits. Players practice concise communication, creative problem-solving, active listening, and collaborative thinking. The game helps develop vocabulary, narrative skills, and the ability to build on others' ideas - valuable skills in both personal and professional contexts.</p>
+        </div>
+    </div>
+    
+    <!-- Invite Modal -->
+    <div class="modal" id="inviteModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <h3>Invite Friends to Play</h3>
+            <p>Share this link with your friends to play together:</p>
+            <div class="invite-link">
+                <input type="text" id="modalInviteLink" value="https://addastore.fun/three-word-story?game=abc123" readonly>
+                <button class="copy-btn" id="copyModalLink">Copy</button>
+            </div>
+            
+            <h4 style="margin-top: 1.5rem;">Share via:</h4>
+            <div class="share-buttons">
+                <a href="#" class="share-btn whatsapp-btn" id="modalWhatsapp">
+                    <span class="share-icon">📱</span> WhatsApp
+                </a>
+                <a href="#" class="share-btn facebook-btn" id="modalFacebook">
+                    <span class="share-icon">📘</span> Facebook
+                </a>
+                <a href="#" class="share-btn instagram-btn" id="modalInstagram">
+                    <span class="share-icon">📷</span> Instagram
+                </a>
+                <a href="#" class="share-btn twitter-btn" id="modalTwitter">
+                    <span class="share-icon">🐦</span> Twitter
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 AddaStore.fun - Creative Tools & Games for Mindful Fun</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+                <a href="#">More Games</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Game state
+            let story = "Once upon a time...";
+            let currentPlayer = 1;
+            let totalWordsAdded = 0;
+            const gameId = generateGameId();
+            const baseUrl = "https://addastore.fun/three-word-story";
+            const gameUrl = `${baseUrl}?game=${gameId}`;
+            
+            // DOM elements
+            const storyDisplay = document.getElementById('storyDisplay');
+            const wordInput = document.getElementById('wordInput');
+            const addWordsBtn = document.getElementById('addWordsBtn');
+            const newGameBtn = document.getElementById('newGameBtn');
+            const shareBtn = document.getElementById('shareBtn');
+            const inviteBtn = document.getElementById('inviteBtn');
+            const wordCount = document.getElementById('wordCount');
+            const currentPlayerElement = document.getElementById('currentPlayer');
+            const playerElements = [
+                document.getElementById('player1'),
+                document.getElementById('player2'),
+                document.getElementById('player3'),
+                document.getElementById('player4')
+            ];
+            
+            // Social sharing elements
+            const whatsappShare = document.getElementById('whatsappShare');
+            const facebookShare = document.getElementById('facebookShare');
+            const instagramShare = document.getElementById('instagramShare');
+            const twitterShare = document.getElementById('twitterShare');
+            const copyLink = document.getElementById('copyLink');
+            
+            // Invite elements
+            const inviteLink = document.getElementById('inviteLink');
+            const copyInviteLink = document.getElementById('copyInviteLink');
+            const whatsappInvite = document.getElementById('whatsappInvite');
+            const facebookInvite = document.getElementById('facebookInvite');
+            const instagramInvite = document.getElementById('instagramInvite');
+            
+            // Modal elements
+            const inviteModal = document.getElementById('inviteModal');
+            const closeModal = document.getElementById('closeModal');
+            const modalInviteLink = document.getElementById('modalInviteLink');
+            const copyModalLink = document.getElementById('copyModalLink');
+            const modalWhatsapp = document.getElementById('modalWhatsapp');
+            const modalFacebook = document.getElementById('modalFacebook');
+            const modalInstagram = document.getElementById('modalInstagram');
+            const modalTwitter = document.getElementById('modalTwitter');
+            
+            // Initialize game
+            updateStoryDisplay();
+            updatePlayerTurn();
+            inviteLink.value = gameUrl;
+            modalInviteLink.value = gameUrl;
+            
+            // Set up social sharing URLs
+            setupSocialSharing();
+            
+            // Event listeners
+            addWordsBtn.addEventListener('click', addWordsToStory);
+            newGameBtn.addEventListener('click', startNewGame);
+            shareBtn.addEventListener('click', shareStory);
+            inviteBtn.addEventListener('click', showInviteModal);
+            
+            wordInput.addEventListener('input', function() {
+                const words = wordInput.value.trim().split(/\s+/);
+                const wordCountValue = words.filter(word => word.length > 0).length;
+                
+                wordCount.textContent = `Words added: ${wordCountValue}/3`;
+                
+                if (wordCountValue === 3) {
+                    wordCount.classList.remove('warning', 'error');
+                } else if (wordCountValue > 3) {
+                    wordCount.classList.add('error');
+                } else {
+                    wordCount.classList.add('warning');
+                }
+            });
+            
+            wordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addWordsToStory();
+                }
+            });
+            
+            // Social sharing event listeners
+            copyLink.addEventListener('click', copyStoryLink);
+            copyInviteLink.addEventListener('click', copyGameLink);
+            copyModalLink.addEventListener('click', copyModalGameLink);
+            
+            // Modal event listeners
+            closeModal.addEventListener('click', hideInviteModal);
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === inviteModal) {
+                    hideInviteModal();
+                }
+            });
+            
+            // Game functions
+            function addWordsToStory() {
+                const inputText = wordInput.value.trim();
+                const words = inputText.split(/\s+/).filter(word => word.length > 0);
+                
+                if (words.length !== 3) {
+                    alert('Please enter exactly three words!');
+                    return;
+                }
+                
+                const newWords = words.join(' ');
+                
+                // Add to story
+                if (story.endsWith('...')) {
+                    story = story.slice(0, -3) + newWords;
+                } else {
+                    story += ' ' + newWords;
+                }
+                
+                totalWordsAdded += 3;
+                updateStoryDisplay();
+                
+                // Clear input and update turn
+                wordInput.value = '';
+                wordCount.textContent = 'Words added: 0/3';
+                wordCount.classList.remove('warning', 'error');
+                
+                // Move to next player
+                currentPlayer = currentPlayer % 4 + 1;
+                updatePlayerTurn();
+                
+                // Update social sharing URLs
+                setupSocialSharing();
+            }
+            
+            function startNewGame() {
+                if (confirm('Start a new story? The current story will be lost.')) {
+                    story = "Once upon a time...";
+                    currentPlayer = 1;
+                    totalWordsAdded = 0;
+                    updateStoryDisplay();
+                    updatePlayerTurn();
+                    setupSocialSharing();
+                }
+            }
+            
+            function shareStory() {
+                const storyText = `Check out this story we created with Three Word Story:\n\n"${story}"\n\nPlay at: ${gameUrl}`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Three Word Story',
+                        text: storyText
+                    });
+                } else {
+                    // Fallback for browsers that don't support Web Share API
+                    navigator.clipboard.writeText(storyText).then(() => {
+                        alert('Story copied to clipboard!');
+                    });
+                }
+            }
+            
+            function updateStoryDisplay() {
+                storyDisplay.textContent = story;
+            }
+            
+            function updatePlayerTurn() {
+                currentPlayerElement.textContent = `Player ${currentPlayer}`;
+                
+                playerElements.forEach((playerEl, index) => {
+                    const playerNumber = index + 1;
+                    
+                    if (playerNumber === currentPlayer) {
+                        playerEl.classList.add('active');
+                        playerEl.querySelector('.player-turn').textContent = 'Your turn!';
+                    } else {
+                        playerEl.classList.remove('active');
+                        playerEl.querySelector('.player-turn').textContent = 'Waiting...';
+                    }
+                });
+            }
+            
+            function generateGameId() {
+                return Math.random().toString(36).substring(2, 8).toUpperCase();
+            }
+            
+            function setupSocialSharing() {
+                const storyText = `Check out this story we created with Three Word Story:\n\n"${story}"\n\nPlay at: ${gameUrl}`;
+                const encodedStory = encodeURIComponent(storyText);
+                const encodedUrl = encodeURIComponent(gameUrl);
+                
+                // Story sharing URLs
+                whatsappShare.href = `https://wa.me/?text=${encodedStory}`;
+                facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedStory}`;
+                instagramShare.href = `https://www.instagram.com/?url=${encodedUrl}`;
+                twitterShare.href = `https://twitter.com/intent/tweet?text=${encodedStory}`;
+                
+                // Game invitation URLs
+                const inviteText = `Join me for a game of Three Word Story! ${gameUrl}`;
+                const encodedInvite = encodeURIComponent(inviteText);
+                
+                whatsappInvite.href = `https://wa.me/?text=${encodedInvite}`;
+                facebookInvite.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+                instagramInvite.href = `https://www.instagram.com/?url=${encodedUrl}`;
+                
+                // Modal invitation URLs
+                modalWhatsapp.href = `https://wa.me/?text=${encodedInvite}`;
+                modalFacebook.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+                modalInstagram.href = `https://www.instagram.com/?url=${encodedUrl}`;
+                modalTwitter.href = `https://twitter.com/intent/tweet?text=${encodedInvite}`;
+            }
+            
+            function copyStoryLink() {
+                const storyText = `Check out this story we created with Three Word Story:\n\n"${story}"\n\nPlay at: ${gameUrl}`;
+                navigator.clipboard.writeText(storyText).then(() => {
+                    alert('Story link copied to clipboard!');
+                });
+            }
+            
+            function copyGameLink() {
+                navigator.clipboard.writeText(gameUrl).then(() => {
+                    alert('Game link copied to clipboard!');
+                });
+            }
+            
+            function copyModalGameLink() {
+                navigator.clipboard.writeText(modalInviteLink.value).then(() => {
+                    alert('Game link copied to clipboard!');
+                });
+            }
+            
+            function showInviteModal() {
+                inviteModal.style.display = 'flex';
+            }
+            
+            function hideInviteModal() {
+                inviteModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
