@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Feedback — AddaStore.fun</title>
+  <meta name="description" content="Share your thoughts, ideas, or suggestions to make AddaStore.fun even better. We value your feedback!" />
+  <link rel="canonical" href="https://www.addastore.fun/feedback" />
+  <meta name="robots" content="index, follow" />
+
+  <style>
+    :root {
+      --bg:#ffffff; --text:#111827; --muted:#6b7280; --accent:#7c3aed;
+      --container-max:900px;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+    }
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--text); line-height:1.6;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      padding:36px 18px;
+    }
+    .wrap{max-width:var(--container-max); margin:0 auto; padding:24px; border-radius:12px;}
+    header{display:flex; align-items:center; gap:14px; margin-bottom:18px}
+    header h1{font-size:1.4rem; margin:0}
+    .lead{color:var(--muted); margin-top:6px}
+    p{margin:0 0 12px 0}
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    form{
+      background:#f9fafb; border:1px solid #e5e7eb; border-radius:12px;
+      padding:24px; margin-top:20px;
+    }
+    label{display:block; font-weight:500; margin-bottom:6px}
+    input,textarea,select{
+      width:100%; padding:10px 12px; border:1px solid #d1d5db; border-radius:8px;
+      font-size:1rem; font-family:inherit; margin-bottom:14px;
+      background:#fff; color:var(--text);
+    }
+    input:focus,textarea:focus,select:focus{
+      outline:none; border-color:var(--accent); box-shadow:0 0 0 2px #ede9fe;
+    }
+    textarea{min-height:120px; resize:vertical}
+    button{
+      background:var(--accent); color:#fff; border:none;
+      padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:600;
+      transition:background 0.2s ease-in-out;
+    }
+    button:hover{background:#6d28d9}
+    .thanks-card{
+      background:#eef2ff; border:1px solid #c7d2fe; border-radius:12px;
+      padding:16px 20px; margin-top:24px; color:#312e81;
+    }
+    footer{margin-top:28px; padding-top:18px; border-top:1px solid #eee; color:var(--muted); font-size:0.9rem}
+    @media (prefers-color-scheme: dark){
+      :root{--bg:#0b1220; --text:#e6eef8; --muted:#9aa6b2; --accent:#a78bfa}
+      input,textarea,select{background:#1e293b; border-color:#334155; color:#f8fafc}
+      form{background:#1e293b; border-color:#334155}
+      .thanks-card{background:#312e81; border-color:#4338ca; color:#c7d2fe}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Feedback",
+    "url": "https://www.addastore.fun/feedback",
+    "description": "Share your feedback and suggestions to help us improve AddaStore.fun."
+  }
+  </script>
+</head>
+<body>
+  <main class="wrap" role="main" aria-labelledby="title">
+    <header>
+      <div aria-hidden="true" style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#e0e7ff,#ddd6fe);display:flex;align-items:center;justify-content:center;font-weight:700;color:#3730a3">A</div>
+      <div>
+        <h1 id="title">Feedback</h1>
+        <div class="lead">Your voice helps shape AddaStore.fun. Tell us what you love or what we can do better.</div>
+      </div>
+    </header>
+
+    <p>We read every single message. Whether it’s a new idea, bug report, or just a quick thought — we’d love to hear from you. Your input helps us make AddaStore.fun a more creative and human web experience.</p>
+
+    <form name="feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" aria-label="Feedback form">
+      <input type="hidden" name="form-name" value="feedback" />
+      <p hidden>
+        <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+      </p>
+
+      <label for="name">Your Name (optional)</label>
+      <input type="text" id="name" name="name" placeholder="Anonymous" />
+
+      <label for="email">Your Email (optional, for reply)</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" />
+
+      <label for="category">Feedback Type</label>
+      <select id="category" name="category" required>
+        <option value="">Select one...</option>
+        <option>Feature Request</option>
+        <option>Bug Report</option>
+        <option>Design or UX Suggestion</option>
+        <option>General Feedback</option>
+        <option>Other</option>
+      </select>
+
+      <label for="message">Your Message</label>
+      <textarea id="message" name="message" placeholder="Share your thoughts..." required></textarea>
+
+      <button type="submit">Send Feedback</button>
+    </form>
+
+    <div class="thanks-card" role="complementary">
+      <h2>Thank You for Helping Us Grow</h2>
+      <p>We believe the web should be creative, kind, and user-driven. Every suggestion brings us closer to that vision. 💜</p>
+      <p>For urgent issues, contact us directly at <a href="mailto:contact@addastore.fun">contact@addastore.fun</a>.</p>
+    </div>
+
+    <footer>
+      <div>© <span id="year"></span> AddaStore.fun · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></div>
+      <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+    </footer>
+  </main>
+</body>
+</html>
