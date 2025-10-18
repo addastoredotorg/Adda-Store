@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Digital Sabbath Planner | Your 24-Hour Guide to Digital Detox</title>
+    <meta name="description" content="Plan your perfect day offline. Our free tool creates a personalized, printable itinerary for your digital Sabbath with analog activities, recipes, and mindfulness prompts. Reconnect with the real world.">
+    <meta name="keywords" content="digital detox, digital sabbath, offline day, mental wellness, printable planner, analog activities, unplug, mindfulness, screen-free, board games, hiking, reading">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #7a9b76;
+            --secondary-color: #5d737e;
+            --background-color: #fefefe;
+            --text-color: #333333;
+            --light-gray: #f5f5f5;
+            --border-color: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        h1, h2, h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            font-family: inherit;
+        }
+        
+        .btn:hover {
+            background-color: #6a8a6a;
+        }
+        
+        .btn-print {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-print:hover {
+            background-color: #4d626d;
+        }
+        
+        /* Rules Section */
+        .rules {
+            background-color: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .rules ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .rules li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Form Styles */
+        .planner-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 0.5rem;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-item input {
+            margin-right: 8px;
+        }
+        
+        /* Itinerary Section */
+        #printable-itinerary {
+            display: none;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .itinerary-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .time-block {
+            margin-bottom: 2rem;
+        }
+        
+        .time-block h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .activity-list {
+            list-style-type: none;
+        }
+        
+        .activity-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        
+        .quote-box {
+            background-color: var(--light-gray);
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            margin: 2rem 0;
+            font-style: italic;
+        }
+        
+        .final-note {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border-color);
+        }
+        
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            
+            #printable-itinerary, #printable-itinerary * {
+                visibility: visible;
+            }
+            
+            #printable-itinerary {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+                padding: 0;
+            }
+            
+            .btn-print {
+                display: none;
+            }
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .planner-form {
+                padding: 1.5rem;
+            }
+            
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Reclaim Your Time. Plan Your Digital Sabbath.</h1>
+        <p>A 24-hour guide to disconnecting from your devices and reconnecting with yourself, your hobbies, and the people around you.</p>
+        <button class="btn" id="start-planning-btn">Start Planning Your Day Offline</button>
+    </section>
+
+    <!-- Introduction & Rules Section -->
+    <section id="rules-section">
+        <h2>The Rules of Your Digital Sabbath</h2>
+        <div class="rules">
+            <p>A Digital Sabbath is a 24-hour period where you voluntarily disconnect from all digital devices: smartphones, computers, tablets, and TVs. The goal isn't to be unproductive, but to be <em>differently</em> productive—focusing on rest, creativity, and real-world connection.</p>
+            <ol>
+                <li><strong>Choose Your 24 Hours:</strong> From Friday sunset to Saturday sunset, or any period that works for you.</li>
+                <li><strong>Power Down & Stash Away:</strong> Turn off all non-essential digital devices and put them in a drawer. Silence is golden.</li>
+                <li><strong>Embrace Analog:</strong> This planner will help you fill your time with non-digital activities. No "just checking."</li>
+                <li><strong>Tell Your Circle:</strong> Let friends and family know you'll be offline, so they don't worry.</li>
+                <li><strong>Be Kind to Yourself:</strong> If you slip up, don't despair. Acknowledge it and gently return to your analog day.</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- Interactive Planner Form -->
+    <section id="planner-form-section">
+        <h2>Craft Your Perfect Offline Day</h2>
+        <form class="planner-form" id="sabbath-planner-form">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" placeholder="e.g., Alex" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="sabbath-date">Date for Your Sabbath</label>
+                <input type="date" id="sabbath-date" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="environment">Your Location/Environment</label>
+                <select id="environment" required>
+                    <option value="">Select an environment</option>
+                    <option value="Urban (City)">Urban (City)</option>
+                    <option value="Suburban">Suburban</option>
+                    <option value="Rural (Countryside)">Rural (Countryside)</option>
+                    <option value="At Home">At Home</option>
+                    <option value="Beach">Beach</option>
+                    <option value="Mountains">Mountains</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Your Interests (Select at least one)</label>
+                <div class="checkbox-group" id="interests-container">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="reading" value="Reading & Writing">
+                        <label for="reading">Reading & Writing</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="arts" value="Arts & Crafts">
+                        <label for="arts">Arts & Crafts</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cooking" value="Cooking & Baking">
+                        <label for="cooking">Cooking & Baking</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hiking" value="Hiking & Nature Walks">
+                        <label for="hiking">Hiking & Nature Walks</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="games" value="Board Games & Puzzles">
+                        <label for="games">Board Games & Puzzles</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="music" value="Music & Instruments">
+                        <label for="music">Music & Instruments</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mindfulness" value="Mindfulness & Journaling">
+                        <label for="mindfulness">Mindfulness & Journaling</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="fitness" value="Fitness & Yoga">
+                        <label for="fitness">Fitness & Yoga</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="diy" value="Home DIY & Gardening">
+                        <label for="diy">Home DIY & Gardening</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="social" value="Socializing with Friends/Family">
+                        <label for="social">Socializing with Friends/Family</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="meal-complexity">Meal Preference</label>
+                <select id="meal-complexity" required>
+                    <option value="">Select a preference</option>
+                    <option value="Simple (e.g., sandwiches, salads)">Simple (e.g., sandwiches, salads)</option>
+                    <option value="I enjoy cooking">I enjoy cooking</option>
+                    <option value="I want a baking project!">I want a baking project!</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn">Generate My Digital Sabbath Plan</button>
+        </form>
+    </section>
+
+    <!-- Printable Itinerary Section -->
+    <section id="printable-itinerary">
+        <div class="itinerary-header">
+            <h2>Your Digital Sabbath Itinerary for <span id="itinerary-date"></span></h2>
+            <p id="personal-greeting"></p>
+        </div>
+        
+        <div class="time-block">
+            <h3>Morning (8:00 AM - 12:00 PM)</h3>
+            <ul class="activity-list" id="morning-activities"></ul>
+        </div>
+        
+        <div class="time-block">
+            <h3>Afternoon (12:00 PM - 5:00 PM)</h3>
+            <ul class="activity-list" id="afternoon-activities"></ul>
+        </div>
+        
+        <div class="time-block">
+            <h3>Evening (5:00 PM - 10:00 PM)</h3>
+            <ul class="activity-list" id="evening-activities"></ul>
+        </div>
+        
+        <div class="quote-box">
+            <p id="inspirational-quote"></p>
+        </div>
+        
+        <div class="final-note">
+            <p>Remember: The goal is presence, not productivity. Enjoy the silence.</p>
+        </div>
+    </section>
+
+    <!-- Final Call to Action -->
+    <section id="final-cta" style="display: none;">
+        <h2>Ready to Unplug?</h2>
+        <p>Print your itinerary, power down your devices, and step into a more mindful day.</p>
+        <button class="btn btn-print" id="print-btn">Print Your Itinerary</button>
+    </section>
+
+    <script>
+        // Activity database
+        const activities = {
+            "Reading & Writing": [
+                "Visit a local library or bookstore and browse physical books",
+                "Start a handwritten journal or write letters to friends/family",
+                "Read a book in a cozy spot with a cup of tea or coffee",
+                "Try creative writing with pen and paper"
+            ],
+            "Arts & Crafts": [
+                "Work on a craft project like knitting, painting, or pottery",
+                "Create a collage from old magazines and newspapers",
+                "Try your hand at sketching or drawing from observation",
+                "Make handmade cards for upcoming occasions"
+            ],
+            "Cooking & Baking": [
+                "Try a new recipe from a physical cookbook",
+                "Bake bread or pastries from scratch",
+                "Prepare a special meal with fresh, local ingredients",
+                "Make preserves or pickles with seasonal produce"
+            ],
+            "Hiking & Nature Walks": [
+                "Explore a local park or nature trail",
+                "Go birdwatching in a natural area",
+                "Take a mindful walk, noticing sights, sounds, and smells",
+                "Have a picnic in a scenic outdoor location"
+            ],
+            "Board Games & Puzzles": [
+                "Play board games with family or friends",
+                "Work on a jigsaw puzzle",
+                "Learn a new card game",
+                "Create your own board game or puzzle"
+            ],
+            "Music & Instruments": [
+                "Play a musical instrument you haven't touched in a while",
+                "Listen to vinyl records or CDs",
+                "Sing with friends or family",
+                "Compose a simple melody or song"
+            ],
+            "Mindfulness & Journaling": [
+                "Practice meditation or deep breathing exercises",
+                "Do a body scan relaxation technique",
+                "Write in a gratitude journal",
+                "Try mindful eating with your meals"
+            ],
+            "Fitness & Yoga": [
+                "Do a yoga or stretching routine",
+                "Go for a run or bike ride",
+                "Try bodyweight exercises at home or in a park",
+                "Practice tai chi or qigong"
+            ],
+            "Home DIY & Gardening": [
+                "Tend to your garden or houseplants",
+                "Start a small DIY home improvement project",
+                "Organize a closet or storage area",
+                "Create a compost bin or herb garden"
+            ],
+            "Socializing with Friends/Family": [
+                "Host a game night or potluck dinner",
+                "Have deep conversations without distractions",
+                "Play outdoor games together",
+                "Share stories or memories"
+            ]
+        };
+
+        // Recipe suggestions based on meal complexity
+        const recipes = {
+            "Simple (e.g., sandwiches, salads)": [
+                "Mediterranean chickpea salad",
+                "Avocado and tomato sandwiches on whole grain bread",
+                "Greek yogurt parfaits with fresh fruit and granola",
+                "Caprese salad with fresh mozzarella and basil"
+            ],
+            "I enjoy cooking": [
+                "Homemade pasta with fresh tomato sauce",
+                "Vegetable stir-fry with rice",
+                "Roasted chicken with herbs and seasonal vegetables",
+                "Hearty vegetable soup with crusty bread"
+            ],
+            "I want a baking project!": [
+                "No-knead artisan bread",
+                "Homemade pizza from scratch",
+                "Apple pie or fruit crumble",
+                "Cinnamon rolls or pastries"
+            ]
+        };
+
+        // Inspirational quotes
+        const quotes = [
+            "Almost everything will work again if you unplug it for a few minutes, including you. - Anne Lamott",
+            "The time to relax is when you don't have time for it. - Sydney J. Harris",
+            "Rest is not idleness, and to lie sometimes on the grass under trees on a summer's day, listening to the murmur of the water, or watching the clouds float across the sky, is by no means a waste of time. - John Lubbock",
+            "In today's rush, we all think too much, seek too much, want too much and forget about the joy of just being. - Eckhart Tolle",
+            "Your calm mind is the ultimate weapon against your challenges. So relax. - Bryant McGill",
+            "The best cure for the body is a quiet mind. - Napoleon Bonaparte"
+        ];
+
+        // DOM elements
+        const startPlanningBtn = document.getElementById('start-planning-btn');
+        const plannerForm = document.getElementById('sabbath-planner-form');
+        const printableItinerary = document.getElementById('printable-itinerary');
+        const finalCta = document.getElementById('final-cta');
+        const printBtn = document.getElementById('print-btn');
+
+        // Set default date to tomorrow
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('sabbath-date').valueAsDate = tomorrow;
+
+        // Scroll to form when "Start Planning" is clicked
+        startPlanningBtn.addEventListener('click', () => {
+            document.getElementById('planner-form-section').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        });
+
+        // Form submission handler
+        plannerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const date = document.getElementById('sabbath-date').value;
+            const environment = document.getElementById('environment').value;
+            const mealComplexity = document.getElementById('meal-complexity').value;
+            
+            // Get selected interests
+            const selectedInterests = [];
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+                selectedInterests.push(checkbox.value);
+            });
+            
+            // Validate form
+            if (!name || !date || !environment || !mealComplexity || selectedInterests.length === 0) {
+                alert('Please fill out all required fields and select at least one interest.');
+                return;
+            }
+            
+            // Generate itinerary
+            generateItinerary(name, date, environment, selectedInterests, mealComplexity);
+            
+            // Show itinerary and final CTA
+            printableItinerary.style.display = 'block';
+            finalCta.style.display = 'block';
+            
+            // Scroll to itinerary
+            printableItinerary.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Print button handler
+        printBtn.addEventListener('click', () => {
+            window.print();
+        });
+
+        // Generate itinerary function
+        function generateItinerary(name, date, environment, interests, mealComplexity) {
+            // Format date
+            const formattedDate = new Date(date).toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Set header and greeting
+            document.getElementById('itinerary-date').textContent = formattedDate;
+            document.getElementById('personal-greeting').textContent = `Hello, ${name}. Enjoy your day offline.`;
+            
+            // Clear previous activities
+            document.getElementById('morning-activities').innerHTML = '';
+            document.getElementById('afternoon-activities').innerHTML = '';
+            document.getElementById('evening-activities').innerHTML = '';
+            
+            // Generate activities based on interests
+            const allActivities = [];
+            interests.forEach(interest => {
+                if (activities[interest]) {
+                    // Select 1-2 random activities from this interest category
+                    const shuffled = [...activities[interest]].sort(() => 0.5 - Math.random());
+                    allActivities.push(...shuffled.slice(0, 2));
+                }
+            });
+            
+            // Add environment-specific activities
+            let environmentActivity = '';
+            switch(environment) {
+                case 'Urban (City)':
+                    environmentActivity = 'Explore a neighborhood you rarely visit and notice the architecture and street life.';
+                    break;
+                case 'Suburban':
+                    environmentActivity = 'Walk or bike around your neighborhood and greet people you meet.';
+                    break;
+                case 'Rural (Countryside)':
+                    environmentActivity = 'Find a quiet spot to sit and observe the natural surroundings.';
+                    break;
+                case 'At Home':
+                    environmentActivity = 'Create a cozy reading nook or meditation space in your home.';
+                    break;
+                case 'Beach':
+                    environmentActivity = 'Walk along the shoreline, collect interesting shells or stones.';
+                    break;
+                case 'Mountains':
+                    environmentActivity = 'Find a scenic viewpoint and spend time simply observing the landscape.';
+                    break;
+            }
+            allActivities.push(environmentActivity);
+            
+            // Add meal suggestion
+            const mealSuggestions = recipes[mealComplexity];
+            const randomMeal = mealSuggestions[Math.floor(Math.random() * mealSuggestions.length)];
+            allActivities.push(`Meal suggestion: ${randomMeal}`);
+            
+            // Shuffle activities and distribute across time blocks
+            const shuffledActivities = [...allActivities].sort(() => 0.5 - Math.random());
+            
+            // Distribute activities across time blocks
+            const morningCount = Math.ceil(shuffledActivities.length / 3);
+            const afternoonCount = Math.ceil((shuffledActivities.length - morningCount) / 2);
+            
+            const morningActivities = shuffledActivities.slice(0, morningCount);
+            const afternoonActivities = shuffledActivities.slice(morningCount, morningCount + afternoonCount);
+            const eveningActivities = shuffledActivities.slice(morningCount + afternoonCount);
+            
+            // Add default activities if needed
+            if (morningActivities.length === 0) {
+                morningActivities.push('Enjoy a leisurely breakfast without rushing.');
+            }
+            if (afternoonActivities.length === 0) {
+                afternoonActivities.push('Take a restorative nap or quiet rest period.');
+            }
+            if (eveningActivities.length === 0) {
+                eveningActivities.push('Reflect on your day in a journal or through quiet contemplation.');
+            }
+            
+            // Populate activity lists
+            populateActivityList('morning-activities', morningActivities);
+            populateActivityList('afternoon-activities', afternoonActivities);
+            populateActivityList('evening-activities', eveningActivities);
+            
+            // Add random inspirational quote
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('inspirational-quote').textContent = randomQuote;
+        }
+
+        // Helper function to populate activity lists
+        function populateActivityList(listId, activities) {
+            const list = document.getElementById(listId);
+            activities.forEach(activity => {
+                const li = document.createElement('li');
+                li.textContent = activity;
+                list.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
