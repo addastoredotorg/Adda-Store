@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound of Focus | Interactive Audio Visualization Tool</title>
+    <meta name="description" content="Transform your focus into art with Sound of Focus. Create dynamic audio-visual patterns through typing, clicking, and movement in this immersive focus tool.">
+    <style>
+        :root {
+            --primary-bg: #0a0a12;
+            --secondary-bg: #151522;
+            --accent-1: #4a00e0;
+            --accent-2: #8e2de2;
+            --accent-3: #00c6fb;
+            --accent-4: #005bea;
+            --text-color: #e6e6ff;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary-bg), var(--secondary-bg));
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(74, 0, 224, 0.3);
+        }
+        
+        .tagline {
+            font-size: 1.3rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            height: calc(100vh - 200px);
+        }
+        
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+        }
+        
+        .visualization-area {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        #visualization-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: crosshair;
+        }
+        
+        .controls-panel {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            overflow-y: auto;
+            max-height: 100%;
+        }
+        
+        .mode-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .mode-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .mode-btn.active {
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            border-color: var(--accent-3);
+            box-shadow: 0 0 15px rgba(74, 0, 224, 0.4);
+        }
+        
+        .mode-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .control-group {
+            margin-bottom: 20px;
+        }
+        
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .slider-container {
+            position: relative;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-3);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 198, 251, 0.5);
+        }
+        
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .color-option {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.2s ease;
+        }
+        
+        .color-option.active {
+            border-color: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        .color-option:hover {
+            transform: scale(1.05);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(90deg, var(--accent-3), var(--accent-4));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .instructions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: var(--accent-3);
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        
+        .interaction-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            max-width: 80%;
+            pointer-events: none;
+            transition: opacity 1s ease;
+        }
+        
+        .interaction-hint.fade-out {
+            opacity: 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .keyboard-shortcuts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .shortcut {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        
+        .key {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sound of Focus</h1>
+            <p class="tagline">Transform your focus into an interactive audio-visual experience</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="visualization-area">
+                <canvas id="visualization-canvas"></canvas>
+                <div class="interaction-hint" id="interaction-hint">
+                    <h3>Start Creating</h3>
+                    <p>Click, drag, type, or move your mouse to generate sounds and visuals</p>
+                    <p class="pulse">Your focus creates the art</p>
+                </div>
+            </div>
+            
+            <div class="controls-panel">
+                <div class="control-group">
+                    <h3>Visualization Mode</h3>
+                    <div class="mode-selector">
+                        <button class="mode-btn active" data-mode="particles">Particles</button>
+                        <button class="mode-btn" data-mode="waves">Sound Waves</button>
+                        <button class="mode-btn" data-mode="geometric">Geometric</button>
+                        <button class="mode-btn" data-mode="fluid">Fluid</button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Intensity</span>
+                        <span id="intensity-value">50%</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" min="1" max="100" value="50" class="slider" id="intensity-slider">
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Responsiveness</span>
+                        <span id="responsiveness-value">70%</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" min="1" max="100" value="70" class="slider" id="responsiveness-slider">
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Decay Speed</span>
+                        <span id="decay-value">30%</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" min="1" max="100" value="30" class="slider" id="decay-slider">
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <h3>Color Palette</h3>
+                    <div class="color-palette">
+                        <div class="color-option active" style="background: linear-gradient(135deg, #4a00e0, #8e2de2);" data-color="purple"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #00c6fb, #005bea);" data-color="blue"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #f857a6, #ff5858);" data-color="pink"></div>
+                        <div class="color-option" style="background: linear-gradient(135deg, #00b09b, #96c93d);" data-color="green"></div>
+                    </div>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-value" id="interaction-count">0</div>
+                        <div class="stat-label">Interactions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="sound-count">0</div>
+                        <div class="stat-label">Sounds Generated</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="focus-time">0:00</div>
+                        <div class="stat-label">Focus Time</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="intensity-level">0%</div>
+                        <div class="stat-label">Current Intensity</div>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h3>How to Use</h3>
+                    <ul>
+                        <li><strong>Click/Drag:</strong> Create visual bursts with matching sounds</li>
+                        <li><strong>Type:</strong> Generate rhythmic patterns and tones</li>
+                        <li><strong>Mouse Movement:</strong> Create flowing visual trails</li>
+                        <li><strong>Spacebar:</strong> Clear the canvas</li>
+                    </ul>
+                    
+                    <div class="keyboard-shortcuts">
+                        <div class="shortcut">
+                            <span>Clear Canvas</span>
+                            <span class="key">Space</span>
+                        </div>
+                        <div class="shortcut">
+                            <span>Toggle Sound</span>
+                            <span class="key">M</span>
+                        </div>
+                        <div class="shortcut">
+                            <span>Save Image</span>
+                            <span class="key">S</span>
+                        </div>
+                        <div class="shortcut">
+                            <span>Randomize</span>
+                            <span class="key">R</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Sound of Focus &copy; 2023 | Transform your concentration into art</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Canvas setup
+            const canvas = document.getElementById('visualization-canvas');
+            const ctx = canvas.getContext('2d');
+            const interactionHint = document.getElementById('interaction-hint');
+            
+            // Set canvas size
+            function resizeCanvas() {
+                const container = canvas.parentElement;
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Audio context
+            let audioContext;
+            let isAudioEnabled = true;
+            let interactionCount = 0;
+            let soundCount = 0;
+            let focusStartTime = Date.now();
+            
+            // Initialize audio on first interaction
+            function initAudio() {
+                if (audioContext) return;
+                
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    console.log('Audio context initialized');
+                } catch (error) {
+                    console.error('Error initializing audio context:', error);
+                    isAudioEnabled = false;
+                }
+            }
+            
+            // Visualization state
+            let particles = [];
+            let waves = [];
+            let mode = 'particles';
+            let colorScheme = 'purple';
+            let intensity = 50;
+            let responsiveness = 70;
+            let decay = 30;
+            
+            // Color schemes
+            const colorSchemes = {
+                purple: ['#4a00e0', '#8e2de2', '#8e44ad', '#9b59b6'],
+                blue: ['#00c6fb', '#005bea', '#3498db', '#2980b9'],
+                pink: ['#f857a6', '#ff5858', '#e74c3c', '#c0392b'],
+                green: ['#00b09b', '#96c93d', '#2ecc71', '#27ae60']
+            };
+            
+            // Get current colors
+            function getColors() {
+                return colorSchemes[colorScheme] || colorSchemes.purple;
+            }
+            
+            // Particle class
+            class Particle {
+                constructor(x, y, intensity, type = 'click') {
+                    this.x = x;
+                    this.y = y;
+                    this.size = Math.random() * 10 + 5 * (intensity / 100);
+                    this.speedX = (Math.random() - 0.5) * 10 * (intensity / 50);
+                    this.speedY = (Math.random() - 0.5) * 10 * (intensity / 50);
+                    this.color = getColors()[Math.floor(Math.random() * getColors().length)];
+                    this.life = 1.0;
+                    this.decayRate = 0.01 + (Math.random() * 0.02) * (decay / 100);
+                    this.type = type;
+                    
+                    // Different behavior based on type
+                    if (type === 'keypress') {
+                        this.speedY = -Math.random() * 8 * (intensity / 50);
+                        this.speedX = (Math.random() - 0.5) * 4 * (intensity / 50);
+                    } else if (type === 'mousemove') {
+                        this.size = Math.random() * 5 + 2 * (intensity / 100);
+                        this.decayRate = 0.005 + (Math.random() * 0.01) * (decay / 100);
+                    }
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.life -= this.decayRate;
+                    
+                    // Apply gravity to keypress particles
+                    if (this.type === 'keypress') {
+                        this.speedY += 0.1;
+                    }
+                    
+                    return this.life > 0;
+                }
+                
+                draw() {
+                    const alpha = this.life;
+                    ctx.save();
+                    ctx.globalAlpha = alpha;
+                    
+                    if (this.type === 'mousemove') {
+                        // Trail effect for mouse movement
+                        ctx.fillStyle = this.color;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    } else {
+                        // Glow effect for clicks and keypresses
+                        const gradient = ctx.createRadialGradient(
+                            this.x, this.y, 0,
+                            this.x, this.y, this.size
+                        );
+                        gradient.addColorStop(0, this.color);
+                        gradient.addColorStop(1, 'transparent');
+                        
+                        ctx.fillStyle = gradient;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    
+                    ctx.restore();
+                }
+            }
+            
+            // Wave class
+            class Wave {
+                constructor(x, y, intensity) {
+                    this.x = x;
+                    this.y = y;
+                    this.radius = 5;
+                    this.maxRadius = 100 + intensity * 2;
+                    this.width = 2 + intensity / 20;
+                    this.speed = 2 + intensity / 25;
+                    this.color = getColors()[Math.floor(Math.random() * getColors().length)];
+                    this.life = 1.0;
+                }
+                
+                update() {
+                    this.radius += this.speed;
+                    this.life = 1 - (this.radius / this.maxRadius);
+                    return this.radius < this.maxRadius;
+                }
+                
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.life * 0.7;
+                    ctx.strokeStyle = this.color;
+                    ctx.lineWidth = this.width;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.restore();
+                }
+            }
+            
+            // Play sound based on interaction
+            function playSound(type, x, y, intensity) {
+                if (!isAudioEnabled || !audioContext) return;
+                
+                soundCount++;
+                document.getElementById('sound-count').textContent = soundCount;
+                
+                try {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    // Set frequency based on position and type
+                    let frequency;
+                    if (type === 'click') {
+                        frequency = 200 + (y / canvas.height) * 800;
+                    } else if (type === 'keypress') {
+                        frequency = 300 + (Math.random() * 500);
+                    } else if (type === 'mousemove') {
+                        frequency = 100 + (x / canvas.width) * 200;
+                    }
+                    
+                    oscillator.type = type === 'keypress' ? 'square' : 'sine';
+                    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+                    
+                    // Set volume based on intensity
+                    gainNode.gain.setValueAtTime(0.1 * (intensity / 100), audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 0.5);
+                } catch (error) {
+                    console.error('Error playing sound:', error);
+                }
+            }
+            
+            // Create visualization based on interaction
+            function createVisualization(x, y, type, intensityMultiplier = 1) {
+                const currentIntensity = intensity * intensityMultiplier;
+                
+                // Play sound
+                playSound(type, x, y, currentIntensity);
+                
+                // Create particles
+                if (mode === 'particles' || mode === 'fluid') {
+                    const particleCount = 10 + Math.floor(currentIntensity / 5);
+                    for (let i = 0; i < particleCount; i++) {
+                        particles.push(new Particle(x, y, currentIntensity, type));
+                    }
+                }
+                
+                // Create waves
+                if (mode === 'waves' || mode === 'fluid') {
+                    waves.push(new Wave(x, y, currentIntensity));
+                }
+                
+                // Update stats
+                interactionCount++;
+                document.getElementById('interaction-count').textContent = interactionCount;
+                document.getElementById('intensity-level').textContent = Math.round(currentIntensity) + '%';
+            }
+            
+            // Animation loop
+            function animate() {
+                // Clear canvas with fade effect
+                ctx.fillStyle = 'rgba(10, 10, 18, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Update and draw particles
+                particles = particles.filter(particle => {
+                    const isAlive = particle.update();
+                    if (isAlive) particle.draw();
+                    return isAlive;
+                });
+                
+                // Update and draw waves
+                waves = waves.filter(wave => {
+                    const isAlive = wave.update();
+                    if (isAlive) wave.draw();
+                    return isAlive;
+                });
+                
+                // Draw geometric patterns if in geometric mode
+                if (mode === 'geometric') {
+                    drawGeometricPattern();
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            // Draw geometric pattern
+            function drawGeometricPattern() {
+                const time = Date.now() * 0.001;
+                const colors = getColors();
+                
+                ctx.save();
+                ctx.globalAlpha = 0.7;
+                
+                // Draw rotating triangles
+                for (let i = 0; i < 5; i++) {
+                    const angle = time * 0.5 + (i * Math.PI * 0.4);
+                    const radius = 50 + i * 30;
+                    const x = canvas.width / 2 + Math.cos(angle) * radius;
+                    const y = canvas.height / 2 + Math.sin(angle) * radius;
+                    
+                    ctx.fillStyle = colors[i % colors.length];
+                    ctx.beginPath();
+                    ctx.moveTo(x, y - 20);
+                    ctx.lineTo(x - 17, y + 10);
+                    ctx.lineTo(x + 17, y + 10);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+                
+                // Draw pulsating circles
+                for (let i = 0; i < 3; i++) {
+                    const pulse = Math.sin(time * 2 + i) * 0.5 + 0.5;
+                    const radius = 30 + pulse * 50;
+                    
+                    ctx.strokeStyle = colors[(i + 2) % colors.length];
+                    ctx.lineWidth = 3;
+                    ctx.beginPath();
+                    ctx.arc(canvas.width / 2, canvas.height / 2, radius, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+                
+                ctx.restore();
+            }
+            
+            // Event listeners
+            canvas.addEventListener('click', function(e) {
+                initAudio();
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                createVisualization(x, y, 'click', 1.2);
+                hideInteractionHint();
+            });
+            
+            canvas.addEventListener('mousemove', function(e) {
+                if (interactionCount === 0) hideInteractionHint();
+                
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Only create particles occasionally during mousemove to prevent overloading
+                if (Math.random() < responsiveness / 200) {
+                    createVisualization(x, y, 'mousemove', 0.5);
+                }
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                initAudio();
+                
+                // Prevent default for shortcut keys
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    clearCanvas();
+                    return;
+                }
+                
+                if (e.code === 'KeyM') {
+                    e.preventDefault();
+                    isAudioEnabled = !isAudioEnabled;
+                    return;
+                }
+                
+                if (e.code === 'KeyS') {
+                    e.preventDefault();
+                    saveCanvas();
+                    return;
+                }
+                
+                if (e.code === 'KeyR') {
+                    e.preventDefault();
+                    randomizeSettings();
+                    return;
+                }
+                
+                // Create visualization for regular keypress
+                createVisualization(
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height,
+                    'keypress',
+                    0.8
+                );
+                hideInteractionHint();
+            });
+            
+            // Control event listeners
+            document.getElementById('intensity-slider').addEventListener('input', function() {
+                intensity = this.value;
+                document.getElementById('intensity-value').textContent = this.value + '%';
+            });
+            
+            document.getElementById('responsiveness-slider').addEventListener('input', function() {
+                responsiveness = this.value;
+                document.getElementById('responsiveness-value').textContent = this.value + '%';
+            });
+            
+            document.getElementById('decay-slider').addEventListener('input', function() {
+                decay = this.value;
+                document.getElementById('decay-value').textContent = this.value + '%';
+            });
+            
+            // Mode buttons
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    mode = this.dataset.mode;
+                    
+                    // Clear existing particles when changing mode
+                    particles = [];
+                    waves = [];
+                });
+            });
+            
+            // Color options
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
+                    this.classList.add('active');
+                    colorScheme = this.dataset.color;
+                });
+            });
+            
+            // Helper functions
+            function hideInteractionHint() {
+                interactionHint.classList.add('fade-out');
+                setTimeout(() => {
+                    interactionHint.style.display = 'none';
+                }, 1000);
+            }
+            
+            function clearCanvas() {
+                particles = [];
+                waves = [];
+                ctx.fillStyle = 'rgba(10, 10, 18, 1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            function saveCanvas() {
+                const link = document.createElement('a');
+                link.download = 'sound-of-focus-' + Date.now() + '.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            }
+            
+            function randomizeSettings() {
+                intensity = Math.floor(Math.random() * 100) + 1;
+                responsiveness = Math.floor(Math.random() * 100) + 1;
+                decay = Math.floor(Math.random() * 100) + 1;
+                
+                document.getElementById('intensity-slider').value = intensity;
+                document.getElementById('responsiveness-slider').value = responsiveness;
+                document.getElementById('decay-slider').value = decay;
+                
+                document.getElementById('intensity-value').textContent = intensity + '%';
+                document.getElementById('responsiveness-value').textContent = responsiveness + '%';
+                document.getElementById('decay-value').textContent = decay + '%';
+                
+                // Random color
+                const colors = Object.keys(colorSchemes);
+                colorScheme = colors[Math.floor(Math.random() * colors.length)];
+                document.querySelectorAll('.color-option').forEach(o => {
+                    o.classList.toggle('active', o.dataset.color === colorScheme);
+                });
+            }
+            
+            // Update focus time
+            function updateFocusTime() {
+                const now = Date.now();
+                const seconds = Math.floor((now - focusStartTime) / 1000);
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                
+                document.getElementById('focus-time').textContent = 
+                    `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+            }
+            
+            // Start animation and timers
+            animate();
+            setInterval(updateFocusTime, 1000);
+        });
+    </script>
+</body>
+</html>
