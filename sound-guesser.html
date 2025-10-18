@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Test your ears with Sound Guesser! Listen to short, high-quality sounds from everyday life and guess the source. A fun, minimalist game that trains active listening.">
+    <title>Sound Guesser - A Minimalist Audio Puzzle</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background-color: rgba(30, 30, 46, 0.8);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #a0a0c0;
+            margin-bottom: 1.5rem;
+        }
+
+        .score-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            background-color: rgba(40, 40, 60, 0.7);
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            font-size: 1.3rem;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .play-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+        }
+
+        .play-btn:active {
+            transform: translateY(0);
+        }
+
+        .play-btn.playing {
+            background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .attempts {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #c0c0e0;
+            background-color: rgba(40, 40, 60, 0.7);
+            padding: 0.8rem;
+            border-radius: 10px;
+        }
+
+        .hint-btn {
+            background-color: rgba(80, 80, 120, 0.7);
+            color: #e6e6e6;
+            border: none;
+            padding: 0.9rem;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hint-btn:hover:not(:disabled) {
+            background-color: rgba(100, 100, 150, 0.9);
+        }
+
+        .hint-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .option-btn {
+            background-color: rgba(50, 50, 70, 0.8);
+            color: #e6e6e6;
+            border: 2px solid transparent;
+            padding: 1.2rem;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .option-btn:hover {
+            background-color: rgba(70, 70, 100, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .option-btn.correct {
+            background-color: rgba(46, 204, 113, 0.3);
+            border-color: #2ecc71;
+            color: #2ecc71;
+        }
+
+        .option-btn.incorrect {
+            background-color: rgba(231, 76, 60, 0.3);
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+
+        .feedback {
+            min-height: 60px;
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .feedback.correct {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            border: 1px solid rgba(46, 204, 113, 0.5);
+        }
+
+        .feedback.incorrect {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            border: 1px solid rgba(231, 76, 60, 0.5);
+        }
+
+        .feedback.hint {
+            background-color: rgba(241, 196, 15, 0.2);
+            color: #f1c40f;
+            border: 1px solid rgba(241, 196, 15, 0.5);
+        }
+
+        .answer-reveal {
+            min-height: 60px;
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background-color: rgba(106, 17, 203, 0.2);
+            color: #a78bfa;
+            border: 1px solid rgba(106, 17, 203, 0.5);
+            margin-bottom: 1.5rem;
+        }
+
+        .rules {
+            background-color: rgba(40, 40, 60, 0.7);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+        }
+
+        .rules h2 {
+            margin-bottom: 1rem;
+            color: #c0c0e0;
+            font-size: 1.3rem;
+        }
+
+        .rules ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .rules li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .rules li:before {
+            content: "•";
+            color: #6a11cb;
+            position: absolute;
+            left: 0;
+        }
+
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: #a0a0c0;
+            font-size: 0.9rem;
+        }
+
+        .sound-wave {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            margin: 1rem 0;
+        }
+
+        .wave-bar {
+            width: 6px;
+            height: 20px;
+            background-color: #6a11cb;
+            margin: 0 3px;
+            border-radius: 3px;
+            animation: wave 1.2s infinite ease-in-out;
+        }
+
+        .wave-bar:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .wave-bar:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .wave-bar:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .wave-bar:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes wave {
+            0%, 40%, 100% {
+                transform: scaleY(0.5);
+            }
+            20% {
+                transform: scaleY(1.5);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sound Guesser</h1>
+            <p class="subtitle">A Minimalist Audio Puzzle Game</p>
+        </header>
+        
+        <div class="score-container">
+            <div class="score">Score: <span id="score-value">0</span></div>
+            <div class="attempts">Attempts: <span id="attempts-value">3</span>/3</div>
+        </div>
+        
+        <div class="game-area">
+            <button id="play-btn" class="play-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+                </svg>
+                Play Sound
+            </button>
+            
+            <div class="sound-wave" id="sound-wave" style="display: none;">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+            </div>
+            
+            <button id="hint-btn" class="hint-btn" disabled>Reveal Hint</button>
+            
+            <div class="options-container" id="options-container">
+                <!-- Options will be generated here -->
+            </div>
+        </div>
+        
+        <div id="feedback" class="feedback">
+            Listen to the sound and guess what it is!
+        </div>
+        
+        <div id="answer-reveal" class="answer-reveal" style="display: none;">
+            The sound was: <span id="correct-answer"></span>
+        </div>
+        
+        <div class="rules">
+            <h2>Game Rules</h2>
+            <ul>
+                <li>Listen to a short, isolated sound from everyday life</li>
+                <li>Select one of the four options to guess the sound source</li>
+                <li>You get 3 attempts per sound</li>
+                <li>Correct guess: 3 points (reduces with attempts)</li>
+                <li>Using a hint reduces max score to 1 point</li>
+                <li>Game continues automatically after each round</li>
+            </ul>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Sound Guesser &copy; 2023 | Train your active listening skills</p>
+    </footer>
+
+    <script>
+        // Sound bank with descriptions
+        const soundBank = [
+            {
+                id: 1,
+                description: "A metallic sliding sound with small clicks",
+                answer: "Zipper",
+                hint: "Used on jackets and bags.",
+                options: ["Zipper", "Velcro", "Button", "Buckle"]
+            },
+            {
+                id: 2,
+                description: "A crisp, papery rustling sound",
+                answer: "Page Turning",
+                hint: "You do this when reading a book.",
+                options: ["Page Turning", "Paper Crumpling", "Book Closing", "Writing"]
+            },
+            {
+                id: 3,
+                description: "A sharp click followed by a faint hum",
+                answer: "Light Switch",
+                hint: "Used to illuminate a room.",
+                options: ["Light Switch", "Door Knob", "Camera Shutter", "Pen Click"]
+            },
+            {
+                id: 4,
+                description: "A repetitive snipping or cutting sound",
+                answer: "Scissors Cutting",
+                hint: "Used for cutting paper or fabric.",
+                options: ["Scissors Cutting", "Hair Clippers", "Knife Sharpening", "Typing"]
+            },
+            {
+                id: 5,
+                description: "Rapid, rhythmic tapping sounds",
+                answer: "Keyboard Typing",
+                hint: "Common in offices and homes with computers.",
+                options: ["Keyboard Typing", "Drumming Fingers", "Raindrops", "Walking"]
+            },
+            {
+                id: 6,
+                description: "A high-pitched ringing vibration",
+                answer: "Phone Vibrating",
+                hint: "Often signals an incoming call or message.",
+                options: ["Phone Vibrating", "Alarm Clock", "Doorbell", "Microwave"]
+            },
+            {
+                id: 7,
+                description: "A bubbling, percolating sound",
+                answer: "Water Boiling",
+                hint: "Happens when heating water to 100°C.",
+                options: ["Water Boiling", "Rainfall", "River Flowing", "Pouring Drink"]
+            },
+            {
+                id: 8,
+                description: "A crisp crunching sound",
+                answer: "Walking on Gravel",
+                hint: "Common on pathways and driveways.",
+                options: ["Walking on Gravel", "Eating Chips", "Crushing Ice", "Breaking Twigs"]
+            }
+        ];
+
+        // Game state variables
+        let currentSound = null;
+        let score = 0;
+        let attempts = 3;
+        let hintUsed = false;
+        let gameActive = true;
+        let audioPlaying = false;
+
+        // DOM elements
+        const playBtn = document.getElementById('play-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        const scoreValue = document.getElementById('score-value');
+        const attemptsValue = document.getElementById('attempts-value');
+        const feedback = document.getElementById('feedback');
+        const answerReveal = document.getElementById('answer-reveal');
+        const correctAnswer = document.getElementById('correct-answer');
+        const optionsContainer = document.getElementById('options-container');
+        const soundWave = document.getElementById('sound-wave');
+
+        // Initialize the game
+        function initGame() {
+            loadNewSound();
+            updateDisplay();
+            
+            // Event listeners
+            playBtn.addEventListener('click', playSound);
+            hintBtn.addEventListener('click', revealHint);
+        }
+
+        // Load a new random sound
+        function loadNewSound() {
+            // Reset state for new round
+            attempts = 3;
+            hintUsed = false;
+            gameActive = true;
+            audioPlaying = false;
+            
+            // Select a random sound
+            const randomIndex = Math.floor(Math.random() * soundBank.length);
+            currentSound = soundBank[randomIndex];
+            
+            // Reset UI
+            hintBtn.disabled = true;
+            answerReveal.style.display = 'none';
+            feedback.textContent = 'Listen to the sound and guess what it is!';
+            feedback.className = 'feedback';
+            playBtn.classList.remove('playing');
+            soundWave.style.display = 'none';
+            
+            // Generate options
+            generateOptions();
+            updateDisplay();
+        }
+
+        // Generate option buttons
+        function generateOptions() {
+            optionsContainer.innerHTML = '';
+            
+            // Shuffle options to randomize positions
+            const shuffledOptions = [...currentSound.options].sort(() => Math.random() - 0.5);
+            
+            shuffledOptions.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.addEventListener('click', () => submitGuess(option));
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        // Play the current sound (simulated)
+        function playSound() {
+            if (!currentSound || audioPlaying) return;
+            
+            audioPlaying = true;
+            playBtn.classList.add('playing');
+            soundWave.style.display = 'flex';
+            
+            // Simulate audio playback with visual feedback
+            feedback.textContent = "Playing sound...";
+            
+            // Simulate sound playing for 1.5 seconds
+            setTimeout(() => {
+                feedback.textContent = "Sound played! What did you hear?";
+                playBtn.classList.remove('playing');
+                soundWave.style.display = 'none';
+                audioPlaying = false;
+                hintBtn.disabled = false;
+            }, 1500);
+        }
+
+        // Reveal a hint for the current sound
+        function revealHint() {
+            if (!currentSound || hintUsed) return;
+            
+            hintUsed = true;
+            feedback.textContent = `Hint: ${currentSound.hint}`;
+            feedback.className = 'feedback hint';
+            hintBtn.disabled = true;
+        }
+
+        // Submit a guess
+        function submitGuess(guess) {
+            if (!gameActive || !currentSound) return;
+            
+            // Highlight selected option
+            const optionButtons = document.querySelectorAll('.option-btn');
+            optionButtons.forEach(btn => {
+                if (btn.textContent === guess) {
+                    btn.classList.add(guess === currentSound.answer ? 'correct' : 'incorrect');
+                }
+                if (btn.textContent === currentSound.answer) {
+                    btn.classList.add('correct');
+                }
+                btn.disabled = true;
+            });
+            
+            // Check if the guess is correct
+            if (guess === currentSound.answer) {
+                // Calculate points based on attempts and hint usage
+                let points = 0;
+                if (hintUsed) {
+                    points = 1;
+                } else {
+                    points = 4 - attempts; // 3 for first attempt, 2 for second, 1 for third
+                }
+                
+                score += points;
+                feedback.textContent = `Correct! +${points} points`;
+                feedback.className = 'feedback correct';
+                
+                gameActive = false;
+                
+                // Show correct answer and move to next sound after delay
+                showCorrectAnswer();
+                setTimeout(loadNewSound, 2500);
+            } else {
+                // Incorrect guess
+                attempts--;
+                updateDisplay();
+                
+                if (attempts <= 0) {
+                    // No attempts left
+                    feedback.textContent = "No more attempts!";
+                    feedback.className = 'feedback incorrect';
+                    gameActive = false;
+                    
+                    // Show correct answer and move to next sound after delay
+                    showCorrectAnswer();
+                    setTimeout(loadNewSound, 2500);
+                } else {
+                    feedback.textContent = `Incorrect! ${attempts} attempt(s) remaining.`;
+                    feedback.className = 'feedback incorrect';
+                }
+            }
+        }
+
+        // Show the correct answer
+        function showCorrectAnswer() {
+            correctAnswer.textContent = currentSound.answer;
+            answerReveal.style.display = 'flex';
+        }
+
+        // Update the display with current score and attempts
+        function updateDisplay() {
+            scoreValue.textContent = score;
+            attemptsValue.textContent = attempts;
+        }
+
+        // Start the game when the page loads
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
