@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>শুভ দীপাবলি ও কালীপূজা | Happy Diwali & Kali Puja</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Hind Siliguri', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0c0c, #1a0b2e, #2d1b69);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .kali-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #ff9800;
+            box-shadow: 0 0 40px #ff9800, 0 0 60px #4a148c;
+            margin: 20px auto;
+            animation: glow 3s infinite alternate;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes glow {
+            0% { 
+                box-shadow: 0 0 20px #ff9800, 0 0 30px #4a148c;
+                transform: scale(1);
+            }
+            100% { 
+                box-shadow: 0 0 40px #ffcc00, 0 0 60px #ff9800, 0 0 80px #4a148c;
+                transform: scale(1.02);
+            }
+        }
+
+        .image-frame {
+            position: relative;
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        .image-frame::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border: 3px solid #ffcc00;
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+            z-index: 1;
+        }
+
+        .image-frame::after {
+            content: '';
+            position: absolute;
+            top: -25px;
+            left: -25px;
+            right: -25px;
+            bottom: -25px;
+            border: 2px dashed #ff9800;
+            border-radius: 50%;
+            animation: rotateReverse 25s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes rotateReverse {
+            0% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin: 20px 0;
+            text-shadow: 0 0 10px #ff9800, 0 0 20px #ff9800;
+            background: linear-gradient(to right, #ff9800, #ffcc00, #ff9800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGlow 2s infinite alternate;
+            font-weight: 700;
+        }
+
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 10px #ff9800; }
+            100% { text-shadow: 0 0 20px #ffcc00, 0 0 30px #ff9800; }
+        }
+
+        .bengali-text {
+            font-size: 1.8rem;
+            margin: 30px 0;
+            line-height: 1.6;
+            background: rgba(255, 152, 0, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #ff9800;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            color: #ffeb3b;
+            text-shadow: 0 0 5px rgba(255, 235, 59, 0.5);
+        }
+
+        .message {
+            font-size: 1.3rem;
+            margin: 30px 0;
+            line-height: 1.7;
+            background: rgba(255, 152, 0, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #ff9800;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-section {
+            margin: 40px 0;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+
+        input {
+            padding: 16px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            outline: none;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            border: 2px solid #ff9800;
+            box-shadow: 0 0 15px #ff9800;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        button {
+            padding: 16px 35px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(to right, #ff9800, #ffcc00);
+            color: #1a0b2e;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 152, 0, 0.6);
+        }
+
+        .share-section {
+            margin: 40px 0;
+            display: none;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .share-link {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 18px;
+            border-radius: 10px;
+            margin: 25px 0;
+            word-break: break-all;
+            font-size: 1rem;
+            border: 1px solid rgba(255, 152, 0, 0.3);
+        }
+
+        .social-share {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            min-width: 180px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .whatsapp {
+            background: #25D366;
+            color: white;
+        }
+
+        .facebook {
+            background: #3b5998;
+            color: white;
+        }
+
+        .instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+        }
+
+        .twitter {
+            background: #1DA1F2;
+            color: white;
+        }
+
+        .telegram {
+            background: #0088cc;
+            color: white;
+        }
+
+        .linkedin {
+            background: #0077b5;
+            color: white;
+        }
+
+        .pinterest {
+            background: #BD081C;
+            color: white;
+        }
+
+        .reddit {
+            background: #FF5700;
+            color: white;
+        }
+
+        .copy {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-btn i {
+            font-size: 1.3rem;
+        }
+
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .diya {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #ff9800, #ff6600);
+            border-radius: 50% 50% 30% 30%;
+            box-shadow: 0 0 25px #ff9800;
+            z-index: 5;
+            animation: flicker 2s infinite alternate;
+        }
+
+        .diya::before {
+            content: '';
+            position: absolute;
+            top: -18px;
+            left: 30px;
+            width: 12px;
+            height: 25px;
+            background: #ffcc00;
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 18px #ffcc00;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .left-diya {
+            left: 5%;
+            bottom: 10%;
+        }
+
+        .right-diya {
+            right: 5%;
+            bottom: 10%;
+        }
+
+        .top-left-diya {
+            left: 10%;
+            top: 15%;
+        }
+
+        .top-right-diya {
+            right: 10%;
+            top: 15%;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding: 25px;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            border-top: 1px solid rgba(255, 152, 0, 0.3);
+        }
+
+        .share-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+        }
+
+        .marigold {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #ff9800, #ff6600);
+            border-radius: 50%;
+            opacity: 0.7;
+            z-index: 3;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .kali-image {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .bengali-text {
+                font-size: 1.5rem;
+            }
+            
+            .diya {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .social-share {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .social-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .bengali-text {
+                font-size: 1.3rem;
+                padding: 20px;
+            }
+            
+            .message {
+                font-size: 1.1rem;
+                padding: 20px;
+            }
+            
+            input, button {
+                padding: 14px;
+            }
+            
+            .share-title {
+                font-size: 1.5rem;
+            }
+            
+            .diya {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .left-diya, .right-diya {
+                bottom: 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Firework elements will be created by JavaScript -->
+    
+    <!-- Diya decorations -->
+    <div class="diya left-diya"></div>
+    <div class="diya right-diya"></div>
+    <div class="diya top-left-diya"></div>
+    <div class="diya top-right-diya"></div>
+    
+    <!-- Marigold flowers -->
+    <div class="marigold" style="left: 15%; top: 20%;"></div>
+    <div class="marigold" style="left: 25%; top: 10%;"></div>
+    <div class="marigold" style="right: 15%; top: 20%;"></div>
+    <div class="marigold" style="right: 25%; top: 10%;"></div>
+    <div class="marigold" style="left: 20%; bottom: 15%;"></div>
+    <div class="marigold" style="right: 20%; bottom: 15%;"></div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="image-frame">
+                <img src="https://i.postimg.cc/YSSNdZtG/Generated-Image-October-19-2025-12-25-PM-1.jpg" alt="মা কালী" class="kali-image">
+            </div>
+            <h1 id="greeting">শুভ দীপাবলি ও কালীপূজা</h1>
+        </div>
+        
+        <div class="bengali-text">
+            <p>‘শুভ দীপাবলি ও কালীপূজা’র আন্তরিক শুভেচ্ছা। আপনার জীবন হোক আলো ও আনন্দে ভরপুর।’</p>
+        </div>
+        
+        <div class="message">
+            <p>May the divine light of Diwali and Kali Puja spread into your life bringing peace, prosperity, happiness and good health. Wishing you and your family a very Happy Diwali and Kali Puja!</p>
+        </div>
+        
+        <div class="input-section">
+            <h2 class="share-title">আপনার শুভেচ্ছা তৈরি করুন</h2>
+            <div class="input-group">
+                <input type="text" id="nameInput" placeholder="আপনার নাম লিখুন">
+                <button id="generateBtn">শেয়ার করার লিঙ্ক তৈরি করুন</button>
+            </div>
+        </div>
+        
+        <div class="share-section" id="shareSection">
+            <h2 class="share-title">আপনার শুভেচ্ছা শেয়ার করুন</h2>
+            <h3>আপনার ব্যক্তিগত শুভেচ্ছা লিঙ্ক:</h3>
+            <div class="share-link" id="shareLink"></div>
+            
+            <div class="social-share">
+                <a href="#" class="social-btn whatsapp" id="whatsappBtn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <a href="#" class="social-btn facebook" id="facebookBtn" target="_blank">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </a>
+                <a href="#" class="social-btn instagram" id="instagramBtn" target="_blank">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+                <a href="#" class="social-btn twitter" id="twitterBtn" target="_blank">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+                <a href="#" class="social-btn telegram" id="telegramBtn" target="_blank">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+                <a href="#" class="social-btn linkedin" id="linkedinBtn" target="_blank">
+                    <i class="fab fa-linkedin-in"></i> LinkedIn
+                </a>
+                <a href="#" class="social-btn pinterest" id="pinterestBtn" target="_blank">
+                    <i class="fab fa-pinterest-p"></i> Pinterest
+                </a>
+                <a href="#" class="social-btn reddit" id="redditBtn" target="_blank">
+                    <i class="fab fa-reddit-alien"></i> Reddit
+                </a>
+                <button class="social-btn copy" id="copyBtn">
+                    <i class="fas fa-copy"></i> লিঙ্ক কপি করুন
+                </button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>দীপাবলি ও কালীপূজা ২০২৫ এর জন্য প্রণীত | আপনার প্রিয়জনদের সাথে আনন্দ শেয়ার করুন</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">এই দীপাবলি, ভালোবাসার দীপ জ্বালুন, দুঃখের শৃঙ্খল ভেঙে ফেলুন, সমৃদ্ধির রকেট উড়িয়ে দিন এবং সুখের ফুলদানি ফুটিয়ে তুলুন!</p>
+        </div>
+    </div>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const fromParam = urlParams.get('from');
+        
+        // Update greeting if 'from' parameter exists
+        if (fromParam) {
+            document.getElementById('greeting').textContent = `${fromParam}-এর পক্ষ থেকে শুভ দীপাবলি ও কালীপূজা`;
+            document.getElementById('nameInput').value = fromParam;
+        }
+        
+        // Generate shareable link
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            const nameInput = document.getElementById('nameInput').value.trim();
+            
+            if (nameInput) {
+                const currentUrl = window.location.href.split('?')[0];
+                const shareableUrl = `${currentUrl}?from=${encodeURIComponent(nameInput)}`;
+                
+                document.getElementById('shareLink').textContent = shareableUrl;
+                document.getElementById('shareSection').style.display = 'block';
+                
+                // Set up social sharing
+                const message = `🎇 শুভ দীপাবলি ও কালীপূজা! ${nameInput} আপনার জন্য বিশেষ শুভেচ্ছা পাঠিয়েছেন। দেখতে এবং নিজের তৈরি করতে এখানে ক্লিক করুন: ${shareableUrl} 🪔`;
+                const encodedMessage = encodeURIComponent(message);
+                const encodedUrl = encodeURIComponent(shareableUrl);
+                
+                // WhatsApp
+                document.getElementById('whatsappBtn').href = `https://wa.me/?text=${encodedMessage}`;
+                
+                // Facebook
+                document.getElementById('facebookBtn').href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedMessage}`;
+                
+                // Instagram (opens in app or web)
+                document.getElementById('instagramBtn').href = `https://www.instagram.com/?url=${encodedUrl}`;
+                
+                // Twitter
+                document.getElementById('twitterBtn').href = `https://twitter.com/intent/tweet?text=${encodedMessage}&url=${encodedUrl}`;
+                
+                // Telegram
+                document.getElementById('telegramBtn').href = `https://t.me/share/url?url=${encodedUrl}&text=${encodedMessage}`;
+                
+                // LinkedIn
+                document.getElementById('linkedinBtn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+                
+                // Pinterest
+                document.getElementById('pinterestBtn').href = `https://pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encodedMessage}`;
+                
+                // Reddit
+                document.getElementById('redditBtn').href = `https://reddit.com/submit?url=${encodedUrl}&title=${encodedMessage}`;
+                
+                // Copy Link
+                document.getElementById('copyBtn').addEventListener('click', function() {
+                    navigator.clipboard.writeText(shareableUrl).then(() => {
+                        const originalText = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i> কপি করা হয়েছে!';
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                        }, 2000);
+                    });
+                });
+                
+                // Scroll to share section
+                document.getElementById('shareSection').scrollIntoView({ behavior: 'smooth' });
+                
+                // Create celebration fireworks
+                createCelebrationFireworks();
+            } else {
+                alert('আপনার ব্যক্তিগত দীপাবলি শুভেচ্ছা তৈরি করতে প্রথমে আপনার নাম লিখুন!');
+            }
+        });
+        
+        // Fireworks animation
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.classList.add('firework');
+            
+            // Random position
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            
+            // Random color
+            const colors = ['#ff9800', '#ffcc00', '#ff6600', '#ff3300', '#ffff00', '#ff00ff', '#00ffff'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            firework.style.left = `${x}px`;
+            firework.style.top = `${y}px`;
+            firework.style.backgroundColor = color;
+            
+            document.body.appendChild(firework);
+            
+            // Animate firework
+            const size = 5 + Math.random() * 15;
+            const duration = 1 + Math.random() * 2;
+            
+            const keyframes = [
+                { transform: 'scale(0)', opacity: 1 },
+                { transform: `scale(${size})`, opacity: 0 }
+            ];
+            
+            const options = {
+                duration: duration * 1000,
+                easing: 'cubic-bezier(0, 0.9, 0.57, 1)'
+            };
+            
+            firework.animate(keyframes, options).onfinish = () => {
+                firework.remove();
+            };
+        }
+        
+        // Create celebration fireworks (more intense)
+        function createCelebrationFireworks() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => createFirework(), i * 100);
+            }
+        }
+        
+        // Create initial fireworks
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => createFirework(), i * 150);
+        }
+        
+        // Create fireworks every 3 seconds
+        setInterval(() => {
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => createFirework(), i * 200);
+            }
+        }, 3000);
+        
+        // Add more floating diyas for mobile
+        if (window.innerWidth < 768) {
+            for (let i = 0; i < 5; i++) {
+                const diya = document.createElement('div');
+                diya.classList.add('diya');
+                diya.style.left = `${Math.random() * 80 + 10}%`;
+                diya.style.bottom = `${Math.random() * 30}%`;
+                diya.style.opacity = '0.7';
+                document.body.appendChild(diya);
+            }
+        }
+        
+        // Auto-open share section if name is already in URL
+        if (fromParam) {
+            setTimeout(() => {
+                document.getElementById('generateBtn').click();
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
