@@ -534,6 +534,492 @@
         // Tool data with categories
         const tools = [
             {
+                name: "Subha Dipabali",
+                description: "Bengali Diwali & Kali Puja Greeting - Create personalized Bengali Diwali greetings to share with friends and family.",
+                category: "creativity",
+                link: "subha-dipabali.html"
+            },
+            {
+                name: "Happy Diwali",
+                description: "Festive Diwali Greeting Creator - Design and share beautiful Diwali greetings with customizable messages.",
+                category: "creativity",
+                link: "happy-diwali.html"
+            },
+            {
+                name: "Mood Mosaic",
+                description: "Visual Emotion Tracker - Track and visualize your emotional patterns over time.",
+                category: "mindfulness",
+                link: "mood-mosaic.html"
+            },
+            {
+                name: "Tiny Promises",
+                description: "Micro Habit Keeper - Build lasting habits through small, daily commitments.",
+                category: "productivity",
+                link: "tiny-promises.html"
+            },
+            {
+                name: "Idea Orchard",
+                description: "Creative Idea Growing Game - Nurture your ideas from seed to fruition.",
+                category: "creativity",
+                link: "idea-orchard.html"
+            },
+            {
+                name: "Life Alignment Compass",
+                description: "Find your true north and align your daily actions with your core values.",
+                category: "mindfulness",
+                link: "life-alignment-compass.html"
+            },
+            {
+                name: "WordSprint",
+                description: "Typing + Vocabulary Challenge - Improve your typing speed while expanding your vocabulary.",
+                category: "learning",
+                link: "wordsprint.html"
+            },
+            {
+                name: "Carbon Footprint Simulator",
+                description: "Understand and reduce your environmental impact through interactive simulations.",
+                category: "learning",
+                link: "carbon-footprint.html"
+            },
+            {
+                name: "Focus Dice",
+                description: "Randomly select a focused task and commit to completing it.",
+                category: "productivity",
+                link: "focus-dice.html"
+            },
+            {
+                name: "Compliment Generator",
+                description: "Create personalized, meaningful compliments for friends and colleagues.",
+                       
+        .nav-desktop a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Mobile Navigation */
+        .nav-mobile {
+            display: none;
+            padding: 1rem;
+        }
+        
+        .mobile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        .mobile-menu {
+            display: none;
+            list-style: none;
+            padding-top: 1rem;
+        }
+        
+        .mobile-menu li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .mobile-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .mobile-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 3rem;
+        }
+        
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--header-bg);
+            position: relative;
+        }
+        
+        section h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            margin: 0.5rem auto;
+            border-radius: 2px;
+        }
+        
+        .about {
+            background-color: var(--section-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .about p {
+            margin-bottom: 1rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        /* Tool Card */
+        .tool-card {
+            background-color: var(--card-bg);
+            color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px var(--shadow);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--accent-color);
+        }
+
+        .tool-card:hover {
+            background-color: var(--card-hover-bg);
+            color: var(--card-hover-text);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--shadow);
+        }
+
+        .tool-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: inherit;
+        }
+
+        .tool-card p {
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+            color: inherit;
+        }
+
+        .tool-card .tool-button {
+            background-color: var(--button-bg);
+            color: var(--card-hover-text);
+            border: none;
+            border-radius: 5px;
+            padding: 0.7rem 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: flex-start;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .tool-card .tool-button:hover {
+            background-color: var(--button-hover-bg);
+        }
+        
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .category-btn {
+            background-color: white;
+            border: 2px solid var(--header-bg);
+            color: var(--header-bg);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--header-bg);
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--header-bg);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--card-hover-bg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .tool-card h3 {
+                font-size: 1.2rem;
+            }
+            
+            .nav-desktop {
+                display: none;
+            }
+            
+            .nav-mobile {
+                display: block;
+            }
+            
+            .mobile-menu.active {
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: 0 1rem;
+            }
+            
+            .tool-card {
+                padding: 1rem;
+            }
+            
+            section h2 {
+                font-size: 1.7rem;
+            }
+            
+            .category-filter {
+                gap: 0.5rem;
+            }
+            
+            .category-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* Loading Animation */
+        .loading {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .loaded {
+            opacity: 1;
+        }
+        
+        /* No Results Message */
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: #777;
+            grid-column: 1 / -1;
+        }
+        
+        /* Hide navigation on scroll */
+        .nav-hidden {
+            transform: translateY(-100%);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Adda Store</h1>
+        <p>Discover unique tools and games designed to enhance your daily life, productivity, and creativity.</p>
+    </header>
+    
+    <nav id="mainNav">
+        <div class="nav-container">
+            <!-- Desktop Navigation -->
+            <ul class="nav-desktop">
+                <li><a href="#all-tools">All Tools</a></li>
+                <li><a href="#productivity">Productivity</a></li>
+                <li><a href="#mindfulness">Mindfulness</a></li>
+                <li><a href="#creativity">Creativity</a></li>
+                <li><a href="#learning">Learning</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            
+            <!-- Mobile Navigation -->
+            <div class="nav-mobile">
+                <div class="mobile-header">
+                    <span>Menu</span>
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                </div>
+                <ul class="mobile-menu" id="mobileMenu">
+                    <li><a href="#all-tools">All Tools</a></li>
+                    <li><a href="#productivity">Productivity</a></li>
+                    <li><a href="#mindfulness">Mindfulness</a></li>
+                    <li><a href="#creativity">Creativity</a></li>
+                    <li><a href="#learning">Learning</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="all-tools">
+            <h2>All Tools & Games</h2>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search a tool...">
+                <div class="search-icon">🔍</div>
+            </div>
+            
+            <div class="category-filter">
+                <button class="category-btn active" data-category="all">All Tools</button>
+                <button class="category-btn" data-category="productivity">Productivity</button>
+                <button class="category-btn" data-category="mindfulness">Mindfulness</button>
+                <button class="category-btn" data-category="creativity">Creativity</button>
+                <button class="category-btn" data-category="learning">Learning</button>
+            </div>
+            
+            <div class="tools-grid" id="toolsContainer">
+                <!-- Tool cards will be generated by JavaScript -->
+            </div>
+        </section>
+        
+        <!-- About Section moved to bottom -->
+        <section class="about" id="about">
+            <h2>About Adda Store</h2>
+            <p>Welcome to AddaStore.fun — a creative playground where tools meet games, and fun meets purpose.</p>
+            
+            <p>AddaStore.fun is a collection of beautifully simple, browser-based experiences designed to help you think better, feel calmer, and grow creatively — all while having fun. From mindfulness tools and focus boosters to idea-growing games and kindness challenges, every feature on AddaStore.fun is built to inspire reflection, curiosity, and joy.</p>
+            
+            <p><strong>🎨 Create, Reflect, Play</strong><br>
+            Explore tools like Mood Mosaic, a visual emotion tracker that turns feelings into art; Tiny Promises, a micro-habit game that helps you build self-trust; and Idea Orchard, where creative ideas grow into digital trees.</p>
+            
+            <p><strong>🧭 Grow with Insight</strong><br>
+            Find balance with Life Alignment Compass, boost focus with Focus Dice, or test your typing and vocabulary in WordSprint. Each experience combines psychology, design, and gentle gamification to make personal growth engaging and rewarding.</p>
+            
+            <p><strong>🌍 Play with Purpose</strong><br>
+            Whether you're learning through Learn-a-Minute, spreading positivity with the Compliment Generator, or exploring sustainability in the Carbon Footprint Simulator, AddaStore.fun transforms small digital moments into meaningful ones.</p>
+            
+            <p><strong>✨ Our Philosophy</strong><br>
+            We believe the best web experiences are authentic, lightweight, and human — no clutter, no endless scrolling. Just tools that work instantly, games that make you think, and stories that help you reconnect with yourself and others.</p>
+            
+            <p><strong>🔍 Why People Love It</strong></p>
+            <ul>
+                <li>Free and easy to use — no sign-ups required.</li>
+                <li>Designed for focus, creativity, and emotional wellness.</li>
+                <li>Constantly growing with new mini-tools and mindful games.</li>
+            </ul>
+            
+            <p>AddaStore.fun isn't just a website — it's your digital creative toolkit for a calmer, smarter, kinder internet.<br>
+            Start exploring, one click at a time.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Adda Store. All tools designed with care and purpose.</p>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="contact.html">Contact Us</a>
+                <a href="feedback.html">Feedback</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tool data with categories
+        const tools = [
+            {
                 name: "Mood Mosaic",
                 description: "Visual Emotion Tracker - Track and visualize your emotional patterns over time.",
                 category: "mindfulness",
