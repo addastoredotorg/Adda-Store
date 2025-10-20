@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Battle Analyzer | India Women vs New Zealand Women | AddaStore.fun</title>
+    <meta name="description" content="Compare India and New Zealand women's cricket players with live stats, AI predictions, and fan votes on AddaStore.fun.">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --india-blue: #1a3c8b;
+            --india-light-blue: #2a5cbb;
+            --nz-black: #000000;
+            --nz-green: #008000;
+            --light-bg: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--india-blue), var(--nz-black));
+            color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .player-selection {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .team-selector {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .team-india {
+            border-top: 5px solid var(--india-blue);
+        }
+
+        .team-nz {
+            border-top: 5px solid var(--nz-black);
+        }
+
+        .team-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .team-india .team-title {
+            color: var(--india-blue);
+        }
+
+        .team-nz .team-title {
+            color: var(--nz-black);
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            background-color: white;
+        }
+
+        .comparison-container {
+            display: none;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .comparison-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background: linear-gradient(to right, var(--india-blue), var(--nz-black));
+            color: white;
+        }
+
+        .player-card {
+            flex: 1;
+            text-align: center;
+        }
+
+        .player-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .player-role {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .player-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 15px auto;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #777;
+            border: 3px solid white;
+        }
+
+        .stats-container {
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .stats-column {
+            flex: 1;
+        }
+
+        .stats-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .stat-name {
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-weight: bold;
+        }
+
+        .chart-container {
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .chart-title {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .prediction-container {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .prediction-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--india-blue);
+        }
+
+        .prediction-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .prediction-chart {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .prediction-text {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .prediction-winner {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .prediction-comment {
+            font-style: italic;
+            line-height: 1.5;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--india-blue);
+        }
+
+        .poll-container {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .poll-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .poll-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .poll-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .poll-btn-india {
+            background-color: var(--india-blue);
+            color: white;
+        }
+
+        .poll-btn-nz {
+            background-color: var(--nz-black);
+            color: white;
+        }
+
+        .poll-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .poll-results {
+            margin-top: 20px;
+        }
+
+        .poll-bar {
+            height: 30px;
+            background-color: #eee;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .poll-fill {
+            height: 100%;
+            border-radius: 15px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .poll-fill-india {
+            background-color: var(--india-blue);
+        }
+
+        .poll-fill-nz {
+            background-color: var(--nz-black);
+        }
+
+        .poll-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Match Preview Styles */
+        .match-preview {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .match-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .match-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--india-blue);
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .intro {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .team-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .team {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .team-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .flag {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+
+        .team-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .player-list {
+            list-style-type: none;
+            margin-top: 15px;
+        }
+
+        .player {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .player:last-child {
+            border-bottom: none;
+        }
+
+        .player-name {
+            font-weight: 500;
+        }
+
+        .player-role {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            background-color: #fff8e1;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .highlight h2 {
+            color: #d32f2f;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ffcdd2;
+            padding-bottom: 10px;
+        }
+
+        .battle {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #1a237e;
+        }
+
+        .stats-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .stats-section h2 {
+            color: #1a237e;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e8eaf6;
+            padding-bottom: 10px;
+        }
+
+        .prediction-section {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .prediction-section h2 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+
+        .hashtags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .hashtag {
+            background: #1a237e;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .final-take {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-top: 5px solid #ff9800;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .keywords {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .keywords h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .social-share {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .share-btn.whatsapp {
+            background-color: #25D366;
+        }
+
+        .share-btn.facebook {
+            background-color: #3b5998;
+        }
+
+        .share-btn.twitter {
+            background-color: #1DA1F2;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+
+        @media (max-width: 768px) {
+            .player-selection {
+                flex-direction: column;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+            }
+            
+            .comparison-header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .poll-buttons {
+                flex-direction: column;
+            }
+            
+            .team-section {
+                flex-direction: column;
+            }
+            
+            .meta-info {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .social-share {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-btn {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Player Battle Analyzer Section -->
+        <header>
+            <h1>⚔️ Player Battle Analyzer: India Women vs New Zealand Women</h1>
+            <p class="subtitle">Compare players, view stats, and predict match outcomes</p>
+        </header>
+
+        <div class="player-selection">
+            <div class="team-selector team-india">
+                <h2 class="team-title">🇮🇳 India Women</h2>
+                <select id="india-player">
+                    <option value="">Select Indian Player</option>
+                    <option value="pratika-rawal">Pratika Rawal (Batter)</option>
+                    <option value="smriti-mandhana">Smriti Mandhana (Batter)</option>
+                    <option value="harleen-deol">Harleen Deol (Batting Allrounder)</option>
+                    <option value="harmanpreet-kaur">Harmanpreet Kaur (C) (Batting Allrounder)</option>
+                    <option value="deepti-sharma">Deepti Sharma (Batting Allrounder)</option>
+                    <option value="richa-ghosh">Richa Ghosh (WK) (WK-Batter)</option>
+                    <option value="amanjot-kaur">Amanjot Kaur (Batting Allrounder)</option>
+                    <option value="sneh-rana">Sneh Rana (Bowling Allrounder)</option>
+                    <option value="kranti-gaud">Kranti Gaud (Bowler)</option>
+                    <option value="shree-charani">Shree Charani (Bowler)</option>
+                    <option value="renuka-singh">Renuka Singh Thakur (Bowler)</option>
+                </select>
+            </div>
+
+            <div class="team-selector team-nz">
+                <h2 class="team-title">🇳🇿 New Zealand Women</h2>
+                <select id="nz-player">
+                    <option value="">Select New Zealand Player</option>
+                    <option value="suzie-bates">Suzie Bates (Batting Allrounder)</option>
+                    <option value="georgia-plimmer">Georgia Plimmer (Batter)</option>
+                    <option value="amelia-kerr">Amelia Kerr (Bowling Allrounder)</option>
+                    <option value="sophie-devine">Sophie Devine (C) (Batting Allrounder)</option>
+                    <option value="brooke-halliday">Brooke Halliday (Batting Allrounder)</option>
+                    <option value="maddy-green">Maddy Green (Batter)</option>
+                    <option value="isabella-gaze">Isabella Gaze (WK) (WK-Batter)</option>
+                    <option value="jess-kerr">Jess Kerr (Bowler)</option>
+                    <option value="rosemary-mair">Rosemary Mair (Bowler)</option>
+                    <option value="bree-illing">Bree Illing (Bowler)</option>
+                    <option value="eden-carson">Eden Carson (Bowler)</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="comparison-container" class="comparison-container">
+            <div class="comparison-header">
+                <div class="player-card">
+                    <div class="player-name" id="india-player-name">Player Name</div>
+                    <div class="player-role" id="india-player-role">Role</div>
+                    <div class="player-image" id="india-player-image">Player Image</div>
+                </div>
+                <div class="vs-badge">VS</div>
+                <div class="player-card">
+                    <div class="player-name" id="nz-player-name">Player Name</div>
+                    <div class="player-role" id="nz-player-role">Role</div>
+                    <div class="player-image" id="nz-player-image">Player Image</div>
+                </div>
+            </div>
+
+            <div class="stats-container">
+                <div class="stats-column">
+                    <h3 class="stats-title">Recent Performance</h3>
+                    <div id="india-recent-stats">
+                        <!-- Stats will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="stats-column">
+                    <h3 class="stats-title">Recent Performance</h3>
+                    <div id="nz-recent-stats">
+                        <!-- Stats will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Player Comparison</h3>
+                <canvas id="comparison-chart"></canvas>
+            </div>
+        </div>
+
+        <div id="prediction-container" class="prediction-container">
+            <h2 class="prediction-title">AI Match Prediction</h2>
+            <div class="prediction-content">
+                <div class="prediction-chart">
+                    <canvas id="prediction-chart"></canvas>
+                </div>
+                <div class="prediction-text">
+                    <div class="prediction-winner" id="prediction-winner">Predicted Winner: Player Name</div>
+                    <div class="prediction-comment" id="prediction-comment">
+                        AI analysis will appear here after player selection.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="poll-container">
+            <h2 class="poll-title">Community Poll: Who Wins?</h2>
+            <div class="poll-buttons">
+                <button class="poll-btn poll-btn-india" id="vote-india">Vote for India Player</button>
+                <button class="poll-btn poll-btn-nz" id="vote-nz">Vote for New Zealand Player</button>
+            </div>
+            <div class="poll-results">
+                <div class="poll-bar">
+                    <div class="poll-fill poll-fill-india" id="india-poll-fill" style="width: 50%">50%</div>
+                </div>
+                <div class="poll-labels">
+                    <span id="india-poll-label">India Player: 50%</span>
+                    <span id="nz-poll-label">NZ Player: 50%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Match Preview Section -->
+        <div class="match-preview">
+            <div class="match-header">
+                <h1 class="match-title">India Women vs New Zealand Women: Full Playing XI, Key Battles and Match Buzz</h1>
+                <div class="meta-info">
+                    <span>By Sports Desk | AddaStore.fun</span>
+                    <span>Updated: October 21, 2025</span>
+                </div>
+                <p class="intro">The stage is set for another blockbuster in women's cricket as India Women take on New Zealand Women in what promises to be a gripping contest between two evenly matched sides. With pride, points, and momentum on the line, both teams will look to stamp their authority early in the series.</p>
+            </div>
+            
+            <div class="social-share">
+                <a href="#" class="share-btn whatsapp">Share on WhatsApp</a>
+                <a href="#" class="share-btn facebook">Share on Facebook</a>
+                <a href="#" class="share-btn twitter">Share on Twitter</a>
+            </div>
+            
+            <div class="team-section">
+                <div class="team">
+                    <div class="team-header">
+                        <div class="flag">🇮🇳</div>
+                        <div class="team-name">India Women Playing XI</div>
+                    </div>
+                    <p>India have gone with a balanced mix of youth and experience for this encounter. The team's combination looks strong on paper, with depth in both batting and bowling.</p>
+                    <ul class="player-list">
+                        <li class="player">
+                            <span class="player-name">Pratika Rawal</span>
+                            <span class="player-role">Batter</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Smriti Mandhana</span>
+                            <span class="player-role">Batter</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Harleen Deol</span>
+                            <span class="player-role">Batting Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Harmanpreet Kaur (C)</span>
+                            <span class="player-role">Batting Allrounder & Captain</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Deepti Sharma</span>
+                            <span class="player-role">Batting Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Richa Ghosh (WK)</span>
+                            <span class="player-role">Wicketkeeper-Batter</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Amanjot Kaur</span>
+                            <span class="player-role">Batting Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Sneh Rana</span>
+                            <span class="player-role">Bowling Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Kranti Gaud</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Shree Charani</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Renuka Singh Thakur</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                    </ul>
+                    <p style="margin-top: 15px;">Mandhana's elegant strokeplay at the top, coupled with Harmanpreet's aggression in the middle, gives India the firepower they need. Renuka Singh's ability to swing the new ball could prove decisive, while youngsters like Pratika Rawal and Kranti Gaud bring fresh energy to the lineup.</p>
+                </div>
+                
+                <div class="team">
+                    <div class="team-header">
+                        <div class="flag">🇳🇿</div>
+                        <div class="team-name">New Zealand Women Playing XI</div>
+                    </div>
+                    <p>The White Ferns, led by the dynamic Sophie Devine, have also fielded a well-rounded XI. Their lineup blends the wisdom of experience with youthful flair — a combination that has served them well in recent outings.</p>
+                    <ul class="player-list">
+                        <li class="player">
+                            <span class="player-name">Suzie Bates</span>
+                            <span class="player-role">Batting Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Georgia Plimmer</span>
+                            <span class="player-role">Batter</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Amelia Kerr</span>
+                            <span class="player-role">Bowling Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Sophie Devine (C)</span>
+                            <span class="player-role">Batting Allrounder & Captain</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Brooke Halliday</span>
+                            <span class="player-role">Batting Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Maddy Green</span>
+                            <span class="player-role">Batter</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Isabella Gaze (WK)</span>
+                            <span class="player-role">Wicketkeeper-Batter</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Jess Kerr</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Rosemary Mair</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Bree Illing</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Eden Carson</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                    </ul>
+                    <p style="margin-top: 15px;">Devine's attacking mindset, backed by Amelia Kerr's all-round class, makes New Zealand a formidable unit. Veterans like Suzie Bates continue to provide calmness at the top of the order — an invaluable asset in pressure situations.</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <h2>🔥 Key Player Battles to Watch</h2>
+                <div class="battle">
+                    <strong>Smriti Mandhana vs Jess Kerr:</strong> Timing versus swing — a battle that could decide the Powerplay momentum.
+                </div>
+                <div class="battle">
+                    <strong>Harmanpreet Kaur vs Amelia Kerr:</strong> Two world-class all-rounders, two captains — expect fireworks when they face off.
+                </div>
+                <div class="battle">
+                    <strong>Renuka Singh vs Suzie Bates:</strong> Experience meets pace; early breakthroughs could set the tone.
+                </div>
+                <p style="margin-top: 15px;">These matchups promise to light up the game and could very well shape the final outcome.</p>
+            </div>
+            
+            <div class="stats-section">
+                <h2>📊 Head-to-Head Overview</h2>
+                <p>In recent years, contests between India and New Zealand Women have often gone down to the wire. India tend to dominate in home conditions, while the White Ferns have historically been tough to beat in tighter chases.</p>
+                <p>The head-to-head record may slightly favor India, but both sides know momentum can swing quickly in modern limited-overs cricket.</p>
+            </div>
+            
+            <div class="stats-section">
+                <h2>🌟 What's at Stake</h2>
+                <p>Beyond the result, this match holds critical ICC Women's Championship points.</p>
+                <ul style="padding-left: 20px; margin-top: 10px;">
+                    <li>For India, it's about consolidating their top-four position and testing their bench strength.</li>
+                    <li>For New Zealand, it's a chance to bounce back strong and fine-tune combinations before major tournaments on the horizon.</li>
+                </ul>
+                <p style="margin-top: 15px;">The emergence of new talents like Pratika Rawal and Kranti Gaud adds another layer of excitement for Indian fans, who are eager to see the next generation step up.</p>
+            </div>
+            
+            <div class="prediction-section">
+                <h2>🏏 Fans, Predictions & Social Buzz</h2>
+                <p>As the players gear up, social media is already buzzing with excitement. Hashtags like #INDvNZW, #SmritiMandhana, and #HarmanpreetKaur are trending across platforms.</p>
+                <div class="hashtags">
+                    <span class="hashtag">#INDvNZW</span>
+                    <span class="hashtag">#SmritiMandhana</span>
+                    <span class="hashtag">#HarmanpreetKaur</span>
+                    <span class="hashtag">#WomensCricket</span>
+                    <span class="hashtag">#INDWvsNZW</span>
+                </div>
+                <p>Fan polls currently tilt slightly in India's favor — around 55% of fans backing the home side to win. However, with players like Devine and Kerr in form, New Zealand are more than capable of pulling off an upset.</p>
+            </div>
+            
+            <div class="stats-section">
+                <h2>🕒 Match Time & Live Coverage</h2>
+                <p>The match kicks off later today with live coverage across major sports networks and streaming platforms. Fans can follow ball-by-ball updates, highlights, and post-match analysis right here on AddaStore.fun — along with interactive fan polls and AI-powered prediction tools.</p>
+            </div>
+            
+            <div class="final-take">
+                <h2>💬 Final Word</h2>
+                <p>The India Women vs New Zealand Women rivalry continues to grow in stature, embodying the spirit and progress of women's cricket.</p>
+                <p>This isn't just about runs and wickets — it's about the pride of two cricketing nations and the inspiring athletes leading the way for the next generation.</p>
+                <p>Whether you're cheering for Smriti Mandhana's finesse or Sophie Devine's firepower, one thing is certain — we're in for a thrilling contest.</p>
+            </div>
+            
+            <div class="keywords">
+                <h3>Keywords:</h3>
+                <p>India Women vs New Zealand Women 2025, INDW vs NZW playing XI, Smriti Mandhana live score, Harmanpreet Kaur innings, Amelia Kerr highlights, India vs New Zealand Women match today, ICC Women's Championship 2025, Women's cricket live updates, trending cricket news, AddaStore.fun sports coverage.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>Player Battle Analyzer &copy; 2025 | AddaStore.fun</p>
+        </footer>
+    </div>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Player Battle Analyzer",
+        "applicationCategory": "Sports Analysis Tool",
+        "operatingSystem": "Web",
+        "url": "https://www.addastore.fun/player-battle-analyzer",
+        "description": "Compare India and New Zealand women's cricket players with live stats, AI predictions, and fan votes.",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+
+    <script>
+        // Player data (in a real app, this would come from an API)
+        const playerData = {
+            // India Players
+            'pratika-rawal': {
+                name: 'Pratika Rawal',
+                role: 'Batter',
+                recentStats: [
+                    { match: 'vs AUS', runs: 45, wickets: 0, strikeRate: 112.5 },
+                    { match: 'vs ENG', runs: 32, wickets: 0, strikeRate: 94.1 },
+                    { match: 'vs SA', runs: 28, wickets: 0, strikeRate: 103.7 },
+                    { match: 'vs PAK', runs: 51, wickets: 0, strikeRate: 118.6 },
+                    { match: 'vs BAN', runs: 39, wickets: 0, strikeRate: 97.5 }
+                ],
+                averages: { batting: 39.0, bowling: 0.0 },
+                attributes: { consistency: 75, power: 70, fielding: 65, influence: 68 }
+            },
+            'smriti-mandhana': {
+                name: 'Smriti Mandhana',
+                role: 'Batter',
+                recentStats: [
+                    { match: 'vs AUS', runs: 68, wickets: 0, strikeRate: 125.9 },
+                    { match: 'vs ENG', runs: 42, wickets: 0, strikeRate: 110.5 },
+                    { match: 'vs SA', runs: 55, wickets: 0, strikeRate: 118.3 },
+                    { match: 'vs PAK', runs: 78, wickets: 0, strikeRate: 132.2 },
+                    { match: 'vs BAN', runs: 61, wickets: 0, strikeRate: 121.8 }
+                ],
+                averages: { batting: 61.0, bowling: 0.0 },
+                attributes: { consistency: 82, power: 85, fielding: 75, influence: 80 }
+            },
+            'harmanpreet-kaur': {
+                name: 'Harmanpreet Kaur',
+                role: 'Batting Allrounder',
+                recentStats: [
+                    { match: 'vs AUS', runs: 52, wickets: 1, strikeRate: 118.2 },
+                    { match: 'vs ENG', runs: 67, wickets: 0, strikeRate: 124.1 },
+                    { match: 'vs SA', runs: 45, wickets: 2, strikeRate: 112.5 },
+                    { match: 'vs PAK', runs: 38, wickets: 1, strikeRate: 105.6 },
+                    { match: 'vs BAN', runs: 71, wickets: 0, strikeRate: 129.1 }
+                ],
+                averages: { batting: 54.6, bowling: 28.5 },
+                attributes: { consistency: 78, power: 88, fielding: 72, influence: 85 }
+            },
+            'deepti-sharma': {
+                name: 'Deepti Sharma',
+                role: 'Batting Allrounder',
+                recentStats: [
+                    { match: 'vs AUS', runs: 32, wickets: 2, strikeRate: 94.1 },
+                    { match: 'vs ENG', runs: 28, wickets: 3, strikeRate: 87.5 },
+                    { match: 'vs SA', runs: 41, wickets: 1, strikeRate: 102.5 },
+                    { match: 'vs PAK', runs: 35, wickets: 2, strikeRate: 97.2 },
+                    { match: 'vs BAN', runs: 29, wickets: 1, strikeRate: 90.6 }
+                ],
+                averages: { batting: 33.0, bowling: 24.3 },
+                attributes: { consistency: 80, power: 68, fielding: 78, influence: 75 }
+            },
+            'renuka-singh': {
+                name: 'Renuka Singh Thakur',
+                role: 'Bowler',
+                recentStats: [
+                    { match: 'vs AUS', runs: 8, wickets: 3, strikeRate: 66.7 },
+                    { match: 'vs ENG', runs: 5, wickets: 2, strikeRate: 41.7 },
+                    { match: 'vs SA', runs: 12, wickets: 4, strikeRate: 100.0 },
+                    { match: 'vs PAK', runs: 6, wickets: 3, strikeRate: 50.0 },
+                    { match: 'vs BAN', runs: 4, wickets: 2, strikeRate: 33.3 }
+                ],
+                averages: { batting: 7.0, bowling: 18.2 },
+                attributes: { consistency: 82, power: 65, fielding: 70, influence: 78 }
+            },
+            
+            // New Zealand Players
+            'suzie-bates': {
+                name: 'Suzie Bates',
+                role: 'Batting Allrounder',
+                recentStats: [
+                    { match: 'vs AUS', runs: 52, wickets: 1, strikeRate: 108.3 },
+                    { match: 'vs ENG', runs: 38, wickets: 0, strikeRate: 95.0 },
+                    { match: 'vs SA', runs: 45, wickets: 2, strikeRate: 112.5 },
+                    { match: 'vs PAK', runs: 61, wickets: 1, strikeRate: 119.6 },
+                    { match: 'vs BAN', runs: 29, wickets: 0, strikeRate: 96.7 }
+                ],
+                averages: { batting: 45.0, bowling: 25.5 },
+                attributes: { consistency: 78, power: 72, fielding: 80, influence: 75 }
+            },
+            'sophie-devine': {
+                name: 'Sophie Devine',
+                role: 'Batting Allrounder',
+                recentStats: [
+                    { match: 'vs AUS', runs: 58, wickets: 2, strikeRate: 122.1 },
+                    { match: 'vs ENG', runs: 44, wickets: 1, strikeRate: 110.0 },
+                    { match: 'vs SA', runs: 67, wickets: 3, strikeRate: 128.8 },
+                    { match: 'vs PAK', runs: 72, wickets: 1, strikeRate: 131.5 },
+                    { match: 'vs BAN', runs: 51, wickets: 2, strikeRate: 118.6 }
+                ],
+                averages: { batting: 58.4, bowling: 22.3 },
+                attributes: { consistency: 80, power: 88, fielding: 78, influence: 85 }
+            },
+            'amelia-kerr': {
+                name: 'Amelia Kerr',
+                role: 'Bowling Allrounder',
+                recentStats: [
+                    { match: 'vs AUS', runs: 42, wickets: 3, strikeRate: 105.0 },
+                    { match: 'vs ENG', runs: 35, wickets: 2, strikeRate: 97.2 },
+                    { match: 'vs SA', runs: 48, wickets: 4, strikeRate: 114.3 },
+                    { match: 'vs PAK', runs: 39, wickets: 2, strikeRate: 102.6 },
+                    { match: 'vs BAN', runs: 31, wickets: 3, strikeRate: 91.2 }
+                ],
+                averages: { batting: 39.0, bowling: 19.8 },
+                attributes: { consistency: 85, power: 75, fielding: 82, influence: 82 }
+            },
+            'jess-kerr': {
+                name: 'Jess Kerr',
+                role: 'Bowler',
+                recentStats: [
+                    { match: 'vs AUS', runs: 7, wickets: 2, strikeRate: 58.3 },
+                    { match: 'vs ENG', runs: 9, wickets: 3, strikeRate: 75.0 },
+                    { match: 'vs SA', runs: 5, wickets: 1, strikeRate: 41.7 },
+                    { match: 'vs PAK', runs: 11, wickets: 4, strikeRate: 91.7 },
+                    { match: 'vs BAN', runs: 6, wickets: 2, strikeRate: 50.0 }
+                ],
+                averages: { batting: 7.6, bowling: 20.4 },
+                attributes: { consistency: 78, power: 68, fielding: 72, influence: 74 }
+            }
+        };
+
+        // Initialize poll data
+        let pollData = {
+            india: 50,
+            nz: 50
+        };
+
+        // Load poll data from localStorage if available
+        if (localStorage.getItem('playerBattlePoll')) {
+            pollData = JSON.parse(localStorage.getItem('playerBattlePoll'));
+            updatePollDisplay();
+        }
+
+        // DOM elements
+        const indiaPlayerSelect = document.getElementById('india-player');
+        const nzPlayerSelect = document.getElementById('nz-player');
+        const comparisonContainer = document.getElementById('comparison-container');
+        const predictionContainer = document.getElementById('prediction-container');
+        const voteIndiaBtn = document.getElementById('vote-india');
+        const voteNzBtn = document.getElementById('vote-nz');
+
+        // Event listeners
+        indiaPlayerSelect.addEventListener('change', updateComparison);
+        nzPlayerSelect.addEventListener('change', updateComparison);
+        voteIndiaBtn.addEventListener('click', () => vote('india'));
+        voteNzBtn.addEventListener('click', () => vote('nz'));
+
+        // Comparison chart
+        let comparisonChart = null;
+
+        // Prediction chart
+        let predictionChart = null;
+
+        function updateComparison() {
+            const indiaPlayerId = indiaPlayerSelect.value;
+            const nzPlayerId = nzPlayerSelect.value;
+            
+            if (!indiaPlayerId || !nzPlayerId) {
+                comparisonContainer.style.display = 'none';
+                predictionContainer.style.display = 'none';
+                return;
+            }
+            
+            const indiaPlayer = playerData[indiaPlayerId];
+            const nzPlayer = playerData[nzPlayerId];
+            
+            if (!indiaPlayer || !nzPlayer) {
+                comparisonContainer.style.display = 'none';
+                predictionContainer.style.display = 'none';
+                return;
+            }
+            
+            // Update player info
+            document.getElementById('india-player-name').textContent = indiaPlayer.name;
+            document.getElementById('india-player-role').textContent = indiaPlayer.role;
+            document.getElementById('nz-player-name').textContent = nzPlayer.name;
+            document.getElementById('nz-player-role').textContent = nzPlayer.role;
+            
+            // Update recent stats
+            updateRecentStats('india', indiaPlayer.recentStats);
+            updateRecentStats('nz', nzPlayer.recentStats);
+            
+            // Update comparison chart
+            updateComparisonChart(indiaPlayer, nzPlayer);
+            
+            // Update prediction
+            updatePrediction(indiaPlayer, nzPlayer);
+            
+            // Show containers
+            comparisonContainer.style.display = 'block';
+            predictionContainer.style.display = 'block';
+        }
+
+        function updateRecentStats(team, stats) {
+            const container = document.getElementById(`${team}-recent-stats`);
+            container.innerHTML = '';
+            
+            stats.forEach(stat => {
+                const statItem = document.createElement('div');
+                statItem.className = 'stat-item';
+                
+                const matchInfo = document.createElement('div');
+                matchInfo.className = 'stat-name';
+                matchInfo.textContent = stat.match;
+                
+                const performance = document.createElement('div');
+                performance.className = 'stat-value';
+                
+                let performanceText = '';
+                if (stat.runs > 0) {
+                    performanceText += `${stat.runs} runs`;
+                }
+                if (stat.wickets > 0) {
+                    if (performanceText) performanceText += ', ';
+                    performanceText += `${stat.wickets} wkts`;
+                }
+                if (stat.strikeRate > 0) {
+                    if (performanceText) performanceText += ' | ';
+                    performanceText += `SR: ${stat.strikeRate}`;
+                }
+                
+                performance.textContent = performanceText;
+                
+                statItem.appendChild(matchInfo);
+                statItem.appendChild(performance);
+                container.appendChild(statItem);
+            });
+        }
+
+        function updateComparisonChart(indiaPlayer, nzPlayer) {
+            const ctx = document.getElementById('comparison-chart').getContext('2d');
+            
+            if (comparisonChart) {
+                comparisonChart.destroy();
+            }
+            
+            comparisonChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Consistency', 'Power Hitting / Economy', 'Fielding Impact', 'Match Influence'],
+                    datasets: [
+                        {
+                            label: indiaPlayer.name,
+                            data: [
+                                indiaPlayer.attributes.consistency,
+                                indiaPlayer.attributes.power,
+                                indiaPlayer.attributes.fielding,
+                                indiaPlayer.attributes.influence
+                            ],
+                            backgroundColor: 'rgba(26, 60, 139, 0.2)',
+                            borderColor: 'rgba(26, 60, 139, 1)',
+                            pointBackgroundColor: 'rgba(26, 60, 139, 1)',
+                            borderWidth: 2
+                        },
+                        {
+                            label: nzPlayer.name,
+                            data: [
+                                nzPlayer.attributes.consistency,
+                                nzPlayer.attributes.power,
+                                nzPlayer.attributes.fielding,
+                                nzPlayer.attributes.influence
+                            ],
+                            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                            borderColor: 'rgba(0, 0, 0, 1)',
+                            pointBackgroundColor: 'rgba(0, 0, 0, 1)',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function updatePrediction(indiaPlayer, nzPlayer) {
+            // Simple prediction algorithm based on player attributes
+            const indiaScore = (
+                indiaPlayer.attributes.consistency * 0.3 +
+                indiaPlayer.attributes.power * 0.3 +
+                indiaPlayer.attributes.fielding * 0.2 +
+                indiaPlayer.attributes.influence * 0.2
+            );
+            
+            const nzScore = (
+                nzPlayer.attributes.consistency * 0.3 +
+                nzPlayer.attributes.power * 0.3 +
+                nzPlayer.attributes.fielding * 0.2 +
+                nzPlayer.attributes.influence * 0.2
+            );
+            
+            const totalScore = indiaScore + nzScore;
+            const indiaPercentage = Math.round((indiaScore / totalScore) * 100);
+            const nzPercentage = 100 - indiaPercentage;
+            
+            // Update prediction text
+            const winner = indiaPercentage > nzPercentage ? indiaPlayer.name : nzPlayer.name;
+            document.getElementById('prediction-winner').textContent = `Predicted Winner: ${winner}`;
+            
+            // Generate AI comment
+            let comment = '';
+            if (indiaPercentage > 60) {
+                comment = `${indiaPlayer.name} is strongly favored to outperform ${nzPlayer.name} based on superior consistency and match influence.`;
+            } else if (nzPercentage > 60) {
+                comment = `${nzPlayer.name} has a significant advantage over ${indiaPlayer.name} according to recent performance metrics.`;
+            } else {
+                comment = `This is a closely contested battle. ${indiaPlayer.name} and ${nzPlayer.name} are evenly matched, making this an exciting contest to watch.`;
+            }
+            
+            document.getElementById('prediction-comment').textContent = comment;
+            
+            // Update prediction chart
+            const ctx = document.getElementById('prediction-chart').getContext('2d');
+            
+            if (predictionChart) {
+                predictionChart.destroy();
+            }
+            
+            predictionChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: [indiaPlayer.name, nzPlayer.name],
+                    datasets: [{
+                        data: [indiaPercentage, nzPercentage],
+                        backgroundColor: [
+                            'rgba(26, 60, 139, 0.8)',
+                            'rgba(0, 0, 0, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(26, 60, 139, 1)',
+                            'rgba(0, 0, 0, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function vote(team) {
+            pollData[team] += 1;
+            
+            // Calculate percentages
+            const totalVotes = pollData.india + pollData.nz;
+            const indiaPercentage = Math.round((pollData.india / totalVotes) * 100);
+            const nzPercentage = 100 - indiaPercentage;
+            
+            // Update display
+            updatePollDisplay();
+            
+            // Save to localStorage
+            localStorage.setItem('playerBattlePoll', JSON.stringify(pollData));
+        }
+
+        function updatePollDisplay() {
+            const totalVotes = pollData.india + pollData.nz;
+            const indiaPercentage = Math.round((pollData.india / totalVotes) * 100);
+            const nzPercentage = 100 - indiaPercentage;
+            
+            document.getElementById('india-poll-fill').style.width = `${indiaPercentage}%`;
+            document.getElementById('india-poll-fill').textContent = `${indiaPercentage}%`;
+            document.getElementById('india-poll-label').textContent = `India Player: ${indiaPercentage}%`;
+            document.getElementById('nz-poll-label').textContent = `NZ Player: ${nzPercentage}%`;
+        }
+
+        // Social sharing functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const shareUrl = encodeURIComponent(window.location.href);
+            const shareText = encodeURIComponent("India Women vs New Zealand Women: Full Playing XI, Key Battles and Match Buzz - Check out this comprehensive match preview!");
+            
+            // Set up sharing buttons
+            const whatsappBtn = document.querySelector('.share-btn.whatsapp');
+            const facebookBtn = document.querySelector('.share-btn.facebook');
+            const twitterBtn = document.querySelector('.share-btn.twitter');
+            
+            whatsappBtn.href = `https://wa.me/?text=${shareText}%20${shareUrl}`;
+            facebookBtn.href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+            twitterBtn.href = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
+            
+            // Open share links in new windows
+            document.querySelectorAll('.share-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.open(this.href, 'share', 'width=600,height=400');
+                });
+            });
+            
+            updatePollDisplay();
+        });
+    </script>
+</body>
+</html>
