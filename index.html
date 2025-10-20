@@ -31,16 +31,22 @@
         /* Base Styles */
         :root {
             --primary-bg: white;
-            --text-color: black;
-            --header-bg: #2B2D42;
-            --accent-color: #4CAF50;
-            --card-bg: #3A3D5B;
-            --card-hover-bg: #FFD700;
-            --card-hover-text: #1E1E2F;
-            --button-bg: #FFD700;
-            --button-hover-bg: #E6C200;
-            --shadow: rgba(255, 215, 0, 0.2);
+            --text-color: #333;
+            --header-bg: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            --accent-color: #FF6B6B;
+            --card-bg: white;
+            --card-hover-bg: #f8f9fa;
+            --card-hover-text: #333;
+            --button-bg: #4CAF50;
+            --button-hover-bg: #45a049;
+            --shadow: rgba(0, 0, 0, 0.1);
             --section-bg: #f8f9fa;
+            
+            /* Category Colors */
+            --productivity-color: #4CAF50;
+            --mindfulness-color: #2196F3;
+            --creativity-color: #9C27B0;
+            --learning-color: #FF9800;
         }
         
         * {
@@ -54,36 +60,64 @@
             background-color: var(--primary-bg);
             color: var(--text-color);
             line-height: 1.6;
+            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
         }
 
         /* Header Styles */
         header {
-            background-color: var(--header-bg);
+            background: var(--header-bg);
             color: white;
-            padding: 2rem 0;
+            padding: 2.5rem 0;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
         }
 
         header h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        header h1::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background-color: #FFD700;
+            margin: 0.8rem auto;
+            border-radius: 2px;
         }
 
         header p {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto;
             padding: 0 1rem;
+            position: relative;
+            opacity: 0.9;
         }
 
         /* Navigation */
         nav {
-            background-color: var(--header-bg);
+            background: linear-gradient(90deg, #2B2D42 0%, #3A3D5B 100%);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
         
@@ -110,12 +144,30 @@
             text-decoration: none;
             font-weight: 500;
             padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: background-color 0.3s;
+            border-radius: 20px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-desktop a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s;
+        }
+        
+        .nav-desktop a:hover::before {
+            left: 100%;
         }
         
         .nav-desktop a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
         }
 
         /* Mobile Navigation */
@@ -137,6 +189,11 @@
             font-size: 1.5rem;
             cursor: pointer;
             padding: 0.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
         }
         
         .mobile-menu {
@@ -179,7 +236,7 @@
             font-size: 2rem;
             margin-bottom: 1.5rem;
             text-align: center;
-            color: var(--header-bg);
+            color: #2B2D42;
             position: relative;
         }
         
@@ -188,16 +245,17 @@
             display: block;
             width: 80px;
             height: 4px;
-            background-color: var(--accent-color);
+            background: linear-gradient(90deg, #FF6B6B, #4CAF50);
             margin: 0.5rem auto;
             border-radius: 2px;
         }
         
         .about {
             background-color: var(--section-bg);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #6a11cb;
         }
         
         .about p {
@@ -205,6 +263,31 @@
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
+        }
+        
+        .about ul {
+            max-width: 900px;
+            margin: 1rem auto;
+            padding-left: 1.5rem;
+        }
+        
+        .about li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .greeting-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 4px solid #9C27B0;
+        }
+        
+        .greeting-section h3 {
+            color: #9C27B0;
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
         }
 
         /* Search Bar */
@@ -220,12 +303,14 @@
             border: 2px solid #ddd;
             border-radius: 30px;
             font-size: 1rem;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
         .search-input:focus {
             outline: none;
-            border-color: var(--accent-color);
+            border-color: #6a11cb;
+            box-shadow: 0 2px 10px rgba(106, 17, 203, 0.2);
         }
         
         .search-icon {
@@ -246,8 +331,8 @@
         /* Tool Card */
         .tool-card {
             background-color: var(--card-bg);
-            color: white;
-            border-radius: 8px;
+            color: var(--text-color);
+            border-radius: 12px;
             padding: 1.5rem;
             box-shadow: 0 4px 8px var(--shadow);
             transition: all 0.3s ease;
@@ -256,6 +341,7 @@
             height: 100%;
             position: relative;
             overflow: hidden;
+            border-top: 4px solid transparent;
         }
         
         .tool-card::before {
@@ -265,20 +351,55 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background-color: var(--accent-color);
+            background: linear-gradient(90deg, var(--category-color, #6a11cb), transparent);
+        }
+        
+        .tool-card.productivity {
+            --category-color: var(--productivity-color);
+            border-top-color: var(--productivity-color);
+        }
+        
+        .tool-card.mindfulness {
+            --category-color: var(--mindfulness-color);
+            border-top-color: var(--mindfulness-color);
+        }
+        
+        .tool-card.creativity {
+            --category-color: var(--creativity-color);
+            border-top-color: var(--creativity-color);
+        }
+        
+        .tool-card.learning {
+            --category-color: var(--learning-color);
+            border-top-color: var(--learning-color);
         }
 
         .tool-card:hover {
             background-color: var(--card-hover-bg);
-            color: var(--card-hover-text);
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px var(--shadow);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tool-card:hover::before {
+            background: linear-gradient(90deg, var(--category-color, #6a11cb), var(--category-color, #6a11cb));
         }
 
         .tool-card h3 {
             font-size: 1.4rem;
             margin-bottom: 0.8rem;
             color: inherit;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tool-card h3::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--category-color, #6a11cb);
+            margin-right: 8px;
         }
 
         .tool-card p {
@@ -289,20 +410,23 @@
 
         .tool-card .tool-button {
             background-color: var(--button-bg);
-            color: var(--card-hover-text);
+            color: white;
             border: none;
             border-radius: 5px;
             padding: 0.7rem 1.2rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
             align-self: flex-start;
             text-decoration: none;
             display: inline-block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .tool-card .tool-button:hover {
             background-color: var(--button-hover-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
         
         /* Category Filter */
@@ -316,26 +440,62 @@
         
         .category-btn {
             background-color: white;
-            border: 2px solid var(--header-bg);
-            color: var(--header-bg);
-            padding: 0.5rem 1.2rem;
+            border: 2px solid #ddd;
+            color: #555;
+            padding: 0.6rem 1.5rem;
             border-radius: 30px;
             cursor: pointer;
             font-weight: 500;
             transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         
         .category-btn:hover, .category-btn.active {
-            background-color: var(--header-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .category-btn[data-category="all"]:hover,
+        .category-btn[data-category="all"].active {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
             color: white;
+            border-color: transparent;
+        }
+        
+        .category-btn[data-category="productivity"]:hover,
+        .category-btn[data-category="productivity"].active {
+            background-color: var(--productivity-color);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .category-btn[data-category="mindfulness"]:hover,
+        .category-btn[data-category="mindfulness"].active {
+            background-color: var(--mindfulness-color);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .category-btn[data-category="creativity"]:hover,
+        .category-btn[data-category="creativity"].active {
+            background-color: var(--creativity-color);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .category-btn[data-category="learning"]:hover,
+        .category-btn[data-category="learning"].active {
+            background-color: var(--learning-color);
+            color: white;
+            border-color: transparent;
         }
         
         /* Footer */
         footer {
-            background-color: var(--header-bg);
+            background: linear-gradient(135deg, #2B2D42 0%, #3A3D5B 100%);
             color: white;
             text-align: center;
-            padding: 2rem 0;
+            padding: 2.5rem 0;
             margin-top: 3rem;
         }
         
@@ -356,11 +516,14 @@
         .footer-links a {
             color: white;
             text-decoration: none;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
         }
         
         .footer-links a:hover {
-            color: var(--card-hover-bg);
+            color: #FFD700;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         /* Responsive Design */
@@ -416,11 +579,13 @@
         /* Loading Animation */
         .loading {
             opacity: 0;
-            transition: opacity 0.3s;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
         }
         
         .loaded {
             opacity: 1;
+            transform: translateY(0);
         }
         
         /* No Results Message */
@@ -429,17 +594,29 @@
             padding: 2rem;
             color: #777;
             grid-column: 1 / -1;
+            font-size: 1.2rem;
         }
         
         /* Hide navigation on scroll */
         .nav-hidden {
             transform: translateY(-100%);
         }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 5s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Adda Store</h1>
+        <h1 class="floating">Adda Store</h1>
         <p>Discover unique tools and games designed to enhance your daily life, productivity, and creativity.</p>
     </header>
     
@@ -512,15 +689,34 @@
             <p><strong>🌍 Play with Purpose</strong><br>
             Whether you're learning through Learn-a-Minute, spreading positivity with the Compliment Generator, or exploring sustainability in the Carbon Footprint Simulator, AddaStore.fun transforms small digital moments into meaningful ones.</p>
             
+            <div class="greeting-section">
+                <h3>🎉 Beautiful Greeting Creators</h3>
+                <p>Express your heartfelt emotions with our collection of beautiful greeting card creators:</p>
+                
+                <p><strong>Happy Diwali Greeting Creator</strong> - Design and share beautiful Diwali greetings with customizable messages, perfect for wishing friends and family during the Festival of Lights. Create personalized Diwali cards with traditional motifs and warm wishes.</p>
+                
+                <p><strong>Subha Dipabali (Bengali Diwali & Kali Puja Greetings)</strong> - Create authentic Bengali Diwali and Kali Puja greetings to share with your Bengali friends and family. This tool helps you craft personalized Shubho Deepabali wishes with traditional Bengali designs and heartfelt messages.</p>
+                
+                <p><strong>Happy Birthday Wishes Creator</strong> - Design beautiful, personalized birthday greetings with our collection of stunning templates and heartfelt messages. Perfect for friends, family, and loved ones. Create the perfect birthday card with customized messages and beautiful designs.</p>
+                
+                <p><strong>Happy Anniversary Wishes Maker</strong> - Celebrate love and togetherness with our anniversary greeting creator. Share heartfelt messages and beautiful designs for any anniversary milestone. Create personalized anniversary cards that capture the special bond between couples.</p>
+            </div>
+            
             <p><strong>✨ Our Philosophy</strong><br>
             We believe the best web experiences are authentic, lightweight, and human — no clutter, no endless scrolling. Just tools that work instantly, games that make you think, and stories that help you reconnect with yourself and others.</p>
             
-            <p><strong>🔍 Why People Love It</strong></p>
+            <p><strong>🔍 Why People Love Adda Store</strong></p>
             <ul>
-                <li>Free and easy to use — no sign-ups required.</li>
-                <li>Designed for focus, creativity, and emotional wellness.</li>
-                <li>Constantly growing with new mini-tools and mindful games.</li>
+                <li>Free and easy to use — no sign-ups required</li>
+                <li>Designed for focus, creativity, and emotional wellness</li>
+                <li>Constantly growing with new mini-tools and mindful games</li>
+                <li>SEO-friendly tools that help with productivity and personal growth</li>
+                <li>Beautiful greeting creators for all occasions</li>
+                <li>Mobile-friendly design works on all devices</li>
             </ul>
+            
+            <p><strong>🎯 Popular Tools & Keywords</strong><br>
+            Users frequently search for our tools using keywords like: <em>free online tools, productivity apps, mindfulness games, creative idea generators, habit trackers, focus tools, typing games, decision helpers, greeting card makers, birthday wishes, anniversary messages, Diwali greetings, Bengali Deepabali wishes, Kali Puja greetings, personal growth tools, digital wellness apps,</em> and <em>AI-powered creativity tools</em>.</p>
             
             <p>AddaStore.fun isn't just a website — it's your digital creative toolkit for a calmer, smarter, kinder internet.<br>
             Start exploring, one click at a time.</p>
@@ -553,6 +749,18 @@
                 description: "Festive Diwali Greeting Creator - Design and share beautiful Diwali greetings with customizable messages.",
                 category: "creativity",
                 link: "happy-diwali.html"
+            },
+            {
+                name: "Happy Birthday Wishes",
+                description: "Create beautiful, personalized birthday greetings with our collection of stunning templates and heartfelt messages. Perfect for friends, family, and loved ones.",
+                category: "creativity",
+                link: "happy-birthday.html"
+            },
+            {
+                name: "Happy Anniversary Wishes",
+                description: "Celebrate love and togetherness with our anniversary greeting creator. Share heartfelt messages and beautiful designs for any anniversary milestone.",
+                category: "creativity",
+                link: "anniversary.html"
             },
             {
                 name: "Mood Mosaic",
@@ -816,7 +1024,7 @@
             
             toolsToShow.forEach(tool => {
                 const toolCard = document.createElement('div');
-                toolCard.className = 'tool-card loading';
+                toolCard.className = `tool-card loading ${tool.category}`;
                 toolCard.dataset.category = tool.category;
                 
                 toolCard.innerHTML = `
