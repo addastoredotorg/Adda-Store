@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Card Generator</title>
+    <meta name="description" content="Create your personalized cricket card — download & share!">
+    <meta property="og:title" content="Cricket Card Generator">
+    <meta property="og:description" content="Create and download a personalized cricket card for IND vs NZ — add player stats, fan manager name, and share on social!">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a5276;
+            --secondary-color: #e74c3c;
+            --accent-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f1c40f;
+            --danger-color: #e74c3c;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            opacity: 0.8;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .app-container {
+                flex-direction: row;
+            }
+        }
+
+        .controls-panel {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .preview-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(26, 82, 118, 0.2);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat-input {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .color-picker-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .color-picker {
+            width: 50px;
+            height: 40px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+        }
+
+        .background-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .bg-option {
+            height: 60px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .bg-option:hover, .bg-option.selected {
+            border-color: var(--primary-color);
+        }
+
+        .bg-gradient-1 {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+        }
+
+        .bg-gradient-2 {
+            background: linear-gradient(135deg, #00416a, #799f0c, #ffe000);
+        }
+
+        .bg-gradient-3 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .bg-pattern-1 {
+            background-color: #3498db;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.2) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .bg-pattern-2 {
+            background-color: #2ecc71;
+            background-image: linear-gradient(45deg, rgba(255,255,255,0.2) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.2) 75%, transparent 75%, transparent);
+            background-size: 20px 20px;
+        }
+
+        .bg-stadium {
+            background-color: #1a5276;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a5276"/><path d="M0,50 L100,50 M50,0 L50,100" stroke="%232c3e50" stroke-width="2"/><circle cx="50" cy="50" r="20" fill="none" stroke="%232c3e50" stroke-width="2"/></svg>');
+            background-size: cover;
+        }
+
+        .toggle-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .toggle-label input {
+            width: auto;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #154360;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #219653;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: var(--dark-color);
+        }
+
+        .btn-warning:hover {
+            background-color: #d4ac0d;
+        }
+
+        .btn-facebook {
+            background-color: #3b5998;
+            color: white;
+        }
+
+        .btn-facebook:hover {
+            background-color: #2d4373;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #1da851;
+        }
+
+        .btn-instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+        }
+
+        .btn-instagram:hover {
+            opacity: 0.9;
+        }
+
+        .btn-full {
+            grid-column: 1 / -1;
+        }
+
+        .card-preview {
+            width: 100%;
+            max-width: 600px;
+            aspect-ratio: 2/3;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .card-square {
+            aspect-ratio: 1/1;
+            max-width: 500px;
+        }
+
+        .card-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            color: white;
+        }
+
+        .team-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .player-photo-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .player-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .player-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .player-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .player-role {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .player-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .fan-manager {
+            text-align: center;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .fan-manager-name {
+            font-weight: 600;
+        }
+
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .social-share-instructions {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .instructions-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .social-share-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .social-btn {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--dark-color);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .preview-panel, .preview-panel * {
+                visibility: visible;
+            }
+            .preview-panel {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+                background: white;
+            }
+            .card-preview {
+                box-shadow: none;
+                margin: 0 auto;
+            }
+        }
+
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles for better accessibility */
+        button:focus, input:focus, select:focus, textarea:focus {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+
+        /* Match Analysis Styles */
+        .match-analysis {
+            margin-top: 50px;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .team-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .team {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .team-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .flag {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+        
+        .team-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .player-list {
+            list-style-type: none;
+        }
+        
+        .player {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .player:last-child {
+            border-bottom: none;
+        }
+        
+        .player-name {
+            font-weight: 500;
+        }
+        
+        .player-role {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .highlight {
+            background-color: #fff8e1;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .highlight h2 {
+            color: #d32f2f;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ffcdd2;
+            padding-bottom: 10px;
+        }
+        
+        .battle {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #1a237e;
+        }
+        
+        .stats-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .stats-section h2 {
+            color: #1a237e;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e8eaf6;
+            padding-bottom: 10px;
+        }
+        
+        .prediction {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .prediction h2 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+        
+        .hashtags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .hashtag {
+            background: #1a237e;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .final-take {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-top: 5px solid #ff9800;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .keywords {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .keywords h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .match-footer {
+            text-align: center;
+            padding: 20px;
+            background: #1a237e;
+            color: white;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .team-section {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .social-share-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cricket Card Generator</h1>
+            <p class="subtitle">Create your personalized cricket card — download & share!</p>
+        </header>
+
+        <main class="app-container">
+            <aside class="controls-panel" role="complementary" aria-label="Card customization controls">
+                <div class="form-group">
+                    <label for="player-photo">Player Photo</label>
+                    <input type="file" id="player-photo" accept="image/jpeg, image/png" aria-describedby="photo-help">
+                    <small id="photo-help">Upload a player photo (JPEG or PNG)</small>
+                    <div class="toggle-group">
+                        <label class="toggle-label">
+                            <input type="radio" name="default-photo" value="india1" checked> India Player 1
+                        </label>
+                        <label class="toggle-label">
+                            <input type="radio" name="default-photo" value="india2"> India Player 2
+                        </label>
+                        <label class="toggle-label">
+                            <input type="radio" name="default-photo" value="nz1"> NZ Player 1
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="player-name">Player Name</label>
+                    <input type="text" id="player-name" placeholder="Smriti Mandhana" value="Smriti Mandhana">
+                </div>
+
+                <div class="form-group">
+                    <label for="player-role">Role / Position</label>
+                    <input type="text" id="player-role" placeholder="Batter" value="Batter">
+                </div>
+
+                <div class="form-group">
+                    <label>Team Badge</label>
+                    <div class="toggle-group">
+                        <label class="toggle-label">
+                            <input type="radio" name="team-badge" value="india" checked> India
+                        </label>
+                        <label class="toggle-label">
+                            <input type="radio" name="team-badge" value="nz"> New Zealand
+                        </label>
+                        <label class="toggle-label">
+                            <input type="radio" name="team-badge" value="custom"> Custom
+                        </label>
+                    </div>
+                    <input type="file" id="custom-badge" accept="image/jpeg, image/png" style="display: none;">
+                </div>
+
+                <div class="form-group">
+                    <label>Player Stats</label>
+                    <div class="stats-container">
+                        <div class="stat-input">
+                            <label for="stat1-label">Stat 1 Label</label>
+                            <input type="text" id="stat1-label" placeholder="Runs" value="Runs">
+                        </div>
+                        <div class="stat-input">
+                            <label for="stat1-value">Stat 1 Value</label>
+                            <input type="text" id="stat1-value" placeholder="2500" value="2500">
+                        </div>
+                        <div class="stat-input">
+                            <label for="stat2-label">Stat 2 Label</label>
+                            <input type="text" id="stat2-label" placeholder="Average" value="Average">
+                        </div>
+                        <div class="stat-input">
+                            <label for="stat2-value">Stat 2 Value</label>
+                            <input type="text" id="stat2-value" placeholder="45.2" value="45.2">
+                        </div>
+                        <div class="stat-input">
+                            <label for="stat3-label">Stat 3 Label</label>
+                            <input type="text" id="stat3-label" placeholder="Wickets" value="Wickets">
+                        </div>
+                        <div class="stat-input">
+                            <label for="stat3-value">Stat 3 Value</label>
+                            <input type="text" id="stat3-value" placeholder="15" value="15">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="card-background">Card Background</label>
+                    <select id="card-background">
+                        <option value="gradient1">Gradient 1 (Blue/Red/Yellow)</option>
+                        <option value="gradient2">Gradient 2 (Blue/Green/Yellow)</option>
+                        <option value="gradient3">Gradient 3 (Purple/Blue)</option>
+                        <option value="pattern1">Pattern 1 (Dots)</option>
+                        <option value="pattern2">Pattern 2 (Stripes)</option>
+                        <option value="stadium">Stadium</option>
+                        <option value="custom">Custom Background</option>
+                    </select>
+                    <input type="file" id="custom-background" accept="image/jpeg, image/png" style="display: none;">
+                    
+                    <div class="background-options">
+                        <div class="bg-option bg-gradient-1 selected" data-bg="gradient1" role="button" aria-label="Select gradient 1 background"></div>
+                        <div class="bg-option bg-gradient-2" data-bg="gradient2" role="button" aria-label="Select gradient 2 background"></div>
+                        <div class="bg-option bg-gradient-3" data-bg="gradient3" role="button" aria-label="Select gradient 3 background"></div>
+                        <div class="bg-option bg-pattern-1" data-bg="pattern1" role="button" aria-label="Select pattern 1 background"></div>
+                        <div class="bg-option bg-pattern-2" data-bg="pattern2" role="button" aria-label="Select pattern 2 background"></div>
+                        <div class="bg-option bg-stadium" data-bg="stadium" role="button" aria-label="Select stadium background"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="font-style">Font Style</label>
+                    <select id="font-style">
+                        <option value="montserrat">Montserrat</option>
+                        <option value="roboto">Roboto</option>
+                        <option value="arial">Arial</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="text-color">Text Color</label>
+                    <div class="color-picker-container">
+                        <input type="color" id="text-color" class="color-picker" value="#ffffff">
+                        <span>White</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fan-manager">Fan Manager Name</label>
+                    <input type="text" id="fan-manager" placeholder="Your Name (Fan Manager)" value="d k">
+                </div>
+
+                <div class="form-group">
+                    <label for="fan-title">Fan Manager Title (Optional)</label>
+                    <input type="text" id="fan-title" placeholder="Fantasy Manager">
+                </div>
+
+                <div class="form-group">
+                    <label>Display Options</label>
+                    <div class="toggle-group">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="show-stats" checked> Show Stats
+                        </label>
+                        <label class="toggle-label">
+                            <input type="checkbox" id="show-watermark" checked> Show Watermark
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Card Shape</label>
+                    <div class="toggle-group">
+                        <label class="toggle-label">
+                            <input type="radio" name="card-shape" value="portrait" checked> Portrait
+                        </label>
+                        <label class="toggle-label">
+                            <input type="radio" name="card-shape" value="square"> Square
+                        </label>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="preview-btn" class="btn-primary">Preview</button>
+                    <button id="reset-btn" class="btn-warning">Reset</button>
+                    <button id="download-png" class="btn-success btn-full">Download PNG</button>
+                    <button id="download-square" class="btn-success">Download Square (1080×1080)</button>
+                    <button id="print-btn" class="btn-primary">Print Card</button>
+                    
+                    <div class="social-share-buttons">
+                        <button id="share-x" class="btn-secondary social-btn">
+                            <i class="fab fa-twitter"></i>
+                            <span>X/Twitter</span>
+                        </button>
+                        <button id="share-facebook" class="btn-facebook social-btn">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>Facebook</span>
+                        </button>
+                        <button id="share-whatsapp" class="btn-whatsapp social-btn">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </button>
+                        <button id="share-instagram" class="btn-instagram social-btn">
+                            <i class="fab fa-instagram"></i>
+                            <span>Instagram</span>
+                        </button>
+                    </div>
+                    
+                    <button id="copy-caption" class="btn-warning btn-full">Copy Instagram Caption</button>
+                </div>
+
+                <div class="social-share-instructions">
+                    <div class="instructions-title">Social Sharing Instructions</div>
+                    <p><strong>Instagram:</strong> Download the square image, open Instagram app, create a new post, upload the image, and paste the copied caption.</p>
+                    <p><strong>Other Platforms:</strong> Use the buttons above to share directly or download the image and share manually.</p>
+                </div>
+            </aside>
+
+            <section class="preview-panel" role="region" aria-label="Card preview">
+                <div class="card-preview" id="card-preview">
+                    <div class="card-background" id="card-bg"></div>
+                    <div class="card-content" id="card-content">
+                        <div class="team-badge" id="team-badge">IND</div>
+                        <div class="player-photo-container">
+                            <img src="" alt="Player photo" class="player-photo" id="player-photo-img">
+                        </div>
+                        <div class="player-info">
+                            <h2 class="player-name" id="preview-player-name">Smriti Mandhana</h2>
+                            <p class="player-role" id="preview-player-role">Batter</p>
+                        </div>
+                        <div class="player-stats" id="preview-stats">
+                            <div class="stat">
+                                <div class="stat-value" id="preview-stat1-value">2500</div>
+                                <div class="stat-label" id="preview-stat1-label">Runs</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value" id="preview-stat2-value">45.2</div>
+                                <div class="stat-label" id="preview-stat2-label">Average</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value" id="preview-stat3-value">15</div>
+                                <div class="stat-label" id="preview-stat3-label">Wickets</div>
+                            </div>
+                        </div>
+                        <div class="fan-manager">
+                            <p>Fan Manager: <span class="fan-manager-name" id="preview-fan-manager">d k</span></p>
+                            <p id="preview-fan-title" style="display: none;"></p>
+                        </div>
+                        <div class="watermark" id="preview-watermark">CricketCardGenerator.com</div>
+                    </div>
+                </div>
+
+                <div id="export-instructions" style="display: none; margin-top: 15px; padding: 10px; background: #e8f4fd; border-radius: 5px;">
+                    <p>If download doesn't start automatically, right-click the preview and select "Save image as..."</p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Match Analysis Section -->
+        <div class="match-analysis">
+            <header>
+                <h1>India Women vs New Zealand Women: Full Playing XI, Key Players & Match Insights</h1>
+                <p class="tagline">Cricket fans, get ready!</p>
+                <p class="intro">The much-anticipated <strong>India Women vs New Zealand Women</strong> clash is here — and it promises to be an absolute thriller. With both teams stacked with talent, this encounter is more than just a match; it's a statement of skill, power, and pride in women's cricket.</p>
+            </header>
+            
+            <div class="team-section">
+                <div class="team">
+                    <div class="team-header">
+                        <div class="flag">🇮🇳</div>
+                        <div class="team-name">India Women Playing XI</div>
+                    </div>
+                    <p>Here's the <strong>confirmed playing XI for India Women</strong> — a powerful mix of experience and youthful energy:</p>
+                    <ul class="player-list">
+                        <li class="player">
+                            <span class="player-name">Pratika Rawal</span>
+                            <span class="player-role">Batter</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Smriti Mandhana</span>
+                            <span class="player-role">Batter</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Harleen Deol</span>
+                            <span class="player-role">Batting Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Harmanpreet Kaur (C)</span>
+                            <span class="player-role">Batting Allrounder & Captain</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Deepti Sharma</span>
+                            <span class="player-role">Batting Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Richa Ghosh (WK)</span>
+                            <span class="player-role">Wicketkeeper-Batter</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Amanjot Kaur</span>
+                            <span class="player-role">Batting Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Sneh Rana</span>
+                            <span class="player-role">Bowling Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Kranti Gaud</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Shree Charani</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Renuka Singh Thakur</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                    </ul>
+                    <p style="margin-top: 15px;">This lineup shows India's perfect balance — top-order stability, strong middle order, and fierce bowling options. Expect fireworks from Smriti Mandhana and captain Harmanpreet Kaur, while Renuka Singh's swing could be the game-changer.</p>
+                </div>
+                
+                <div class="team">
+                    <div class="team-header">
+                        <div class="flag">🇳🇿</div>
+                        <div class="team-name">New Zealand Women Playing XI</div>
+                    </div>
+                    <p>The <strong>New Zealand Women's squad</strong> is equally formidable, led by the charismatic Sophie Devine:</p>
+                    <ul class="player-list">
+                        <li class="player">
+                            <span class="player-name">Suzie Bates</span>
+                            <span class="player-role">Batting Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Georgia Plimmer</span>
+                            <span class="player-role">Batter</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Amelia Kerr</span>
+                            <span class="player-role">Bowling Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Sophie Devine (C)</span>
+                            <span class="player-role">Batting Allrounder & Captain</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Brooke Halliday</span>
+                            <span class="player-role">Batting Allrounder</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Maddy Green</span>
+                            <span class="player-role">Batter</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Isabella Gaze (WK)</span>
+                            <span class="player-role">Wicketkeeper-Batter</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Jess Kerr</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Rosemary Mair</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Bree Illing</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                        <li class="player">
+                            <span class="player-name">Eden Carson</span>
+                            <span class="player-role">Bowler</span>
+                        </li>
+                    </ul>
+                    <p style="margin-top: 15px;">Devine's aggression and Kerr's all-round brilliance make the White Ferns a team to beat. Keep an eye on Suzie Bates too — her experience at the top could be vital in setting the tone.</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <h2>🔥 Key Player Battles to Watch</h2>
+                <div class="battle">
+                    <strong>Smriti Mandhana vs Jess Kerr</strong> – A classic duel of timing vs swing.
+                </div>
+                <div class="battle">
+                    <strong>Harmanpreet Kaur vs Amelia Kerr</strong> – Captain vs all-rounder showdown.
+                </div>
+                <div class="battle">
+                    <strong>Renuka Singh vs Suzie Bates</strong> – Powerplay dominance on the line.
+                </div>
+                <p style="margin-top: 15px;">These matchups could decide the winner in this high-octane clash.</p>
+            </div>
+            
+            <div class="stats-section">
+                <h2>📊 Head-to-Head Stats</h2>
+                <p>In past encounters, India Women and New Zealand Women have gone toe-to-toe, producing unforgettable moments. India has had the edge in subcontinent conditions, but New Zealand's consistency and all-round strength make them a formidable opponent.</p>
+            </div>
+            
+            <div class="stats-section">
+                <h2>🌟 Why This Match Matters</h2>
+                <ul style="padding-left: 20px; margin-top: 10px;">
+                    <li>Boosts both teams' ICC Women's Championship points.</li>
+                    <li>A test of India's bench strength with emerging players like <strong>Pratika Rawal</strong> and <strong>Kranti Gaud</strong>.</li>
+                    <li>Momentum-builder before the upcoming global tournaments.</li>
+                </ul>
+                <p style="margin-top: 15px;">Women's cricket is seeing a surge in viewership — and this match is another example of how far the game has come.</p>
+            </div>
+            
+            <div class="prediction">
+                <h2>🏏 Prediction & Fan Buzz</h2>
+                <p>With social media buzzing under hashtags like <strong>#INDvNZWomen</strong>, <strong>#HarmanpreetKaur</strong>, and <strong>#SmritiMandhana</strong>, fans are expecting a high-scoring, nail-biting contest.</p>
+                <div class="hashtags">
+                    <span class="hashtag">#INDvNZWomen</span>
+                    <span class="hashtag">#HarmanpreetKaur</span>
+                    <span class="hashtag">#SmritiMandhana</span>
+                    <span class="hashtag">#WomensCricket</span>
+                    <span class="hashtag">#INDWvsNZW</span>
+                </div>
+                <p><strong>Our early prediction:</strong> India Women 55% favorites — thanks to home conditions and a deep batting lineup.</p>
+            </div>
+            
+            <div class="stats-section">
+                <h2>🕒 Don't Miss the Action!</h2>
+                <p>Catch all the <strong>live updates, highlights, scorecards, and post-match analysis</strong> right here.</p>
+                <p>Follow for real-time stats, video moments, and AI-powered fan polls on who'll take home the Player of the Match trophy.</p>
+            </div>
+            
+            <div class="final-take">
+                <h2>📢 Final Take</h2>
+                <p>The India Women vs New Zealand Women rivalry represents the best of international women's cricket — respect, passion, and pure sporting spirit.</p>
+                <p>Whether you're a fan of Mandhana's elegance or Devine's power, this game promises edge-of-the-seat entertainment.</p>
+            </div>
+            
+            <div class="keywords">
+                <h3>Keywords:</h3>
+                <p>India Women vs New Zealand Women 2025, India Women Playing XI, New Zealand Women Playing XI, Smriti Mandhana batting highlights, Harmanpreet Kaur captain innings, INDW vs NZW live score, India vs New Zealand women match today, Women's cricket trending, ICC Women's Championship 2025.</p>
+            </div>
+            
+            <div class="match-footer">
+                <p>📌 <em>Stay tuned on AddaStore.fun for cricket tools, fantasy team generators, and fan-made digital collectibles inspired by this epic clash!</em></p>
+            </div>
+        </div>
+
+        <footer>
+            <p>Cricket Card Generator &copy; 2023 | Create, customize, and share your personalized cricket cards</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const playerPhotoInput = document.getElementById('player-photo');
+            const playerNameInput = document.getElementById('player-name');
+            const playerRoleInput = document.getElementById('player-role');
+            const teamBadgeRadios = document.querySelectorAll('input[name="team-badge"]');
+            const customBadgeInput = document.getElementById('custom-badge');
+            const statLabels = [
+                document.getElementById('stat1-label'),
+                document.getElementById('stat2-label'),
+                document.getElementById('stat3-label')
+            ];
+            const statValues = [
+                document.getElementById('stat1-value'),
+                document.getElementById('stat2-value'),
+                document.getElementById('stat3-value')
+            ];
+            const cardBackgroundSelect = document.getElementById('card-background');
+            const customBackgroundInput = document.getElementById('custom-background');
+            const fontStyleSelect = document.getElementById('font-style');
+            const textColorInput = document.getElementById('text-color');
+            const fanManagerInput = document.getElementById('fan-manager');
+            const fanTitleInput = document.getElementById('fan-title');
+            const showStatsCheckbox = document.getElementById('show-stats');
+            const showWatermarkCheckbox = document.getElementById('show-watermark');
+            const cardShapeRadios = document.querySelectorAll('input[name="card-shape"]');
+            const bgOptions = document.querySelectorAll('.bg-option');
+            
+            // Preview elements
+            const cardPreview = document.getElementById('card-preview');
+            const cardBg = document.getElementById('card-bg');
+            const playerPhotoImg = document.getElementById('player-photo-img');
+            const previewPlayerName = document.getElementById('preview-player-name');
+            const previewPlayerRole = document.getElementById('preview-player-role');
+            const teamBadge = document.getElementById('team-badge');
+            const previewStats = document.getElementById('preview-stats');
+            const previewStatValues = [
+                document.getElementById('preview-stat1-value'),
+                document.getElementById('preview-stat2-value'),
+                document.getElementById('preview-stat3-value')
+            ];
+            const previewStatLabels = [
+                document.getElementById('preview-stat1-label'),
+                document.getElementById('preview-stat2-label'),
+                document.getElementById('preview-stat3-label')
+            ];
+            const previewFanManager = document.getElementById('preview-fan-manager');
+            const previewFanTitle = document.getElementById('preview-fan-title');
+            const previewWatermark = document.getElementById('preview-watermark');
+            
+            // Action buttons
+            const previewBtn = document.getElementById('preview-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const downloadPngBtn = document.getElementById('download-png');
+            const downloadSquareBtn = document.getElementById('download-square');
+            const printBtn = document.getElementById('print-btn');
+            const shareXBtn = document.getElementById('share-x');
+            const shareFacebookBtn = document.getElementById('share-facebook');
+            const shareWhatsappBtn = document.getElementById('share-whatsapp');
+            const shareInstagramBtn = document.getElementById('share-instagram');
+            const copyCaptionBtn = document.getElementById('copy-caption');
+            
+            // Default player photos (in a real app, these would be actual image URLs)
+            const defaultPhotos = {
+                india1: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><circle cx="75" cy="75" r="75" fill="%23ff9933"/><circle cx="75" cy="75" r="60" fill="white"/><circle cx="75" cy="75" r="45" fill="%23138808"/><text x="75" y="85" text-anchor="middle" fill="white" font-family="Arial" font-size="20">IND</text></svg>',
+                india2: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><circle cx="75" cy="75" r="75" fill="%231a5276"/><circle cx="75" cy="75" r="60" fill="%23e74c3c"/><text x="75" y="85" text-anchor="middle" fill="white" font-family="Arial" font-size="20">IND</text></svg>',
+                nz1: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><circle cx="75" cy="75" r="75" fill="%2300247D"/><circle cx="75" cy="75" r="60" fill="%23CC142B"/><text x="75" y="85" text-anchor="middle" fill="white" font-family="Arial" font-size="20">NZ</text></svg>'
+            };
+            
+            // Current state
+            let currentState = {
+                playerPhoto: defaultPhotos.india1,
+                playerName: 'Smriti Mandhana',
+                playerRole: 'Batter',
+                teamBadge: 'india',
+                stats: {
+                    label1: 'Runs',
+                    value1: '2500',
+                    label2: 'Average',
+                    value2: '45.2',
+                    label3: 'Wickets',
+                    value3: '15'
+                },
+                background: 'gradient1',
+                fontStyle: 'montserrat',
+                textColor: '#ffffff',
+                fanManager: 'd k',
+                fanTitle: '',
+                showStats: true,
+                showWatermark: true,
+                cardShape: 'portrait'
+            };
+            
+            // Initialize the app
+            function init() {
+                // Set default player photo
+                playerPhotoImg.src = defaultPhotos.india1;
+                
+                // Add event listeners
+                playerPhotoInput.addEventListener('change', handlePlayerPhotoUpload);
+                playerNameInput.addEventListener('input', updatePlayerName);
+                playerRoleInput.addEventListener('input', updatePlayerRole);
+                
+                teamBadgeRadios.forEach(radio => {
+                    radio.addEventListener('change', updateTeamBadge);
+                });
+                
+                customBadgeInput.addEventListener('change', handleCustomBadgeUpload);
+                
+                statLabels.forEach((input, index) => {
+                    input.addEventListener('input', () => updateStatLabel(index, input.value));
+                });
+                
+                statValues.forEach((input, index) => {
+                    input.addEventListener('input', () => updateStatValue(index, input.value));
+                });
+                
+                cardBackgroundSelect.addEventListener('change', updateCardBackground);
+                customBackgroundInput.addEventListener('change', handleCustomBackgroundUpload);
+                
+                fontStyleSelect.addEventListener('change', updateFontStyle);
+                textColorInput.addEventListener('input', updateTextColor);
+                fanManagerInput.addEventListener('input', updateFanManager);
+                fanTitleInput.addEventListener('input', updateFanTitle);
+                showStatsCheckbox.addEventListener('change', toggleStatsVisibility);
+                showWatermarkCheckbox.addEventListener('change', toggleWatermarkVisibility);
+                
+                cardShapeRadios.forEach(radio => {
+                    radio.addEventListener('change', updateCardShape);
+                });
+                
+                bgOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        const bgValue = option.getAttribute('data-bg');
+                        selectBackgroundOption(bgValue);
+                        updateCardBackground();
+                    });
+                });
+                
+                // Action buttons
+                previewBtn.addEventListener('click', updatePreview);
+                resetBtn.addEventListener('click', resetForm);
+                downloadPngBtn.addEventListener('click', downloadPng);
+                downloadSquareBtn.addEventListener('click', downloadSquare);
+                printBtn.addEventListener('click', printCard);
+                shareXBtn.addEventListener('click', shareOnX);
+                shareFacebookBtn.addEventListener('click', shareOnFacebook);
+                shareWhatsappBtn.addEventListener('click', shareOnWhatsApp);
+                shareInstagramBtn.addEventListener('click', shareOnInstagram);
+                copyCaptionBtn.addEventListener('click', copyInstagramCaption);
+                
+                // Initialize default photo selection
+                document.querySelector('input[name="default-photo"][value="india1"]').checked = true;
+                document.querySelector('input[name="default-photo"]').addEventListener('change', function(e) {
+                    const value = e.target.value;
+                    playerPhotoImg.src = defaultPhotos[value];
+                    currentState.playerPhoto = defaultPhotos[value];
+                });
+                
+                // Initial preview update
+                updatePreview();
+            }
+            
+            // Event handler functions
+            function handlePlayerPhotoUpload(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        playerPhotoImg.src = event.target.result;
+                        currentState.playerPhoto = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+            
+            function updatePlayerName() {
+                const name = playerNameInput.value || 'Player Name';
+                previewPlayerName.textContent = name;
+                currentState.playerName = name;
+            }
+            
+            function updatePlayerRole() {
+                const role = playerRoleInput.value || 'Player Role';
+                previewPlayerRole.textContent = role;
+                currentState.playerRole = role;
+            }
+            
+            function updateTeamBadge() {
+                const selectedBadge = document.querySelector('input[name="team-badge"]:checked').value;
+                
+                if (selectedBadge === 'custom') {
+                    customBadgeInput.style.display = 'block';
+                } else {
+                    customBadgeInput.style.display = 'none';
+                    teamBadge.textContent = selectedBadge === 'india' ? 'IND' : 'NZ';
+                    currentState.teamBadge = selectedBadge;
+                }
+            }
+            
+            function handleCustomBadgeUpload(e) {
+                // In a real implementation, this would handle custom badge upload
+                console.log('Custom badge uploaded:', e.target.files[0]);
+                // For demo purposes, we'll just show a placeholder
+                teamBadge.innerHTML = '<span style="font-size: 12px;">CUSTOM</span>';
+            }
+            
+            function updateStatLabel(index, value) {
+                previewStatLabels[index].textContent = value || `Stat ${index + 1}`;
+                currentState.stats[`label${index + 1}`] = value || `Stat ${index + 1}`;
+            }
+            
+            function updateStatValue(index, value) {
+                previewStatValues[index].textContent = value || '0';
+                currentState.stats[`value${index + 1}`] = value || '0';
+            }
+            
+            function updateCardBackground() {
+                const bgValue = cardBackgroundSelect.value;
+                
+                if (bgValue === 'custom') {
+                    customBackgroundInput.style.display = 'block';
+                    return;
+                }
+                
+                customBackgroundInput.style.display = 'none';
+                selectBackgroundOption(bgValue);
+                
+                // Update the background based on selection
+                cardBg.className = 'card-background';
+                
+                switch(bgValue) {
+                    case 'gradient1':
+                        cardBg.classList.add('bg-gradient-1');
+                        break;
+                    case 'gradient2':
+                        cardBg.classList.add('bg-gradient-2');
+                        break;
+                    case 'gradient3':
+                        cardBg.classList.add('bg-gradient-3');
+                        break;
+                    case 'pattern1':
+                        cardBg.classList.add('bg-pattern-1');
+                        break;
+                    case 'pattern2':
+                        cardBg.classList.add('bg-pattern-2');
+                        break;
+                    case 'stadium':
+                        cardBg.classList.add('bg-stadium');
+                        break;
+                }
+                
+                currentState.background = bgValue;
+            }
+            
+            function selectBackgroundOption(bgValue) {
+                // Update the select element
+                cardBackgroundSelect.value = bgValue;
+                
+                // Update visual selection
+                bgOptions.forEach(option => {
+                    option.classList.remove('selected');
+                    if (option.getAttribute('data-bg') === bgValue) {
+                        option.classList.add('selected');
+                    }
+                });
+            }
+            
+            function handleCustomBackgroundUpload(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        cardBg.style.backgroundImage = `url(${event.target.result})`;
+                        cardBg.style.backgroundSize = 'cover';
+                        cardBg.style.backgroundPosition = 'center';
+                        cardBg.className = 'card-background';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+            
+            function updateFontStyle() {
+                const font = fontStyleSelect.value;
+                const cardContent = document.getElementById('card-content');
+                
+                // Remove previous font classes
+                cardContent.classList.remove('font-montserrat', 'font-roboto', 'font-arial');
+                
+                // Add new font class
+                cardContent.classList.add(`font-${font}`);
+                
+                currentState.fontStyle = font;
+            }
+            
+            function updateTextColor() {
+                const color = textColorInput.value;
+                const cardContent = document.getElementById('card-content');
+                cardContent.style.color = color;
+                currentState.textColor = color;
+            }
+            
+            function updateFanManager() {
+                const name = fanManagerInput.value || 'Fan Manager';
+                previewFanManager.textContent = name;
+                currentState.fanManager = name;
+            }
+            
+            function updateFanTitle() {
+                const title = fanTitleInput.value;
+                if (title) {
+                    previewFanTitle.textContent = title;
+                    previewFanTitle.style.display = 'block';
+                } else {
+                    previewFanTitle.style.display = 'none';
+                }
+                currentState.fanTitle = title;
+            }
+            
+            function toggleStatsVisibility() {
+                const show = showStatsCheckbox.checked;
+                previewStats.style.display = show ? 'flex' : 'none';
+                currentState.showStats = show;
+            }
+            
+            function toggleWatermarkVisibility() {
+                const show = showWatermarkCheckbox.checked;
+                previewWatermark.style.display = show ? 'block' : 'none';
+                currentState.showWatermark = show;
+            }
+            
+            function updateCardShape() {
+                const shape = document.querySelector('input[name="card-shape"]:checked').value;
+                if (shape === 'square') {
+                    cardPreview.classList.add('card-square');
+                } else {
+                    cardPreview.classList.remove('card-square');
+                }
+                currentState.cardShape = shape;
+            }
+            
+            function updatePreview() {
+                // This function would update the preview based on all current state
+                // For this demo, we're handling updates in individual event handlers
+                console.log('Preview updated with state:', currentState);
+            }
+            
+            function resetForm() {
+                // Reset all inputs to default values
+                playerNameInput.value = 'Smriti Mandhana';
+                playerRoleInput.value = 'Batter';
+                document.querySelector('input[name="team-badge"][value="india"]').checked = true;
+                document.querySelector('input[name="default-photo"][value="india1"]').checked = true;
+                
+                statLabels[0].value = 'Runs';
+                statLabels[1].value = 'Average';
+                statLabels[2].value = 'Wickets';
+                
+                statValues[0].value = '2500';
+                statValues[1].value = '45.2';
+                statValues[2].value = '15';
+                
+                cardBackgroundSelect.value = 'gradient1';
+                selectBackgroundOption('gradient1');
+                
+                fontStyleSelect.value = 'montserrat';
+                textColorInput.value = '#ffffff';
+                fanManagerInput.value = 'd k';
+                fanTitleInput.value = '';
+                showStatsCheckbox.checked = true;
+                showWatermarkCheckbox.checked = true;
+                document.querySelector('input[name="card-shape"][value="portrait"]').checked = true;
+                
+                // Reset preview
+                updatePlayerName();
+                updatePlayerRole();
+                updateTeamBadge();
+                updateCardBackground();
+                updateFontStyle();
+                updateTextColor();
+                updateFanManager();
+                updateFanTitle();
+                toggleStatsVisibility();
+                toggleWatermarkVisibility();
+                updateCardShape();
+                
+                // Reset player photo
+                playerPhotoImg.src = defaultPhotos.india1;
+                currentState.playerPhoto = defaultPhotos.india1;
+                
+                // Reset custom inputs
+                customBadgeInput.style.display = 'none';
+                customBackgroundInput.style.display = 'none';
+                
+                alert('Form reset to default values!');
+            }
+            
+            function downloadPng() {
+                // In a real implementation, this would use html2canvas or similar library
+                // to convert the card preview to a PNG image
+                alert('Downloading PNG version of your cricket card!');
+                
+                // Show download instructions
+                document.getElementById('export-instructions').style.display = 'block';
+                
+                // Simulate download (in a real app, this would be the actual download)
+                setTimeout(() => {
+                    document.getElementById('export-instructions').style.display = 'none';
+                }, 5000);
+            }
+            
+            function downloadSquare() {
+                // Similar to downloadPng but with square aspect ratio
+                alert('Downloading square (1080×1080) version for Instagram!');
+                
+                // Show download instructions
+                document.getElementById('export-instructions').style.display = 'block';
+                
+                // Simulate download
+                setTimeout(() => {
+                    document.getElementById('export-instructions').style.display = 'none';
+                }, 5000);
+            }
+            
+            function printCard() {
+                window.print();
+            }
+            
+            function shareOnX() {
+                const text = encodeURIComponent(`Check out my custom cricket card for ${currentState.playerName}! #CricketCard #INDvNZ`);
+                const url = encodeURIComponent(window.location.href);
+                window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+            }
+            
+            function shareOnFacebook() {
+                const url = encodeURIComponent(window.location.href);
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+            }
+            
+            function shareOnWhatsApp() {
+                const text = encodeURIComponent(`Check out my custom cricket card for ${currentState.playerName}!`);
+                window.open(`https://wa.me/?text=${text}`, '_blank');
+            }
+            
+            function shareOnInstagram() {
+                alert('For Instagram: Download the square image using the "Download Square" button, then post it manually on Instagram with the copied caption.');
+            }
+            
+            function copyInstagramCaption() {
+                const caption = `Proud fan — my #CricketCard for ${currentState.playerName} of ${currentState.teamBadge === 'india' ? 'India' : 'New Zealand'}! 🔥 #INDvNZ #AddaStoreFun`;
+                
+                // Use the Clipboard API if available
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(caption)
+                        .then(() => {
+                            alert('Instagram caption copied to clipboard!');
+                        })
+                        .catch(err => {
+                            console.error('Failed to copy: ', err);
+                            fallbackCopyTextToClipboard(caption);
+                        });
+                } else {
+                    fallbackCopyTextToClipboard(caption);
+                }
+            }
+            
+            function fallbackCopyTextToClipboard(text) {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                try {
+                    const successful = document.execCommand('copy');
+                    const msg = successful ? 'successful' : 'unsuccessful';
+                    alert('Instagram caption copied to clipboard!');
+                } catch (err) {
+                    console.error('Fallback: Oops, unable to copy', err);
+                    alert('Failed to copy caption. Please select and copy manually: ' + text);
+                }
+                
+                document.body.removeChild(textArea);
+            }
+            
+            // Initialize the application
+            init();
+        });
+    </script>
+</body>
+</html>
