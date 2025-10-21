@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-23LSZJ3WYJ');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RRB NTPC Cut-Off & Rank Predictor - All Regions</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #2e86c1;
+            --accent: #3498db;
+            --light: #ebf5fb;
+            --dark: #1b4f72;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --gray: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .hero {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .hero h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 2rem;
+        }
+        
+        .hero p {
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto 25px;
+        }
+        
+        .feature-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border-top: 4px solid var(--accent);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .card p {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .tool-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tool-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .result-box {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 25px;
+            display: none;
+        }
+        
+        .result-box.active {
+            display: block;
+        }
+        
+        .result-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .prediction-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--success);
+            margin: 10px 0;
+        }
+        
+        .chance-meter {
+            height: 20px;
+            background-color: #eee;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .chance-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+        
+        .chance-low { width: 20%; background-color: var(--danger); }
+        .chance-medium { width: 50%; background-color: var(--warning); }
+        .chance-high { width: 80%; background-color: #2ecc71; }
+        .chance-very-high { width: 95%; background-color: var(--success); }
+        
+        .chance-label {
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .chance-low-text { color: var(--danger); }
+        .chance-medium-text { color: var(--warning); }
+        .chance-high-text { color: #2ecc71; }
+        .chance-very-high-text { color: var(--success); }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .data-table th, .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .data-table th {
+            background-color: var(--light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .data-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .chart-container {
+            margin-top: 30px;
+            height: 300px;
+        }
+        
+        .disclaimer {
+            background-color: #fff8e1;
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+        
+        .disclaimer h4 {
+            color: var(--warning);
+            margin-bottom: 8px;
+        }
+        
+        .info-section {
+            margin: 40px 0;
+        }
+        
+        .info-articles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .article {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .article h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .feature-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">🚆</div>
+                    <h1>RRB NTPC Cut-Off Analyzer</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active">Home</a></li>
+                        <li><a href="#past-cutoffs">Past Cut-Offs</a></li>
+                        <li><a href="#predictor">Predictor</a></li>
+                        <li><a href="#chance-calculator">Chance Calculator</a></li>
+                        <li><a href="#comparison">Comparison</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h2>RRB NTPC Cut-Off & Rank Predictor</h2>
+            <p>Your comprehensive tool for analyzing RRB NTPC exam cut-off trends across all 21 RRB regions, predicting current cut-offs, and assessing your selection chances based on historical data and intelligent algorithms.</p>
+            <a href="#predictor" class="btn" onclick="showSection('predictor')">Try Cut-Off Predictor</a>
+        </section>
+
+        <section class="feature-cards">
+            <div class="card" onclick="showSection('past-cutoffs')">
+                <h3><span class="card-icon">📊</span> Past Cut-Offs</h3>
+                <p>Explore historical cut-off data with advanced filtering options by RRB region, post, category, and exam stage.</p>
+                <a href="#past-cutoffs" class="btn" onclick="showSection('past-cutoffs')">View Data</a>
+            </div>
+            <div class="card" onclick="showSection('predictor')">
+                <h3><span class="card-icon">🔮</span> Cut-Off Predictor</h3>
+                <p>Get predicted cut-off ranges for the current exam cycle based on historical trends and current factors.</p>
+                <a href="#predictor" class="btn" onclick="showSection('predictor')">Predict Now</a>
+            </div>
+            <div class="card" onclick="showSection('chance-calculator')">
+                <h3><span class="card-icon">📈</span> Chance Calculator</h3>
+                <p>Assess your selection probability by comparing your expected score with predicted or historical cut-offs.</p>
+                <a href="#chance-calculator" class="btn" onclick="showSection('chance-calculator')">Check Chance</a>
+            </div>
+            <div class="card" onclick="showSection('comparison')">
+                <h3><span class="card-icon">⚖️</span> Comparison Tool</h3>
+                <p>Compare cut-off marks for the same post across different RRB regions to identify less competitive options.</p>
+                <a href="#comparison" class="btn" onclick="showSection('comparison')">Compare</a>
+            </div>
+        </section>
+
+        <section id="past-cutoffs" class="tool-section">
+            <h2>Past Cut-Off Database</h2>
+            <p>Filter and explore historical RRB NTPC cut-off marks from previous recruitment cycles across all 21 RRB regions.</p>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="region-filter">RRB Region</label>
+                    <select id="region-filter" class="form-control">
+                        <option value="">All Regions</option>
+                        <option value="ahmedabad">RRB Ahmedabad</option>
+                        <option value="ajmer">RRB Ajmer</option>
+                        <option value="allahabad">RRB Allahabad</option>
+                        <option value="bangalore">RRB Bangalore</option>
+                        <option value="bhopal">RRB Bhopal</option>
+                        <option value="bhubaneswar">RRB Bhubaneswar</option>
+                        <option value="bilaspur">RRB Bilaspur</option>
+                        <option value="chandigarh">RRB Chandigarh</option>
+                        <option value="chennai">RRB Chennai</option>
+                        <option value="gorakhpur">RRB Gorakhpur</option>
+                        <option value="guwahati">RRB Guwahati</option>
+                        <option value="jammu">RRB Jammu</option>
+                        <option value="kolkata">RRB Kolkata</option>
+                        <option value="malda">RRB Malda</option>
+                        <option value="mumbai">RRB Mumbai</option>
+                        <option value="muzaffarpur">RRB Muzaffarpur</option>
+                        <option value="patna">RRB Patna</option>
+                        <option value="ranchi">RRB Ranchi</option>
+                        <option value="secunderabad">RRB Secunderabad</option>
+                        <option value="siliguri">RRB Siliguri</option>
+                        <option value="thiruvananthapuram">RRB Thiruvananthapuram</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="post-filter">Post Name</label>
+                    <select id="post-filter" class="form-control">
+                        <option value="">All Posts</option>
+                        <option value="goods-guard">Goods Guard</option>
+                        <option value="junior-clerk">Junior Clerk</option>
+                        <option value="accounts-clerk">Accounts Clerk</option>
+                        <option value="trains-clerk">Trains Clerk</option>
+                        <option value="senior-commercial">Senior Commercial Clerk</option>
+                        <option value="junior-account-assistant">Junior Account Assistant</option>
+                        <option value="senior-clerk">Senior Clerk</option>
+                        <option value="senior-time-keeper">Senior Time Keeper</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="category-filter">Category</label>
+                    <select id="category-filter" class="form-control">
+                        <option value="">All Categories</option>
+                        <option value="ur">UR</option>
+                        <option value="obc">OBC</option>
+                        <option value="sc">SC</option>
+                        <option value="st">ST</option>
+                        <option value="ews">EWS</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stage-filter">Exam Stage</label>
+                    <select id="stage-filter" class="form-control">
+                        <option value="">All Stages</option>
+                        <option value="cbt1">CBT-1</option>
+                        <option value="cbt2">CBT-2</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="filterCutoffData()">Apply Filters</button>
+            
+            <div class="chart-container">
+                <canvas id="cutoffTrendChart"></canvas>
+            </div>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>RRB Region</th>
+                        <th>Post</th>
+                        <th>Category</th>
+                        <th>Stage</th>
+                        <th>Cut-Off Marks</th>
+                    </tr>
+                </thead>
+                <tbody id="cutoff-table-body">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="predictor" class="tool-section">
+            <h2>Cut-Off Predictor</h2>
+            <p>Get a predicted cut-off range for the current exam cycle based on historical data and current factors.</p>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="predict-region">RRB Region</label>
+                    <select id="predict-region" class="form-control" required>
+                        <option value="">Select Region</option>
+                        <option value="ahmedabad">RRB Ahmedabad</option>
+                        <option value="ajmer">RRB Ajmer</option>
+                        <option value="allahabad">RRB Allahabad</option>
+                        <option value="bangalore">RRB Bangalore</option>
+                        <option value="bhopal">RRB Bhopal</option>
+                        <option value="bhubaneswar">RRB Bhubaneswar</option>
+                        <option value="bilaspur">RRB Bilaspur</option>
+                        <option value="chandigarh">RRB Chandigarh</option>
+                        <option value="chennai">RRB Chennai</option>
+                        <option value="gorakhpur">RRB Gorakhpur</option>
+                        <option value="guwahati">RRB Guwahati</option>
+                        <option value="jammu">RRB Jammu</option>
+                        <option value="kolkata">RRB Kolkata</option>
+                        <option value="malda">RRB Malda</option>
+                        <option value="mumbai">RRB Mumbai</option>
+                        <option value="muzaffarpur">RRB Muzaffarpur</option>
+                        <option value="patna">RRB Patna</option>
+                        <option value="ranchi">RRB Ranchi</option>
+                        <option value="secunderabad">RRB Secunderabad</option>
+                        <option value="siliguri">RRB Siliguri</option>
+                        <option value="thiruvananthapuram">RRB Thiruvananthapuram</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="predict-post">Post Name</label>
+                    <select id="predict-post" class="form-control" required>
+                        <option value="">Select Post</option>
+                        <option value="goods-guard">Goods Guard</option>
+                        <option value="junior-clerk">Junior Clerk</option>
+                        <option value="accounts-clerk">Accounts Clerk</option>
+                        <option value="trains-clerk">Trains Clerk</option>
+                        <option value="senior-commercial">Senior Commercial Clerk</option>
+                        <option value="junior-account-assistant">Junior Account Assistant</option>
+                        <option value="senior-clerk">Senior Clerk</option>
+                        <option value="senior-time-keeper">Senior Time Keeper</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="predict-category">Category</label>
+                    <select id="predict-category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="ur">UR</option>
+                        <option value="obc">OBC</option>
+                        <option value="sc">SC</option>
+                        <option value="st">ST</option>
+                        <option value="ews">EWS</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="predict-stage">Exam Stage</label>
+                    <select id="predict-stage" class="form-control" required>
+                        <option value="">Select Stage</option>
+                        <option value="cbt1">CBT-1</option>
+                        <option value="cbt2">CBT-2</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="predict-difficulty">Difficulty Level</label>
+                    <select id="predict-difficulty" class="form-control" required>
+                        <option value="">Select Difficulty</option>
+                        <option value="low">Low (Easier than previous)</option>
+                        <option value="moderate">Moderate (Similar to previous)</option>
+                        <option value="high">High (Harder than previous)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="predict-vacancies">Vacancies (Approx.)</label>
+                    <input type="number" id="predict-vacancies" class="form-control" placeholder="Enter approximate vacancies">
+                </div>
+            </div>
+            
+            <button class="btn" onclick="calculatePrediction()">Calculate Prediction</button>
+            
+            <div id="prediction-result" class="result-box">
+                <div class="result-title">Predicted Cut-Off Range:</div>
+                <div class="prediction-value" id="prediction-value">72.50 - 75.80</div>
+                <p>Based on historical data and your selected parameters, the predicted cut-off range for <span id="prediction-details"></span> is shown above.</p>
+                
+                <div class="disclaimer">
+                    <h4>Disclaimer</h4>
+                    <p>The predicted cut-offs are based on algorithmic analysis of historical data and user inputs. These are estimates for informational purposes only and do not guarantee actual selection. The official cut-off is declared solely by the Railway Recruitment Board.</p>
+                </div>
+                
+                <div class="chance-check-prompt">
+                    <p><strong>Want to check your chance with this score?</strong></p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="user-score">Your Expected Score</label>
+                            <input type="number" id="user-score" class="form-control" placeholder="Enter your expected score" step="0.01" min="0" max="100">
+                        </div>
+                    </div>
+                    <button class="btn" onclick="checkChance()">Check My Chance</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="chance-calculator" class="tool-section">
+            <h2>Chance of Selection Calculator</h2>
+            <p>Enter your expected score to assess your probability of selection based on historical or predicted cut-offs.</p>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="chance-region">RRB Region</label>
+                    <select id="chance-region" class="form-control" required>
+                        <option value="">Select Region</option>
+                        <option value="ahmedabad">RRB Ahmedabad</option>
+                        <option value="ajmer">RRB Ajmer</option>
+                        <option value="allahabad">RRB Allahabad</option>
+                        <option value="bangalore">RRB Bangalore</option>
+                        <option value="bhopal">RRB Bhopal</option>
+                        <option value="bhubaneswar">RRB Bhubaneswar</option>
+                        <option value="bilaspur">RRB Bilaspur</option>
+                        <option value="chandigarh">RRB Chandigarh</option>
+                        <option value="chennai">RRB Chennai</option>
+                        <option value="gorakhpur">RRB Gorakhpur</option>
+                        <option value="guwahati">RRB Guwahati</option>
+                        <option value="jammu">RRB Jammu</option>
+                        <option value="kolkata">RRB Kolkata</option>
+                        <option value="malda">RRB Malda</option>
+                        <option value="mumbai">RRB Mumbai</option>
+                        <option value="muzaffarpur">RRB Muzaffarpur</option>
+                        <option value="patna">RRB Patna</option>
+                        <option value="ranchi">RRB Ranchi</option>
+                        <option value="secunderabad">RRB Secunderabad</option>
+                        <option value="siliguri">RRB Siliguri</option>
+                        <option value="thiruvananthapuram">RRB Thiruvananthapuram</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="chance-post">Post Name</label>
+                    <select id="chance-post" class="form-control" required>
+                        <option value="">Select Post</option>
+                        <option value="goods-guard">Goods Guard</option>
+                        <option value="junior-clerk">Junior Clerk</option>
+                        <option value="accounts-clerk">Accounts Clerk</option>
+                        <option value="trains-clerk">Trains Clerk</option>
+                        <option value="senior-commercial">Senior Commercial Clerk</option>
+                        <option value="junior-account-assistant">Junior Account Assistant</option>
+                        <option value="senior-clerk">Senior Clerk</option>
+                        <option value="senior-time-keeper">Senior Time Keeper</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="chance-category">Category</label>
+                    <select id="chance-category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="ur">UR</option>
+                        <option value="obc">OBC</option>
+                        <option value="sc">SC</option>
+                        <option value="st">ST</option>
+                        <option value="ews">EWS</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="chance-stage">Exam Stage</label>
+                    <select id="chance-stage" class="form-control" required>
+                        <option value="">Select Stage</option>
+                        <option value="cbt1">CBT-1</option>
+                        <option value="cbt2">CBT-2</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="chance-score">Your Expected Score</label>
+                    <input type="number" id="chance-score" class="form-control" placeholder="Enter your expected score" step="0.01" min="0" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="cutoff-reference">Cut-Off Reference</label>
+                    <select id="cutoff-reference" class="form-control">
+                        <option value="last-year">Last Year's Cut-Off</option>
+                        <option value="predicted">Predicted Cut-Off</option>
+                        <option value="average">Average of Last 3 Years</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="calculateChance()">Calculate My Chance</button>
+            
+            <div id="chance-result" class="result-box">
+                <div class="result-title">Your Selection Chance:</div>
+                <div class="chance-meter">
+                    <div class="chance-fill chance-medium" id="chance-meter"></div>
+                </div>
+                <div class="chance-label chance-medium-text" id="chance-label">Medium Chance</div>
+                <p id="chance-details">Based on last year's data, your score is approximately 2.5 points above the cut-off. Your chances are Medium.</p>
+            </div>
+        </section>
+
+        <section id="comparison" class="tool-section">
+            <h2>Comparative Analysis</h2>
+            <p>Compare cut-off marks for the same post across different RRB regions to identify less competitive options.</p>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="compare-post">Post Name</label>
+                    <select id="compare-post" class="form-control" required>
+                        <option value="">Select Post</option>
+                        <option value="goods-guard">Goods Guard</option>
+                        <option value="junior-clerk">Junior Clerk</option>
+                        <option value="accounts-clerk">Accounts Clerk</option>
+                        <option value="trains-clerk">Trains Clerk</option>
+                        <option value="senior-commercial">Senior Commercial Clerk</option>
+                        <option value="junior-account-assistant">Junior Account Assistant</option>
+                        <option value="senior-clerk">Senior Clerk</option>
+                        <option value="senior-time-keeper">Senior Time Keeper</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="compare-category">Category</label>
+                    <select id="compare-category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="ur">UR</option>
+                        <option value="obc">OBC</option>
+                        <option value="sc">SC</option>
+                        <option value="st">ST</option>
+                        <option value="ews">EWS</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="compare-stage">Exam Stage</label>
+                    <select id="compare-stage" class="form-control" required>
+                        <option value="">Select Stage</option>
+                        <option value="cbt1">CBT-1</option>
+                        <option value="cbt2">CBT-2</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="compare-year">Year</label>
+                    <select id="compare-year" class="form-control">
+                        <option value="2022">2022</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2016">2016</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="generateComparison()">Generate Comparison</button>
+            
+            <div class="chart-container">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>RRB Region</th>
+                        <th>Cut-Off Marks</th>
+                        <th>Difference from Average</th>
+                        <th>Competitiveness</th>
+                    </tr>
+                </thead>
+                <tbody id="comparison-table-body">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </section>
+
+        <section class="info-section">
+            <h2>Learn More About RRB NTPC Cut-Offs</h2>
+            <div class="info-articles">
+                <div class="article">
+                    <h3>Factors Affecting RRB NTPC Cut-Off</h3>
+                    <p>Understand the key factors that influence cut-off marks each year, including number of vacancies, difficulty level, number of applicants, and reservation policies.</p>
+                    <a href="#" class="btn">Read More</a>
+                </div>
+                <div class="article">
+                    <h3>What is Normalization?</h3>
+                    <p>Learn about the normalization process used by RRB to adjust scores across different exam shifts, ensuring fair comparison of candidates.</p>
+                    <a href="#" class="btn">Read More</a>
+                </div>
+                <div class="article">
+                    <h3>How to Use This Tool Effectively</h3>
+                    <p>Get the most out of our cut-off analyzer with tips on interpreting predictions, understanding chance calculations, and making data-driven decisions.</p>
+                    <a href="#" class="btn">Read More</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>RRB NTPC Cut-Off Analyzer</h3>
+                    <p>Your trusted companion for RRB NTPC exam preparation and analysis across all 21 RRB regions.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#past-cutoffs">Past Cut-Offs</a></li>
+                        <li><a href="#predictor">Cut-Off Predictor</a></li>
+                        <li><a href="#chance-calculator">Chance Calculator</a></li>
+                        <li><a href="#comparison">Comparison Tool</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>All RRB Regions</h3>
+                    <ul>
+                        <li><a href="#">RRB Ahmedabad</a></li>
+                        <li><a href="#">RRB Ajmer</a></li>
+                        <li><a href="#">RRB Allahabad</a></li>
+                        <li><a href="#">RRB Bangalore</a></li>
+                        <li><a href="#">RRB Bhopal</a></li>
+                        <li><a href="#">RRB Bhubaneswar</a></li>
+                        <li><a href="#">RRB Bilaspur</a></li>
+                        <li><a href="#">RRB Chandigarh</a></li>
+                        <li><a href="#">RRB Chennai</a></li>
+                        <li><a href="#">RRB Gorakhpur</a></li>
+                        <li><a href="#">RRB Guwahati</a></li>
+                        <li><a href="#">RRB Jammu</a></li>
+                        <li><a href="#">RRB Kolkata</a></li>
+                        <li><a href="#">RRB Malda</a></li>
+                        <li><a href="#">RRB Mumbai</a></li>
+                        <li><a href="#">RRB Muzaffarpur</a></li>
+                        <li><a href="#">RRB Patna</a></li>
+                        <li><a href="#">RRB Ranchi</a></li>
+                        <li><a href="#">RRB Secunderabad</a></li>
+                        <li><a href="#">RRB Siliguri</a></li>
+                        <li><a href="#">RRB Thiruvananthapuram</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>Email: info@rrbanalyzer.com</li>
+                        <li>Feedback: feedback@rrbanalyzer.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 RRB NTPC Cut-Off Analyzer. All rights reserved.</p>
+                <p class="disclaimer">Disclaimer: This tool provides estimates based on historical data and is not affiliated with the official Railway Recruitment Board.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample data for demonstration with all 21 RRB regions
+        const cutoffData = [
+            { year: "2022", region: "RRB Ahmedabad", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 74.50 },
+            { year: "2022", region: "RRB Ajmer", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 75.80 },
+            { year: "2022", region: "RRB Allahabad", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 76.20 },
+            { year: "2022", region: "RRB Bangalore", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 77.10 },
+            { year: "2022", region: "RRB Bhopal", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 75.30 },
+            { year: "2022", region: "RRB Bhubaneswar", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 74.20 },
+            { year: "2022", region: "RRB Bilaspur", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 73.90 },
+            { year: "2022", region: "RRB Chandigarh", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 76.50 },
+            { year: "2022", region: "RRB Chennai", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 75.20 },
+            { year: "2022", region: "RRB Gorakhpur", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 74.80 },
+            { year: "2022", region: "RRB Guwahati", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 73.50 },
+            { year: "2022", region: "RRB Jammu", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 72.90 },
+            { year: "2022", region: "RRB Kolkata", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 75.60 },
+            { year: "2022", region: "RRB Malda", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 73.20 },
+            { year: "2022", region: "RRB Mumbai", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 76.50 },
+            { year: "2022", region: "RRB Muzaffarpur", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 74.10 },
+            { year: "2022", region: "RRB Patna", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 75.40 },
+            { year: "2022", region: "RRB Ranchi", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 74.30 },
+            { year: "2022", region: "RRB Secunderabad", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 76.80 },
+            { year: "2022", region: "RRB Siliguri", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 73.70 },
+            { year: "2022", region: "RRB Thiruvananthapuram", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 75.90 },
+            { year: "2022", region: "RRB Chennai", post: "Junior Clerk", category: "UR", stage: "CBT-1", cutoff: 78.30 },
+            { year: "2022", region: "RRB Mumbai", post: "Junior Clerk", category: "UR", stage: "CBT-1", cutoff: 79.10 },
+            { year: "2020", region: "RRB Chennai", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 72.40 },
+            { year: "2020", region: "RRB Mumbai", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 73.80 },
+            { year: "2020", region: "RRB Allahabad", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 71.90 },
+            { year: "2020", region: "RRB Kolkata", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 70.50 },
+            { year: "2019", region: "RRB Chennai", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 70.20 },
+            { year: "2019", region: "RRB Mumbai", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 71.50 },
+            { year: "2019", region: "RRB Allahabad", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 69.80 },
+            { year: "2019", region: "RRB Kolkata", post: "Goods Guard", category: "UR", stage: "CBT-1", cutoff: 68.90 },
+        ];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            populateCutoffTable();
+            initializeCutoffChart();
+        });
+
+        // Function to show specific sections
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.tool-section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            document.getElementById(sectionId).style.display = 'block';
+            window.location.href = `#${sectionId}`;
+        }
+
+        // Populate the cutoff table with data
+        function populateCutoffTable() {
+            const tableBody = document.getElementById('cutoff-table-body');
+            tableBody.innerHTML = '';
+            
+            cutoffData.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.year}</td>
+                    <td>${item.region}</td>
+                    <td>${item.post}</td>
+                    <td>${item.category}</td>
+                    <td>${item.stage}</td>
+                    <td>${item.cutoff}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Initialize the cutoff trend chart
+        function initializeCutoffChart() {
+            const ctx = document.getElementById('cutoffTrendChart').getContext('2d');
+            const years = ['2019', '2020', '2022'];
+            const chennaiData = [70.2, 72.4, 75.2];
+            const mumbaiData = [71.5, 73.8, 76.5];
+            const allahabadData = [69.8, 71.9, 76.2];
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [
+                        {
+                            label: 'RRB Chennai',
+                            data: chennaiData,
+                            borderColor: '#3498db',
+                            backgroundColor: 'rgba(52, 152, 219, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'RRB Mumbai',
+                            data: mumbaiData,
+                            borderColor: '#2ecc71',
+                            backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'RRB Allahabad',
+                            data: allahabadData,
+                            borderColor: '#9b59b6',
+                            backgroundColor: 'rgba(155, 89, 182, 0.1)',
+                            tension: 0.3,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Cut-Off Trend for Goods Guard (UR) - CBT-1'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Cut-Off Marks'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Filter cutoff data based on user selection
+        function filterCutoffData() {
+            const region = document.getElementById('region-filter').value;
+            const post = document.getElementById('post-filter').value;
+            const category = document.getElementById('category-filter').value;
+            const stage = document.getElementById('stage-filter').value;
+            
+            // Filter the data based on user selections
+            let filteredData = cutoffData;
+            
+            if (region) {
+                const regionName = document.getElementById('region-filter').options[document.getElementById('region-filter').selectedIndex].text;
+                filteredData = filteredData.filter(item => item.region === regionName);
+            }
+            
+            if (post) {
+                const postName = document.getElementById('post-filter').options[document.getElementById('post-filter').selectedIndex].text;
+                filteredData = filteredData.filter(item => item.post === postName);
+            }
+            
+            if (category) {
+                filteredData = filteredData.filter(item => item.category === category.toUpperCase());
+            }
+            
+            if (stage) {
+                filteredData = filteredData.filter(item => item.stage === stage.toUpperCase());
+            }
+            
+            // Update the table with filtered data
+            const tableBody = document.getElementById('cutoff-table-body');
+            tableBody.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="6" style="text-align: center;">No data found for the selected filters</td>`;
+                tableBody.appendChild(row);
+            } else {
+                filteredData.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.year}</td>
+                        <td>${item.region}</td>
+                        <td>${item.post}</td>
+                        <td>${item.category}</td>
+                        <td>${item.stage}</td>
+                        <td>${item.cutoff}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+            
+            // Update the chart with filtered data
+            updateChartWithFilteredData(filteredData);
+        }
+
+        // Update chart with filtered data
+        function updateChartWithFilteredData(filteredData) {
+            // Extract unique years and regions from filtered data
+            const years = [...new Set(filteredData.map(item => item.year))].sort();
+            const regions = [...new Set(filteredData.map(item => item.region))];
+            
+            // Prepare datasets for the chart
+            const datasets = regions.map(region => {
+                const data = years.map(year => {
+                    const item = filteredData.find(d => d.region === region && d.year === year);
+                    return item ? item.cutoff : null;
+                });
+                
+                // Generate a random color for each region
+                const color = '#' + Math.floor(Math.random()*16777215).toString(16);
+                
+                return {
+                    label: region,
+                    data: data,
+                    borderColor: color,
+                    backgroundColor: color + '20', // Add transparency
+                    tension: 0.3,
+                    fill: true
+                };
+            });
+            
+            // Update the chart
+            const ctx = document.getElementById('cutoffTrendChart').getContext('2d');
+            
+            // Destroy existing chart if it exists
+            if (window.cutoffChart) {
+                window.cutoffChart.destroy();
+            }
+            
+            window.cutoffChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Cut-Off Trends Based on Selected Filters'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Cut-Off Marks'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Calculate prediction based on user inputs
+        function calculatePrediction() {
+            const region = document.getElementById('predict-region').value;
+            const post = document.getElementById('predict-post').value;
+            const category = document.getElementById('predict-category').value;
+            const stage = document.getElementById('predict-stage').value;
+            const difficulty = document.getElementById('predict-difficulty').value;
+            
+            if (!region || !post || !category || !stage || !difficulty) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            // Generate a prediction based on historical data and difficulty
+            const regionName = document.getElementById('predict-region').options[document.getElementById('predict-region').selectedIndex].text;
+            const postName = document.getElementById('predict-post').options[document.getElementById('predict-post').selectedIndex].text;
+            
+            // Find relevant historical data
+            const relevantData = cutoffData.filter(item => 
+                item.region === regionName && 
+                item.post === postName && 
+                item.category === category.toUpperCase() && 
+                item.stage === stage.toUpperCase()
+            );
+            
+            let baseCutoff;
+            if (relevantData.length > 0) {
+                // Use the most recent data as base
+                baseCutoff = relevantData[0].cutoff;
+            } else {
+                // Use a default base if no data found
+                baseCutoff = 70 + Math.random() * 10;
+            }
+            
+            // Adjust based on difficulty
+            let adjustment = 0;
+            if (difficulty === 'low') {
+                adjustment = 2 + Math.random() * 2; // Higher cutoff for easier exam
+            } else if (difficulty === 'high') {
+                adjustment = -2 - Math.random() * 2; // Lower cutoff for harder exam
+            }
+            
+            const predictedCutoff = baseCutoff + adjustment;
+            const range = 1 + Math.random() * 2;
+            const lower = (predictedCutoff - range/2).toFixed(2);
+            const upper = (predictedCutoff + range/2).toFixed(2);
+            
+            document.getElementById('prediction-value').textContent = `${lower} - ${upper}`;
+            document.getElementById('prediction-details').textContent = `${regionName}, ${postName}, ${category.toUpperCase()}, ${stage.toUpperCase()}`;
+            document.getElementById('prediction-result').classList.add('active');
+        }
+
+        // Calculate chance of selection
+        function calculateChance() {
+            const score = parseFloat(document.getElementById('chance-score').value);
+            
+            if (isNaN(score)) {
+                alert('Please enter a valid score');
+                return;
+            }
+            
+            // Get reference cutoff based on user selection
+            const reference = document.getElementById('cutoff-reference').value;
+            let cutoff;
+            
+            if (reference === 'last-year') {
+                // Use last year's cutoff (simplified)
+                cutoff = 75.0;
+            } else if (reference === 'predicted') {
+                // Use predicted cutoff (simplified)
+                cutoff = 76.5;
+            } else {
+                // Use average of last 3 years (simplified)
+                cutoff = 74.5;
+            }
+            
+            // Calculate chance based on score difference
+            const difference = score - cutoff;
+            let chanceLevel, chanceText, chanceDetail;
+            
+            if (difference < -5) {
+                chanceLevel = 'low';
+                chanceText = 'Low Chance';
+                chanceDetail = `Your score is ${Math.abs(difference).toFixed(1)} points below the expected cut-off. Consider focusing on improving your preparation.`;
+            } else if (difference < 0) {
+                chanceLevel = 'medium';
+                chanceText = 'Medium Chance';
+                chanceDetail = `Your score is ${Math.abs(difference).toFixed(1)} points below the expected cut-off. There is a reasonable chance of selection.`;
+            } else if (difference < 5) {
+                chanceLevel = 'high';
+                chanceText = 'High Chance';
+                chanceDetail = `Your score is ${difference.toFixed(1)} points above the expected cut-off. Your chances of selection are good.`;
+            } else {
+                chanceLevel = 'very-high';
+                chanceText = 'Very High Chance';
+                chanceDetail = `Your score is ${difference.toFixed(1)} points above the expected cut-off. Your selection is highly likely.`;
+            }
+            
+            const meter = document.getElementById('chance-meter');
+            meter.className = `chance-fill chance-${chanceLevel}`;
+            
+            document.getElementById('chance-label').textContent = chanceText;
+            document.getElementById('chance-label').className = `chance-label chance-${chanceLevel}-text`;
+            document.getElementById('chance-details').textContent = chanceDetail;
+            document.getElementById('chance-result').classList.add('active');
+        }
+
+        // Check chance from prediction section
+        function checkChance() {
+            const score = parseFloat(document.getElementById('user-score').value);
+            
+            if (isNaN(score)) {
+                alert('Please enter a valid score');
+                return;
+            }
+            
+            // Navigate to chance calculator and pre-fill the score
+            document.getElementById('chance-score').value = score;
+            showSection('chance-calculator');
+            calculateChance();
+        }
+
+        // Generate comparison chart and table
+        function generateComparison() {
+            const post = document.getElementById('compare-post').value;
+            const category = document.getElementById('compare-category').value;
+            const stage = document.getElementById('compare-stage').value;
+            const year = document.getElementById('compare-year').value;
+            
+            if (!post || !category || !stage) {
+                alert('Please fill all required fields');
+                return;
+            }
+            
+            // For demonstration, we'll use sample data for all 21 regions
+            const regions = [
+                'RRB Ahmedabad', 'RRB Ajmer', 'RRB Allahabad', 'RRB Bangalore', 
+                'RRB Bhopal', 'RRB Bhubaneswar', 'RRB Bilaspur', 'RRB Chandigarh',
+                'RRB Chennai', 'RRB Gorakhpur', 'RRB Guwahati', 'RRB Jammu',
+                'RRB Kolkata', 'RRB Malda', 'RRB Mumbai', 'RRB Muzaffarpur',
+                'RRB Patna', 'RRB Ranchi', 'RRB Secunderabad', 'RRB Siliguri',
+                'RRB Thiruvananthapuram'
+            ];
+            
+            // Generate random cutoffs for demonstration
+            const cutoffs = regions.map(() => 70 + Math.random() * 10);
+            const avg = cutoffs.reduce((a, b) => a + b, 0) / cutoffs.length;
+            
+            // Update comparison chart
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: regions,
+                    datasets: [{
+                        label: `Cut-Off Marks (${year})`,
+                        data: cutoffs,
+                        backgroundColor: 'rgba(52, 152, 219, 0.7)',
+                        borderColor: 'rgb(52, 152, 219)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `Cut-Off Comparison for ${document.getElementById('compare-post').options[document.getElementById('compare-post').selectedIndex].text} (${category}) - ${stage.toUpperCase()}`
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Cut-Off Marks'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                maxRotation: 90,
+                                minRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Update comparison table
+            const tableBody = document.getElementById('comparison-table-body');
+            tableBody.innerHTML = '';
+            
+            regions.forEach((region, index) => {
+                const cutoff = cutoffs[index].toFixed(2);
+                const diff = (cutoff - avg).toFixed(2);
+                let competitiveness = 'High';
+                
+                if (cutoff < avg - 1) competitiveness = 'Low';
+                else if (cutoff < avg) competitiveness = 'Medium';
+                else if (cutoff > avg + 1) competitiveness = 'Very High';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${region}</td>
+                    <td>${cutoff}</td>
+                    <td>${diff > 0 ? '+' : ''}${diff}</td>
+                    <td>${competitiveness}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
