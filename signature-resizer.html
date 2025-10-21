@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-23LSZJ3WYJ');
+</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>RRB NTPC Signature Resizer & Compressor</title>
+    <meta name="description" content="Create a RRB NTPC 2025 signature image that meets official specs. Resize, crop and compress JPG to 140x60 px and 30–49KB — browser-only tool."/>
+    <style>
+        :root {
+            --primary: #1a4f8c;
+            --secondary: #e63946;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+
+        /* Basic reset */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        h1 { font-size: 1.6rem; margin-bottom: 6px; }
+        .subtitle { opacity: 0.95; font-size: 0.95rem; }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
+        .card-title { font-size: 1.15rem; margin-bottom: 12px; color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 10px; }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .spec-item { background: var(--light); padding: 10px; border-radius: 6px; border-left: 4px solid var(--primary); }
+        .spec-label { font-weight: 700; color: var(--primary); margin-bottom: 6px; display:block; }
+
+        .warning-box { background-color: rgba(255,193,7,0.08); border-left: 4px solid var(--warning); padding: 12px; border-radius: 6px; color: #856404; margin-top: 8px; }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 28px 18px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .2s ease-in-out;
+            user-select: none;
+        }
+        .upload-area:hover { border-color: var(--primary); background: rgba(26,79,140,0.04); }
+        .upload-area.dragover { border-color: var(--primary); background: rgba(26,79,140,0.08); }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 9px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin: 4px;
+        }
+        .btn:hover { background: #153d6b; }
+        .btn-danger { background: var(--danger); }
+        .btn-success { background: var(--success); }
+        .btn-warning { background: var(--warning); color: #000; }
+        .btn.active { background: #153d6b; }
+
+        .preview-container { display:flex; gap: 16px; flex-wrap:wrap; margin-top: 14px; }
+        .preview-box { flex:1; min-width: 260px; text-align:center; }
+        .preview-title { font-weight:700; color:var(--primary); margin-bottom: 8px; }
+        canvas.preview-image { max-width: 100%; border:1px solid #ddd; border-radius:6px; background: white; }
+
+        .size-box { background: var(--light); padding:8px; margin-top:8px; border-radius:6px; font-size:0.9rem; }
+
+        .controls { display:flex; gap:12px; flex-wrap:wrap; margin-top: 14px; }
+        .control-group { flex:1; min-width: 220px; }
+        .control-label { display:block; font-weight:700; margin-bottom: 6px; }
+        .slider-container { display:flex; gap:8px; align-items:center; }
+        input[type="range"] { width:100%; }
+        .slider-value { min-width:44px; text-align:center; font-weight:600; background:#fff; padding:4px 6px; border-radius:4px; border:1px solid #eee; }
+
+        .dimension-box { display:flex; gap:8px; }
+        .dimension-input { flex:1; padding:8px; border-radius:6px; border:1px solid #ddd; }
+
+        .file-size-indicator { height:10px; background:#e9ecef; border-radius:6px; overflow:hidden; margin-top:10px; }
+        .file-size-bar { height:100%; width:0%; background:#28a745; transition: width .25s ease, background .25s ease; }
+
+        .file-size-labels { display:flex; justify-content:space-between; font-size:0.82rem; color:#6c757d; margin-top:6px; }
+
+        .validation-result { margin-top:12px; padding:12px; border-radius:6px; }
+        .validation-success { background: rgba(40,167,69,0.08); border-left: 4px solid var(--success); color:#155724; }
+        .validation-error { background: rgba(220,53,69,0.08); border-left: 4px solid var(--danger); color:#721c24; }
+
+        .quality-presets { display:flex; gap:10px; margin-top:8px; }
+        .quality-preset { padding:8px; background:#eef0f2; border-radius:6px; cursor:pointer; flex:1; text-align:center; }
+        .quality-preset.active { background:var(--primary); color:white; }
+
+        .enhancement-controls { display: flex; gap: 10px; margin-top: 8px; }
+        .enhancement-btn { flex: 1; padding: 8px; background: #eef0f2; border-radius: 6px; cursor: pointer; text-align: center; }
+        .enhancement-btn.active { background: var(--primary); color: white; }
+
+        .auto-optimize-section { 
+            background: rgba(40,167,69,0.08); 
+            border: 1px solid var(--success);
+            border-radius: 8px; 
+            padding: 15px; 
+            margin-top: 15px; 
+            text-align: center;
+        }
+        .auto-optimize-section h3 { color: var(--success); margin-bottom: 10px; font-size: 1.1rem; }
+
+        .optimize-status { 
+            margin: 10px 0; 
+            padding: 8px; 
+            border-radius: 6px; 
+            background: white;
+            font-size: 0.9rem;
+        }
+
+        .optimize-options {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .optimize-option {
+            padding: 8px 16px;
+            background: #eef0f2;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .optimize-option.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        footer { text-align:center; color:#6c757d; font-size:0.9rem; margin-top:18px; }
+
+        .hidden { display:none; }
+
+        @media (max-width:800px) {
+            .preview-container { flex-direction:column; }
+            .optimize-options { flex-direction: column; }
+        }
+
+        /* Article Styles */
+        .article-content {
+            max-width: 100%;
+            margin: 20px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .article-content h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .article-content h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .spec-table td, .spec-table th {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .spec-table th {
+            background-color: #3498db;
+            color: white;
+        }
+        .spec-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .checklist, .disclaimer {
+            background-color: #fffde7;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+        }
+        .disclaimer {
+            background-color: #ffebee;
+            border-left-color: #f44336;
+            font-style: italic;
+        }
+        .article-content ul li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" role="main">
+        <header>
+            <h1>RRB NTPC Signature Resizer & Compressor</h1>
+            <p class="subtitle">Prepare your signature image for RRB NTPC 2025 — client-side, private, and easy to use.</p>
+        </header>
+
+        <!-- UPLOAD + TOOL AT THE TOP -->
+        <div class="card" aria-labelledby="toolHeading">
+            <h2 id="toolHeading" class="card-title">Signature Resizer & Compressor</h2>
+
+            <div id="uploadArea" class="upload-area" tabindex="0" aria-label="Upload signature image">
+                <div style="font-size:36px; margin-bottom:8px;">📤</div>
+                <div style="font-weight:700; margin-bottom:6px;">Drag & drop your signature image here</div>
+                <div>or</div>
+                <div style="margin-top:10px;">
+                    <input id="fileInput" type="file" accept="image/*" class="hidden" aria-hidden="true" />
+                    <button id="browseBtn" class="btn" aria-label="Browse files">Browse Files</button>
+                </div>
+                <div style="margin-top:10px; font-size:0.94rem; color:#6c757d;">Supported formats: JPG, JPEG, PNG</div>
+            </div>
+
+            <div id="validationResult" class="validation-result hidden" aria-live="polite"></div>
+
+            <div id="previewSection" class="hidden" aria-hidden="true">
+                <div class="preview-container">
+                    <div class="preview-box">
+                        <div class="preview-title">Original Signature</div>
+                        <canvas id="originalCanvas" class="preview-image" width="300" height="120" aria-label="Original signature preview"></canvas>
+                        <div id="originalSize" class="size-box" aria-live="polite"></div>
+                    </div>
+
+                    <div class="preview-box">
+                        <div class="preview-title">Processed Signature (final)</div>
+                        <canvas id="processedCanvas" class="preview-image" width="140" height="60" aria-label="Processed signature preview"></canvas>
+                        <div id="processedSize" class="size-box" aria-live="polite"></div>
+
+                        <div class="file-size-indicator" aria-hidden="true">
+                            <div id="fileSizeBar" class="file-size-bar"></div>
+                        </div>
+                        <div class="file-size-labels" aria-hidden="true">
+                            <span>0KB</span><span>30KB</span><span>49KB</span><span>100KB+</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="controls" role="region" aria-label="Controls for processing">
+                    <!-- Quality -->
+                    <div class="control-group" style="min-width:260px;">
+                        <label class="control-label" for="qualitySlider">Quality / Compression</label>
+                        <div class="slider-container">
+                            <input id="qualitySlider" class="slider" type="range" min="0.1" max="1" step="0.05" value="0.8" aria-valuemin="0.1" aria-valuemax="1" aria-valuenow="0.8" />
+                            <div id="qualityValue" class="slider-value">0.80</div>
+                        </div>
+                        <div class="quality-presets" role="group" aria-label="Quality presets">
+                            <div class="quality-preset" data-quality="0.35" role="button" tabindex="0">High Compression</div>
+                            <div class="quality-preset active" data-quality="0.8" role="button" tabindex="0">Balanced</div>
+                            <div class="quality-preset" data-quality="1.0" role="button" tabindex="0">Best Quality</div>
+                        </div>
+                    </div>
+
+                    <!-- Dimensions -->
+                    <div class="control-group">
+                        <label class="control-label">Target Dimensions (pixels)</label>
+                        <div class="dimension-box" role="group" aria-label="Target dimensions">
+                            <input id="widthInput" class="dimension-input" type="number" value="140" min="1" aria-label="Width in pixels"/>
+                            <div style="align-self:center;">×</div>
+                            <input id="heightInput" class="dimension-input" type="number" value="60" min="1" aria-label="Height in pixels"/>
+                        </div>
+                        <small style="display:block; margin-top:6px; color:#6c757d;">Recommended: 140 × 60 pixels (5:2 aspect ratio)</small>
+                    </div>
+
+                    <!-- Signature Size Increase -->
+                    <div class="control-group">
+                        <label class="control-label" for="scaleSlider">Signature Size Increase</label>
+                        <div class="slider-container">
+                            <input id="scaleSlider" class="slider" type="range" min="0.5" max="3.0" step="0.05" value="1.00" aria-valuemin="0.5" aria-valuemax="3.0" aria-valuenow="1.0" />
+                            <div id="scaleValue" class="slider-value">1.00×</div>
+                        </div>
+                        <div class="enhancement-controls">
+                            <div class="enhancement-btn" data-scale="1.0" role="button" tabindex="0">Normal</div>
+                            <div class="enhancement-btn active" data-scale="1.5" role="button" tabindex="0">Larger</div>
+                            <div class="enhancement-btn" data-scale="2.0" role="button" tabindex="0">Largest</div>
+                        </div>
+                        <small style="display:block; margin-top:6px; color:#6c757d;">
+                            Increase the visible size of the signature within the final frame. Use larger sizes if you scanned a small signature.
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Enhancement Controls -->
+                <div class="controls" role="region" aria-label="Enhancement controls">
+                    <div class="control-group">
+                        <label class="control-label">Image Enhancement</label>
+                        <div class="enhancement-controls">
+                            <button id="brightnessBtn" class="btn" aria-pressed="false">Increase Contrast</button>
+                            <button id="resetEnhancementBtn" class="btn" aria-pressed="false">Reset Enhancements</button>
+                        </div>
+                        <small style="display:block; margin-top:6px; color:#6c757d;">
+                            Improve signature visibility. Use if your signature appears too faint.
+                        </small>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Positioning</label>
+                        <div class="enhancement-controls">
+                            <button id="autoFitBtn" class="btn active" aria-pressed="true">Auto-fit</button>
+                            <button id="centerBtn" class="btn active" aria-pressed="true">Center</button>
+                            <button id="resetPositionBtn" class="btn" aria-pressed="false">Reset Position</button>
+                        </div>
+                        <small style="display:block; margin-top:6px; color:#6c757d;">
+                            Control how your signature is positioned within the frame.
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Auto-Optimize Section -->
+                <div class="auto-optimize-section">
+                    <h3>🎯 Auto-Optimize File Size</h3>
+                    <p style="margin-bottom: 10px; color: #555;">Automatically find the perfect quality setting</p>
+                    
+                    <div class="optimize-options">
+                        <div class="optimize-option active" data-target="40">
+                            Optimize to 40KB
+                        </div>
+                        <div class="optimize-option" data-target="35">
+                            Optimize to 35KB
+                        </div>
+                        <div class="optimize-option" data-target="45">
+                            Optimize to 45KB
+                        </div>
+                    </div>
+                    
+                    <button id="autoOptimizeBtn" class="btn btn-warning">Auto-Optimize Now</button>
+                    <div id="optimizeStatus" class="optimize-status hidden">
+                        <div id="optimizeProgress"></div>
+                    </div>
+                    <small style="display:block; margin-top:8px; color:#6c757d;">
+                        Automatically adjusts quality to achieve your target file size within the 30-49KB range.
+                    </small>
+                </div>
+
+                <div style="text-align:center; margin-top:12px;">
+                    <button id="processBtn" class="btn btn-success">Process Signature</button>
+                    <button id="downloadBtn" class="btn" title="Download processed file">Download Processed Signature</button>
+                    <button id="resetBtn" class="btn btn-danger">Reset</button>
+                </div>
+
+                <div style="margin-top:12px; color:#6c757d; font-size:0.92rem;">
+                    <strong>Privacy:</strong> All processing happens locally in your browser — files are not uploaded to any server.
+                </div>
+            </div>
+        </div>
+
+        <!-- TIPS CARD -->
+        <div class="card">
+            <h2 class="card-title">Tips for taking a perfect signature photo</h2>
+            <ul style="margin-top:10px; color:#444; line-height:1.5;">
+                <li>Use white paper and a Black ink pen. Avoid coloured or textured paper.</li>
+                <li>Keep the camera parallel to the paper to avoid skew. No heavy shadows.</li>
+                <li>Fill the camera frame with the signed area — don't include too much empty space.</li>
+                <li>If signature appears too thin when processed, use the <strong>Signature Increase</strong> slider to make it larger inside the final 140×60 frame.</li>
+                <li>Use the <strong>Increase Contrast</strong> button if your signature appears faint.</li>
+                <li>Use <strong>Auto-Optimize</strong> for automatic file size optimization to your preferred target.</li>
+                <li>Prefer natural, even light and use your phone's highest quality photo setting.</li>
+            </ul>
+        </div>
+
+        <!-- SPECIFICATIONS AT THE BOTTOM -->
+        <div class="card" aria-labelledby="specsHeading">
+            <h2 id="specsHeading" class="card-title">Signature Specifications</h2>
+            <div class="specs-grid" role="list">
+                <div class="spec-item" role="listitem"><span class="spec-label">Dimensions</span><div>50mm × 20mm (140 × 60 pixels preferred)</div></div>
+                <div class="spec-item" role="listitem"><span class="spec-label">File Format</span><div>JPG/JPEG</div></div>
+                <div class="spec-item" role="listitem"><span class="spec-label">File Size</span><div>30KB to 49KB (Critical Requirement)</div></div>
+                <div class="spec-item" role="listitem"><span class="spec-label">Background</span><div>White paper with black ink</div></div>
+                <div class="spec-item" role="listitem"><span class="spec-label">Signature Style</span><div>Running letters (not block letters)</div></div>
+                <div class="spec-item" role="listitem"><span class="spec-label">Reference</span><div>Para 14.5.1 of CEN 06/2025</div></div>
+            </div>
+
+            <div style="margin-top:12px; padding:12px; border-radius:6px; background:#fafafa; border:1px solid #eee;">
+                <strong>Specification for Signature Image</strong>
+                <div style="margin-top:8px; padding:10px; border-radius:6px; background:#fff; border-left:4px solid var(--primary);">
+                    <pre style="white-space:pre-wrap; font-size:0.95rem; line-height:1.4; margin:0;">
+Specification for Signature Image
+
+The applicant has to sign on white paper with Black ink pen within a box of size 50mm x 20mm.
+
+The signature must be in running letters and not in block letters.
+
+The image should be in JPG/JPEG format.
+
+Dimensions of 50mm x 20mm or 140 x 60pixels (preferred).
+
+Size of the file should be between 30KB to 49KB.
+
+The signature must be of the applicant only and not of any other person.
+
+Any deviations in the uploaded signature other than the standard specifications mentioned above will lead to rejection at any stage of recruitment after submission of application. Refer para no. 14.5.1 of detailed CEN 06/2025.
+                    </pre>
+                </div>
+            </div>
+
+            <div class="warning-box" role="status" aria-live="polite">
+                <strong>Important:</strong> Any deviations from these specifications may lead to rejection at any stage of recruitment. File size must be between <strong>30KB</strong> and <strong>49KB</strong>.
+            </div>
+        </div>
+
+        <!-- COMPLETE GUIDE ARTICLE -->
+        <div class="article-content">
+            <header>
+                <h1>RRB NTPC 2025: The Complete Signature Guide (50x20mm, 30-49KB)</h1>
+                <p>Getting your digital signature right for the RRB NTPC application is crucial. A small mistake can lead to rejection. Don't worry! This guide will walk you through the entire process, from signing on paper to uploading the perfect file, in simple, easy-to-follow steps.</p>
+            </header>
+
+            <section>
+                <h2>Official RRB NTPC Signature Specifications</h2>
+                <p>Refer to Para 14.5.1 of CEN 06/2025. Here are the exact requirements you must meet:</p>
+                <table class="spec-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Specification</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Physical Box Size</strong></td>
+                        <td>50mm (Width) x 20mm (Height)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Digital Dimension (Preferred)</strong></td>
+                        <td><strong>140 pixels (Width) x 60 pixels (Height)</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>File Format</strong></td>
+                        <td>JPG or JPEG</td>
+                    </tr>
+                    <tr>
+                        <td><strong>File Size</strong></td>
+                        <td><strong>30 KB to 49 KB</strong> (This is critical)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ink & Paper</strong></td>
+                        <td>Black ink on a plain white paper.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Signature Style</strong></td>
+                        <td>Must be in <strong>running handwriting</strong> (cursive), NOT in block/capital letters.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Important Note</strong></td>
+                        <td>The signature must be yours. Any deviation will lead to rejection at any stage.</td>
+                    </tr>
+                </table>
+            </section>
+
+            <section>
+                <h2>Step-by-Step: From Paper to Perfect Digital Signature</h2>
+                
+                <h3>1. Signing on Paper</h3>
+                <ul>
+                    <li>Take a clean, white sheet of paper.</li>
+                    <li>Using a ruler, draw a <strong>light pencil box of 50mm x 20mm</strong>.</li>
+                    <li>Use a good-quality <strong>black ink pen</strong> (ballpoint or gel).</li>
+                    <li>Practice a few times, then sign <em>inside the box</em> with your normal running signature. Make it clear and bold.</li>
+                </ul>
+
+                <h3>2. Scanning or Photographing</h3>
+                <p><strong>Best Method - Flatbed Scanner:</strong> Place the paper on a scanner and scan at 200 DPI. Save the file.</p>
+                <p><strong>Alternate Method - Smartphone Camera:</strong></p>
+                <ul>
+                    <li>Do this in bright, daytime light to avoid shadows.</li>
+                    <li>Place the paper on a flat surface and hold the phone directly above it.</li>
+                    <li>Ensure the entire signature is in focus and the background looks white.</li>
+                    <li>Take the picture.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>How to Resize & Compress to 140x60 pixels and 30-49KB</h2>
+                <p>Your scanned image or photo will be too large. You need to resize and compress it. The easiest way is to use free online tools.</p>
+                
+                <h3>Using Free Online Tools</h3>
+                <ol>
+                    <li>Go to a free image resizer website (e.g., ILoveIMG, ResizePixel).</li>
+                    <li>Upload your signature photo.</li>
+                    <li>Set the new dimensions to <strong>140 pixels (Width)</strong> and <strong>60 pixels (Height)</strong>. <strong>Do NOT</strong> maintain the aspect ratio.</li>
+                    <li>Download the resized image.</li>
+                    <li>Now, go to a free image compressor website (e.g., TinyPNG, Compressor.io).</li>
+                    <li>Upload your <em>resized</em> signature image.</li>
+                    <li>Use the quality slider to compress the file. Keep checking the output file size until it is between <strong>30KB and 49KB</strong>.</li>
+                    <li>Download your final, compliant signature file. Rename it to something like "my_signature.jpg".</li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>Final Checklist: Avoid Rejection!</h2>
+                <div class="checklist">
+                    <ul>
+                        <li><input type="checkbox"> File is in <strong>.JPG or .JPEG</strong> format.</li>
+                        <li><input type="checkbox"> Dimensions are exactly <strong>140 x 60 pixels</strong>.</li>
+                        <li><input type="checkbox"> File size is between <strong>30 KB to 49 KB</strong>.</li>
+                        <li><input type="checkbox"> Signature is in <strong>running handwriting</strong>, not block letters.</li>
+                        <li><input type="checkbox"> Background is clean and <strong>white</strong>.</li>
+                        <li><input type="checkbox"> Signature is clear, sharp, and looks like your own.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <div class="disclaimer">
+                    <p><strong>Disclaimer:</strong> This guide is created for informational purposes based on the RRB's official CEN 06/2025 notification. Applicants are strongly advised to refer to the <a href="https://www.rrb.gov.in" target="_blank">official RRB website</a> for the final and authoritative specifications. We are not affiliated with the Railway Recruitment Board.</p>
+                </div>
+                <p>We hope this guide makes your application process smoother. Double-check your file against the checklist and proceed with confidence. Best of luck with your RRB NTPC 2025 application!</p>
+            </section>
+        </div>
+
+        <footer>
+            <div>RRB NTPC 2025 Signature Helper — client-side tool. Always verify final image before submitting.</div>
+        </footer>
+    </div>
+
+    <script>
+        /*******************************
+         * Maintainer constants (top)
+         * preferredPixels = 140 x 60
+         * aspectRatio = 5:2
+         * minFileKB = 30
+         * maxFileKB = 49
+         *******************************/
+
+        // DOM references
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const browseBtn = document.getElementById('browseBtn');
+        const validationResult = document.getElementById('validationResult');
+        const previewSection = document.getElementById('previewSection');
+        const originalCanvas = document.getElementById('originalCanvas');
+        const processedCanvas = document.getElementById('processedCanvas');
+        const originalSize = document.getElementById('originalSize');
+        const processedSize = document.getElementById('processedSize');
+        const qualitySlider = document.getElementById('qualitySlider');
+        const qualityValue = document.getElementById('qualityValue');
+        const widthInput = document.getElementById('widthInput');
+        const heightInput = document.getElementById('heightInput');
+        const processBtn = document.getElementById('processBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const fileSizeBar = document.getElementById('fileSizeBar');
+        const qualityPresets = document.querySelectorAll('.quality-preset');
+
+        // NEW: Enhanced controls
+        const scaleSlider = document.getElementById('scaleSlider');
+        const scaleValue = document.getElementById('scaleValue');
+        const scalePresets = document.querySelectorAll('.enhancement-btn[data-scale]');
+        const autoFitBtn = document.getElementById('autoFitBtn');
+        const centerBtn = document.getElementById('centerBtn');
+        const brightnessBtn = document.getElementById('brightnessBtn');
+        const resetEnhancementBtn = document.getElementById('resetEnhancementBtn');
+        const resetPositionBtn = document.getElementById('resetPositionBtn');
+
+        // Auto-Optimize controls
+        const autoOptimizeBtn = document.getElementById('autoOptimizeBtn');
+        const optimizeStatus = document.getElementById('optimizeStatus');
+        const optimizeProgress = document.getElementById('optimizeProgress');
+        const optimizeOptions = document.querySelectorAll('.optimize-option');
+
+        // canvas contexts
+        const origCtx = originalCanvas.getContext('2d');
+        const procCtx = processedCanvas.getContext('2d');
+
+        // state
+        let originalImage = null;
+        let originalFile = null;
+        let processedImageBlob = null;
+        let useAutoFit = true;
+        let useCenter = true;
+        let currentEnhancement = 'none'; // 'none', 'brightness'
+        let enhancementLevel = 1.0;
+        let isOptimizing = false;
+        let currentTargetSize = 40; // Default target size
+
+        // helpers
+        function bytesToKB(b) { return (b / 1024); }
+
+        // events
+        browseBtn.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleFileSelect);
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            if (e.dataTransfer.files && e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                handleFileSelect();
+            }
+        });
+        uploadArea.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+        });
+
+        qualitySlider.addEventListener('input', () => {
+            qualityValue.textContent = parseFloat(qualitySlider.value).toFixed(2);
+            if (originalImage && !isOptimizing) processImage();
+        });
+
+        qualityPresets.forEach(p => {
+            p.addEventListener('click', () => {
+                qualityPresets.forEach(x => x.classList.remove('active'));
+                p.classList.add('active');
+                const q = parseFloat(p.getAttribute('data-quality'));
+                qualitySlider.value = q;
+                qualityValue.textContent = q.toFixed(2);
+                if (originalImage && !isOptimizing) processImage();
+            });
+            p.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') p.click(); });
+        });
+
+        scaleSlider.addEventListener('input', () => {
+            scaleValue.textContent = parseFloat(scaleSlider.value).toFixed(2) + '×';
+            // Update scale presets active state
+            scalePresets.forEach(p => p.classList.remove('active'));
+            if (originalImage && !isOptimizing) processImage();
+        });
+
+        scalePresets.forEach(p => {
+            p.addEventListener('click', () => {
+                scalePresets.forEach(x => x.classList.remove('active'));
+                p.classList.add('active');
+                const scale = parseFloat(p.getAttribute('data-scale'));
+                scaleSlider.value = scale;
+                scaleValue.textContent = scale.toFixed(2) + '×';
+                if (originalImage && !isOptimizing) processImage();
+            });
+            p.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') p.click(); });
+        });
+
+        // Optimize options
+        optimizeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                optimizeOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                currentTargetSize = parseInt(option.getAttribute('data-target'));
+            });
+        });
+
+        autoFitBtn.addEventListener('click', () => {
+            useAutoFit = !useAutoFit;
+            autoFitBtn.setAttribute('aria-pressed', String(useAutoFit));
+            autoFitBtn.classList.toggle('active', useAutoFit);
+            if (originalImage && !isOptimizing) processImage();
+        });
+
+        centerBtn.addEventListener('click', () => {
+            useCenter = !useCenter;
+            centerBtn.setAttribute('aria-pressed', String(useCenter));
+            centerBtn.classList.toggle('active', useCenter);
+            if (originalImage && !isOptimizing) processImage();
+        });
+
+        brightnessBtn.addEventListener('click', () => {
+            currentEnhancement = 'brightness';
+            enhancementLevel = 1.5;
+            brightnessBtn.setAttribute('aria-pressed', 'true');
+            brightnessBtn.classList.add('active');
+            if (originalImage && !isOptimizing) processImage();
+        });
+
+        resetEnhancementBtn.addEventListener('click', () => {
+            currentEnhancement = 'none';
+            enhancementLevel = 1.0;
+            brightnessBtn.setAttribute('aria-pressed', 'false');
+            brightnessBtn.classList.remove('active');
+            if (originalImage && !isOptimizing) processImage();
+        });
+
+        resetPositionBtn.addEventListener('click', () => {
+            useAutoFit = true;
+            useCenter = true;
+            autoFitBtn.setAttribute('aria-pressed', 'true');
+            centerBtn.setAttribute('aria-pressed', 'true');
+            autoFitBtn.classList.add('active');
+            centerBtn.classList.add('active');
+            if (originalImage && !isOptimizing) processImage();
+        });
+
+        // Auto-Optimize event
+        autoOptimizeBtn.addEventListener('click', autoOptimizeToTarget);
+
+        processBtn.addEventListener('click', processImage);
+        downloadBtn.addEventListener('click', downloadImage);
+        resetBtn.addEventListener('click', resetApp);
+
+        // File selection
+        function handleFileSelect() {
+            if (!fileInput.files.length) return;
+            const file = fileInput.files[0];
+            originalFile = file;
+
+            // Basic mime-type validation (we accept PNG for convenience but will convert)
+            if (!file.type.match('image.*')) {
+                showValidation('Please select a valid image file (JPG, JPEG, PNG).', false);
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const img = new Image();
+                img.onload = function() {
+                    originalImage = img;
+                    // Draw original on canvas (fit to canvas area while preserving pixel size)
+                    originalCanvas.width = Math.min(img.width, 800);
+                    originalCanvas.height = Math.min(img.height, 400);
+                    // Clear and draw scaled to canvas for preview
+                    origCtx.clearRect(0,0,originalCanvas.width, originalCanvas.height);
+                    // Fit preview while preserving aspect ratio
+                    const scale = Math.min(originalCanvas.width / img.width, originalCanvas.height / img.height);
+                    const w = img.width * scale;
+                    const h = img.height * scale;
+                    origCtx.drawImage(img, 0, 0, img.width, img.height, (originalCanvas.width - w)/2, (originalCanvas.height - h)/2, w, h);
+
+                    originalSize.textContent = `Original: ${img.width} × ${img.height} px | File: ${bytesToKB(file.size).toFixed(2)} KB | Type: ${file.type.split('/').pop()}`;
+                    previewSection.classList.remove('hidden');
+                    previewSection.setAttribute('aria-hidden','false');
+                    // run an initial process (gentle auto)
+                    processImage();
+                };
+                img.onerror = function() {
+                    showValidation('Could not load image. Try another file.', false);
+                };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Validation helper
+        function showValidation(msg, ok) {
+            validationResult.className = `validation-result ${ok ? 'validation-success' : 'validation-error'}`;
+            validationResult.innerHTML = msg;
+            validationResult.classList.remove('hidden');
+        }
+
+        // Apply image enhancements
+        function applyEnhancements(ctx, width, height) {
+            if (currentEnhancement === 'none') return;
+            
+            const imageData = ctx.getImageData(0, 0, width, height);
+            const data = imageData.data;
+            
+            for (let i = 0; i < data.length; i += 4) {
+                if (currentEnhancement === 'brightness') {
+                    // Increase contrast by making dark pixels darker and light pixels lighter
+                    const factor = enhancementLevel;
+                    data[i] = data[i] < 128 ? data[i] / factor : 255 - (255 - data[i]) / factor; // R
+                    data[i+1] = data[i+1] < 128 ? data[i+1] / factor : 255 - (255 - data[i+1]) / factor; // G
+                    data[i+2] = data[i+2] < 128 ? data[i+2] / factor : 255 - (255 - data[i+2]) / factor; // B
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        // Auto-Optimize function - finds the perfect quality setting for target size
+        async function autoOptimizeToTarget() {
+            if (!originalImage) {
+                showValidation('Please upload a signature image first.', false);
+                return;
+            }
+
+            isOptimizing = true;
+            autoOptimizeBtn.disabled = true;
+            autoOptimizeBtn.textContent = 'Optimizing...';
+            optimizeStatus.classList.remove('hidden');
+
+            const TARGET_SIZE_KB = currentTargetSize;
+            const TOLERANCE = 1.0; // ±1KB tolerance
+            let low = 0.1;
+            let high = 1.0;
+            let bestQuality = 0.8;
+            let bestSizeDiff = Infinity;
+            let iterations = 0;
+            const maxIterations = 15;
+
+            optimizeProgress.innerHTML = `Starting optimization to ${TARGET_SIZE_KB}KB...`;
+
+            // Binary search for optimal quality
+            while (iterations < maxIterations && (high - low) > 0.01) {
+                const mid = (low + high) / 2;
+                qualitySlider.value = mid;
+                qualityValue.textContent = mid.toFixed(3);
+
+                // Update progress
+                optimizeProgress.innerHTML = `Testing quality ${mid.toFixed(3)}... (Iteration ${iterations + 1}/${maxIterations})`;
+                
+                // Process with current quality
+                await new Promise(resolve => {
+                    processImageWithQuality(mid, (blob) => {
+                        const sizeKB = bytesToKB(blob.size);
+                        const sizeDiff = Math.abs(sizeKB - TARGET_SIZE_KB);
+                        
+                        // Update progress with current result
+                        optimizeProgress.innerHTML = `Quality ${mid.toFixed(3)} → ${sizeKB.toFixed(1)}KB (target: ${TARGET_SIZE_KB}KB)`;
+                        
+                        // Check if this is the best result so far
+                        if (sizeDiff < bestSizeDiff) {
+                            bestSizeDiff = sizeDiff;
+                            bestQuality = mid;
+                        }
+                        
+                        // Binary search adjustment
+                        if (sizeKB < TARGET_SIZE_KB) {
+                            low = mid; // Need higher quality (larger file)
+                        } else {
+                            high = mid; // Need lower quality (smaller file)
+                        }
+                        
+                        resolve();
+                    });
+                });
+                
+                iterations++;
+                
+                // If we're within tolerance, we can stop early
+                if (bestSizeDiff <= TOLERANCE) {
+                    break;
+                }
+            }
+
+            // Apply the best found quality
+            qualitySlider.value = bestQuality;
+            qualityValue.textContent = bestQuality.toFixed(3);
+            
+            // Update quality presets
+            qualityPresets.forEach(p => p.classList.remove('active'));
+            
+            // Process one final time with the best quality
+            processImageWithQuality(bestQuality, (blob) => {
+                const finalSizeKB = bytesToKB(blob.size);
+                optimizeProgress.innerHTML = `✅ Optimization complete!<br>Optimal quality: ${bestQuality.toFixed(3)}<br>Final size: ${finalSizeKB.toFixed(1)}KB (target: ${TARGET_SIZE_KB}KB)`;
+                
+                // Show success message
+                if (finalSizeKB >= 30 && finalSizeKB <= 49) {
+                    showValidation(`Auto-optimization successful! Final file size: ${finalSizeKB.toFixed(1)}KB (within required 30-49KB range)`, true);
+                } else {
+                    showValidation(`Optimization complete. Final size: ${finalSizeKB.toFixed(1)}KB (outside ideal range - try adjusting signature size)`, false);
+                }
+                
+                // Reset button state
+                setTimeout(() => {
+                    isOptimizing = false;
+                    autoOptimizeBtn.disabled = false;
+                    autoOptimizeBtn.textContent = 'Auto-Optimize Now';
+                }, 1000);
+            });
+        }
+
+        // Helper function to process image with specific quality
+        function processImageWithQuality(quality, callback) {
+            const targetW = Math.max(1, parseInt(widthInput.value, 10));
+            const targetH = Math.max(1, parseInt(heightInput.value, 10));
+            const scaleFactor = parseFloat(scaleSlider.value);
+
+            processedCanvas.width = targetW;
+            processedCanvas.height = targetH;
+
+            // White background
+            procCtx.fillStyle = '#ffffff';
+            procCtx.fillRect(0,0,targetW,targetH);
+
+            // Calculate dimensions
+            const scaledW = originalImage.width * scaleFactor;
+            const scaledH = originalImage.height * scaleFactor;
+
+            let destW = scaledW;
+            let destH = scaledH;
+
+            if (useAutoFit) {
+                const fitScale = Math.min(targetW / scaledW, targetH / scaledH, 1);
+                destW = Math.round(scaledW * fitScale);
+                destH = Math.round(scaledH * fitScale);
+            } else {
+                destW = Math.round(scaledW);
+                destH = Math.round(scaledH);
+            }
+
+            let dx = Math.round((targetW - destW) / 2);
+            let dy = Math.round((targetH - destH) / 2);
+            if (!useCenter) { dx = 0; dy = 0; }
+
+            procCtx.imageSmoothingEnabled = true;
+            procCtx.imageSmoothingQuality = 'high';
+
+            procCtx.drawImage(originalImage, 0, 0, originalImage.width, originalImage.height, dx, dy, destW, destH);
+
+            if (currentEnhancement !== 'none') {
+                applyEnhancements(procCtx, targetW, targetH);
+            }
+
+            processedCanvas.toBlob(function(blob) {
+                processedImageBlob = blob;
+                const sizeKB = bytesToKB(blob.size);
+                processedSize.textContent = `Processed: ${targetW} × ${targetH} px | Size: ${sizeKB.toFixed(2)} KB | Quality: ${quality.toFixed(3)} | Scale: ${scaleFactor.toFixed(2)}×`;
+
+                // Update size bar
+                let pct = Math.min(100, (sizeKB / 100) * 100);
+                fileSizeBar.style.width = pct + '%';
+                
+                if (sizeKB < 30) fileSizeBar.style.background = '#dc3545';
+                else if (sizeKB <= 49) fileSizeBar.style.background = '#28a745';
+                else fileSizeBar.style.background = '#ffc107';
+
+                if (callback) callback(blob);
+            }, 'image/jpeg', quality);
+        }
+
+        // The core processing function
+        function processImage() {
+            if (!originalImage) {
+                showValidation('Please upload a signature image first.', false);
+                return;
+            }
+
+            processImageWithQuality(parseFloat(qualitySlider.value), (blob) => {
+                const sizeKB = bytesToKB(blob.size);
+                
+                // Validate critical requirements
+                const checks = [];
+                const aspectOK = Math.abs((parseInt(widthInput.value) / parseInt(heightInput.value)) - (5 / 2)) < 0.25;
+                if (!aspectOK) checks.push(`Preferred aspect ratio is 5:2 (e.g. 140×60). Current target aspect ratio is ${(parseInt(widthInput.value)/parseInt(heightInput.value)).toFixed(2)}. Use recommended dimensions for best results.`);
+                
+                if (sizeKB < 30) checks.push(`File size is too small (${sizeKB.toFixed(2)} KB). Increase quality or make signature darker / bolder, or increase scale.`);
+                if (sizeKB > 49) checks.push(`File size is too large (${sizeKB.toFixed(2)} KB). Reduce quality or reduce dimensions slightly.`);
+
+                if (checks.length === 0) {
+                    showValidation('Processed signature meets RRB NTPC requirements (size and dimensions).', true);
+                } else {
+                    showValidation(checks.join('<br>'), false);
+                }
+            });
+        }
+
+        // download
+        function downloadImage() {
+            if (!processedImageBlob) {
+                alert('Please process your signature first.');
+                return;
+            }
+            const sizeKB = bytesToKB(processedImageBlob.size);
+            if (sizeKB < 30 || sizeKB > 49) {
+                const ok = confirm(`Processed file is ${sizeKB.toFixed(2)} KB, which is outside the required 30–49 KB. Download anyway?`);
+                if (!ok) return;
+            }
+            const url = URL.createObjectURL(processedImageBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'rrb-ntpc-signature-2025.jpg';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // reset
+        function resetApp() {
+            fileInput.value = '';
+            originalImage = null;
+            originalFile = null;
+            processedImageBlob = null;
+            previewSection.classList.add('hidden');
+            previewSection.setAttribute('aria-hidden','true');
+            validationResult.classList.add('hidden');
+            optimizeStatus.classList.add('hidden');
+            origCtx.clearRect(0,0,originalCanvas.width, originalCanvas.height);
+            procCtx.clearRect(0,0,processedCanvas.width, processedCanvas.height);
+            qualitySlider.value = 0.8; qualityValue.textContent = '0.80';
+            scaleSlider.value = 1.0; scaleValue.textContent = '1.00×';
+            widthInput.value = 140; heightInput.value = 60;
+            fileSizeBar.style.width = '0%';
+            processedSize.textContent = '';
+            originalSize.textContent = '';
+            qualityPresets.forEach(p => p.classList.remove('active'));
+            document.querySelector('.quality-preset[data-quality="0.8"]').classList.add('active');
+            scalePresets.forEach(p => p.classList.remove('active'));
+            document.querySelector('.enhancement-btn[data-scale="1.5"]').classList.add('active');
+            
+            // Reset enhancement state
+            currentEnhancement = 'none';
+            enhancementLevel = 1.0;
+            brightnessBtn.setAttribute('aria-pressed', 'false');
+            brightnessBtn.classList.remove('active');
+            
+            // Reset positioning
+            useAutoFit = true; useCenter = true;
+            autoFitBtn.setAttribute('aria-pressed', 'true');
+            centerBtn.setAttribute('aria-pressed', 'true');
+            autoFitBtn.classList.add('active');
+            centerBtn.classList.add('active');
+            
+            // Reset optimize button and options
+            isOptimizing = false;
+            autoOptimizeBtn.disabled = false;
+            autoOptimizeBtn.textContent = 'Auto-Optimize Now';
+            optimizeOptions.forEach(opt => opt.classList.remove('active'));
+            document.querySelector('.optimize-option[data-target="40"]').classList.add('active');
+            currentTargetSize = 40;
+        }
+
+        // Initialize defaults
+        (function init() {
+            qualityValue.textContent = parseFloat(qualitySlider.value).toFixed(2);
+            scaleValue.textContent = parseFloat(scaleSlider.value).toFixed(2) + '×';
+            autoFitBtn.setAttribute('aria-pressed', 'true');
+            centerBtn.setAttribute('aria-pressed', 'true');
+            brightnessBtn.setAttribute('aria-pressed', 'false');
+        })();
+    </script>
+</body>
+</html>
