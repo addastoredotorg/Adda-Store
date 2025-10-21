@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RRB NTPC 2025 Detailed Syllabus - Complete Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary: #0055a5;
+            --secondary: #d52b1e;
+            --accent: #ffcc00;
+            --light: #f5f7fa;
+            --dark: #333;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --gray: #6c757d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), #003d7a);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><path d="M10,50 L90,50 M50,10 L50,90" stroke="white" stroke-width="2"/></svg>');
+            background-size: 50px;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .exam-highlight {
+            background-color: var(--accent);
+            color: var(--dark);
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 3rem 0;
+            background-color: white;
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        /* Exam Pattern Styles */
+        .exam-pattern {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .pattern-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            border-top: 4px solid var(--primary);
+        }
+
+        .pattern-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pattern-card ul {
+            padding-left: 20px;
+        }
+
+        .pattern-card li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        /* Syllabus Section Styles */
+        .syllabus-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .subject-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .subject-header {
+            background: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subject-content {
+            padding: 20px;
+        }
+
+        .topic-list {
+            list-style-type: none;
+        }
+
+        .topic-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .topic-list li:last-child {
+            border-bottom: none;
+        }
+
+        .topic-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Weightage Table */
+        .weightage-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .weightage-table th, .weightage-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .weightage-table th {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .weightage-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Preparation Tips */
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .tip-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            border-left: 4px solid var(--success);
+        }
+
+        .tip-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Recommended Books */
+        .books-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .book-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .book-card .author {
+            color: var(--gray);
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        /* Alert Styles */
+        .alert {
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            border-left: 4px solid var(--warning);
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border-left: 4px solid var(--danger);
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .alert-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .footer-section ul {
+            list-style-type: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--box-shadow);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .exam-pattern, .syllabus-container, .tips-container, .books-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .meta-info {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <h1>📚 RRB NTPC 2025 Detailed Syllabus</h1>
+            <p class="tagline">Complete Subject-wise Syllabus & Preparation Strategy</p>
+            <div class="exam-highlight">Computer Based Test (CBT) Pattern</div>
+            <div class="meta-info">
+                <span><i class="far fa-calendar-alt"></i> Last Updated: October 5, 2025</span>
+                <span><i class="far fa-user"></i> Author: Exam Preparation Team</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Exam Pattern Section -->
+        <section id="pattern">
+            <h2 class="section-title">📊 Exam Pattern & Structure</h2>
+            
+            <div class="exam-pattern">
+                <div class="pattern-card">
+                    <h3><i class="fas fa-layer-group"></i> 1st Stage CBT</h3>
+                    <ul>
+                        <li><strong>Duration:</strong> 90 Minutes (120 mins for PwBD)</li>
+                        <li><strong>Total Questions:</strong> 100</li>
+                        <li><strong>Total Marks:</strong> 100</li>
+                        <li><strong>Marking Scheme:</strong> +1 for correct answer</li>
+                        <li><strong>Negative Marking:</strong> ⅓ mark deducted for wrong answer</li>
+                    </ul>
+                </div>
+                
+                <div class="pattern-card">
+                    <h3><i class="fas fa-layer-group"></i> 2nd Stage CBT</h3>
+                    <ul>
+                        <li><strong>Duration:</strong> 90 Minutes (120 mins for PwBD)</li>
+                        <li><strong>Total Questions:</strong> 120</li>
+                        <li><strong>Total Marks:</strong> 120</li>
+                        <li><strong>Marking Scheme:</strong> +1 for correct answer</li>
+                        <li><strong>Negative Marking:</strong> ⅓ mark deducted for wrong answer</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="alert alert-info">
+                <div class="alert-icon">ℹ️</div>
+                <div>
+                    <strong>Note:</strong> The 1st Stage CBT is of screening nature. The standard of questions for the CBT will be generally in conformity with the educational standards prescribed for the posts.
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Syllabus Section -->
+        <section id="syllabus">
+            <h2 class="section-title">📖 Detailed Subject-wise Syllabus</h2>
+            
+            <div class="syllabus-container">
+                <!-- Mathematics -->
+                <div class="subject-card">
+                    <div class="subject-header">
+                        <i class="fas fa-calculator"></i>
+                        <h3>Mathematics</h3>
+                    </div>
+                    <div class="subject-content">
+                        <ul class="topic-list">
+                            <li>Number System</li>
+                            <li>Decimals & Fractions</li>
+                            <li>LCM and HCF</li>
+                            <li>Ratio and Proportion</li>
+                            <li>Percentage</li>
+                            <li>Mensuration</li>
+                            <li>Time and Work</li>
+                            <li>Time and Distance</li>
+                            <li>Simple and Compound Interest</li>
+                            <li>Profit and Loss</li>
+                            <li>Elementary Algebra</li>
+                            <li>Geometry and Trigonometry</li>
+                            <li>Elementary Statistics</li>
+                            <li>Square Root</li>
+                            <li>Age Calculations</li>
+                            <li>Calendar & Clock</li>
+                            <li>Pipes & Cisterns</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- General Intelligence & Reasoning -->
+                <div class="subject-card">
+                    <div class="subject-header">
+                        <i class="fas fa-brain"></i>
+                        <h3>General Intelligence & Reasoning</h3>
+                    </div>
+                    <div class="subject-content">
+                        <ul class="topic-list">
+                            <li>Analogies</li>
+                            <li>Alphabetical and Number Series</li>
+                            <li>Coding and Decoding</li>
+                            <li>Mathematical Operations</li>
+                            <li>Relationships</li>
+                            <li>Similarities and Differences</li>
+                            <li>Analytical Reasoning</li>
+                            <li>Syllogism</li>
+                            <li>Jumbling</li>
+                            <li>Venn Diagrams</li>
+                            <li>Puzzle</li>
+                            <li>Data Sufficiency</li>
+                            <li>Statement-Conclusion</li>
+                            <li>Statement-Courses of Action</li>
+                            <li>Decision Making</li>
+                            <li>Maps</li>
+                            <li>Interpretation of Graphs</li>
+                            <li>Classification</li>
+                            <li>Direction Sense</li>
+                            <li>Blood Relations</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- General Awareness -->
+                <div class="subject-card">
+                    <div class="subject-header">
+                        <i class="fas fa-globe"></i>
+                        <h3>General Awareness</h3>
+                    </div>
+                    <div class="subject-content">
+                        <ul class="topic-list">
+                            <li>Current Events of National and International Importance</li>
+                            <li>Games and Sports</li>
+                            <li>Art and Culture of India</li>
+                            <li>Indian Literature</li>
+                            <li>Monuments and Places of India</li>
+                            <li>General Science and Life Science (up to 10th CBSE)</li>
+                            <li>History of India and Freedom Struggle</li>
+                            <li>Physical, Social and Economic Geography of India and World</li>
+                            <li>Indian Polity and Governance - constitution and political system</li>
+                            <li>General Scientific and Technological Developments including Space and Nuclear Program of India</li>
+                            <li>UN and Other important World Organizations</li>
+                            <li>Environmental Issues Concerning India and World at Large</li>
+                            <li>Basics of Computers and Computer Applications</li>
+                            <li>Common Abbreviations</li>
+                            <li>Transport Systems in India</li>
+                            <li>Indian Economy</li>
+                            <li>Famous Personalities of India and World</li>
+                            <li>Flagship Government Programs</li>
+                            <li>Flora and Fauna of India</li>
+                            <li>Important Government and Public Sector Organizations of India</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section-wise Weightage -->
+        <section id="weightage">
+            <h2 class="section-title">⚖️ Section-wise Weightage & Marks Distribution</h2>
+            
+            <div class="table-container">
+                <table class="weightage-table">
+                    <thead>
+                        <tr>
+                            <th>Stage</th>
+                            <th>Subject</th>
+                            <th>No. of Questions</th>
+                            <th>Marks</th>
+                            <th>Approx. Weightage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="3"><strong>1st Stage CBT</strong></td>
+                            <td>Mathematics</td>
+                            <td>30</td>
+                            <td>30</td>
+                            <td>30%</td>
+                        </tr>
+                        <tr>
+                            <td>General Intelligence & Reasoning</td>
+                            <td>30</td>
+                            <td>30</td>
+                            <td>30%</td>
+                        </tr>
+                        <tr>
+                            <td>General Awareness</td>
+                            <td>40</td>
+                            <td>40</td>
+                            <td>40%</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3"><strong>2nd Stage CBT</strong></td>
+                            <td>Mathematics</td>
+                            <td>35</td>
+                            <td>35</td>
+                            <td>29%</td>
+                        </tr>
+                        <tr>
+                            <td>General Intelligence & Reasoning</td>
+                            <td>35</td>
+                            <td>35</td>
+                            <td>29%</td>
+                        </tr>
+                        <tr>
+                            <td>General Awareness</td>
+                            <td>50</td>
+                            <td>50</td>
+                            <td>42%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="alert alert-warning">
+                <div class="alert-icon">📝</div>
+                <div>
+                    <strong>Important:</strong> The section-wise distribution given in the table is only indicative and there may be some variations in the actual question papers.
+                </div>
+            </div>
+        </section>
+
+        <!-- Preparation Strategy -->
+        <section id="preparation">
+            <h2 class="section-title">🎯 Preparation Strategy & Tips</h2>
+            
+            <div class="tips-container">
+                <div class="tip-card">
+                    <h3><i class="fas fa-clock"></i> Time Management</h3>
+                    <p>Allocate time based on weightage - focus more on General Awareness (40-42%) followed by Mathematics and Reasoning equally.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h3><i class="fas fa-book"></i> Study Material</h3>
+                    <p>Focus on NCERT books (6th to 10th standard) for basic concepts. Use standard reference books for advanced practice.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h3><i class="fas fa-tasks"></i> Practice & Mock Tests</h3>
+                    <p>Take regular mock tests to improve speed and accuracy. Analyze your performance to identify weak areas.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h3><i class="fas fa-newspaper"></i> Current Affairs</h3>
+                    <p>Read newspapers daily and follow monthly current affairs magazines. Focus on last 6-12 months of important events.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h3><i class="fas fa-brain"></i> Reasoning Practice</h3>
+                    <p>Practice different types of reasoning questions daily. Focus on puzzles, syllogism, and coding-decoding.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h3><i class="fas fa-calculator"></i> Mathematics Focus</h3>
+                    <p>Concentrate on simplification, percentage, profit-loss, and time-speed-distance. Learn shortcut methods.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recommended Books -->
+        <section id="books">
+            <h2 class="section-title">📚 Recommended Books for Preparation</h2>
+            
+            <div class="books-container">
+                <div class="book-card">
+                    <h3>Fast Track Objective Arithmetic</h3>
+                    <p class="author">by Rajesh Verma</p>
+                    <p>Comprehensive coverage of arithmetic topics with shortcut methods</p>
+                </div>
+                
+                <div class="book-card">
+                    <h3>A Modern Approach to Verbal & Non-Verbal Reasoning</h3>
+                    <p class="author">by R.S. Aggarwal</p>
+                    <p>Complete reasoning syllabus with practice questions</p>
+                </div>
+                
+                <div class="book-card">
+                    <h3>Lucent's General Knowledge</h3>
+                    <p class="author">by Dr. Binay Karna</p>
+                    <p>Comprehensive GK coverage with current affairs updates</p>
+                </div>
+                
+                <div class="book-card">
+                    <h3>RRB NTPC Guide</h3>
+                    <p class="author">by Arihant Publications</p>
+                    <p>Complete guide with previous year papers and practice sets</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Important Notes -->
+        <section id="notes">
+            <h2 class="section-title">📌 Important Notes & Instructions</h2>
+            
+            <div class="alert alert-danger">
+                <div class="alert-icon">⚠️</div>
+                <div>
+                    <strong>Negative Marking:</strong> There will be negative marking of 1/3rd mark for every wrong answer in both stages of CBT.
+                </div>
+            </div>
+            
+            <div class="alert alert-warning">
+                <div class="alert-icon">ℹ️</div>
+                <div>
+                    <strong>Medium of Examination:</strong> Questions will be available in English, Hindi, and 13 regional Indian languages (Assamese, Bengali, Gujarati, Kannada, Konkani, Malayalam, Manipuri, Marathi, Odia, Punjabi, Tamil, Telugu and Urdu).
+                </div>
+            </div>
+            
+            <div class="alert alert-info">
+                <div class="alert-icon">📊</div>
+                <div>
+                    <strong>Normalization of Marks:</strong> Shortlisting of candidates for various stages shall be based on normalized marks obtained whenever CBT is conducted in multiple sessions.
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Source & Disclaimer</h3>
+                    <p>This syllabus is based on the official RRB NTPC 2025 notification. Always refer to official websites for the most accurate information.</p>
+                    <p><strong>Source:</strong> Centralized Employment Notice No. 06/2025, Railway Recruitment Boards.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#pattern">Exam Pattern</a></li>
+                        <li><a href="#syllabus">Detailed Syllabus</a></li>
+                        <li><a href="#weightage">Marks Distribution</a></li>
+                        <li><a href="#preparation">Preparation Tips</a></li>
+                        <li><a href="#books">Recommended Books</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Additional Resources</h3>
+                    <ul>
+                        <li><a href="#">Previous Year Question Papers</a></li>
+                        <li><a href="#">Mock Test Series</a></li>
+                        <li><a href="#">Study Plan & Schedule</a></li>
+                        <li><a href="#">Shortcut Methods</a></li>
+                        <li><a href="#">Current Affairs Updates</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Exam Preparation Guide. All information provided is for educational purposes only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
