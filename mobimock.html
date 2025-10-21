@@ -32,6 +32,7 @@
             --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             --railway-blue: #1e3a8a;
             --railway-orange: #f97316;
+            --railway-light: #e0e7ff;
         }
 
         body {
@@ -288,6 +289,7 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: transform 0.3s ease;
+            position: relative;
         }
 
         .course-card:hover {
@@ -307,6 +309,18 @@
         .railway-course .course-image {
             background: linear-gradient(135deg, var(--railway-blue), var(--railway-orange));
             color: white;
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--railway-orange);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
         }
 
         .course-content {
@@ -345,7 +359,121 @@
             gap: 0.5rem;
         }
 
-        /* RRB NTPC Section */
+        /* RRB NTPC Dashboard Section */
+        .rrb-dashboard-section {
+            background-color: var(--railway-light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--railway-blue);
+        }
+
+        .rrb-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .rrb-badge {
+            display: inline-block;
+            background-color: var(--railway-orange);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .rrb-progress-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .rrb-progress-section {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .rrb-progress-card {
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: var(--border);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--railway-blue), var(--railway-orange));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .rrb-quick-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .rrb-stat {
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--railway-light);
+            border-radius: 8px;
+        }
+
+        .rrb-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--railway-blue);
+        }
+
+        .rrb-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .rrb-upcoming-tests {
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .test-item:last-child {
+            border-bottom: none;
+        }
+
+        .test-info h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .test-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* RRB NTPC Page Styles */
         .railway-hero {
             background: linear-gradient(135deg, var(--railway-blue), var(--railway-orange));
             color: white;
@@ -358,17 +486,6 @@
         .railway-hero h1 {
             color: white;
             margin-bottom: 0.5rem;
-        }
-
-        .railway-badge {
-            display: inline-block;
-            background-color: var(--railway-orange);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
         }
 
         .railway-features {
@@ -1036,6 +1153,89 @@
                     <p>You're making excellent progress in your preparation. Complete more tests to improve your score.</p>
                 </div>
                 
+                <!-- RRB NTPC 2025 Dashboard Section -->
+                <div class="rrb-dashboard-section">
+                    <div class="rrb-header">
+                        <div>
+                            <h2>RRB NTPC 2025 Preparation</h2>
+                            <span class="rrb-badge">Active Course</span>
+                        </div>
+                        <a href="#" class="btn btn-railway" data-page="rrb-ntpc">View Full Course</a>
+                    </div>
+                    
+                    <div class="rrb-progress-section">
+                        <div class="rrb-progress-card">
+                            <h3>Course Progress</h3>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="rrb-progress-fill" style="width: 65%"></div>
+                            </div>
+                            <div class="d-flex justify-between">
+                                <span>65% Complete</span>
+                                <span>35/54 Topics</span>
+                            </div>
+                            
+                            <div class="rrb-quick-stats">
+                                <div class="rrb-stat">
+                                    <div class="rrb-stat-value">12</div>
+                                    <div class="rrb-stat-label">Mock Tests Taken</div>
+                                </div>
+                                <div class="rrb-stat">
+                                    <div class="rrb-stat-value">78%</div>
+                                    <div class="rrb-stat-label">Average Score</div>
+                                </div>
+                                <div class="rrb-stat">
+                                    <div class="rrb-stat-value">24</div>
+                                    <div class="rrb-stat-label">Study Hours</div>
+                                </div>
+                                <div class="rrb-stat">
+                                    <div class="rrb-stat-value">7</div>
+                                    <div class="rrb-stat-label">Days Streak</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="rrb-upcoming-tests">
+                            <h3>Upcoming Tests</h3>
+                            <div class="test-item">
+                                <div class="test-info">
+                                    <h4>RRB NTPC Stage 1 Mock</h4>
+                                    <p class="test-date">Tomorrow, 10:00 AM</p>
+                                </div>
+                                <button class="btn btn-outline">Start</button>
+                            </div>
+                            <div class="test-item">
+                                <div class="test-info">
+                                    <h4>Mathematics Section Test</h4>
+                                    <p class="test-date">June 15, 2:00 PM</p>
+                                </div>
+                                <button class="btn btn-outline">Start</button>
+                            </div>
+                            <div class="test-item">
+                                <div class="test-info">
+                                    <h4>General Awareness Quiz</h4>
+                                    <p class="test-date">June 18, 11:00 AM</p>
+                                </div>
+                                <button class="btn btn-outline">Start</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="rrb-quick-actions">
+                        <h3>Quick Actions</h3>
+                        <div class="course-actions">
+                            <button class="btn btn-railway">
+                                <i class="fas fa-play-circle"></i> Continue Learning
+                            </button>
+                            <button class="btn btn-outline">
+                                <i class="fas fa-clipboard-list"></i> Take Practice Test
+                            </button>
+                            <button class="btn btn-outline">
+                                <i class="fas fa-download"></i> Download Materials
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-value">12</div>
@@ -1060,31 +1260,15 @@
                     <a href="#" class="btn btn-outline" data-page="courses">View All</a>
                 </div>
                 
-                <div class="courses-grid">
-                    <!-- Course cards will be populated by JavaScript -->
-                </div>
-                
-                <div class="section-title">
-                    <h2>Upcoming Tests</h2>
-                </div>
-                
-                <div class="upcoming-tests">
-                    <div class="course-card">
-                        <div class="course-content">
-                            <h3 class="course-title">RRB NTPC Stage 1 Mock Test</h3>
-                            <p class="course-instructor">Scheduled: Tomorrow, 10:00 AM</p>
-                            <div class="course-actions">
-                                <button class="btn btn-railway">Start Preparation</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="courses-grid" id="recent-courses">
+                    <!-- Recent course cards will be populated by JavaScript -->
                 </div>
             </section>
             
             <!-- RRB NTPC 2025 Page -->
             <section id="rrb-ntpc" class="page">
                 <div class="railway-hero">
-                    <span class="railway-badge">NEW</span>
+                    <span class="rrb-badge">NEW</span>
                     <h1>RRB NTPC 2025 Preparation</h1>
                     <p>Complete preparation package for Railway Non-Technical Popular Categories exam</p>
                     <button class="btn btn-railway mt-1">Enroll Now</button>
@@ -1717,6 +1901,57 @@
             }
         ];
 
+        // Recent courses with RRB NTPC courses included
+        const recentCourses = [
+            {
+                id: 101,
+                title: "RRB NTPC Complete Course 2025",
+                instructor: "Shri Rakesh Yadav",
+                rating: 4.9,
+                price: "₹3,999",
+                originalPrice: "₹5,999",
+                category: "railway",
+                difficulty: "all",
+                duration: "long",
+                isRailway: true
+            },
+            {
+                id: 102,
+                title: "Mathematics for Railways",
+                instructor: "Dr. Arun Sharma",
+                rating: 4.8,
+                price: "₹1,499",
+                originalPrice: "₹2,499",
+                category: "railway",
+                difficulty: "intermediate",
+                duration: "medium",
+                isRailway: true
+            },
+            {
+                id: 1,
+                title: "Advanced Mathematics",
+                instructor: "Dr. Priya Sharma",
+                rating: 4.8,
+                price: "₹1,999",
+                originalPrice: "₹2,999",
+                category: "mathematics",
+                difficulty: "advanced",
+                duration: "medium"
+            },
+            {
+                id: 103,
+                title: "General Awareness for RRB",
+                instructor: "Prof. Kiran Bedi",
+                rating: 4.7,
+                price: "₹1,299",
+                originalPrice: "₹1,999",
+                category: "railway",
+                difficulty: "all",
+                duration: "medium",
+                isRailway: true
+            }
+        ];
+
         const testQuestions = [
             {
                 id: 1,
@@ -1784,6 +2019,7 @@
         const switchToSignup = document.getElementById('switch-to-signup');
         const switchToLogin = document.getElementById('switch-to-login');
         const coursesGrids = document.querySelectorAll('.courses-grid');
+        const recentCoursesGrid = document.getElementById('recent-courses');
         const rrbCoursesGrid = document.getElementById('rrb-courses-grid');
         const questionsGrid = document.getElementById('questions-grid');
         const questionText = document.getElementById('question-text');
@@ -1803,6 +2039,7 @@
         // Initialize the app
         function init() {
             renderCourses();
+            renderRecentCourses();
             renderRRBCourses();
             renderTestQuestions();
             renderStudyMaterials();
@@ -1813,13 +2050,22 @@
         // Render courses in all course grids
         function renderCourses() {
             coursesGrids.forEach(grid => {
-                if (grid.id === 'rrb-courses-grid') return; // Skip RRB grid
+                if (grid.id === 'recent-courses' || grid.id === 'rrb-courses-grid') return; // Skip recent and RRB grids
                 
                 grid.innerHTML = '';
                 courses.forEach(course => {
                     const courseCard = createCourseCard(course);
                     grid.appendChild(courseCard);
                 });
+            });
+        }
+
+        // Render recent courses with RRB NTPC courses
+        function renderRecentCourses() {
+            recentCoursesGrid.innerHTML = '';
+            recentCourses.forEach(course => {
+                const courseCard = createCourseCard(course, course.isRailway);
+                recentCoursesGrid.appendChild(courseCard);
             });
         }
 
@@ -1836,7 +2082,12 @@
         function createCourseCard(course, isRailway = false) {
             const courseCard = document.createElement('div');
             courseCard.className = `course-card ${isRailway ? 'railway-course' : ''}`;
+            
+            // Add badge for RRB NTPC courses
+            const badge = isRailway ? `<div class="course-badge">RRB NTPC 2025</div>` : '';
+            
             courseCard.innerHTML = `
+                ${badge}
                 <div class="course-image">
                     <i class="fas fa-${isRailway ? 'train' : 'book'}"></i>
                 </div>
@@ -1853,7 +2104,7 @@
                     </div>
                     <div class="course-actions">
                         <button class="btn btn-outline">View Details</button>
-                        <button class="btn ${isRailway ? 'btn-railway' : 'btn-primary'}">Enroll Now</button>
+                        <button class="btn ${isRailway ? 'btn-railway' : 'btn-primary'}">${isRailway ? 'Continue' : 'Enroll Now'}</button>
                     </div>
                 </div>
             `;
