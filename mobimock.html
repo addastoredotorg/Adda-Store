@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MobiMock - Online Test Preparation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3f51b5;
+            --primary-dark: #303f9f;
+            --primary-light: #c5cae9;
+            --secondary: #ff5722;
+            --secondary-light: #ffccbc;
+            --background: #f5f5f7;
+            --surface: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #757575;
+            --text-disabled: #bdbdbd;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --error: #f44336;
+            --border: #e0e0e0;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --railway-blue: #1e3a8a;
+            --railway-orange: #f97316;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--surface);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .nav-desktop {
+            display: none;
+        }
+
+        .nav-mobile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .hamburger {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e64a19;
+        }
+
+        .btn-railway {
+            background-color: var(--railway-blue);
+            color: white;
+        }
+
+        .btn-railway:hover {
+            background-color: #1e40af;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--surface);
+            z-index: 200;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .close-menu {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .mobile-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .mobile-nav a {
+            padding: 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .mobile-nav a:hover, .mobile-nav a.active {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        main {
+            min-height: calc(100vh - 140px);
+            padding: 2rem 0;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .course-card {
+            background-color: var(--surface);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .course-image {
+            height: 160px;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 3rem;
+        }
+
+        .railway-course .course-image {
+            background: linear-gradient(135deg, var(--railway-blue), var(--railway-orange));
+            color: white;
+        }
+
+        .course-content {
+            padding: 1.5rem;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-instructor {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .course-rating {
+            color: var(--warning);
+        }
+
+        .course-price {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .course-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* RRB NTPC Section */
+        .railway-hero {
+            background: linear-gradient(135deg, var(--railway-blue), var(--railway-orange));
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .railway-hero h1 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .railway-badge {
+            display: inline-block;
+            background-color: var(--railway-orange);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .railway-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--railway-blue);
+            margin-bottom: 1rem;
+        }
+
+        /* Course Catalog Styles */
+        .catalog-header {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-select {
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background-color: var(--surface);
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Mock Test Styles */
+        .test-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .test-header {
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .test-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .test-timer {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .test-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .test-content {
+                flex-direction: row;
+            }
+        }
+
+        .questions-sidebar {
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            flex: 0 0 300px;
+        }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-number {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .question-number.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .question-number.visited {
+            background-color: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .question-area {
+            flex: 1;
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .question-text {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            background-color: var(--primary-light);
+        }
+
+        .option.selected {
+            background-color: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .option input {
+            display: none;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Study Materials Styles */
+        .materials-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .materials-sidebar {
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .materials-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .material-item {
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .material-item:hover {
+            background-color: var(--primary-light);
+        }
+
+        .material-item.active {
+            background-color: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .material-content {
+            flex: 1;
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .material-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .material-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 300px;
+            background-color: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+        }
+
+        .video-placeholder {
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .video-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Profile Styles */
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .profile-header {
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .profile-stat {
+            text-align: center;
+        }
+
+        .profile-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .profile-stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .profile-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .profile-card {
+            background-color: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .history-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 300;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--surface);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transform: translateY(-20px);
+            transition: transform 0.3s;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background-color: var(--surface);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .social-btn.google:hover {
+            background-color: #f5f5f5;
+        }
+
+        .social-btn.facebook:hover {
+            background-color: #f0f2f5;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .form-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--surface);
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        /* Responsive Styles */
+        @media (min-width: 768px) {
+            .nav-desktop {
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+            }
+
+            .nav-mobile {
+                display: none;
+            }
+
+            .nav-link {
+                text-decoration: none;
+                color: var(--text-primary);
+                font-weight: 500;
+                transition: color 0.3s;
+            }
+
+            .nav-link:hover, .nav-link.active {
+                color: var(--primary);
+            }
+
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .footer-section {
+                flex: 1;
+            }
+
+            .materials-container {
+                flex-direction: row;
+            }
+
+            .materials-sidebar {
+                flex: 0 0 300px;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-1 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+
+        .mt-1 {
+            margin-top: 1rem;
+        }
+
+        .mt-2 {
+            margin-top: 2rem;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .align-center {
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo" aria-label="MobiMock Home">
+                    <i class="fas fa-graduation-cap logo-icon"></i>
+                    <span class="logo-text">MobiMock</span>
+                </a>
+                
+                <nav class="nav-desktop">
+                    <a href="#" class="nav-link active" data-page="dashboard">Dashboard</a>
+                    <a href="#" class="nav-link" data-page="rrb-ntpc">RRB NTPC 2025</a>
+                    <a href="#" class="nav-link" data-page="courses">Courses</a>
+                    <a href="#" class="nav-link" data-page="tests">Mock Tests</a>
+                    <a href="#" class="nav-link" data-page="materials">Study Materials</a>
+                    <a href="#" class="nav-link" data-page="profile">Profile</a>
+                </nav>
+                
+                <div class="user-actions">
+                    <button class="btn btn-outline" id="login-btn">Login</button>
+                    <button class="btn btn-primary" id="signup-btn">Sign Up</button>
+                </div>
+                
+                <div class="nav-mobile">
+                    <button class="hamburger" id="hamburger" aria-label="Open menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header">
+            <a href="#" class="logo" aria-label="MobiMock Home">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <span class="logo-text">MobiMock</span>
+            </a>
+            <button class="close-menu" id="close-menu" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <nav class="mobile-nav">
+            <a href="#" class="active" data-page="dashboard">Dashboard</a>
+            <a href="#" data-page="rrb-ntpc">RRB NTPC 2025</a>
+            <a href="#" data-page="courses">Courses</a>
+            <a href="#" data-page="tests">Mock Tests</a>
+            <a href="#" data-page="materials">Study Materials</a>
+            <a href="#" data-page="profile">Profile</a>
+            <a href="#" id="mobile-login-btn">Login</a>
+            <a href="#" id="mobile-signup-btn">Sign Up</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Dashboard Page -->
+            <section id="dashboard" class="page active">
+                <div class="dashboard-header">
+                    <h1>Dashboard</h1>
+                    <p>Welcome back, Rahul! Here's your learning progress.</p>
+                </div>
+                
+                <div class="welcome-section">
+                    <h2>Keep up the great work!</h2>
+                    <p>You're making excellent progress in your preparation. Complete more tests to improve your score.</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Tests Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">78%</div>
+                        <div class="stat-label">Average Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Courses Enrolled</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">24</div>
+                        <div class="stat-label">Study Hours</div>
+                    </div>
+                </div>
+                
+                <div class="section-title">
+                    <h2>Recent Courses</h2>
+                    <a href="#" class="btn btn-outline" data-page="courses">View All</a>
+                </div>
+                
+                <div class="courses-grid">
+                    <!-- Course cards will be populated by JavaScript -->
+                </div>
+                
+                <div class="section-title">
+                    <h2>Upcoming Tests</h2>
+                </div>
+                
+                <div class="upcoming-tests">
+                    <div class="course-card">
+                        <div class="course-content">
+                            <h3 class="course-title">RRB NTPC Stage 1 Mock Test</h3>
+                            <p class="course-instructor">Scheduled: Tomorrow, 10:00 AM</p>
+                            <div class="course-actions">
+                                <button class="btn btn-railway">Start Preparation</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- RRB NTPC 2025 Page -->
+            <section id="rrb-ntpc" class="page">
+                <div class="railway-hero">
+                    <span class="railway-badge">NEW</span>
+                    <h1>RRB NTPC 2025 Preparation</h1>
+                    <p>Complete preparation package for Railway Non-Technical Popular Categories exam</p>
+                    <button class="btn btn-railway mt-1">Enroll Now</button>
+                </div>
+                
+                <div class="railway-features">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3>Complete Syllabus</h3>
+                        <p>Covers all subjects: Mathematics, General Intelligence, General Awareness</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h3>100+ Mock Tests</h3>
+                        <p>Stage 1 & 2 specific tests with detailed solutions</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Performance Analytics</h3>
+                        <p>Track your progress with detailed insights</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>Video Lectures</h3>
+                        <p>Learn from India's best Railway exam faculty</p>
+                    </div>
+                </div>
+                
+                <div class="section-title">
+                    <h2>RRB NTPC Courses</h2>
+                </div>
+                
+                <div class="courses-grid" id="rrb-courses-grid">
+                    <!-- RRB NTPC course cards will be populated by JavaScript -->
+                </div>
+                
+                <div class="section-title mt-2">
+                    <h2>Exam Pattern</h2>
+                </div>
+                
+                <div class="course-card">
+                    <div class="course-content">
+                        <h3>RRB NTPC Stage 1</h3>
+                        <ul>
+                            <li><strong>Mathematics:</strong> 30 Questions</li>
+                            <li><strong>General Intelligence & Reasoning:</strong> 30 Questions</li>
+                            <li><strong>General Awareness:</strong> 40 Questions</li>
+                            <li><strong>Total:</strong> 100 Questions</li>
+                            <li><strong>Duration:</strong> 90 Minutes</li>
+                            <li><strong>Negative Marking:</strong> 1/3 for each wrong answer</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Courses Page -->
+            <section id="courses" class="page">
+                <div class="catalog-header">
+                    <h1>Course Catalog</h1>
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="Search courses...">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="category" class="form-label">Category</label>
+                        <select id="category" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="mathematics">Mathematics</option>
+                            <option value="science">Science</option>
+                            <option value="english">English</option>
+                            <option value="reasoning">Reasoning</option>
+                            <option value="railway">Railway Exams</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="difficulty" class="form-label">Difficulty</label>
+                        <select id="difficulty" class="filter-select">
+                            <option value="all">All Levels</option>
+                            <option value="beginner">Beginner</option>
+                            <option value="intermediate">Intermediate</option>
+                            <option value="advanced">Advanced</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="duration" class="form-label">Duration</label>
+                        <select id="duration" class="filter-select">
+                            <option value="all">Any Duration</option>
+                            <option value="short">Less than 1 month</option>
+                            <option value="medium">1-3 months</option>
+                            <option value="long">More than 3 months</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="courses-grid">
+                    <!-- Course cards will be populated by JavaScript -->
+                </div>
+            </section>
+            
+            <!-- Mock Tests Page -->
+            <section id="tests" class="page">
+                <h1>Mock Tests</h1>
+                
+                <div class="test-container">
+                    <div class="test-header">
+                        <div class="test-info">
+                            <h2>Mathematics Practice Test</h2>
+                            <div class="test-timer">45:00</div>
+                        </div>
+                        <p>This test contains 15 questions. You have 45 minutes to complete it.</p>
+                    </div>
+                    
+                    <div class="test-content">
+                        <div class="questions-sidebar">
+                            <h3>Questions</h3>
+                            <div class="questions-grid" id="questions-grid">
+                                <!-- Question numbers will be populated by JavaScript -->
+                            </div>
+                            <button class="btn btn-secondary" id="submit-test">Submit Test</button>
+                        </div>
+                        
+                        <div class="question-area">
+                            <div class="question-text" id="question-text">
+                                <!-- Question text will be populated by JavaScript -->
+                            </div>
+                            
+                            <div class="options-list" id="options-list">
+                                <!-- Options will be populated by JavaScript -->
+                            </div>
+                            
+                            <div class="navigation-buttons">
+                                <button class="btn btn-outline" id="prev-question">Previous</button>
+                                <button class="btn btn-primary" id="next-question">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Study Materials Page -->
+            <section id="materials" class="page">
+                <h1>Study Materials</h1>
+                
+                <div class="materials-container">
+                    <div class="materials-sidebar">
+                        <h3>Subjects</h3>
+                        <div class="materials-list" id="materials-list">
+                            <!-- Material items will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="material-content">
+                        <div class="material-header">
+                            <h2 id="material-title">Mathematics Basics</h2>
+                            <div class="material-actions">
+                                <button class="btn btn-outline">
+                                    <i class="fas fa-bookmark"></i> Bookmark
+                                </button>
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="video-container">
+                            <div class="video-placeholder">
+                                <i class="fas fa-play-circle"></i>
+                                <p>Video Lecture</p>
+                            </div>
+                        </div>
+                        
+                        <div class="material-description">
+                            <h3>About this material</h3>
+                            <p>This module covers the fundamental concepts of mathematics that are essential for competitive exams. Topics include algebra, geometry, arithmetic, and data interpretation.</p>
+                            
+                            <h3 class="mt-2">Key Topics</h3>
+                            <ul>
+                                <li>Algebraic Expressions and Equations</li>
+                                <li>Geometric Shapes and Properties</li>
+                                <li>Percentage, Profit and Loss</li>
+                                <li>Data Interpretation Techniques</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Profile Page -->
+            <section id="profile" class="page">
+                <h1>My Profile</h1>
+                
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h2>Rahul Sharma</h2>
+                            <p>Premium Member</p>
+                        </div>
+                        
+                        <div class="profile-stats">
+                            <div class="profile-stat">
+                                <div class="profile-stat-value">12</div>
+                                <div class="profile-stat-label">Tests Taken</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="profile-stat-value">78%</div>
+                                <div class="profile-stat-label">Avg. Score</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="profile-stat-value">24</div>
+                                <div class="profile-stat-label">Study Hours</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-outline">Edit Profile</button>
+                    </div>
+                    
+                    <div class="profile-content">
+                        <div class="profile-card">
+                            <div class="profile-card-header">
+                                <h3>Personal Information</h3>
+                                <button class="btn btn-outline">Edit</button>
+                            </div>
+                            <div class="profile-info">
+                                <p><strong>Email:</strong> rahul.sharma@example.com</p>
+                                <p><strong>Phone:</strong> +91 98765 43210</p>
+                                <p><strong>Joined:</strong> January 15, 2023</p>
+                                <p><strong>Membership:</strong> Premium</p>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-card">
+                            <div class="profile-card-header">
+                                <h3>Test History</h3>
+                            </div>
+                            <div class="history-list">
+                                <div class="history-item">
+                                    <div class="d-flex justify-between align-center">
+                                        <div>
+                                            <h4>RRB NTPC Stage 1 Mock</h4>
+                                            <p>Completed: June 10, 2023</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="profile-stat-value">85%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="history-item">
+                                    <div class="d-flex justify-between align-center">
+                                        <div>
+                                            <h4>Mathematics Advanced</h4>
+                                            <p>Completed: June 5, 2023</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="profile-stat-value">72%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="history-item">
+                                    <div class="d-flex justify-between align-center">
+                                        <div>
+                                            <h4>Reasoning Practice</h4>
+                                            <p>Completed: May 28, 2023</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="profile-stat-value">79%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-card">
+                            <div class="profile-card-header">
+                                <h3>Enrolled Courses</h3>
+                            </div>
+                            <div class="history-list">
+                                <div class="history-item">
+                                    <h4>RRB NTPC Complete Course 2025</h4>
+                                    <p>Progress: 65%</p>
+                                </div>
+                                <div class="history-item">
+                                    <h4>Mathematics for Railways</h4>
+                                    <p>Progress: 42%</p>
+                                </div>
+                                <div class="history-item">
+                                    <h4>General Awareness Mastery</h4>
+                                    <p>Progress: 78%</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-card">
+                            <div class="profile-card-header">
+                                <h3>Settings</h3>
+                            </div>
+                            <div class="settings-list">
+                                <div class="history-item d-flex justify-between align-center">
+                                    <span>Push Notifications</span>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="history-item d-flex justify-between align-center">
+                                    <span>Email Notifications</span>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="history-item d-flex justify-between align-center">
+                                    <span>Dark Mode</span>
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>MobiMock</h3>
+                    <p>Your trusted partner in exam preparation. We provide high-quality mock tests and study materials to help you succeed.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link" data-page="dashboard">Dashboard</a>
+                        <a href="#" class="footer-link" data-page="rrb-ntpc">RRB NTPC 2025</a>
+                        <a href="#" class="footer-link" data-page="courses">Courses</a>
+                        <a href="#" class="footer-link" data-page="tests">Mock Tests</a>
+                        <a href="#" class="footer-link" data-page="materials">Study Materials</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Help Center</a>
+                        <a href="#" class="footer-link">Contact Us</a>
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                        <a href="#" class="footer-link">Terms of Service</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </a>
+                        <a href="#" class="footer-link">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </a>
+                        <a href="#" class="footer-link">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </a>
+                        <a href="#" class="footer-link">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 MobiMock. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login to Your Account</h2>
+                <button class="close-modal" id="close-login">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email" class="form-label">Email or Phone</label>
+                    <input type="text" id="login-email" class="form-input" placeholder="Enter your email or phone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password" class="form-label">Password</label>
+                    <input type="password" id="login-password" class="form-input" placeholder="Enter your password">
+                </div>
+                
+                <div class="form-group d-flex justify-between align-center">
+                    <label>
+                        <input type="checkbox"> Remember me
+                    </label>
+                    <a href="#" class="form-link">Forgot Password?</a>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="cancel-login">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+                
+                <div class="social-login">
+                    <button type="button" class="social-btn google">
+                        <i class="fab fa-google"></i> Continue with Google
+                    </button>
+                    <button type="button" class="social-btn facebook">
+                        <i class="fab fa-facebook"></i> Continue with Facebook
+                    </button>
+                </div>
+                
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="#" class="form-link" id="switch-to-signup">Sign Up</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signup-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create an Account</h2>
+                <button class="close-modal" id="close-signup">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="signup-name" class="form-label">Full Name</label>
+                    <input type="text" id="signup-name" class="form-input" placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-email" class="form-label">Email</label>
+                    <input type="email" id="signup-email" class="form-input" placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-phone" class="form-label">Phone Number</label>
+                    <input type="tel" id="signup-phone" class="form-input" placeholder="Enter your phone number">
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-password" class="form-label">Password</label>
+                    <input type="password" id="signup-password" class="form-input" placeholder="Create a password">
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-confirm" class="form-label">Confirm Password</label>
+                    <input type="password" id="signup-confirm" class="form-input" placeholder="Confirm your password">
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox"> I agree to the <a href="#" class="form-link">Terms of Service</a> and <a href="#" class="form-link">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="cancel-signup">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                </div>
+                
+                <div class="social-login">
+                    <button type="button" class="social-btn google">
+                        <i class="fab fa-google"></i> Continue with Google
+                    </button>
+                    <button type="button" class="social-btn facebook">
+                        <i class="fab fa-facebook"></i> Continue with Facebook
+                    </button>
+                </div>
+                
+                <div class="form-footer">
+                    <p>Already have an account? <a href="#" class="form-link" id="switch-to-login">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample Data
+        const courses = [
+            {
+                id: 1,
+                title: "Advanced Mathematics",
+                instructor: "Dr. Priya Sharma",
+                rating: 4.8,
+                price: "₹1,999",
+                originalPrice: "₹2,999",
+                category: "mathematics",
+                difficulty: "advanced",
+                duration: "medium"
+            },
+            {
+                id: 2,
+                title: "English Grammar Mastery",
+                instructor: "Prof. Rajesh Kumar",
+                rating: 4.5,
+                price: "₹1,499",
+                originalPrice: "₹2,499",
+                category: "english",
+                difficulty: "intermediate",
+                duration: "short"
+            },
+            {
+                id: 3,
+                title: "Science Fundamentals",
+                instructor: "Dr. Anjali Singh",
+                rating: 4.7,
+                price: "₹1,799",
+                originalPrice: "₹2,799",
+                category: "science",
+                difficulty: "beginner",
+                duration: "medium"
+            },
+            {
+                id: 4,
+                title: "Logical Reasoning",
+                instructor: "Prof. Sanjay Verma",
+                rating: 4.6,
+                price: "₹1,299",
+                originalPrice: "₹1,999",
+                category: "reasoning",
+                difficulty: "intermediate",
+                duration: "short"
+            },
+            {
+                id: 5,
+                title: "Data Interpretation",
+                instructor: "Dr. Neha Gupta",
+                rating: 4.9,
+                price: "₹2,199",
+                originalPrice: "₹2,999",
+                category: "mathematics",
+                difficulty: "advanced",
+                duration: "long"
+            },
+            {
+                id: 6,
+                title: "Vocabulary Builder",
+                instructor: "Prof. Meera Patel",
+                rating: 4.4,
+                price: "₹999",
+                originalPrice: "₹1,499",
+                category: "english",
+                difficulty: "beginner",
+                duration: "short"
+            }
+        ];
+
+        const rrbCourses = [
+            {
+                id: 101,
+                title: "RRB NTPC Complete Course 2025",
+                instructor: "Shri Rakesh Yadav",
+                rating: 4.9,
+                price: "₹3,999",
+                originalPrice: "₹5,999",
+                category: "railway",
+                difficulty: "all",
+                duration: "long",
+                isRailway: true
+            },
+            {
+                id: 102,
+                title: "Mathematics for Railways",
+                instructor: "Dr. Arun Sharma",
+                rating: 4.8,
+                price: "₹1,499",
+                originalPrice: "₹2,499",
+                category: "railway",
+                difficulty: "intermediate",
+                duration: "medium",
+                isRailway: true
+            },
+            {
+                id: 103,
+                title: "General Awareness for RRB",
+                instructor: "Prof. Kiran Bedi",
+                rating: 4.7,
+                price: "₹1,299",
+                originalPrice: "₹1,999",
+                category: "railway",
+                difficulty: "all",
+                duration: "medium",
+                isRailway: true
+            },
+            {
+                id: 104,
+                title: "Reasoning for Railway Exams",
+                instructor: "Shri Narendra Kumar",
+                rating: 4.6,
+                price: "₹1,599",
+                originalPrice: "₹2,299",
+                category: "railway",
+                difficulty: "intermediate",
+                duration: "medium",
+                isRailway: true
+            }
+        ];
+
+        const testQuestions = [
+            {
+                id: 1,
+                text: "What is the value of x in the equation 2x + 5 = 15?",
+                options: ["5", "10", "7.5", "20"],
+                correct: 0
+            },
+            {
+                id: 2,
+                text: "If a triangle has angles of 45° and 75°, what is the measure of the third angle?",
+                options: ["45°", "60°", "75°", "90°"],
+                correct: 1
+            },
+            {
+                id: 3,
+                text: "What is the square root of 144?",
+                options: ["11", "12", "13", "14"],
+                correct: 1
+            }
+        ];
+
+        const studyMaterials = [
+            {
+                id: 1,
+                title: "Mathematics Basics",
+                subject: "mathematics",
+                type: "video"
+            },
+            {
+                id: 2,
+                title: "English Grammar Rules",
+                subject: "english",
+                type: "pdf"
+            },
+            {
+                id: 3,
+                title: "Science Concepts",
+                subject: "science",
+                type: "video"
+            },
+            {
+                id: 4,
+                title: "Logical Reasoning Techniques",
+                subject: "reasoning",
+                type: "pdf"
+            }
+        ];
+
+        // DOM Elements
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburger = document.getElementById('hamburger');
+        const closeMenu = document.getElementById('close-menu');
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-link, .mobile-nav a');
+        const loginBtn = document.getElementById('login-btn');
+        const signupBtn = document.getElementById('signup-btn');
+        const mobileLoginBtn = document.getElementById('mobile-login-btn');
+        const mobileSignupBtn = document.getElementById('mobile-signup-btn');
+        const loginModal = document.getElementById('login-modal');
+        const signupModal = document.getElementById('signup-modal');
+        const closeLogin = document.getElementById('close-login');
+        const closeSignup = document.getElementById('close-signup');
+        const cancelLogin = document.getElementById('cancel-login');
+        const cancelSignup = document.getElementById('cancel-signup');
+        const switchToSignup = document.getElementById('switch-to-signup');
+        const switchToLogin = document.getElementById('switch-to-login');
+        const coursesGrids = document.querySelectorAll('.courses-grid');
+        const rrbCoursesGrid = document.getElementById('rrb-courses-grid');
+        const questionsGrid = document.getElementById('questions-grid');
+        const questionText = document.getElementById('question-text');
+        const optionsList = document.getElementById('options-list');
+        const prevQuestionBtn = document.getElementById('prev-question');
+        const nextQuestionBtn = document.getElementById('next-question');
+        const submitTestBtn = document.getElementById('submit-test');
+        const materialsList = document.getElementById('materials-list');
+        const materialTitle = document.getElementById('material-title');
+
+        // Current State
+        let currentPage = 'dashboard';
+        let currentQuestion = 0;
+        let userAnswers = new Array(testQuestions.length).fill(null);
+        let timerInterval;
+
+        // Initialize the app
+        function init() {
+            renderCourses();
+            renderRRBCourses();
+            renderTestQuestions();
+            renderStudyMaterials();
+            setupEventListeners();
+            startTimer(45 * 60); // 45 minutes in seconds
+        }
+
+        // Render courses in all course grids
+        function renderCourses() {
+            coursesGrids.forEach(grid => {
+                if (grid.id === 'rrb-courses-grid') return; // Skip RRB grid
+                
+                grid.innerHTML = '';
+                courses.forEach(course => {
+                    const courseCard = createCourseCard(course);
+                    grid.appendChild(courseCard);
+                });
+            });
+        }
+
+        // Render RRB NTPC courses
+        function renderRRBCourses() {
+            rrbCoursesGrid.innerHTML = '';
+            rrbCourses.forEach(course => {
+                const courseCard = createCourseCard(course, true);
+                rrbCoursesGrid.appendChild(courseCard);
+            });
+        }
+
+        // Create a course card element
+        function createCourseCard(course, isRailway = false) {
+            const courseCard = document.createElement('div');
+            courseCard.className = `course-card ${isRailway ? 'railway-course' : ''}`;
+            courseCard.innerHTML = `
+                <div class="course-image">
+                    <i class="fas fa-${isRailway ? 'train' : 'book'}"></i>
+                </div>
+                <div class="course-content">
+                    <h3 class="course-title">${course.title}</h3>
+                    <p class="course-instructor">By ${course.instructor}</p>
+                    <div class="course-meta">
+                        <div class="course-rating">
+                            ${renderStars(course.rating)}
+                        </div>
+                        <div class="course-price">
+                            ${course.price} <span style="text-decoration: line-through; color: var(--text-disabled); font-size: 0.9rem;">${course.originalPrice}</span>
+                        </div>
+                    </div>
+                    <div class="course-actions">
+                        <button class="btn btn-outline">View Details</button>
+                        <button class="btn ${isRailway ? 'btn-railway' : 'btn-primary'}">Enroll Now</button>
+                    </div>
+                </div>
+            `;
+            return courseCard;
+        }
+
+        // Render star ratings
+        function renderStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Render test questions and navigation
+        function renderTestQuestions() {
+            // Render question numbers
+            questionsGrid.innerHTML = '';
+            testQuestions.forEach((question, index) => {
+                const questionNumber = document.createElement('div');
+                questionNumber.className = 'question-number';
+                if (index === 0) questionNumber.classList.add('active');
+                questionNumber.textContent = index + 1;
+                questionNumber.addEventListener('click', () => showQuestion(index));
+                questionsGrid.appendChild(questionNumber);
+            });
+            
+            // Show first question
+            showQuestion(0);
+        }
+
+        // Show a specific question
+        function showQuestion(index) {
+            currentQuestion = index;
+            
+            // Update active question in navigation
+            document.querySelectorAll('.question-number').forEach((el, i) => {
+                el.classList.toggle('active', i === index);
+                if (userAnswers[i] !== null) {
+                    el.classList.add('visited');
+                }
+            });
+            
+            // Update question text
+            const question = testQuestions[index];
+            questionText.textContent = question.text;
+            
+            // Update options
+            optionsList.innerHTML = '';
+            question.options.forEach((option, optIndex) => {
+                const optionEl = document.createElement('div');
+                optionEl.className = 'option';
+                if (userAnswers[index] === optIndex) {
+                    optionEl.classList.add('selected');
+                }
+                optionEl.innerHTML = `
+                    <input type="radio" name="option" id="option-${optIndex}" value="${optIndex}" ${userAnswers[index] === optIndex ? 'checked' : ''}>
+                    <label for="option-${optIndex}">${option}</label>
+                `;
+                optionEl.addEventListener('click', () => selectOption(optIndex));
+                optionsList.appendChild(optionEl);
+            });
+            
+            // Update navigation buttons
+            prevQuestionBtn.disabled = index === 0;
+            nextQuestionBtn.textContent = index === testQuestions.length - 1 ? 'Finish' : 'Next';
+        }
+
+        // Select an option for the current question
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestion] = optionIndex;
+            showQuestion(currentQuestion);
+        }
+
+        // Render study materials
+        function renderStudyMaterials() {
+            materialsList.innerHTML = '';
+            studyMaterials.forEach(material => {
+                const materialItem = document.createElement('div');
+                materialItem.className = 'material-item';
+                materialItem.innerHTML = `
+                    <h4>${material.title}</h4>
+                    <p>${material.type === 'video' ? 'Video Lecture' : 'PDF Document'}</p>
+                `;
+                materialItem.addEventListener('click', () => {
+                    document.querySelectorAll('.material-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    materialItem.classList.add('active');
+                    materialTitle.textContent = material.title;
+                });
+                materialsList.appendChild(materialItem);
+            });
+            
+            // Activate first material by default
+            if (materialsList.firstChild) {
+                materialsList.firstChild.classList.add('active');
+            }
+        }
+
+        // Start the test timer
+        function startTimer(duration) {
+            const timerDisplay = document.querySelector('.test-timer');
+            let timer = duration;
+            
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timer / 60);
+                const seconds = timer % 60;
+                
+                timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    submitTest();
+                }
+            }, 1000);
+        }
+
+        // Submit the test
+        function submitTest() {
+            clearInterval(timerInterval);
+            alert('Test submitted! Your answers have been saved.');
+            // In a real app, this would send the answers to a server
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Mobile menu
+            hamburger.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+            });
+            
+            closeMenu.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+            
+            // Navigation
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.getAttribute('data-page');
+                    if (page) {
+                        showPage(page);
+                        mobileMenu.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Footer links
+            document.querySelectorAll('.footer-link[data-page]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.getAttribute('data-page');
+                    showPage(page);
+                });
+            });
+            
+            // Modals
+            loginBtn.addEventListener('click', () => loginModal.classList.add('active'));
+            signupBtn.addEventListener('click', () => signupModal.classList.add('active'));
+            mobileLoginBtn.addEventListener('click', () => {
+                loginModal.classList.add('active');
+                mobileMenu.classList.remove('active');
+            });
+            mobileSignupBtn.addEventListener('click', () => {
+                signupModal.classList.add('active');
+                mobileMenu.classList.remove('active');
+            });
+            
+            closeLogin.addEventListener('click', () => loginModal.classList.remove('active'));
+            closeSignup.addEventListener('click', () => signupModal.classList.remove('active'));
+            cancelLogin.addEventListener('click', () => loginModal.classList.remove('active'));
+            cancelSignup.addEventListener('click', () => signupModal.classList.remove('active'));
+            
+            switchToSignup.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginModal.classList.remove('active');
+                signupModal.classList.add('active');
+            });
+            
+            switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                signupModal.classList.remove('active');
+                loginModal.classList.add('active');
+            });
+            
+            // Test navigation
+            prevQuestionBtn.addEventListener('click', () => {
+                if (currentQuestion > 0) {
+                    showQuestion(currentQuestion - 1);
+                }
+            });
+            
+            nextQuestionBtn.addEventListener('click', () => {
+                if (currentQuestion < testQuestions.length - 1) {
+                    showQuestion(currentQuestion + 1);
+                } else {
+                    submitTest();
+                }
+            });
+            
+            submitTestBtn.addEventListener('click', submitTest);
+            
+            // Form submissions
+            document.getElementById('login-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                // In a real app, this would send login data to a server
+                alert('Login functionality would be implemented here');
+                loginModal.classList.remove('active');
+            });
+            
+            document.getElementById('signup-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                // In a real app, this would send signup data to a server
+                alert('Signup functionality would be implemented here');
+                signupModal.classList.remove('active');
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === loginModal) {
+                    loginModal.classList.remove('active');
+                }
+                if (e.target === signupModal) {
+                    signupModal.classList.remove('active');
+                }
+            });
+        }
+
+        // Show a specific page
+        function showPage(pageName) {
+            // Update active page
+            pages.forEach(page => {
+                page.classList.toggle('active', page.id === pageName);
+            });
+            
+            // Update active nav link
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('data-page') === pageName);
+            });
+            
+            currentPage = pageName;
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
