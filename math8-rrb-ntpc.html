@@ -1,0 +1,2113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-23LSZJ3WYJ');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RRB NTPC Mock Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 15px 0;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .timer-container {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .time-left {
+            margin-right: 10px;
+            font-size: 16px;
+            font-weight: normal;
+        }
+        
+        .timer {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            display: flex;
+            margin-top: 20px;
+            gap: 20px;
+        }
+        
+        .question-panel {
+            flex: 3;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            position: relative;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .question-number {
+            font-size: 18px;
+            color: #2a5298;
+            font-weight: 600;
+        }
+        
+        .language-selector {
+            display: flex;
+            align-items: center;
+        }
+        
+        .language-selector select {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: #333;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .question-text {
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .options {
+            margin-bottom: 25px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #edf2ff;
+            border-color: #2a5298;
+        }
+        
+        .option.selected {
+            background-color: #e3ecff;
+            border-color: #2a5298;
+        }
+        
+        .option.correct {
+            background-color: #e8f5e9;
+            border-color: #4CAF50;
+        }
+        
+        .option.incorrect {
+            background-color: #ffebee;
+            border-color: #f44336;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .btn-prev {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-clear {
+            background-color: #ff6b6b;
+            color: white;
+        }
+        
+        .btn-next {
+            background-color: #2a5298;
+            color: white;
+        }
+        
+        .btn-submit {
+            background-color: #28a745;
+            color: white;
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            font-size: 16px;
+        }
+        
+        .btn-reattempt {
+            background-color: #2a5298;
+            color: white;
+            padding: 12px 30px;
+            font-size: 16px;
+            margin: 20px auto;
+            display: block;
+        }
+        
+        .btn-show-solution {
+            background-color: #FF9800;
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .btn-check-answer {
+            background-color: #2196F3;
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .sidebar {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        .question-palette {
+            margin-bottom: 20px;
+        }
+        
+        .palette-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2a5298;
+        }
+        
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+        
+        .question-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .question-btn.answered {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+        
+        .question-btn.current {
+            background-color: #2a5298;
+            color: white;
+            border-color: #2a5298;
+        }
+        
+        .question-btn.marked {
+            background-color: #FF9800;
+            color: white;
+            border-color: #FF9800;
+        }
+        
+        .question-btn.not-answered {
+            background-color: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+        
+        .question-btn.not-visited {
+            background-color: white;
+            color: #333;
+            border-color: #ddd;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+        
+        .answered-color {
+            background-color: #4CAF50;
+        }
+        
+        .current-color {
+            background-color: #2a5298;
+        }
+        
+        .marked-color {
+            background-color: #FF9800;
+        }
+        
+        .not-answered-color {
+            background-color: #f44336;
+        }
+        
+        .not-visited-color {
+            background-color: white;
+            border: 1px solid #ddd;
+        }
+        
+        .instructions {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .instructions h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #2a5298;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+            font-size: 14px;
+        }
+        
+        .instructions li {
+            margin-bottom: 5px;
+        }
+        
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 0 0 8px 8px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .submit-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .result-panel {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-top: 20px;
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2a5298;
+        }
+        
+        .result-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            width: 30%;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .score {
+            color: #2a5298;
+        }
+        
+        .rank {
+            color: #FF9800;
+        }
+        
+        .time-taken {
+            color: #4CAF50;
+        }
+        
+        .solutions {
+            margin-top: 30px;
+        }
+        
+        .solution-item {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        
+        .solution-question {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .solution-answer {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .correct-answer {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .solution-explanation {
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            font-size: 14px;
+            line-height: 1.6;
+            display: none;
+        }
+        
+        .solution-explanation h4 {
+            color: #2a5298;
+            margin-bottom: 10px;
+        }
+        
+        .solution-explanation p {
+            margin-bottom: 10px;
+        }
+        
+        .solution-explanation ul {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .solution-explanation li {
+            margin-bottom: 5px;
+        }
+        
+        .solution-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ddd;
+        }
+        
+        .solution-stat {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .solution-stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .solution-stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .mobile-nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .mobile-btn {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            text-align: center;
+            background-color: #2a5298;
+            color: white;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                margin-bottom: 70px;
+            }
+            
+            .question-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .result-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-box {
+                width: 80%;
+                margin-bottom: 15px;
+            }
+            
+            .timer-container {
+                margin-top: 10px;
+            }
+            
+            .mobile-nav {
+                display: block;
+            }
+            
+            .navigation {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .navigation > div {
+                display: flex;
+                gap: 10px;
+            }
+            
+            .btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .solution-language-selector {
+                margin-top: 10px;
+            }
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        .modal h2 {
+            color: #2a5298;
+            margin-bottom: 15px;
+        }
+        
+        .modal p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .modal-btn-cancel {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .modal-btn-confirm {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        /* Testbook Style Solution Panel */
+        .solution-panel {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-top: 20px;
+        }
+        
+        .solution-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2a5298;
+        }
+        
+        .solution-language-selector {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        .solution-language-selector select {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: #333;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .solution-question-panel {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .solution-options {
+            margin-bottom: 25px;
+        }
+        
+        .solution-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .solution-option:hover {
+            background-color: #edf2ff;
+            border-color: #2a5298;
+        }
+        
+        .solution-option.selected {
+            background-color: #e3ecff;
+            border-color: #2a5298;
+        }
+        
+        .solution-option.correct {
+            background-color: #e8f5e9;
+            border-color: #4CAF50;
+        }
+        
+        .solution-option.incorrect {
+            background-color: #ffebee;
+            border-color: #f44336;
+        }
+        
+        .solution-option input {
+            margin-right: 10px;
+        }
+        
+        .solution-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .solution-feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .feedback-correct {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #4CAF50;
+        }
+        
+        .feedback-incorrect {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <!-- Placeholder for logo -->
+                    <div style="width: 50px; height: 50px; background-color: white; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #2a5298; font-weight: bold;">RRB</div>
+                    <h1>RRB NTPC Mock Test</h1>
+                </div>
+                <div class="timer-container">
+                    <span class="time-left">Time Left:</span>
+                    <div class="timer" id="timer">12:00</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="question-panel">
+                <div class="question-header">
+                    <div class="question-number">Question <span id="current-q">1</span> of 10</div>
+                    <div class="language-selector">
+                        <select id="language-select">
+                            <option value="english">English</option>
+                            <option value="hindi">हिन्दी (Hindi)</option>
+                            <option value="bengali">বাংলা (Bengali)</option>
+                            <option value="tamil">தமிழ் (Tamil)</option>
+                            <option value="telugu">తెలుగు (Telugu)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="question-text" id="question-text">
+                    A man sells an article at a 12.5% profit. If he had sold it for ₹62.50 more, he would have gained 25%. What is the cost price of the article?
+                </div>
+                
+                <div class="options">
+                    <div class="option" onclick="selectOption(1)">
+                        <input type="radio" name="option" id="option1">
+                        <label for="option1">₹500</label>
+                    </div>
+                    <div class="option" onclick="selectOption(2)">
+                        <input type="radio" name="option" id="option2">
+                        <label for="option2">₹550</label>
+                    </div>
+                    <div class="option" onclick="selectOption(3)">
+                        <input type="radio" name="option" id="option3">
+                        <label for="option3">₹600</label>
+                    </div>
+                    <div class="option" onclick="selectOption(4)">
+                        <input type="radio" name="option" id="option4">
+                        <label for="option4">₹650</label>
+                    </div>
+                </div>
+                
+                <div class="navigation">
+                    <button class="btn btn-prev" onclick="prevQuestion()">Previous</button>
+                    <div>
+                        <button class="btn btn-clear" onclick="clearResponse()">Clear Response</button>
+                        <button class="btn" onclick="markQuestion()">Mark for Review</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Next</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="question-palette">
+                    <div class="palette-title">Question Palette</div>
+                    <div class="question-grid" id="question-palette">
+                        <!-- Question buttons will be generated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color answered-color"></div>
+                        <span>Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color current-color"></div>
+                        <span>Current</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color marked-color"></div>
+                        <span>Marked</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color not-answered-color"></div>
+                        <span>Not Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color not-visited-color"></div>
+                        <span>Not Visited</span>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h3>Instructions</h3>
+                    <ul>
+                        <li>Total time for this test is 12 minutes.</li>
+                        <li>You can navigate between questions using Previous/Next buttons.</li>
+                        <li>Click on question number in palette to jump to that question.</li>
+                        <li>Use "Mark for Review" to flag questions you want to review later.</li>
+                        <li>Use "Clear Response" to remove your selected answer.</li>
+                        <li>Correct answer: +1 mark, Wrong answer: -0.33 mark</li>
+                    </ul>
+                </div>
+                
+                <div class="submit-section">
+                    <button class="btn btn-submit" onclick="showSubmitModal()">Submit Test</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav">
+            <div class="mobile-nav-buttons">
+                <div class="mobile-btn" onclick="prevQuestion()">Previous</div>
+                <div class="mobile-btn" onclick="nextQuestion()">Next</div>
+                <div class="mobile-btn" onclick="showSubmitModal()">Submit</div>
+            </div>
+        </div>
+        
+        <!-- Results Panel -->
+        <div class="result-panel" id="result-panel">
+            <div class="result-header">
+                <h2>Test Results</h2>
+                <p>You have successfully completed the mock test</p>
+            </div>
+            
+            <div class="result-stats">
+                <div class="stat-box">
+                    <div class="stat-value score" id="score-value">0</div>
+                    <div class="stat-label">Marks Obtained</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value rank" id="rank-value">0</div>
+                    <div class="stat-label">Rank</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value time-taken" id="time-taken">12:00</div>
+                    <div class="stat-label">Time Taken</div>
+                </div>
+            </div>
+            
+            <button class="btn btn-reattempt" onclick="showSolutionPanel()">View Solutions</button>
+            
+            <div class="solutions" id="solutions-container">
+                <!-- Solutions will be generated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Solution Panel (Testbook Style) -->
+        <div class="solution-panel" id="solution-panel">
+            <div class="solution-header">
+                <h2>Solutions</h2>
+                <p>Review your answers and understand the solutions</p>
+            </div>
+            
+            <div class="solution-language-selector">
+                <span>View solutions in:</span>
+                <select id="solution-language-select">
+                    <option value="english">English</option>
+                    <option value="hindi">हिन्दी (Hindi)</option>
+                    <option value="bengali">বাংলা (Bengali)</option>
+                    <option value="tamil">தமிழ் (Tamil)</option>
+                    <option value="telugu">తెలుగు (Telugu)</option>
+                </select>
+            </div>
+            
+            <div class="solution-controls">
+                <button class="btn btn-prev" onclick="prevSolutionQuestion()">Previous</button>
+                <button class="btn btn-next" onclick="nextSolutionQuestion()">Next</button>
+            </div>
+            
+            <div class="solution-question-panel">
+                <div class="question-number">Solution for Question <span id="solution-current-q">1</span> of 10</div>
+                <div class="question-text" id="solution-question-text">
+                    A man sells an article at a 12.5% profit. If he had sold it for ₹62.50 more, he would have gained 25%. What is the cost price of the article?
+                </div>
+                
+                <div class="solution-options" id="solution-options">
+                    <!-- Solution options will be generated by JavaScript -->
+                </div>
+                
+                <div class="solution-feedback" id="solution-feedback">
+                    <!-- Feedback will be shown here -->
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button class="btn btn-check-answer" onclick="checkSolutionAnswer()">Check Answer</button>
+                    <button class="btn btn-show-solution" onclick="toggleSolution()">Show Solution</button>
+                </div>
+                
+                <div class="solution-explanation" id="solution-explanation">
+                    <!-- Solution explanation will be generated by JavaScript -->
+                </div>
+            </div>
+            
+            <button class="btn btn-reattempt" onclick="restartTest()">Reattempt Test</button>
+        </div>
+        
+        <footer>
+            <p>© 2023 Railway Recruitment Board. This is a mock test interface for practice purposes.</p>
+        </footer>
+    </div>
+
+    <!-- Submit Confirmation Modal -->
+    <div class="modal" id="submit-modal">
+        <div class="modal-content">
+            <h2>Submit Test</h2>
+            <p>You have <span id="answered-count">0</span> out of 10 questions answered.</p>
+            <p>Are you sure you want to submit the test?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="hideSubmitModal()">Cancel</button>
+                <button class="modal-btn modal-btn-confirm" onclick="submitTest()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions data in multiple languages with solutions
+        const questions = {
+            english: [
+                {
+                    text: "A man sells an article at a 12.5% profit. If he had sold it for ₹62.50 more, he would have gained 25%. What is the cost price of the article?",
+                    options: ["₹500", "₹550", "₹600", "₹650"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Let the Cost Price (CP) be ₹x.</p>
+                        <p>Selling Price at 12.5% profit = x + 12.5% of x = 1.125x</p>
+                        <p>Selling Price for 25% profit = x + 25% of x = 1.25x</p>
+                        <p>The difference between these two SPs is ₹62.50</p>
+                        <p>So, 1.25x - 1.125x = 62.50</p>
+                        <p>0.125x = 62.50</p>
+                        <p>x = 62.50 / 0.125 = ₹500</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>The difference in profit percentages is 25% - 12.5% = 12.5%</p>
+                        <p>This 12.5% of CP equals ₹62.50</p>
+                        <p>Therefore, CP = (62.50 / 12.5) × 100 = ₹500</p>
+                        <p><strong>Answer: ₹500</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Profit and Loss"
+                },
+                {
+                    text: "Three pipes A, B, and C can fill a tank in 10, 15, and 18 hours respectively. Pipes A and B are opened for 4 hours, then closed. Pipe C is then opened alone. How much total time will it take to fill the tank?",
+                    options: ["8 hours", "9 hours", "10 hours", "12 hours"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Let the total work (capacity of tank) be LCM(10, 15, 18) = 90 units</p>
+                        <p>Efficiency of A = 90/10 = 9 units/hr</p>
+                        <p>Efficiency of B = 90/15 = 6 units/hr</p>
+                        <p>Efficiency of C = 90/18 = 5 units/hr</p>
+                        <p>Work done by A and B in 4 hours = (9+6) × 4 = 15 × 4 = 60 units</p>
+                        <p>Remaining work = 90 - 60 = 30 units</p>
+                        <p>Time taken by C to complete remaining work = 30 / 5 = 6 hours</p>
+                        <p><strong>Total time</strong> = 4 hours (A+B) + 6 hours (C) = 10 hours</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Calculate fractional work</p>
+                        <p>A+B in 1 hour = 1/10 + 1/15 = (3+2)/30 = 5/30 = 1/6</p>
+                        <p>In 4 hours, A+B complete 4/6 = 2/3 of the work</p>
+                        <p>Remaining work = 1 - 2/3 = 1/3</p>
+                        <p>C's rate = 1/18</p>
+                        <p>Time for C = (1/3) / (1/18) = 18/3 = 6 hours</p>
+                        <p>Total time = 4 + 6 = 10 hours</p>
+                        <p><strong>Answer: 10 hours</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Pipes and Cisterns"
+                },
+                {
+                    text: "If x = 2 + √3, then the value of x² + 1/x² is:",
+                    options: ["12", "14", "16", "18"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>x = 2 + √3</p>
+                        <p>1/x = 1/(2+√3). Rationalize the denominator: Multiply numerator and denominator by (2-√3)</p>
+                        <p>1/x = (2-√3) / ((2+√3)(2-√3)) = (2-√3) / (4-3) = 2-√3</p>
+                        <p>Now, x + 1/x = (2+√3) + (2-√3) = 4</p>
+                        <p>We know that x² + 1/x² = (x + 1/x)² - 2</p>
+                        <p>= (4)² - 2 = 16 - 2 = 14</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Recognize that x and 1/x are conjugates. Their sum is an integer (4). Squaring this sum and subtracting 2 gives the result directly: 16-2=14</p>
+                        <p><strong>Answer: 14</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Algebra"
+                },
+                {
+                    text: "The difference between the compound interest and simple interest on a certain sum for 2 years at 10% per annum is ₹125. What is the sum?",
+                    options: ["₹12,500", "₹13,000", "₹14,000", "₹15,000"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Let the principal sum be ₹P</p>
+                        <p>Rate (R) = 10%</p>
+                        <p>Time (n) = 2 years</p>
+                        <p>The difference between CI and SI for 2 years is given by: P × (R/100)²</p>
+                        <p>So, P × (10/100)² = 125</p>
+                        <p>P × (0.1)² = 125</p>
+                        <p>P × 0.01 = 125</p>
+                        <p>P = 125 / 0.01 = ₹12,500</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Direct formula: Difference = P × (R/100)². So, 125 = P × (10/100)² => 125 = P × 1/100 => P = ₹12,500</p>
+                        <p><strong>Answer: ₹12,500</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Simple and Compound Interest"
+                },
+                {
+                    text: "Two pipes A and B can fill a tank in 12 and 15 hours respectively. Pipe C can empty it in 10 hours. If all three pipes are opened simultaneously, and after 3 hours, pipes A and B are closed, how long will it take for C to empty the tank?",
+                    options: ["4.5 hours", "5 hours", "5.5 hours", "6 hours"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Let tank capacity = LCM(12,15,10) = 60 units</p>
+                        <p>A's rate = 5 units/hr, B's rate = 4 units/hr, C's rate = -6 units/hr</p>
+                        <p>Net rate when all are open = 5 + 4 - 6 = 3 units/hr</p>
+                        <p>In 3 hours, tank filled = 3 × 3 = 9 units</p>
+                        <p>Now, only C is open. Rate = -6 units/hr</p>
+                        <p>Time to empty 9 units = 9/6 = 1.5 hours</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Work done in first 3 hours = 3 × (1/12 + 1/15 - 1/10) = 3 × (5/60 + 4/60 - 6/60) = 3 × (3/60) = 9/60 = 3/20 of tank</p>
+                        <p>C's rate = 1/10 tank/hr. Time to empty (3/20) tank = (3/20) / (1/10) = (3/20) × (10/1) = 30/20 = 1.5 hours</p>
+                        <p><strong>Answer: 1.5 hours</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Pipes and Cisterns"
+                },
+                {
+                    text: "A number when divided by 5 leaves a remainder of 3. What is the remainder when the square of that number is divided by 5?",
+                    options: ["1", "2", "3", "4"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Let the number be N</p>
+                        <p>N = 5k + 3 (where k is an integer)</p>
+                        <p>N² = (5k+3)² = 25k² + 30k + 9 = 5(5k²+6k+1) + 4</p>
+                        <p>Thus, when N² is divided by 5, the remainder is 4</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Take a sample number that leaves remainder 3 when divided by 5, e.g., 8</p>
+                        <p>8² = 64. 64 ÷ 5 gives remainder 4</p>
+                        <p><strong>Answer: 4</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Number System"
+                },
+                {
+                    text: "The average weight of 20 students in a class is 45 kg. If the weight of the teacher is included, the average weight becomes 46 kg. What is the weight of the teacher?",
+                    options: ["60 kg", "62 kg", "64 kg", "66 kg"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Total weight of 20 students = 20 × 45 = 900 kg</p>
+                        <p>Let the teacher's weight be T kg</p>
+                        <p>Total weight of 20 students + teacher = 900 + T</p>
+                        <p>Average weight of 21 persons = (900 + T) / 21 = 46</p>
+                        <p>So, 900 + T = 46 × 21 = 966</p>
+                        <p>T = 966 - 900 = 66 kg</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>The teacher's weight is the previous average plus the increase multiplied by the new number of people</p>
+                        <p>Teacher's weight = Old Average + (Increase in Average × New Total)</p>
+                        <p>= 45 + (1 × 21) = 45 + 21 = 66 kg</p>
+                        <p><strong>Answer: 66 kg</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Average"
+                },
+                {
+                    text: "If 30% of A = 0.25 of B = 1/5 of C, then A:B:C is:",
+                    options: ["10:12:15", "12:15:10", "15:12:10", "10:15:12"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>30% of A = 0.30A</p>
+                        <p>0.25 of B = 0.25B</p>
+                        <p>1/5 of C = 0.20C</p>
+                        <p>So, 0.30A = 0.25B = 0.20C = k (say)</p>
+                        <p>Then, A = k / 0.30 = k / (3/10) = (10k)/3</p>
+                        <p>B = k / 0.25 = k / (1/4) = 4k</p>
+                        <p>C = k / 0.20 = k / (1/5) = 5k</p>
+                        <p>So, A:B:C = (10k/3) : 4k : 5k</p>
+                        <p>Multiply all terms by 3 to eliminate denominator: 10k : 12k : 15k</p>
+                        <p>Divide by k: 10:12:15</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Find LCM of the coefficients (0.30, 0.25, 0.20). It's easier to use fractions</p>
+                        <p>30% A = (3/10)A, 0.25B = (1/4)B, (1/5)C</p>
+                        <p>So, (3/10)A = (1/4)B = (1/5)C = k</p>
+                        <p>A = (10/3)k, B = 4k, C = 5k</p>
+                        <p>A:B:C = 10/3 : 4 : 5 = 10:12:15 (multiplying by 3)</p>
+                        <p><strong>Answer: 10:12:15</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Ratio and Proportion"
+                },
+                {
+                    text: "A train crosses a pole in 15 seconds and a platform 250 meters long in 40 seconds. What is the length of the train?",
+                    options: ["150 meters", "200 meters", "250 meters", "300 meters"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Let the length of the train be L meters</p>
+                        <p>Speed of train = Distance/Time</p>
+                        <p>When crossing a pole, distance = L. So, Speed = L/15 m/s</p>
+                        <p>When crossing a platform, distance = L + 250</p>
+                        <p>So, Speed = (L+250)/40 m/s</p>
+                        <p>Since speed is same:</p>
+                        <p>L/15 = (L+250)/40</p>
+                        <p>Cross-multiply: 40L = 15(L+250)</p>
+                        <p>40L = 15L + 3750</p>
+                        <p>25L = 3750</p>
+                        <p>L = 3750 / 25 = 150 meters</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>The train takes 40-15 = 25 seconds to cover the platform length (250m)</p>
+                        <p>So, speed = 250/25 = 10 m/s</p>
+                        <p>Length of train = Speed × Time to cross pole = 10 × 15 = 150 meters</p>
+                        <p><strong>Answer: 150 meters</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Time, Speed and Distance"
+                },
+                {
+                    text: "A man bought 50 pens for ₹1000. He sold 40 of them at a profit of 10%. At what profit percentage should he sell the remaining so that he makes an overall profit of 20%?",
+                    options: ["50%", "60%", "70%", "80%"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Cost Price (CP) of 50 pens = ₹1000</p>
+                        <p>Desired overall Selling Price (SP) for 20% profit = 1000 × 1.20 = ₹1200</p>
+                        <p>CP of 40 pens = (40/50) × 1000 = ₹800</p>
+                        <p>SP of 40 pens at 10% profit = 800 × 1.10 = ₹880</p>
+                        <p>CP of remaining 10 pens = (10/50) × 1000 = ₹200</p>
+                        <p>Let profit% on remaining 10 pens be P%</p>
+                        <p>SP of 10 pens = 200 × (1 + P/100)</p>
+                        <p>Total SP = SP of 40 pens + SP of 10 pens = 880 + 200(1+P/100) = 1200</p>
+                        <p>So, 880 + 200 + 2P = 1200 => 1080 + 2P = 1200 => 2P = 120 => P = 60%</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Use alligation on the profit percentages</p>
+                        <p>Overall profit needed = 20%</p>
+                        <p>Profit on first part (40 pens) = 10%</p>
+                        <p>Profit on second part (10 pens) = P%</p>
+                        <p>The ratio of quantities (costs) is 800:200 = 4:1</p>
+                        <p>So, 4/1 = (P - 20) / (20 - 10)</p>
+                        <p>4/1 = (P-20)/10</p>
+                        <p>40 = P-20</p>
+                        <p>P = 60%</p>
+                        <p><strong>Answer: 60%</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Profit and Loss"
+                }
+            ],
+            hindi: [
+                {
+                    text: "एक व्यक्ति एक वस्तु को 12.5% लाभ पर बेचता है। यदि उसने इसे ₹62.50 अधिक में बेचा होता, तो उसे 25% लाभ होता। वस्तु का क्रय मूल्य क्या है?",
+                    options: ["₹500", "₹550", "₹600", "₹650"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>मान लीजिए क्रय मूल्य (CP) ₹x है</p>
+                        <p>12.5% लाभ पर विक्रय मूल्य = x + 12.5% of x = 1.125x</p>
+                        <p>25% लाभ पर विक्रय मूल्य = x + 25% of x = 1.25x</p>
+                        <p>इन दोनों SP के बीच का अंतर ₹62.50 है</p>
+                        <p>तो, 1.25x - 1.125x = 62.50</p>
+                        <p>0.125x = 62.50</p>
+                        <p>x = 62.50 / 0.125 = ₹500</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>लाभ प्रतिशत में अंतर = 25% - 12.5% = 12.5%</p>
+                        <p>CP का यह 12.5% ₹62.50 के बराबर है</p>
+                        <p>इसलिए, CP = (62.50 / 12.5) × 100 = ₹500</p>
+                        <p><strong>उत्तर: ₹500</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Profit and Loss"
+                },
+                {
+                    text: "तीन पाइप A, B, और C एक टैंक को क्रमशः 10, 15, और 18 घंटे में भर सकते हैं। पाइप A और B को 4 घंटे के लिए खोला जाता है, फिर बंद कर दिया जाता है। इसके बाद पाइप C को अकेले खोला जाता है। टैंक को भरने में कुल कितना समय लगेगा?",
+                    options: ["8 घंटे", "9 घंटे", "10 घंटे", "12 घंटे"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>मान लीजिए कुल कार्य (टैंक की क्षमता) LCM(10, 15, 18) = 90 इकाई है</p>
+                        <p>A की दक्षता = 90/10 = 9 इकाई/घंटा</p>
+                        <p>B की दक्षता = 90/15 = 6 इकाई/घंटा</p>
+                        <p>C की दक्षता = 90/18 = 5 इकाई/घंटा</p>
+                        <p>4 घंटे में A और B द्वारा किया गया कार्य = (9+6) × 4 = 15 × 4 = 60 इकाई</p>
+                        <p>शेष कार्य = 90 - 60 = 30 इकाई</p>
+                        <p>शेष कार्य को पूरा करने में C द्वारा लिया गया समय = 30 / 5 = 6 घंटे</p>
+                        <p><strong>कुल समय</strong> = 4 घंटे (A+B) + 6 घंटे (C) = 10 घंटे</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>भिन्नात्मक कार्य की गणना करें</p>
+                        <p>1 घंटे में A+B = 1/10 + 1/15 = (3+2)/30 = 5/30 = 1/6</p>
+                        <p>4 घंटे में, A+B 4/6 = 2/3 कार्य पूरा करते हैं</p>
+                        <p>शेष कार्य = 1 - 2/3 = 1/3</p>
+                        <p>C की दर = 1/18</p>
+                        <p>C के लिए समय = (1/3) / (1/18) = 18/3 = 6 घंटे</p>
+                        <p>कुल समय = 4 + 6 = 10 घंटे</p>
+                        <p><strong>उत्तर: 10 घंटे</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Pipes and Cisterns"
+                },
+                {
+                    text: "यदि x = 2 + √3 है, तो x² + 1/x² का मान है:",
+                    options: ["12", "14", "16", "18"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>x = 2 + √3</p>
+                        <p>1/x = 1/(2+√3)। हर का परिमेयकरण करें: अंश और हर को (2-√3) से गुणा करें</p>
+                        <p>1/x = (2-√3) / ((2+√3)(2-√3)) = (2-√3) / (4-3) = 2-√3</p>
+                        <p>अब, x + 1/x = (2+√3) + (2-√3) = 4</p>
+                        <p>हम जानते हैं कि x² + 1/x² = (x + 1/x)² - 2</p>
+                        <p>= (4)² - 2 = 16 - 2 = 14</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>पहचानें कि x और 1/x संयुग्मी हैं। उनका योग एक पूर्णांक (4) है। इस योग का वर्ग करने और 2 घटाने से सीधे परिणाम मिलता है: 16-2=14</p>
+                        <p><strong>उत्तर: 14</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Algebra"
+                },
+                {
+                    text: "किसी निश्चित राशि पर 2 वर्षों के लिए 10% प्रति वर्ष की दर से चक्रवृद्धि ब्याज और साधारण ब्याज का अंतर ₹125 है। वह राशि क्या है?",
+                    options: ["₹12,500", "₹13,000", "₹14,000", "₹15,000"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>मान लीजिए मूल राशि ₹P है</p>
+                        <p>दर (R) = 10%</p>
+                        <p>समय (n) = 2 वर्ष</p>
+                        <p>2 वर्षों के लिए CI और SI के बीच का अंतर दिया गया है: P × (R/100)²</p>
+                        <p>तो, P × (10/100)² = 125</p>
+                        <p>P × (0.1)² = 125</p>
+                        <p>P × 0.01 = 125</p>
+                        <p>P = 125 / 0.01 = ₹12,500</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>सीधा सूत्र: अंतर = P × (R/100)²। तो, 125 = P × (10/100)² => 125 = P × 1/100 => P = ₹12,500</p>
+                        <p><strong>उत्तर: ₹12,500</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Simple and Compound Interest"
+                },
+                {
+                    text: "दो पाइप A और B एक टैंक को क्रमशः 12 और 15 घंटे में भर सकते हैं। पाइप C इसे 10 घंटे में खाली कर सकता है। यदि तीनों पाइपों को एक साथ खोला जाता है, और 3 घंटे के बाद, पाइप A और B को बंद कर दिया जाता है, तो C को टैंक खाली करने में कितना समय लगेगा?",
+                    options: ["4.5 घंटे", "5 घंटे", "5.5 घंटे", "6 घंटे"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>मान लीजिए टैंक की क्षमता = LCM(12,15,10) = 60 इकाई</p>
+                        <p>A की दर = 5 इकाई/घंटा, B की दर = 4 इकाई/घंटा, C की दर = -6 इकाई/घंटा</p>
+                        <p>जब सभी खुले होते हैं तो शुद्ध दर = 5 + 4 - 6 = 3 इकाई/घंटा</p>
+                        <p>3 घंटे में, टैंक भरा = 3 × 3 = 9 इकाई</p>
+                        <p>अब, केवल C खुला है। दर = -6 इकाई/घंटा</p>
+                        <p>9 इकाई खाली करने में समय = 9/6 = 1.5 घंटे</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>पहले 3 घंटे में किया गया कार्य = 3 × (1/12 + 1/15 - 1/10) = 3 × (5/60 + 4/60 - 6/60) = 3 × (3/60) = 9/60 = 3/20 टैंक</p>
+                        <p>C की दर = 1/10 टैंक/घंटा। (3/20) टैंक खाली करने का समय = (3/20) / (1/10) = (3/20) × (10/1) = 30/20 = 1.5 घंटे</p>
+                        <p><strong>उत्तर: 1.5 घंटे</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Pipes and Cisterns"
+                },
+                {
+                    text: "एक संख्या को 5 से विभाजित करने पर 3 शेष बचता है। यदि उस संख्या के वर्ग को 5 से विभाजित किया जाए, तो शेषफल क्या होगा?",
+                    options: ["1", "2", "3", "4"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>मान लीजिए संख्या N है</p>
+                        <p>N = 5k + 3 (जहाँ k एक पूर्णांक है)</p>
+                        <p>N² = (5k+3)² = 25k² + 30k + 9 = 5(5k²+6k+1) + 4</p>
+                        <p>इस प्रकार, जब N² को 5 से विभाजित किया जाता है, तो शेषफल 4 होता है</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>एक नमूना संख्या लें जो 5 से विभाजित करने पर 3 शेष देती है, उदाहरण के लिए, 8</p>
+                        <p>8² = 64। 64 ÷ 5 शेषफल 4 देता है</p>
+                        <p><strong>उत्तर: 4</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Number System"
+                },
+                {
+                    text: "एक कक्षा में 20 छात्रों का औसत वजन 45 किग्रा है। यदि शिक्षक का वजन शामिल किया जाता है, तो औसत वजन 46 किग्रा हो जाता है। शिक्षक का वजन क्या है?",
+                    options: ["60 किग्रा", "62 किग्रा", "64 किग्रा", "66 किग्रा"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>20 छात्रों का कुल वजन = 20 × 45 = 900 किग्रा</p>
+                        <p>मान लीजिए शिक्षक का वजन T किग्रा है</p>
+                        <p>20 छात्रों + शिक्षक का कुल वजन = 900 + T</p>
+                        <p>21 व्यक्तियों का औसत वजन = (900 + T) / 21 = 46</p>
+                        <p>तो, 900 + T = 46 × 21 = 966</p>
+                        <p>T = 966 - 900 = 66 किग्रा</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>शिक्षक का वजन पिछला औसत प्लस वृद्धि गुणा नई कुल संख्या है</p>
+                        <p>शिक्षक का वजन = पुराना औसत + (औसत में वृद्धि × नया कुल)</p>
+                        <p>= 45 + (1 × 21) = 45 + 21 = 66 किग्रा</p>
+                        <p><strong>उत्तर: 66 किग्रा</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Average"
+                },
+                {
+                    text: "यदि A का 30% = B का 0.25 = C का 1/5 है, तो A:B:C है:",
+                    options: ["10:12:15", "12:15:10", "15:12:10", "10:15:12"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>A का 30% = 0.30A</p>
+                        <p>B का 0.25 = 0.25B</p>
+                        <p>C का 1/5 = 0.20C</p>
+                        <p>तो, 0.30A = 0.25B = 0.20C = k (मान लीजिए)</p>
+                        <p>तब, A = k / 0.30 = k / (3/10) = (10k)/3</p>
+                        <p>B = k / 0.25 = k / (1/4) = 4k</p>
+                        <p>C = k / 0.20 = k / (1/5) = 5k</p>
+                        <p>तो, A:B:C = (10k/3) : 4k : 5k</p>
+                        <p>हर को हटाने के लिए सभी पदों को 3 से गुणा करें: 10k : 12k : 15k</p>
+                        <p>k से विभाजित करें: 10:12:15</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>गुणांकों (0.30, 0.25, 0.20) का LCM ज्ञात करें। भिन्नों का उपयोग करना आसान है</p>
+                        <p>30% A = (3/10)A, 0.25B = (1/4)B, (1/5)C</p>
+                        <p>तो, (3/10)A = (1/4)B = (1/5)C = k</p>
+                        <p>A = (10/3)k, B = 4k, C = 5k</p>
+                        <p>A:B:C = 10/3 : 4 : 5 = 10:12:15 (3 से गुणा करके)</p>
+                        <p><strong>उत्तर: 10:12:15</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Ratio and Proportion"
+                },
+                {
+                    text: "एक ट्रेन एक खंभे को 15 सेकंड में और 250 मीटर लंबे प्लेटफॉर्म को 40 सेकंड में पार करती है। ट्रेन की लंबाई कितनी है?",
+                    options: ["150 मीटर", "200 मीटर", "250 मीटर", "300 मीटर"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>मान लीजिए ट्रेन की लंबाई L मीटर है</p>
+                        <p>ट्रेन की गति = दूरी/समय</p>
+                        <p>खंभे को पार करते समय, दूरी = L। तो, गति = L/15 मीटर/सेकंड</p>
+                        <p>प्लेटफॉर्म को पार करते समय, दूरी = L + 250</p>
+                        <p>तो, गति = (L+250)/40 मीटर/सेकंड</p>
+                        <p>चूंकि गति समान है:</p>
+                        <p>L/15 = (L+250)/40</p>
+                        <p>क्रॉस-गुणा: 40L = 15(L+250)</p>
+                        <p>40L = 15L + 3750</p>
+                        <p>25L = 3750</p>
+                        <p>L = 3750 / 25 = 150 मीटर</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>ट्रेन को प्लेटफॉर्म की लंबाई (250m) को कवर करने में 40-15 = 25 सेकंड लगते हैं</p>
+                        <p>तो, गति = 250/25 = 10 मीटर/सेकंड</p>
+                        <p>ट्रेन की लंबाई = गति × खंभे को पार करने का समय = 10 × 15 = 150 मीटर</p>
+                        <p><strong>उत्तर: 150 मीटर</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Time, Speed and Distance"
+                },
+                {
+                    text: "एक आदमी ने ₹1000 में 50 पेन खरीदे। उसने उनमें से 40 को 10% लाभ पर बेच दिया। शेष पेन को उसे कितने प्रतिशत लाभ पर बेचना चाहिए ताकि उसे कुल मिलाकर 20% का लाभ हो?",
+                    options: ["50%", "60%", "70%", "80%"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>50 पेन का क्रय मूल्य (CP) = ₹1000</p>
+                        <p>20% लाभ के लिए वांछित कुल विक्रय मूल्य (SP) = 1000 × 1.20 = ₹1200</p>
+                        <p>40 पेन का CP = (40/50) × 1000 = ₹800</p>
+                        <p>10% लाभ पर 40 पेन का SP = 800 × 1.10 = ₹880</p>
+                        <p>शेष 10 पेन का CP = (10/50) × 1000 = ₹200</p>
+                        <p>मान लीजिए शेष 10 पेन पर लाभ% P% है</p>
+                        <p>10 पेन का SP = 200 × (1 + P/100)</p>
+                        <p>कुल SP = 40 पेन का SP + 10 पेन का SP = 880 + 200(1+P/100) = 1200</p>
+                        <p>तो, 880 + 200 + 2P = 1200 => 1080 + 2P = 1200 => 2P = 120 => P = 60%</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>लाभ प्रतिशत पर मिश्रण का उपयोग करें</p>
+                        <p>आवश्यक कुल लाभ = 20%</p>
+                        <p>पहले भाग (40 पेन) पर लाभ = 10%</p>
+                        <p>दूसरे भाग (10 पेन) पर लाभ = P%</p>
+                        <p>मात्राओं (लागतों) का अनुपात 800:200 = 4:1 है</p>
+                        <p>तो, 4/1 = (P - 20) / (20 - 10)</p>
+                        <p>4/1 = (P-20)/10</p>
+                        <p>40 = P-20</p>
+                        <p>P = 60%</p>
+                        <p><strong>उत्तर: 60%</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Profit and Loss"
+                }
+            ],
+            bengali: [
+                {
+                    text: "একজন ব্যক্তি একটি প্রবন্ধ 12.5% লাভে বিক্রি করেন। তিনি যদি এটি ₹62.50 বেশিতে বিক্রি করতেন, তবে তিনি 25% লাভ করতেন। প্রবন্ধটির ক্রয় মূল্য কত?",
+                    options: ["₹500", "₹550", "₹600", "₹650"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>ধরি ক্রয় মূল্য (CP) ₹x</p>
+                        <p>12.5% লাভে বিক্রয় মূল্য = x + 12.5% of x = 1.125x</p>
+                        <p>25% লাভে বিক্রয় মূল্য = x + 25% of x = 1.25x</p>
+                        <p>এই দুটি SP-এর মধ্যে পার্থক্য হল ₹62.50</p>
+                        <p>সুতরাং, 1.25x - 1.125x = 62.50</p>
+                        <p>0.125x = 62.50</p>
+                        <p>x = 62.50 / 0.125 = ₹500</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>লাভের শতাংশের পার্থক্য = 25% - 12.5% = 12.5%</p>
+                        <p>CP-এর এই 12.5% ₹62.50-এর সমান</p>
+                        <p>অতএব, CP = (62.50 / 12.5) × 100 = ₹500</p>
+                        <p><strong>উত্তর: ₹500</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Profit and Loss"
+                },
+                {
+                    text: "তিনটি পাইপ A, B, এবং C একটি ট্যাঙ্ক যথাক্রমে 10, 15, এবং 18 ঘন্টায় পূরণ করতে পারে। পাইপ A এবং B 4 ঘন্টার জন্য খোলা হয়, তারপর বন্ধ করা হয়। এরপর পাইপ C একা খোলা হয়। ট্যাঙ্কটি পূরণ করতে মোট কত সময় লাগবে?",
+                    options: ["8 ঘন্টা", "9 ঘন্টা", "10 ঘন্টা", "12 ঘন্টা"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>ধরি মোট কাজ (ট্যাঙ্কের ক্ষমতা) LCM(10, 15, 18) = 90 একক</p>
+                        <p>A-এর দক্ষতা = 90/10 = 9 একক/ঘন্টা</p>
+                        <p>B-এর দক্ষতা = 90/15 = 6 একক/ঘন্টা</p>
+                        <p>C-এর দক্ষতা = 90/18 = 5 একক/ঘন্টা</p>
+                        <p>4 ঘন্টায় A এবং B দ্বারা করা কাজ = (9+6) × 4 = 15 × 4 = 60 একক</p>
+                        <p>বাকি কাজ = 90 - 60 = 30 একক</p>
+                        <p>বাকি কাজ শেষ করতে C-এর সময় = 30 / 5 = 6 ঘন্টা</p>
+                        <p><strong>মোট সময়</strong> = 4 ঘন্টা (A+B) + 6 ঘন্টা (C) = 10 ঘন্টা</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>ভগ্নাংশের কাজ গণনা করুন</p>
+                        <p>1 ঘন্টায় A+B = 1/10 + 1/15 = (3+2)/30 = 5/30 = 1/6</p>
+                        <p>4 ঘন্টায়, A+B 4/6 = 2/3 কাজ সম্পূর্ণ করে</p>
+                        <p>বাকি কাজ = 1 - 2/3 = 1/3</p>
+                        <p>C-এর হার = 1/18</p>
+                        <p>C-এর জন্য সময় = (1/3) / (1/18) = 18/3 = 6 ঘন্টা</p>
+                        <p>মোট সময় = 4 + 6 = 10 ঘন্টা</p>
+                        <p><strong>উত্তর: 10 ঘন্টা</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Pipes and Cisterns"
+                },
+                {
+                    text: "যদি x = 2 + √3 হয়, তবে x² + 1/x² এর মান হল:",
+                    options: ["12", "14", "16", "18"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>x = 2 + √3</p>
+                        <p>1/x = 1/(2+√3)। হরকে যুক্তিযুক্ত করুন: লব এবং হরকে (2-√3) দিয়ে গুণ করুন</p>
+                        <p>1/x = (2-√3) / ((2+√3)(2-√3)) = (2-√3) / (4-3) = 2-√3</p>
+                        <p>এখন, x + 1/x = (2+√3) + (2-√3) = 4</p>
+                        <p>আমরা জানি যে x² + 1/x² = (x + 1/x)² - 2</p>
+                        <p>= (4)² - 2 = 16 - 2 = 14</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>চিনতে পারুন যে x এবং 1/x অনুবন্ধী। তাদের যোগফল একটি পূর্ণসংখ্যা (4)। এই যোগফলের বর্গ করে 2 বিয়োগ করলে সরাসরি ফলাফল পাওয়া যায়: 16-2=14</p>
+                        <p><strong>উত্তর: 14</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Algebra"
+                },
+                {
+                    text: "একটি নির্দিষ্ট অর্থের উপর 2 বছরের জন্য বার্ষিক 10% হারে চক্রবৃদ্ধি সুদ এবং সরল সুদের পার্থক্য হল ₹125। অর্থটির পরিমাণ কত?",
+                    options: ["₹12,500", "₹13,000", "₹14,000", "₹15,000"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>ধরি মূল অর্থ ₹P</p>
+                        <p>হার (R) = 10%</p>
+                        <p>সময় (n) = 2 বছর</p>
+                        <p>2 বছরের জন্য CI এবং SI-এর মধ্যে পার্থক্য দেওয়া হয়েছে: P × (R/100)²</p>
+                        <p>সুতরাং, P × (10/100)² = 125</p>
+                        <p>P × (0.1)² = 125</p>
+                        <p>P × 0.01 = 125</p>
+                        <p>P = 125 / 0.01 = ₹12,500</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>সরাসরি সূত্র: পার্থক্য = P × (R/100)²। সুতরাং, 125 = P × (10/100)² => 125 = P × 1/100 => P = ₹12,500</p>
+                        <p><strong>উত্তর: ₹12,500</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Simple and Compound Interest"
+                },
+                {
+                    text: "দুটি পাইপ A এবং B একটি ট্যাঙ্ক যথাক্রমে 12 এবং 15 ঘন্টায় পূরণ করতে পারে। পাইপ C এটি 10 ঘন্টায় খালি করতে পারে। যদি তিনটি পাইপ একসাথে খোলা হয়, এবং 3 ঘন্টা পরে, পাইপ A এবং B বন্ধ করা হয়, তবে C-এর ট্যাঙ্কটি খালি করতে কত সময় লাগবে?",
+                    options: ["4.5 ঘন্টা", "5 ঘন্টা", "5.5 ঘন্টা", "6 ঘন্টা"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>ধরি ট্যাঙ্কের ক্ষমতা = LCM(12,15,10) = 60 একক</p>
+                        <p>A-এর হার = 5 একক/ঘন্টা, B-এর হার = 4 একক/ঘন্টা, C-এর হার = -6 একক/ঘন্টা</p>
+                        <p>সব খোলা থাকলে মোট হার = 5 + 4 - 6 = 3 একক/ঘন্টা</p>
+                        <p>3 ঘন্টায়, ট্যাঙ্ক ভর্তি হয়েছে = 3 × 3 = 9 একক</p>
+                        <p>এখন, শুধুমাত্র C খোলা। হার = -6 একক/ঘন্টা</p>
+                        <p>9 একক খালি করতে সময় = 9/6 = 1.5 ঘন্টা</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>প্রথম 3 ঘন্টায় কাজ করা হয়েছে = 3 × (1/12 + 1/15 - 1/10) = 3 × (5/60 + 4/60 - 6/60) = 3 × (3/60) = 9/60 = 3/20 ট্যাঙ্ক</p>
+                        <p>C-এর হার = 1/10 ট্যাঙ্ক/ঘন্টা। (3/20) ট্যাঙ্ক খালি করতে সময় = (3/20) / (1/10) = (3/20) × (10/1) = 30/20 = 1.5 ঘন্টা</p>
+                        <p><strong>উত্তর: 1.5 ঘন্টা</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Pipes and Cisterns"
+                },
+                {
+                    text: "একটি সংখ্যাকে 5 দ্বারা ভাগ করলে 3 অবশিষ্ট থাকে। সেই সংখ্যাটির বর্গকে 5 দ্বারা ভাগ করলে অবশিষ্ট কত হবে?",
+                    options: ["1", "2", "3", "4"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>ধরি সংখ্যাটি N</p>
+                        <p>N = 5k + 3 (যেখানে k একটি পূর্ণসংখ্যা)</p>
+                        <p>N² = (5k+3)² = 25k² + 30k + 9 = 5(5k²+6k+1) + 4</p>
+                        <p>এইভাবে, যখন N² কে 5 দ্বারা ভাগ করা হয়, অবশিষ্ট থাকে 4</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>একটি নমুনা সংখ্যা নিন যা 5 দ্বারা ভাগ করলে 3 অবশিষ্ট দেয়, উদাহরণস্বরূপ, 8</p>
+                        <p>8² = 64। 64 ÷ 5 অবশিষ্ট দেয় 4</p>
+                        <p><strong>উত্তর: 4</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Number System"
+                },
+                {
+                    text: "একটি ক্লাসে 20 জন শিক্ষার্থীর গড় ওজন 45 কেজি। যদি শিক্ষকের ওজন অন্তর্ভুক্ত করা হয়, তবে গড় ওজন 46 কেজি হয়। শিক্ষকের ওজন কত?",
+                    options: ["60 কেজি", "62 কেজি", "64 কেজি", "66 কেজি"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>20 জন শিক্ষার্থীর মোট ওজন = 20 × 45 = 900 কেজি</p>
+                        <p>ধরি শিক্ষকের ওজন T কেজি</p>
+                        <p>20 জন শিক্ষার্থী + শিক্ষকের মোট ওজন = 900 + T</p>
+                        <p>21 জন ব্যক্তির গড় ওজন = (900 + T) / 21 = 46</p>
+                        <p>সুতরাং, 900 + T = 46 × 21 = 966</p>
+                        <p>T = 966 - 900 = 66 কেজি</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>শিক্ষকের ওজন হল পূর্বের গড় প্লাস বৃদ্ধি গুণন নতুন মোট সংখ্যা</p>
+                        <p>শিক্ষকের ওজন = পুরানো গড় + (গড়ে বৃদ্ধি × নতুন মোট)</p>
+                        <p>= 45 + (1 × 21) = 45 + 21 = 66 কেজি</p>
+                        <p><strong>উত্তর: 66 কেজি</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Average"
+                },
+                {
+                    text: "যদি A-এর 30% = B-এর 0.25 = C-এর 1/5 হয়, তবে A:B:C হল:",
+                    options: ["10:12:15", "12:15:10", "15:12:10", "10:15:12"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>A-এর 30% = 0.30A</p>
+                        <p>B-এর 0.25 = 0.25B</p>
+                        <p>C-এর 1/5 = 0.20C</p>
+                        <p>সুতরাং, 0.30A = 0.25B = 0.20C = k (ধরি)</p>
+                        <p>তাহলে, A = k / 0.30 = k / (3/10) = (10k)/3</p>
+                        <p>B = k / 0.25 = k / (1/4) = 4k</p>
+                        <p>C = k / 0.20 = k / (1/5) = 5k</p>
+                        <p>সুতরাং, A:B:C = (10k/3) : 4k : 5k</p>
+                        <p>হর অপসারণ করতে সমস্ত পদকে 3 দিয়ে গুণ করুন: 10k : 12k : 15k</p>
+                        <p>k দ্বারা ভাগ করুন: 10:12:15</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>গুণাঙ্কগুলির (0.30, 0.25, 0.20) LCM খুঁজুন। ভগ্নাংশ ব্যবহার করা সহজ</p>
+                        <p>30% A = (3/10)A, 0.25B = (1/4)B, (1/5)C</p>
+                        <p>সুতরাং, (3/10)A = (1/4)B = (1/5)C = k</p>
+                        <p>A = (10/3)k, B = 4k, C = 5k</p>
+                        <p>A:B:C = 10/3 : 4 : 5 = 10:12:15 (3 দিয়ে গুণ করে)</p>
+                        <p><strong>উত্তর: 10:12:15</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Ratio and Proportion"
+                },
+                {
+                    text: "একটি ট্রেন একটি খুঁটিকে 15 সেকেন্ডে এবং 250 মিটার লম্বা একটি প্ল্যাটফর্মকে 40 সেকেন্ডে অতিক্রম করে। ট্রেনটির দৈর্ঘ্য কত?",
+                    options: ["150 মিটার", "200 মিটার", "250 মিটার", "300 মিটার"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>ধরি ট্রেনের দৈর্ঘ্য L মিটার</p>
+                        <p>ট্রেনের গতি = দূরত্ব/সময়</p>
+                        <p>খুঁটি অতিক্রম করার সময়, দূরত্ব = L। সুতরাং, গতি = L/15 মিটার/সেকেন্ড</p>
+                        <p>প্ল্যাটফর্ম অতিক্রম করার সময়, দূরত্ব = L + 250</p>
+                        <p>সুতরাং, গতি = (L+250)/40 মিটার/সেকেন্ড</p>
+                        <p>যেহেতু গতি একই:</p>
+                        <p>L/15 = (L+250)/40</p>
+                        <p>ক্রস-গুণ: 40L = 15(L+250)</p>
+                        <p>40L = 15L + 3750</p>
+                        <p>25L = 3750</p>
+                        <p>L = 3750 / 25 = 150 মিটার</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>ট্রেনটি প্ল্যাটফর্মের দৈর্ঘ্য (250m) অতিক্রম করতে 40-15 = 25 সেকেন্ড সময় নেয়</p>
+                        <p>সুতরাং, গতি = 250/25 = 10 মিটার/সেকেন্ড</p>
+                        <p>ট্রেনের দৈর্ঘ্য = গতি × খুঁটি অতিক্রম করার সময় = 10 × 15 = 150 মিটার</p>
+                        <p><strong>উত্তর: 150 মিটার</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Time, Speed and Distance"
+                },
+                {
+                    text: "একজন ব্যক্তি ₹1000 তে 50টি কলম কিনলেন। তিনি সেগুলির মধ্যে 40টি 10% লাভে বিক্রি করলেন। বাকি কলমগুলি কত শতাংশ লাভে বিক্রি করলে তার সামগ্রিকভাবে 20% লাভ হবে?",
+                    options: ["50%", "60%", "70%", "80%"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>50টি কলমের ক্রয় মূল্য (CP) = ₹1000</p>
+                        <p>20% লাভের জন্য কাঙ্ক্ষিত সামগ্রিক বিক্রয় মূল্য (SP) = 1000 × 1.20 = ₹1200</p>
+                        <p>40টি কলমের CP = (40/50) × 1000 = ₹800</p>
+                        <p>10% লাভে 40টি কলমের SP = 800 × 1.10 = ₹880</p>
+                        <p>বাকি 10টি কলমের CP = (10/50) × 1000 = ₹200</p>
+                        <p>ধরি বাকি 10টি কলমে লাভ% P%</p>
+                        <p>10টি কলমের SP = 200 × (1 + P/100)</p>
+                        <p>মোট SP = 40টি কলমের SP + 10টি কলমের SP = 880 + 200(1+P/100) = 1200</p>
+                        <p>সুতরাং, 880 + 200 + 2P = 1200 => 1080 + 2P = 1200 => 2P = 120 => P = 60%</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>লাভের শতাংশে অ্যালিগেশন ব্যবহার করুন</p>
+                        <p>প্রয়োজনীয় সামগ্রিক লাভ = 20%</p>
+                        <p>প্রথম অংশে (40টি কলম) লাভ = 10%</p>
+                        <p>দ্বিতীয় অংশে (10টি কলম) লাভ = P%</p>
+                        <p>পরিমাণের (খরচের) অনুপাত 800:200 = 4:1</p>
+                        <p>সুতরাং, 4/1 = (P - 20) / (20 - 10)</p>
+                        <p>4/1 = (P-20)/10</p>
+                        <p>40 = P-20</p>
+                        <p>P = 60%</p>
+                        <p><strong>উত্তর: 60%</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Profit and Loss"
+                }
+            ]
+        };
+
+        // For other languages, we'll use English questions as fallback
+        questions.tamil = questions.english;
+        questions.telugu = questions.english;
+
+        let currentQuestion = 0;
+        let currentSolutionQuestion = 0;
+        let answers = new Array(10).fill(null);
+        let marked = new Array(10).fill(false);
+        let visited = new Array(10).fill(false);
+        let solutionAnswers = new Array(10).fill(null);
+        let timeLeft = 12 * 60; // 12 minutes in seconds
+        let currentLanguage = 'english';
+        let solutionLanguage = 'english';
+        let startTime = new Date();
+        
+        // Initialize question palette
+        function initQuestionPalette() {
+            const palette = document.getElementById('question-palette');
+            for (let i = 0; i < 10; i++) {
+                const btn = document.createElement('div');
+                btn.className = 'question-btn not-visited';
+                btn.textContent = i + 1;
+                btn.onclick = () => goToQuestion(i);
+                palette.appendChild(btn);
+            }
+            updateQuestionPalette();
+        }
+        
+        // Update question palette highlighting
+        function updateQuestionPalette() {
+            const buttons = document.querySelectorAll('.question-btn');
+            buttons.forEach((btn, index) => {
+                btn.className = 'question-btn';
+                
+                if (index === currentQuestion) {
+                    btn.classList.add('current');
+                } else if (answers[index] !== null) {
+                    btn.classList.add('answered');
+                } else if (marked[index]) {
+                    btn.classList.add('marked');
+                } else if (visited[index]) {
+                    btn.classList.add('not-answered');
+                } else {
+                    btn.classList.add('not-visited');
+                }
+            });
+        }
+        
+        // Go to specific question
+        function goToQuestion(index) {
+            currentQuestion = index;
+            visited[index] = true;
+            displayQuestion();
+            updateQuestionPalette();
+        }
+        
+        // Display current question
+        function displayQuestion() {
+            document.getElementById('current-q').textContent = currentQuestion + 1;
+            document.getElementById('question-text').textContent = questions[currentLanguage][currentQuestion].text;
+            
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                option.classList.remove('selected');
+                option.querySelector('label').textContent = questions[currentLanguage][currentQuestion].options[index];
+                
+                // Clear all radio buttons
+                option.querySelector('input').checked = false;
+            });
+            
+            // If answer exists for this question, select it
+            if (answers[currentQuestion] !== null) {
+                options[answers[currentQuestion]].classList.add('selected');
+                options[answers[currentQuestion]].querySelector('input').checked = true;
+            }
+        }
+        
+        // Select an option
+        function selectOption(optionIndex) {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex - 1].classList.add('selected');
+            options[optionIndex - 1].querySelector('input').checked = true;
+            
+            answers[currentQuestion] = optionIndex - 1;
+            updateQuestionPalette();
+        }
+        
+        // Clear response for current question
+        function clearResponse() {
+            answers[currentQuestion] = null;
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.classList.remove('selected');
+                option.querySelector('input').checked = false;
+            });
+            updateQuestionPalette();
+        }
+        
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestion < 9) {
+                currentQuestion++;
+                visited[currentQuestion] = true;
+                displayQuestion();
+                updateQuestionPalette();
+            }
+        }
+        
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                visited[currentQuestion] = true;
+                displayQuestion();
+                updateQuestionPalette();
+            }
+        }
+        
+        // Mark question for review
+        function markQuestion() {
+            marked[currentQuestion] = !marked[currentQuestion];
+            updateQuestionPalette();
+        }
+        
+        // Timer function
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            const timer = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    submitTest();
+                } else {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+        
+        // Change language
+        function changeLanguage() {
+            const languageSelect = document.getElementById('language-select');
+            currentLanguage = languageSelect.value;
+            displayQuestion();
+        }
+        
+        // Change solution language
+        function changeSolutionLanguage() {
+            const solutionLanguageSelect = document.getElementById('solution-language-select');
+            solutionLanguage = solutionLanguageSelect.value;
+            displaySolutionQuestion();
+        }
+        
+        // Show submit confirmation modal
+        function showSubmitModal() {
+            const answeredCount = answers.filter(answer => answer !== null).length;
+            document.getElementById('answered-count').textContent = answeredCount;
+            document.getElementById('submit-modal').style.display = 'flex';
+        }
+        
+        // Hide submit confirmation modal
+        function hideSubmitModal() {
+            document.getElementById('submit-modal').style.display = 'none';
+        }
+        
+        // Calculate score
+        function calculateScore() {
+            let score = 0;
+            for (let i = 0; i < 10; i++) {
+                if (answers[i] !== null) {
+                    if (answers[i] === questions[currentLanguage][i].correctAnswer) {
+                        score += 1;
+                    } else {
+                        score -= 1/3;
+                    }
+                }
+            }
+            return Math.max(0, score); // Ensure score is not negative
+        }
+        
+        // Calculate rank (simulated)
+        function calculateRank(score) {
+            // In a real application, this would be calculated based on other test takers
+            // For demo purposes, we'll use a simple formula
+            const maxScore = 10;
+            const percentile = (score / maxScore) * 100;
+            
+            if (percentile >= 90) return 1;
+            if (percentile >= 80) return Math.floor(Math.random() * 10) + 1;
+            if (percentile >= 70) return Math.floor(Math.random() * 50) + 11;
+            if (percentile >= 60) return Math.floor(Math.random() * 100) + 51;
+            if (percentile >= 50) return Math.floor(Math.random() * 200) + 151;
+            return Math.floor(Math.random() * 500) + 351;
+        }
+        
+        // Show solution panel (Testbook style)
+        function showSolutionPanel() {
+            document.getElementById('result-panel').style.display = 'none';
+            document.getElementById('solution-panel').style.display = 'block';
+            displaySolutionQuestion();
+        }
+        
+        // Display solution question
+        function displaySolutionQuestion() {
+            document.getElementById('solution-current-q').textContent = currentSolutionQuestion + 1;
+            document.getElementById('solution-question-text').textContent = questions[solutionLanguage][currentSolutionQuestion].text;
+            
+            const solutionOptions = document.getElementById('solution-options');
+            solutionOptions.innerHTML = '';
+            
+            questions[solutionLanguage][currentSolutionQuestion].options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'solution-option';
+                optionDiv.onclick = () => selectSolutionOption(index);
+                
+                // Highlight correct answer only if user has checked answer
+                if (solutionAnswers[currentSolutionQuestion] !== null && 
+                    index === questions[solutionLanguage][currentSolutionQuestion].correctAnswer) {
+                    optionDiv.classList.add('correct');
+                }
+                
+                // Highlight user's selection
+                if (solutionAnswers[currentSolutionQuestion] === index) {
+                    optionDiv.classList.add('selected');
+                }
+                
+                optionDiv.innerHTML = `
+                    <input type="radio" name="solution-option" id="solution-option${index+1}" ${solutionAnswers[currentSolutionQuestion] === index ? 'checked' : ''}>
+                    <label for="solution-option${index+1}">${option}</label>
+                `;
+                
+                solutionOptions.appendChild(optionDiv);
+            });
+            
+            // Set solution explanation
+            document.getElementById('solution-explanation').innerHTML = questions[solutionLanguage][currentSolutionQuestion].explanation;
+            
+            // Hide solution explanation initially
+            document.getElementById('solution-explanation').style.display = 'none';
+            
+            // Reset feedback
+            document.getElementById('solution-feedback').style.display = 'none';
+        }
+        
+        // Select an option in solution panel
+        function selectSolutionOption(optionIndex) {
+            const options = document.querySelectorAll('.solution-option');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            
+            solutionAnswers[currentSolutionQuestion] = optionIndex;
+            
+            // Update radio button
+            options.forEach((option, index) => {
+                option.querySelector('input').checked = (index === optionIndex);
+            });
+        }
+        
+        // Check answer in solution panel
+        function checkSolutionAnswer() {
+            if (solutionAnswers[currentSolutionQuestion] === null) {
+                alert('Please select an option first');
+                return;
+            }
+            
+            const options = document.querySelectorAll('.solution-option');
+            const correctIndex = questions[solutionLanguage][currentSolutionQuestion].correctAnswer;
+            const feedback = document.getElementById('solution-feedback');
+            
+            // Highlight correct answer
+            options[correctIndex].classList.add('correct');
+            
+            // Show feedback
+            if (solutionAnswers[currentSolutionQuestion] === correctIndex) {
+                feedback.textContent = 'Correct! Well done.';
+                feedback.className = 'solution-feedback feedback-correct';
+            } else {
+                feedback.textContent = 'Incorrect. The correct answer is highlighted in green.';
+                feedback.className = 'solution-feedback feedback-incorrect';
+            }
+            
+            feedback.style.display = 'block';
+        }
+        
+        // Toggle solution visibility
+        function toggleSolution() {
+            const explanation = document.getElementById('solution-explanation');
+            const button = document.querySelector('.btn-show-solution');
+            
+            if (explanation.style.display === 'none') {
+                explanation.style.display = 'block';
+                button.textContent = 'Hide Solution';
+            } else {
+                explanation.style.display = 'none';
+                button.textContent = 'Show Solution';
+            }
+        }
+        
+        // Navigate to next solution question
+        function nextSolutionQuestion() {
+            if (currentSolutionQuestion < 9) {
+                currentSolutionQuestion++;
+                displaySolutionQuestion();
+            }
+        }
+        
+        // Navigate to previous solution question
+        function prevSolutionQuestion() {
+            if (currentSolutionQuestion > 0) {
+                currentSolutionQuestion--;
+                displaySolutionQuestion();
+            }
+        }
+        
+        // Restart test
+        function restartTest() {
+            // Reset all variables
+            currentQuestion = 0;
+            currentSolutionQuestion = 0;
+            answers = new Array(10).fill(null);
+            solutionAnswers = new Array(10).fill(null);
+            marked = new Array(10).fill(false);
+            visited = new Array(10).fill(false);
+            timeLeft = 12 * 60;
+            startTime = new Date();
+            
+            // Hide solution panel and show main content
+            document.getElementById('solution-panel').style.display = 'none';
+            document.getElementById('result-panel').style.display = 'none';
+            document.querySelector('.main-content').style.display = 'flex';
+            document.querySelector('.mobile-nav').style.display = 'block';
+            
+            // Reset question palette and display
+            updateQuestionPalette();
+            displayQuestion();
+            startTimer();
+        }
+        
+        // Submit test
+        function submitTest() {
+            // Calculate time taken
+            const endTime = new Date();
+            const timeTaken = Math.floor((endTime - startTime) / 1000);
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            const timeTakenStr = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            // Calculate score and rank
+            const score = calculateScore();
+            const rank = calculateRank(score);
+            
+            // Display results
+            document.getElementById('score-value').textContent = score.toFixed(2);
+            document.getElementById('rank-value').textContent = rank;
+            document.getElementById('time-taken').textContent = timeTakenStr;
+            
+            // Show result panel and hide question panel
+            document.getElementById('result-panel').style.display = 'block';
+            document.querySelector('.main-content').style.display = 'none';
+            document.querySelector('.mobile-nav').style.display = 'none';
+            
+            hideSubmitModal();
+        }
+        
+        // Initialize the test
+        window.onload = function() {
+            initQuestionPalette();
+            displayQuestion();
+            startTimer();
+            
+            // Add event listener for language change
+            document.getElementById('language-select').addEventListener('change', changeLanguage);
+            
+            // Add event listener for solution language change
+            document.getElementById('solution-language-select').addEventListener('change', changeSolutionLanguage);
+        };
+    </script>
+</body>
+</html>
