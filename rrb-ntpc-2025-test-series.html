@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-23LSZJ3WYJ');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RRB NTPC 2025 Test Series</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-blue: #1a2a6c;
+            --primary-red: #b21f1f;
+            --primary-yellow: #fdbb2d;
+            --accent-purple: #6a11cb;
+            --accent-teal: #08aeea;
+            --accent-green: #00b09b;
+            --accent-orange: #ff7e5f;
+            --accent-pink: #ff6b9d;
+            --accent-indigo: #4a00e0;
+            --accent-cyan: #00d2ff;
+            --accent-lime: #a8ff78;
+            --accent-magenta: #ff00cc;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-red), var(--primary-yellow));
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 30px 0;
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        h1 {
+            color: white;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            color: #ffeb3b;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        /* Section Styles */
+        section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.8s ease-out;
+        }
+        
+        h2 {
+            color: var(--primary-blue);
+            border-bottom: 3px solid var(--primary-yellow);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2 i {
+            color: var(--primary-red);
+        }
+        
+        /* Test Card Styles */
+        .test-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .test-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid var(--primary-blue);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .test-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary-blue);
+        }
+        
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .test-card:nth-child(2n) {
+            border-left-color: var(--primary-red);
+        }
+        
+        .test-card:nth-child(2n)::before {
+            background: var(--primary-red);
+        }
+        
+        .test-card:nth-child(3n) {
+            border-left-color: var(--primary-yellow);
+        }
+        
+        .test-card:nth-child(3n)::before {
+            background: var(--primary-yellow);
+        }
+        
+        .test-card h3 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .test-details {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .test-details span {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .start-btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary-blue), var(--primary-red));
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .start-btn:hover {
+            background: linear-gradient(to right, var(--primary-red), var(--primary-blue));
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Full Mock Test Section */
+        .full-mock {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-indigo), var(--accent-magenta));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .full-mock::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: pulse 8s infinite linear;
+        }
+        
+        .full-mock h2 {
+            color: white;
+            border-bottom: 3px solid var(--primary-yellow);
+            position: relative;
+        }
+        
+        .full-mock-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-left: 5px solid;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: glow 2s infinite alternate;
+        }
+        
+        .full-mock-card::before {
+            display: none;
+        }
+        
+        .full-mock-card h3 {
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .full-mock-card .test-details {
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        .full-mock-card .test-details span {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: bounce 2s infinite;
+        }
+        
+        .full-mock-card .start-btn {
+            background: linear-gradient(to right, var(--primary-yellow), var(--accent-orange));
+            color: var(--primary-blue);
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .full-mock-card .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .full-mock-card .start-btn:hover::before {
+            left: 100%;
+        }
+        
+        .full-mock-card .start-btn:hover {
+            background: linear-gradient(to right, var(--accent-orange), var(--primary-yellow));
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Color variations for full mock tests */
+        .full-mock-card:nth-child(1) {
+            border-left-color: var(--accent-cyan);
+            animation-delay: 0.1s;
+        }
+        
+        .full-mock-card:nth-child(2) {
+            border-left-color: var(--accent-pink);
+            animation-delay: 0.2s;
+        }
+        
+        .full-mock-card:nth-child(3) {
+            border-left-color: var(--accent-green);
+            animation-delay: 0.3s;
+        }
+        
+        .full-mock-card:nth-child(4) {
+            border-left-color: var(--accent-orange);
+            animation-delay: 0.4s;
+        }
+        
+        .full-mock-card:nth-child(5) {
+            border-left-color: var(--accent-teal);
+            animation-delay: 0.5s;
+        }
+        
+        .full-mock-card:nth-child(6) {
+            border-left-color: var(--accent-purple);
+            animation-delay: 0.6s;
+        }
+        
+        .full-mock-card:nth-child(7) {
+            border-left-color: var(--primary-yellow);
+            animation-delay: 0.7s;
+        }
+        
+        .full-mock-card:nth-child(8) {
+            border-left-color: var(--accent-indigo);
+            animation-delay: 0.8s;
+        }
+        
+        .full-mock-card:nth-child(9) {
+            border-left-color: var(--accent-lime);
+            animation-delay: 0.9s;
+        }
+        
+        .full-mock-card:nth-child(10) {
+            border-left-color: var(--accent-magenta);
+            animation-delay: 1s;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(255,255,255,0.2);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(255,255,255,0.4);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-3px);
+            }
+        }
+        
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                transform: translateX(-5px);
+            }
+            20%, 40%, 60%, 80% {
+                transform: translateX(5px);
+            }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .shaking {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        /* Progress Tracker */
+        .progress-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .progress-bar {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            width: 100%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        .progress-step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .progress-step.active {
+            background: var(--primary-yellow);
+            transform: scale(1.2);
+        }
+        
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .test-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: 15px;
+            }
+            
+            .progress-container {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .progress-bar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RRB NTPC 2025 Test Series</h1>
+            <p class="subtitle">Comprehensive Practice Tests for Railway Recruitment Board Non-Technical Popular Categories Exam</p>
+            
+            <!-- Progress Tracker -->
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+                <div class="progress-step active">1</div>
+                <div class="progress-step">2</div>
+                <div class="progress-step">3</div>
+                <div class="progress-step">4</div>
+                <div class="progress-step">5</div>
+            </div>
+        </header>
+        
+        <section id="mathematics">
+            <h2><i class="fas fa-calculator"></i> Mathematics Mock Tests</h2>
+            <p>Practice with 10 specialized tests focusing on quantitative aptitude and numerical ability.</p>
+            <div class="test-cards">
+                <!-- Mathematics Test 1 -->
+                <div class="test-card">
+                    <h3>Mathematics Mock Test 1</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="math1-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <!-- Mathematics Test 2 -->
+                <div class="test-card">
+                    <h3>Mathematics Mock Test 2</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="math2-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <!-- Repeat for Mathematics Tests 3-10 -->
+                <div class="test-card">
+                    <h3>Mathematics Mock Test 3</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="math3-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Mathematics Mock Test 4</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="math4-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Mathematics Mock Test 5</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="math5-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Mathematics Mock Test 6</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="math6-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Mathematics Mock Test 7</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="math7-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Mathematics Mock Test 8</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="math8-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Mathematics Mock Test 9</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="math9-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Mathematics Mock Test 10</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="math10-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="reasoning">
+            <h2><i class="fas fa-brain"></i> General Intelligence & Reasoning Mock Tests</h2>
+            <p>Enhance your logical thinking and analytical skills with these reasoning tests.</p>
+            <div class="test-cards">
+                <!-- Reasoning Tests 1-10 -->
+                <div class="test-card">
+                    <h3>Reasoning Mock Test 1</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="reasoning1-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Reasoning Mock Test 2</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="reasoning2-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <!-- Add remaining 8 reasoning tests following the same pattern -->
+                <div class="test-card">
+                    <h3>Reasoning Mock Test 3</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="reasoning3-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Reasoning Mock Test 4</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="reasoning4-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Reasoning Mock Test 5</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="reasoning5-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Reasoning Mock Test 6</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="reasoning6-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Reasoning Mock Test 7</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="reasoning7-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Reasoning Mock Test 8</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="reasoning8-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Reasoning Mock Test 9</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="reasoning9-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Reasoning Mock Test 10</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>12 Minutes</span>
+                    </div>
+                    <a href="reasoning10-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="science">
+            <h2><i class="fas fa-flask"></i> General Science Mock Tests</h2>
+            <p>Test your knowledge of physics, chemistry, and biology with these quick tests.</p>
+            <div class="test-cards">
+                <!-- Science Tests 1-10 -->
+                <div class="test-card">
+                    <h3>Science Mock Test 1</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="science1-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Science Mock Test 2</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="science2-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <!-- Add remaining 8 science tests following the same pattern -->
+                <div class="test-card">
+                    <h3>Science Mock Test 3</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="science3-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Science Mock Test 4</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="science4-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Science Mock Test 5</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="science5-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Science Mock Test 6</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="science6-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Science Mock Test 7</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="science7-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Science Mock Test 8</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="science8-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Science Mock Test 9</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="science9-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Science Mock Test 10</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="science10-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="awareness">
+            <h2><i class="fas fa-globe"></i> General Awareness Mock Tests</h2>
+            <p>Stay updated with current affairs and general knowledge with these tests.</p>
+            <div class="test-cards">
+                <!-- Awareness Tests 1-10 -->
+                <div class="test-card">
+                    <h3>Awareness Mock Test 1</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="awareness1-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Awareness Mock Test 2</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="awareness2-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <!-- Add remaining 8 awareness tests following the same pattern -->
+                <div class="test-card">
+                    <h3>Awareness Mock Test 3</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="awareness3-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Awareness Mock Test 4</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="awareness4-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Awareness Mock Test 5</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="awareness5-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Awareness Mock Test 6</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="awareness6-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Awareness Mock Test 7</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="awareness7-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Awareness Mock Test 8</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="awareness8-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Awareness Mock Test 9</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="awareness9-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Awareness Mock Test 10</h3>
+                    <div class="test-details">
+                        <span>10 Questions</span>
+                        <span>10 Marks</span>
+                        <span>6 Minutes</span>
+                    </div>
+                    <a href="awareness10-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="full-mock" class="full-mock">
+            <div class="particles" id="particles-container"></div>
+            <h2><i class="fas fa-star floating"></i> Full Mock Tests</h2>
+            <p>Simulate the actual exam experience with comprehensive full-length tests.</p>
+            <div class="test-cards">
+                <!-- Full Mock Tests 1-10 -->
+                <div class="test-card full-mock-card">
+                    <h3>Full Mock Test 1</h3>
+                    <div class="test-details">
+                        <span>100 Questions</span>
+                        <span>100 Marks</span>
+                        <span>90 Minutes</span>
+                    </div>
+                    <a href="fullmock1-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card full-mock-card">
+                    <h3>Full Mock Test 2</h3>
+                    <div class="test-details">
+                        <span>100 Questions</span>
+                        <span>100 Marks</span>
+                        <span>90 Minutes</span>
+                    </div>
+                    <a href="fullmock2-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card full-mock-card">
+                    <h3>Full Mock Test 3</h3>
+                    <div class="test-details">
+                        <span>100 Questions</span>
+                        <span>100 Marks</span>
+                        <span>90 Minutes</span>
+                    </div>
+                    <a href="fullmock3-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card full-mock-card">
+                    <h3>Full Mock Test 4</h3>
+                    <div class="test-details">
+                        <span>100 Questions</span>
+                        <span>100 Marks</span>
+                        <span>90 Minutes</span>
+                    </div>
+                    <a href="fullmock4-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card full-mock-card">
+                    <h3>Full Mock Test 5</h3>
+                    <div class="test-details">
+                        <span>100 Questions</span>
+                        <span>100 Marks</span>
+                        <span>90 Minutes</span>
+                    </div>
+                    <a href="fullmock5-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card full-mock-card">
+                    <h3>Full Mock Test 6</h3>
+                    <div class="test-details">
+                        <span>100 Questions</span>
+                        <span>100 Marks</span>
+                        <span>90 Minutes</span>
+                    </div>
+                    <a href="fullmock6-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card full-mock-card">
+                    <h3>Full Mock Test 7</h3>
+                    <div class="test-details">
+                        <span>100 Questions</span>
+                        <span>100 Marks</span>
+                        <span>90 Minutes</span>
+                    </div>
+                    <a href="fullmock7-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card full-mock-card">
+                    <h3>Full Mock Test 8</h3>
+                    <div class="test-details">
+                        <span>100 Questions</span>
+                        <span>100 Marks</span>
+                        <span>90 Minutes</span>
+                    </div>
+                    <a href="fullmock8-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card full-mock-card">
+                    <h3>Full Mock Test 9</h3>
+                    <div class="test-details">
+                        <span>100 Questions</span>
+                        <span>100 Marks</span>
+                        <span>90 Minutes</span>
+                    </div>
+                    <a href="fullmock9-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+                
+                <div class="test-card full-mock-card">
+                    <h3>Full Mock Test 10</h3>
+                    <div class="test-details">
+                        <span>100 Questions</span>
+                        <span>100 Marks</span>
+                        <span>90 Minutes</span>
+                    </div>
+                    <a href="fullmock10-rrb-ntpc.html" class="start-btn">Start Now</a>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>© 2025 RRB NTPC Test Series. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effect delay for cards
+            const cards = document.querySelectorAll('.test-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transition = 'all 0.3s ease';
+                });
+            });
+            
+            // Add staggered animation for cards
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'slideUp 0.6s ease-out forwards';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all test cards
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                observer.observe(card);
+            });
+            
+            // Progress step animation
+            const progressSteps = document.querySelectorAll('.progress-step');
+            let currentStep = 0;
+            
+            function updateProgress() {
+                progressSteps.forEach((step, index) => {
+                    if (index === currentStep) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+                
+                currentStep = (currentStep + 1) % progressSteps.length;
+            }
+            
+            // Change progress step every 3 seconds
+            setInterval(updateProgress, 3000);
+            
+            // Create floating particles
+            const particlesContainer = document.getElementById('particles-container');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random position
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                
+                // Random size
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Random animation delay
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                
+                // Random animation duration
+                particle.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Add shake animation to full mock cards on hover
+            const fullMockCards = document.querySelectorAll('.full-mock-card');
+            fullMockCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.classList.add('shaking');
+                });
+                
+                card.addEventListener('animationend', function() {
+                    this.classList.remove('shaking');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
