@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-23LSZJ3WYJ');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RRB NTPC Mock Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 15px 0;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .timer-container {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .time-left {
+            margin-right: 10px;
+            font-size: 16px;
+            font-weight: normal;
+        }
+        
+        .timer {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            display: flex;
+            margin-top: 20px;
+            gap: 20px;
+        }
+        
+        .question-panel {
+            flex: 3;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            position: relative;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .question-number {
+            font-size: 18px;
+            color: #2a5298;
+            font-weight: 600;
+        }
+        
+        .language-selector {
+            display: flex;
+            align-items: center;
+        }
+        
+        .language-selector select {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: #333;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .question-text {
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .options {
+            margin-bottom: 25px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #edf2ff;
+            border-color: #2a5298;
+        }
+        
+        .option.selected {
+            background-color: #e3ecff;
+            border-color: #2a5298;
+        }
+        
+        .option.correct {
+            background-color: #e8f5e9;
+            border-color: #4CAF50;
+        }
+        
+        .option.incorrect {
+            background-color: #ffebee;
+            border-color: #f44336;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .btn-prev {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-clear {
+            background-color: #ff6b6b;
+            color: white;
+        }
+        
+        .btn-next {
+            background-color: #2a5298;
+            color: white;
+        }
+        
+        .btn-submit {
+            background-color: #28a745;
+            color: white;
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            font-size: 16px;
+        }
+        
+        .btn-reattempt {
+            background-color: #2a5298;
+            color: white;
+            padding: 12px 30px;
+            font-size: 16px;
+            margin: 20px auto;
+            display: block;
+        }
+        
+        .btn-show-solution {
+            background-color: #FF9800;
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .btn-check-answer {
+            background-color: #2196F3;
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .sidebar {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        .question-palette {
+            margin-bottom: 20px;
+        }
+        
+        .palette-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2a5298;
+        }
+        
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+        
+        .question-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .question-btn.answered {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+        
+        .question-btn.current {
+            background-color: #2a5298;
+            color: white;
+            border-color: #2a5298;
+        }
+        
+        .question-btn.marked {
+            background-color: #FF9800;
+            color: white;
+            border-color: #FF9800;
+        }
+        
+        .question-btn.not-answered {
+            background-color: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+        
+        .question-btn.not-visited {
+            background-color: white;
+            color: #333;
+            border-color: #ddd;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+        
+        .answered-color {
+            background-color: #4CAF50;
+        }
+        
+        .current-color {
+            background-color: #2a5298;
+        }
+        
+        .marked-color {
+            background-color: #FF9800;
+        }
+        
+        .not-answered-color {
+            background-color: #f44336;
+        }
+        
+        .not-visited-color {
+            background-color: white;
+            border: 1px solid #ddd;
+        }
+        
+        .instructions {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .instructions h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #2a5298;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+            font-size: 14px;
+        }
+        
+        .instructions li {
+            margin-bottom: 5px;
+        }
+        
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 0 0 8px 8px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .submit-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .result-panel {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-top: 20px;
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2a5298;
+        }
+        
+        .result-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            width: 30%;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .score {
+            color: #2a5298;
+        }
+        
+        .rank {
+            color: #FF9800;
+        }
+        
+        .time-taken {
+            color: #4CAF50;
+        }
+        
+        .solutions {
+            margin-top: 30px;
+        }
+        
+        .solution-item {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        
+        .solution-question {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .solution-answer {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .correct-answer {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .solution-explanation {
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            font-size: 14px;
+            line-height: 1.6;
+            display: none;
+        }
+        
+        .solution-explanation h4 {
+            color: #2a5298;
+            margin-bottom: 10px;
+        }
+        
+        .solution-explanation p {
+            margin-bottom: 10px;
+        }
+        
+        .solution-explanation ul {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .solution-explanation li {
+            margin-bottom: 5px;
+        }
+        
+        .solution-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ddd;
+        }
+        
+        .solution-stat {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .solution-stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .solution-stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .mobile-nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .mobile-btn {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            text-align: center;
+            background-color: #2a5298;
+            color: white;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                margin-bottom: 70px;
+            }
+            
+            .question-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .result-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-box {
+                width: 80%;
+                margin-bottom: 15px;
+            }
+            
+            .timer-container {
+                margin-top: 10px;
+            }
+            
+            .mobile-nav {
+                display: block;
+            }
+            
+            .navigation {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .navigation > div {
+                display: flex;
+                gap: 10px;
+            }
+            
+            .btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .solution-language-selector {
+                margin-top: 10px;
+            }
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        .modal h2 {
+            color: #2a5298;
+            margin-bottom: 15px;
+        }
+        
+        .modal p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .modal-btn-cancel {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .modal-btn-confirm {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        /* Testbook Style Solution Panel */
+        .solution-panel {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-top: 20px;
+        }
+        
+        .solution-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2a5298;
+        }
+        
+        .solution-language-selector {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        .solution-language-selector select {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: #333;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .solution-question-panel {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .solution-options {
+            margin-bottom: 25px;
+        }
+        
+        .solution-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .solution-option:hover {
+            background-color: #edf2ff;
+            border-color: #2a5298;
+        }
+        
+        .solution-option.selected {
+            background-color: #e3ecff;
+            border-color: #2a5298;
+        }
+        
+        .solution-option.correct {
+            background-color: #e8f5e9;
+            border-color: #4CAF50;
+        }
+        
+        .solution-option.incorrect {
+            background-color: #ffebee;
+            border-color: #f44336;
+        }
+        
+        .solution-option input {
+            margin-right: 10px;
+        }
+        
+        .solution-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .solution-feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .feedback-correct {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #4CAF50;
+        }
+        
+        .feedback-incorrect {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <!-- Placeholder for logo -->
+                    <div style="width: 50px; height: 50px; background-color: white; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #2a5298; font-weight: bold;">RRB</div>
+                    <h1>RRB NTPC Mock Test</h1>
+                </div>
+                <div class="timer-container">
+                    <span class="time-left">Time Left:</span>
+                    <div class="timer" id="timer">12:00</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="question-panel">
+                <div class="question-header">
+                    <div class="question-number">Question <span id="current-q">1</span> of 10</div>
+                    <div class="language-selector">
+                        <select id="language-select">
+                            <option value="english">English</option>
+                            <option value="hindi">हिन्दी (Hindi)</option>
+                            <option value="bengali">বাংলা (Bengali)</option>
+                            <option value="tamil">தமிழ் (Tamil)</option>
+                            <option value="telugu">తెలుగు (Telugu)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="question-text" id="question-text">
+                    A merchant marks his goods at 50% above the cost price but allows a discount of 20% for cash payment. If he also uses a faulty weight which is 20% less than the marked weight, what is his net profit percentage?
+                </div>
+                
+                <div class="options">
+                    <div class="option" onclick="selectOption(1)">
+                        <input type="radio" name="option" id="option1">
+                        <label for="option1">40%</label>
+                    </div>
+                    <div class="option" onclick="selectOption(2)">
+                        <input type="radio" name="option" id="option2">
+                        <label for="option2">45%</label>
+                    </div>
+                    <div class="option" onclick="selectOption(3)">
+                        <input type="radio" name="option" id="option3">
+                        <label for="option3">50%</label>
+                    </div>
+                    <div class="option" onclick="selectOption(4)">
+                        <input type="radio" name="option" id="option4">
+                        <label for="option4">55%</label>
+                    </div>
+                </div>
+                
+                <div class="navigation">
+                    <button class="btn btn-prev" onclick="prevQuestion()">Previous</button>
+                    <div>
+                        <button class="btn btn-clear" onclick="clearResponse()">Clear Response</button>
+                        <button class="btn" onclick="markQuestion()">Mark for Review</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Next</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="question-palette">
+                    <div class="palette-title">Question Palette</div>
+                    <div class="question-grid" id="question-palette">
+                        <!-- Question buttons will be generated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color answered-color"></div>
+                        <span>Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color current-color"></div>
+                        <span>Current</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color marked-color"></div>
+                        <span>Marked</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color not-answered-color"></div>
+                        <span>Not Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color not-visited-color"></div>
+                        <span>Not Visited</span>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h3>Instructions</h3>
+                    <ul>
+                        <li>Total time for this test is 12 minutes.</li>
+                        <li>You can navigate between questions using Previous/Next buttons.</li>
+                        <li>Click on question number in palette to jump to that question.</li>
+                        <li>Use "Mark for Review" to flag questions you want to review later.</li>
+                        <li>Use "Clear Response" to remove your selected answer.</li>
+                        <li>Correct answer: +1 mark, Wrong answer: -0.33 mark</li>
+                    </ul>
+                </div>
+                
+                <div class="submit-section">
+                    <button class="btn btn-submit" onclick="showSubmitModal()">Submit Test</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav">
+            <div class="mobile-nav-buttons">
+                <div class="mobile-btn" onclick="prevQuestion()">Previous</div>
+                <div class="mobile-btn" onclick="nextQuestion()">Next</div>
+                <div class="mobile-btn" onclick="showSubmitModal()">Submit</div>
+            </div>
+        </div>
+        
+        <!-- Results Panel -->
+        <div class="result-panel" id="result-panel">
+            <div class="result-header">
+                <h2>Test Results</h2>
+                <p>You have successfully completed the mock test</p>
+            </div>
+            
+            <div class="result-stats">
+                <div class="stat-box">
+                    <div class="stat-value score" id="score-value">0</div>
+                    <div class="stat-label">Marks Obtained</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value rank" id="rank-value">0</div>
+                    <div class="stat-label">Rank</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value time-taken" id="time-taken">12:00</div>
+                    <div class="stat-label">Time Taken</div>
+                </div>
+            </div>
+            
+            <button class="btn btn-reattempt" onclick="showSolutionPanel()">View Solutions</button>
+            
+            <div class="solutions" id="solutions-container">
+                <!-- Solutions will be generated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Solution Panel (Testbook Style) -->
+        <div class="solution-panel" id="solution-panel">
+            <div class="solution-header">
+                <h2>Solutions</h2>
+                <p>Review your answers and understand the solutions</p>
+            </div>
+            
+            <div class="solution-language-selector">
+                <span>View solutions in:</span>
+                <select id="solution-language-select">
+                    <option value="english">English</option>
+                    <option value="hindi">हिन्दी (Hindi)</option>
+                    <option value="bengali">বাংলা (Bengali)</option>
+                    <option value="tamil">தமிழ் (Tamil)</option>
+                    <option value="telugu">తెలుగు (Telugu)</option>
+                </select>
+            </div>
+            
+            <div class="solution-controls">
+                <button class="btn btn-prev" onclick="prevSolutionQuestion()">Previous</button>
+                <button class="btn btn-next" onclick="nextSolutionQuestion()">Next</button>
+            </div>
+            
+            <div class="solution-question-panel">
+                <div class="question-number">Solution for Question <span id="solution-current-q">1</span> of 10</div>
+                <div class="question-text" id="solution-question-text">
+                    A merchant marks his goods at 50% above the cost price but allows a discount of 20% for cash payment. If he also uses a faulty weight which is 20% less than the marked weight, what is his net profit percentage?
+                </div>
+                
+                <div class="solution-options" id="solution-options">
+                    <!-- Solution options will be generated by JavaScript -->
+                </div>
+                
+                <div class="solution-feedback" id="solution-feedback">
+                    <!-- Feedback will be shown here -->
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button class="btn btn-check-answer" onclick="checkSolutionAnswer()">Check Answer</button>
+                    <button class="btn btn-show-solution" onclick="toggleSolution()">Show Solution</button>
+                </div>
+                
+                <div class="solution-explanation" id="solution-explanation">
+                    <!-- Solution explanation will be generated by JavaScript -->
+                </div>
+            </div>
+            
+            <button class="btn btn-reattempt" onclick="restartTest()">Reattempt Test</button>
+        </div>
+        
+        <footer>
+            <p>© 2023 Railway Recruitment Board. This is a mock test interface for practice purposes.</p>
+        </footer>
+    </div>
+
+    <!-- Submit Confirmation Modal -->
+    <div class="modal" id="submit-modal">
+        <div class="modal-content">
+            <h2>Submit Test</h2>
+            <p>You have <span id="answered-count">0</span> out of 10 questions answered.</p>
+            <p>Are you sure you want to submit the test?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="hideSubmitModal()">Cancel</button>
+                <button class="modal-btn modal-btn-confirm" onclick="submitTest()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions data in multiple languages with solutions
+        const questions = {
+            english: [
+                {
+                    text: "A merchant marks his goods at 50% above the cost price but allows a discount of 20% for cash payment. If he also uses a faulty weight which is 20% less than the marked weight, what is his net profit percentage?",
+                    options: ["40%", "45%", "50%", "55%"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Assume the cost price for 1000g is ₹100.</p>
+                        <p>He uses a weight that is 20% less, so he gives only 800g.</p>
+                        <p>Marked Price for 1000g = 100 + 50% of 100 = ₹150.</p>
+                        <p>Selling Price after 20% discount = 150 × 0.80 = ₹120.</p>
+                        <p>He charges ₹120 for 800g.</p>
+                        <p>His cost for 800g = (800/1000) × 100 = ₹80.</p>
+                        <p>Profit = SP - CP = 120 - 80 = ₹40.</p>
+                        <p>Profit % = (40/80) × 100 = <strong>50%</strong>.</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Use the formula for successive adjustments: Net Profit% = [ (1+Markup%)×(1-Discount%) / (1-Weight Deficiency%) - 1 ] × 100%</p>
+                        <p>= [ (1.50 × 0.80) / (0.80) - 1 ] × 100% = [ (1.20) / (0.80) - 1 ] × 100% = [1.50 - 1] × 100% = <strong>50%</strong>.</p>
+                        <p><strong>Answer: 50%</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Profit and Loss"
+                },
+                {
+                    text: "The HCF of two numbers is 15 and their LCM is 300. If one number is 60, what is the other number?",
+                    options: ["75", "90", "105", "120"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Product of two numbers = HCF × LCM.</p>
+                        <p>60 × other number = 15 × 300.</p>
+                        <p>Other number = (15 × 300) / 60 = (15 × 5) = <strong>75</strong>.</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Other number = (HCF × LCM) / given number = (15 × 300) / 60 = 75.</p>
+                        <p><strong>Answer: 75</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "HCF and LCM"
+                },
+                {
+                    text: "If x = 7 - 4√3, then the value of √x + 1/√x is:",
+                    options: ["3", "4", "2√3", "3√2"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>x = 7 - 4√3.</p>
+                        <p>Notice that x = (2 - √3)² because (2-√3)² = 4 + 3 - 4√3 = 7 - 4√3.</p>
+                        <p>So, √x = 2 - √3. (Taking positive root)</p>
+                        <p>Now, 1/√x = 1/(2-√3). Rationalize: (2+√3)/((2-√3)(2+√3)) = (2+√3)/(4-3) = 2+√3.</p>
+                        <p>So, √x + 1/√x = (2-√3) + (2+√3) = <strong>4</strong>.</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Find (√x + 1/√x)² = x + 1/x + 2.</p>
+                        <p>We have x = 7-4√3.</p>
+                        <p>1/x = 1/(7-4√3) = (7+4√3)/((7-4√3)(7+4√3)) = (7+4√3)/(49-48) = 7+4√3.</p>
+                        <p>So, x + 1/x = (7-4√3) + (7+4√3) = 14.</p>
+                        <p>Then (√x + 1/√x)² = 14 + 2 = 16, so √x + 1/√x = <strong>4</strong>.</p>
+                        <p><strong>Answer: 4</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Algebra"
+                },
+                {
+                    text: "A sum of money becomes ₹4,624 in 2 years at a compound interest rate of 20% per annum. What is the principal amount?",
+                    options: ["₹3,200", "₹3,400", "₹3,600", "₹3,800"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Let Principal be P.</p>
+                        <p>Amount A = P(1 + R/100)^n = 4624.</p>
+                        <p>P(1 + 20/100)² = 4624</p>
+                        <p>P(1.20)² = 4624</p>
+                        <p>P × 1.44 = 4624</p>
+                        <p>P = 4624 / 1.44 = ₹3,211.11 (approximately)</p>
+                        <p>Checking options: For P = 3200, A = 3200 × 1.44 = ₹4,608 (closest to 4624)</p>
+                        <p>So the best choice is <strong>₹3,200</strong>.</p>
+                        <p><strong>Shortcut Method for Exam:</strong></p>
+                        <p>Check options by calculating compound interest.</p>
+                        <p>For P = 3200, CI = 3200 × (1.2)² - 3200 = 4608 - 3200 = 1408. So Amount = 4608, which is close to 4624.</p>
+                        <p><strong>Answer: ₹3,200</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Compound Interest"
+                },
+                {
+                    text: "The difference between the compound interest and simple interest on a sum for 2 years at 8% per annum is ₹64. What is the sum?",
+                    options: ["₹8,000", "₹9,000", "₹10,000", "₹11,000"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Let the principal be P.</p>
+                        <p>Rate R = 8%.</p>
+                        <p>Time n = 2 years.</p>
+                        <p>Difference CI - SI = P × (R/100)².</p>
+                        <p>So, 64 = P × (8/100)² = P × (0.0064)</p>
+                        <p>P = 64 / 0.0064 = <strong>₹10,000</strong>.</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Direct formula: P = Difference / (R/100)² = 64 / (0.0064) = 10,000.</p>
+                        <p><strong>Answer: ₹10,000</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Simple and Compound Interest"
+                },
+                {
+                    text: "The average of 60 numbers is 42. If two numbers, 50 and 60, are discarded, what is the average of the remaining numbers?",
+                    options: ["41.2", "41.5", "41.7", "41.9"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Sum of 60 numbers = 60 × 42 = 2520.</p>
+                        <p>Sum of discarded numbers = 50 + 60 = 110.</p>
+                        <p>Sum of remaining 58 numbers = 2520 - 110 = 2410.</p>
+                        <p>Average of remaining numbers = 2410 / 58 = <strong>41.5517... ≈ 41.5</strong>.</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Change in average = (Sum of discarded - Old average × number discarded) / New count.</p>
+                        <p>= (110 - 42 × 2) / 58 = (110 - 84) / 58 = 26 / 58 ≈ 0.448.</p>
+                        <p>New average = 42 - 0.448 = 41.552 ≈ 41.5.</p>
+                        <p><strong>Answer: 41.5</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Average"
+                },
+                {
+                    text: "If a + b + c = 0, then the value of ( (b+c)² / bc ) + ( (c+a)² / ca ) + ( (a+b)² / ab ) is:",
+                    options: ["0", "1", "2", "3"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Given a + b + c = 0, so b + c = -a, c + a = -b, a + b = -c.</p>
+                        <p>Substitute into the expression:</p>
+                        <p>= [ (-a)² / bc ] + [ (-b)² / ca ] + [ (-c)² / ab ]</p>
+                        <p>= [ a²/bc ] + [ b²/ca ] + [ c²/ab ]</p>
+                        <p>= (a³ + b³ + c³) / (abc). (After writing with common denominator abc)</p>
+                        <p>Now, since a + b + c = 0, we know a³ + b³ + c³ = 3abc.</p>
+                        <p>So, the expression becomes (3abc) / (abc) = <strong>3</strong>.</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Remember the identity and substitution. The expression simplifies to the known identity a³+b³+c³ / abc when a+b+c=0, which equals 3.</p>
+                        <p><strong>Answer: 3</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Algebra"
+                },
+                {
+                    text: "A man can row 12 km/h in still water. If the speed of the current is 4 km/h, what time will he take to row to a place 24 km upstream and back?",
+                    options: ["4.5 hours", "5 hours", "5.5 hours", "6 hours"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Speed upstream = 12 - 4 = 8 km/h.</p>
+                        <p>Speed downstream = 12 + 4 = 16 km/h.</p>
+                        <p>Time upstream = 24 / 8 = 3 hours.</p>
+                        <p>Time downstream = 24 / 16 = 1.5 hours.</p>
+                        <p>Total time = 3 + 1.5 = <strong>4.5 hours</strong>.</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Direct calculation. The times are in ratio 2:1 for upstream:downstream since speeds are in ratio 1:2 for the same distance.</p>
+                        <p><strong>Answer: 4.5 hours</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Time, Speed and Distance"
+                },
+                {
+                    text: "The HCF of two numbers is 18 and their LCM is 1080. If one number is 180, what is the other number?",
+                    options: ["108", "120", "144", "162"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>We know: Product of two numbers = HCF × LCM.</p>
+                        <p>Let the other number be N.</p>
+                        <p>So, 180 × N = 18 × 1080</p>
+                        <p>N = (18 × 1080) / 180 = (18 × 6) = <strong>108</strong>.</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Since HCF is 18, the numbers are multiples of 18. So other number = (18 × 1080) / 180 = 18 × (1080/180) = 18 × 6 = 108.</p>
+                        <p><strong>Answer: 108</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "HCF and LCM"
+                },
+                {
+                    text: "A man can row 10 km/h in still water. If the speed of the current is 2 km/h, what time will he take to row to a place 24 km downstream and back?",
+                    options: ["4 hours", "4.5 hours", "5 hours", "5.5 hours"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>Step-by-step Solution:</h4>
+                        <p>Downstream speed = 10 + 2 = 12 km/h.</p>
+                        <p>Upstream speed = 10 - 2 = 8 km/h.</p>
+                        <p>Time downstream = 24 / 12 = 2 hours.</p>
+                        <p>Time upstream = 24 / 8 = 3 hours.</p>
+                        <p>Total time = 2 + 3 = <strong>5 hours</strong>.</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Direct calculation.</p>
+                        <p><strong>Answer: 5 hours</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Time, Speed and Distance"
+                }
+            ],
+            hindi: [
+                {
+                    text: "एक व्यापारी अपने माल पर क्रय मूल्य से 50% अधिक अंकित करता है लेकिन नकद भुगतान के लिए 20% की छूट देता है। यदि वह एक दोषपूर्ण बाट का भी उपयोग करता है जो चिह्नित वजन से 20% कम है, तो उसका शुद्ध लाभ प्रतिशत क्या है?",
+                    options: ["40%", "45%", "50%", "55%"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>मान लीजिए 1000 ग्राम का क्रय मूल्य ₹100 है।</p>
+                        <p>वह 20% कम वजन का उपयोग करता है, इसलिए वह केवल 800 ग्राम देता है।</p>
+                        <p>1000 ग्राम का अंकित मूल्य = 100 + 100 का 50% = ₹150।</p>
+                        <p>20% छूट के बाद विक्रय मूल्य = 150 × 0.80 = ₹120।</p>
+                        <p>वह 800 ग्राम के लिए ₹120 वसूलता है।</p>
+                        <p>उसके द्वारा बेचे गए 800 ग्राम का क्रय मूल्य = (800/1000) × 100 = ₹80।</p>
+                        <p>लाभ = विक्रय मूल्य - क्रय मूल्य = 120 - 80 = ₹40।</p>
+                        <p>लाभ % = (लाभ/क्रय मूल्य) × 100 = (40/80) × 100 = <strong>50%</strong>।</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>सूत्र का उपयोग करें: शुद्ध लाभ% = [ (1+अंकित%)×(1-छूट%) / (1-वजन कमी%) - 1 ] × 100%</p>
+                        <p>= [ (1.50 × 0.80) / (0.80) - 1 ] × 100% = [ (1.20) / (0.80) - 1 ] × 100% = [1.50 - 1] × 100% = <strong>50%</strong>।</p>
+                        <p><strong>उत्तर: 50%</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Profit and Loss"
+                },
+                {
+                    text: "दो संख्याओं का महत्तम समापवर्तक (HCF) 15 है और उनका लघुत्तम समापवर्त्य (LCM) 300 है। यदि एक संख्या 60 है, तो दूसरी संख्या क्या है?",
+                    options: ["75", "90", "105", "120"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>दो संख्याओं का गुणनफल = HCF × LCM।</p>
+                        <p>60 × दूसरी संख्या = 15 × 300।</p>
+                        <p>दूसरी संख्या = (15 × 300) / 60 = (15 × 5) = <strong>75</strong>।</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>दूसरी संख्या = (HCF × LCM) / दी गई संख्या = (15 × 300) / 60 = 75।</p>
+                        <p><strong>उत्तर: 75</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "HCF and LCM"
+                },
+                {
+                    text: "यदि x = 7 - 4√3 है, तो √x + 1/√x का मान है:",
+                    options: ["3", "4", "2√3", "3√2"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>x = 7 - 4√3।</p>
+                        <p>ध्यान दें कि x = (2 - √3)² क्योंकि (2-√3)² = 4 + 3 - 4√3 = 7 - 4√3।</p>
+                        <p>तो, √x = 2 - √3। (धनात्मक मूल लेते हुए)</p>
+                        <p>अब, 1/√x = 1/(2-√3)। परिमेयकरण: (2+√3)/((2-√3)(2+√3)) = (2+√3)/(4-3) = 2+√3।</p>
+                        <p>तो, √x + 1/√x = (2-√3) + (2+√3) = <strong>4</strong>।</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>(√x + 1/√x)² = x + 1/x + 2 ज्ञात करें।</p>
+                        <p>हमारे पास x = 7-4√3 है।</p>
+                        <p>1/x = 1/(7-4√3) = (7+4√3)/((7-4√3)(7+4√3)) = (7+4√3)/(49-48) = 7+4√3।</p>
+                        <p>तो, x + 1/x = (7-4√3) + (7+4√3) = 14।</p>
+                        <p>तब (√x + 1/√x)² = 14 + 2 = 16, इसलिए √x + 1/√x = <strong>4</strong>।</p>
+                        <p><strong>उत्तर: 4</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Algebra"
+                },
+                {
+                    text: "एक धनराशि 20% प्रति वर्ष की चक्रवृद्धि ब्याज दर पर 2 वर्षों में ₹4,624 हो जाती है। मूलधन राशि क्या है?",
+                    options: ["₹3,200", "₹3,400", "₹3,600", "₹3,800"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>मान लीजिए मूलधन P है।</p>
+                        <p>मिश्रधन A = P(1 + R/100)^n = 4624।</p>
+                        <p>P(1 + 20/100)² = 4624</p>
+                        <p>P(1.20)² = 4624</p>
+                        <p>P × 1.44 = 4624</p>
+                        <p>P = 4624 / 1.44 = ₹3,211.11 (लगभग)</p>
+                        <p>विकल्पों की जाँच: P = 3200 के लिए, A = 3200 × 1.44 = ₹4,608 (4624 के सबसे करीब)</p>
+                        <p>तो सबसे अच्छा विकल्प <strong>₹3,200</strong> है।</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>विकल्पों की जाँच करके चक्रवृद्धि ब्याज की गणना करें।</p>
+                        <p>P = 3200 के लिए, CI = 3200 × (1.2)² - 3200 = 4608 - 3200 = 1408। तो मिश्रधन = 4608, जो 4624 के करीब है।</p>
+                        <p><strong>उत्तर: ₹3,200</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Compound Interest"
+                },
+                {
+                    text: "एक राशि पर 2 वर्षों के लिए 8% प्रति वर्ष की दर से चक्रवृद्धि ब्याज और साधारण ब्याज का अंतर ₹64 है। वह राशि क्या है?",
+                    options: ["₹8,000", "₹9,000", "₹10,000", "₹11,000"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>मान लीजिए मूलधन P है।</p>
+                        <p>दर R = 8%।</p>
+                        <p>समय n = 2 वर्ष।</p>
+                        <p>अंतर CI - SI = P × (R/100)²।</p>
+                        <p>तो, 64 = P × (8/100)² = P × (0.0064)</p>
+                        <p>P = 64 / 0.0064 = <strong>₹10,000</strong>।</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>सीधा सूत्र: P = अंतर / (R/100)² = 64 / (0.0064) = 10,000।</p>
+                        <p><strong>उत्तर: ₹10,000</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Simple and Compound Interest"
+                },
+                {
+                    text: "60 संख्याओं का औसत 42 है। यदि दो संख्याएँ, 50 और 60, हटा दी जाती हैं, तो शेष संख्याओं का औसत क्या होगा?",
+                    options: ["41.2", "41.5", "41.7", "41.9"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>60 संख्याओं का योग = 60 × 42 = 2520।</p>
+                        <p>हटाई गई संख्याओं का योग = 50 + 60 = 110।</p>
+                        <p>शेष 58 संख्याओं का योग = 2520 - 110 = 2410।</p>
+                        <p>शेष संख्याओं का औसत = 2410 / 58 = <strong>41.5517... ≈ 41.5</strong>।</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>औसत में परिवर्तन = (हटाई गई संख्याओं का योग - पुराना औसत × हटाई गई संख्याएँ) / नई संख्या।</p>
+                        <p>= (110 - 42 × 2) / 58 = (110 - 84) / 58 = 26 / 58 ≈ 0.448।</p>
+                        <p>नया औसत = 42 - 0.448 = 41.552 ≈ 41.5।</p>
+                        <p><strong>उत्तर: 41.5</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Average"
+                },
+                {
+                    text: "यदि a + b + c = 0 है, तो ( (b+c)² / bc ) + ( (c+a)² / ca ) + ( (a+b)² / ab ) का मान क्या है?",
+                    options: ["0", "1", "2", "3"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>दिया गया है a + b + c = 0, तो b + c = -a, c + a = -b, a + b = -c।</p>
+                        <p>व्यंजक में प्रतिस्थापित करें:</p>
+                        <p>= [ (-a)² / bc ] + [ (-b)² / ca ] + [ (-c)² / ab ]</p>
+                        <p>= [ a²/bc ] + [ b²/ca ] + [ c²/ab ]</p>
+                        <p>= (a³ + b³ + c³) / (abc)। (abc के सामान्य हर के बाद)</p>
+                        <p>अब, चूंकि a + b + c = 0, हम जानते हैं कि a³ + b³ + c³ = 3abc।</p>
+                        <p>तो, व्यंजक बन जाता है (3abc) / (abc) = <strong>3</strong>।</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>सर्वसमिका और प्रतिस्थापन याद रखें। जब a+b+c=0 होता है, तो व्यंजक सरल होकर ज्ञात सर्वसमिका a³+b³+c³ / abc बन जाता है, जो 3 के बराबर होता है।</p>
+                        <p><strong>उत्तर: 3</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Algebra"
+                },
+                {
+                    text: "एक आदमी शांत जल में 12 किमी/घंटा की चाल से नाव चला सकता है। यदि धारा की चाल 4 किमी/घंटा है, तो उसे 24 किमी धारा के प्रतिकूल जाकर वापस आने में कितना समय लगेगा?",
+                    options: ["4.5 घंटे", "5 घंटे", "5.5 घंटे", "6 घंटे"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>धारा के प्रतिकूल चाल = 12 - 4 = 8 किमी/घंटा।</p>
+                        <p>धारा के अनुकूल चाल = 12 + 4 = 16 किमी/घंटा।</p>
+                        <p>धारा के प्रतिकूल जाने में लगा समय = 24 / 8 = 3 घंटे।</p>
+                        <p>वापस आने (धारा के अनुकूल) में लगा समय = 24 / 16 = 1.5 घंटे।</p>
+                        <p>कुल समय = 3 + 1.5 = <strong>4.5 घंटे</strong>।</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>सीधी गणना। समय 2:1 के अनुपात में है धारा के प्रतिकूल:अनुकूल के लिए क्योंकि चाल समान दूरी के लिए 1:2 के अनुपात में हैं।</p>
+                        <p><strong>उत्तर: 4.5 घंटे</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Time, Speed and Distance"
+                },
+                {
+                    text: "दो संख्याओं का महत्तम समापवर्तक (HCF) 18 है और उनका लघुत्तम समापवर्त्य (LCM) 1080 है। यदि एक संख्या 180 है, तो दूसरी संख्या क्या है?",
+                    options: ["108", "120", "144", "162"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>हम जानते हैं: दो संख्याओं का गुणनफल = HCF × LCM।</p>
+                        <p>मान लीजिए दूसरी संख्या N है।</p>
+                        <p>तो, 180 × N = 18 × 1080</p>
+                        <p>N = (18 × 1080) / 180 = (18 × 6) = <strong>108</strong>।</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>चूंकि HCF 18 है, संख्याएँ 18 के गुणज हैं। तो दूसरी संख्या = (18 × 1080) / 180 = 18 × (1080/180) = 18 × 6 = 108।</p>
+                        <p><strong>उत्तर: 108</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "HCF and LCM"
+                },
+                {
+                    text: "एक आदमी शांत जल में 10 किमी/घंटा की चाल से नाव चला सकता है। यदि धारा की चाल 2 किमी/घंटा है, तो उसे 24 किमी धारा के अनुकूल जाकर वापस आने में कितना समय लगेगा?",
+                    options: ["4 घंटे", "4.5 घंटे", "5 घंटे", "5.5 घंटे"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>धारा के अनुकूल चाल = 10 + 2 = 12 किमी/घंटा।</p>
+                        <p>धारा के प्रतिकूल चाल = 10 - 2 = 8 किमी/घंटा।</p>
+                        <p>धारा के अनुकूल जाने में लगा समय = 24 / 12 = 2 घंटे।</p>
+                        <p>वापस आने (धारा के प्रतिकूल) में लगा समय = 24 / 8 = 3 घंटे।</p>
+                        <p>कुल समय = 2 + 3 = <strong>5 घंटे</strong>।</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>सीधी गणना।</p>
+                        <p><strong>उत्तर: 5 घंटे</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Time, Speed and Distance"
+                }
+            ],
+            bengali: [
+                {
+                    text: "একজন ব্যবসায়ী তার পণ্যের দাম ক্রয় মূল্যের চেয়ে 50% বেশি চিহ্নিত করেন কিন্তু নগদ পরিশোধের জন্য 20% ছাড় দেন। যদি তিনি একটি ত্রুটিপূর্ণ ওজনও ব্যবহার করেন যা চিহ্নিত ওজনের চেয়ে 20% কম, তবে তার নিট লাভের শতাংশ কত?",
+                    options: ["40%", "45%", "50%", "55%"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>ধরা যাক 1000 গ্রাম পণ্যের ক্রয় মূল্য ₹100।</p>
+                        <p>তিনি 20% কম ওজন ব্যবহার করেন, তাই তিনি কেবল 800 গ্রাম দেন।</p>
+                        <p>1000 গ্রামের চিহ্নিত মূল্য = 100 + 100 এর 50% = ₹150।</p>
+                        <p>20% ছাড়ের পরে বিক্রয় মূল্য = 150 × 0.80 = ₹120।</p>
+                        <p>তিনি 800 গ্রামের জন্য ₹120 নেন।</p>
+                        <p>তিনি আসলে যে 800 গ্রাম বিক্রি করেন তার ক্রয় মূল্য = (800/1000) × 100 = ₹80।</p>
+                        <p>লাভ = বিক্রয় মূল্য - ক্রয় মূল্য = 120 - 80 = ₹40।</p>
+                        <p>লাভ % = (লাভ/ক্রয় মূল্য) × 100 = (40/80) × 100 = <strong>50%</strong>।</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>সূত্র ব্যবহার করুন: নিট লাভ% = [ (1+চিহ্নিত%)×(1-ছাড়%) / (1-ওজন ঘাটতি%) - 1 ] × 100%</p>
+                        <p>= [ (1.50 × 0.80) / (0.80) - 1 ] × 100% = [ (1.20) / (0.80) - 1 ] × 100% = [1.50 - 1] × 100% = <strong>50%</strong>।</p>
+                        <p><strong>উত্তর: 50%</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Profit and Loss"
+                },
+                {
+                    text: "দুটি সংখ্যার গরিষ্ঠ সাধারণ গুণনীয়ক (HCF) 15 এবং তাদের লঘিষ্ঠ সাধারণ গুণিতক (LCM) 300। যদি একটি সংখ্যা 60 হয়, তবে অন্য সংখ্যাটি কত?",
+                    options: ["75", "90", "105", "120"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>দুটি সংখ্যার গুণফল = HCF × LCM।</p>
+                        <p>60 × অন্য সংখ্যা = 15 × 300।</p>
+                        <p>অন্য সংখ্যা = (15 × 300) / 60 = (15 × 5) = <strong>75</strong>।</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>অন্য সংখ্যা = (HCF × LCM) / প্রদত্ত সংখ্যা = (15 × 300) / 60 = 75।</p>
+                        <p><strong>উত্তর: 75</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "HCF and LCM"
+                },
+                {
+                    text: "যদি x = 7 - 4√3 হয়, তবে √x + 1/√x এর মান হল:",
+                    options: ["3", "4", "2√3", "3√2"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>x = 7 - 4√3।</p>
+                        <p>লক্ষ্য করুন যে x = (2 - √3)² কারণ (2-√3)² = 4 + 3 - 4√3 = 7 - 4√3।</p>
+                        <p>সুতরাং, √x = 2 - √3। (ধনাত্মক মূল নিচ্ছি)</p>
+                        <p>এখন, 1/√x = 1/(2-√3)। যুক্তিযুক্ত করুন: (2+√3)/((2-√3)(2+√3)) = (2+√3)/(4-3) = 2+√3।</p>
+                        <p>সুতরাং, √x + 1/√x = (2-√3) + (2+√3) = <strong>4</strong>।</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>(√x + 1/√x)² = x + 1/x + 2 খুঁজুন।</p>
+                        <p>আমাদের আছে x = 7-4√3।</p>
+                        <p>1/x = 1/(7-4√3) = (7+4√3)/((7-4√3)(7+4√3)) = (7+4√3)/(49-48) = 7+4√3।</p>
+                        <p>সুতরাং, x + 1/x = (7-4√3) + (7+4√3) = 14।</p>
+                        <p>তখন (√x + 1/√x)² = 14 + 2 = 16, তাই √x + 1/√x = <strong>4</strong>।</p>
+                        <p><strong>উত্তর: 4</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Algebra"
+                },
+                {
+                    text: "একটি নির্দিষ্ট পরিমাণ অর্থ বার্ষিক 20% চক্রবৃদ্ধি সুদের হারে 2 বছরে ₹4,624 হয়। আসল পরিমাণ কত?",
+                    options: ["₹3,200", "₹3,400", "₹3,600", "₹3,800"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>ধরি মূলধন P।</p>
+                        <p>সমৃদ্ধি A = P(1 + R/100)^n = 4624।</p>
+                        <p>P(1 + 20/100)² = 4624</p>
+                        <p>P(1.20)² = 4624</p>
+                        <p>P × 1.44 = 4624</p>
+                        <p>P = 4624 / 1.44 = ₹3,211.11 (প্রায়)</p>
+                        <p>বিকল্পগুলি পরীক্ষা করা: P = 3200 এর জন্য, A = 3200 × 1.44 = ₹4,608 (4624 এর সবচেয়ে কাছাকাছি)</p>
+                        <p>তাই সেরা পছন্দ হল <strong>₹3,200</strong>।</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>বিকল্পগুলি পরীক্ষা করে চক্রবৃদ্ধি সুদ গণনা করুন।</p>
+                        <p>P = 3200 এর জন্য, CI = 3200 × (1.2)² - 3200 = 4608 - 3200 = 1408। তাই সমৃদ্ধি = 4608, যা 4624 এর কাছাকাছি।</p>
+                        <p><strong>উত্তর: ₹3,200</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Compound Interest"
+                },
+                {
+                    text: "একটি অর্থের উপর 2 বছরের জন্য বার্ষিক 8% হারে চক্রবৃদ্ধি সুদ এবং সরল সুদের পার্থক্য ₹64। অর্থটির পরিমাণ কত?",
+                    options: ["₹8,000", "₹9,000", "₹10,000", "₹11,000"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>ধরি মূলধন P।</p>
+                        <p>হার R = 8%।</p>
+                        <p>সময় n = 2 বছর।</p>
+                        <p>পার্থক্য CI - SI = P × (R/100)²।</p>
+                        <p>সুতরাং, 64 = P × (8/100)² = P × (0.0064)</p>
+                        <p>P = 64 / 0.0064 = <strong>₹10,000</strong>।</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>সরাসরি সূত্র: P = পার্থক্য / (R/100)² = 64 / (0.0064) = 10,000।</p>
+                        <p><strong>উত্তর: ₹10,000</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Simple and Compound Interest"
+                },
+                {
+                    text: "60টি সংখ্যার গড় 42। যদি দুটি সংখ্যা, 50 এবং 60, বাতিল করা হয়, তবে বাকি সংখ্যাগুলির গড় কত?",
+                    options: ["41.2", "41.5", "41.7", "41.9"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>60টি সংখ্যার সমষ্টি = 60 × 42 = 2520।</p>
+                        <p>বাতিল করা সংখ্যাগুলির সমষ্টি = 50 + 60 = 110।</p>
+                        <p>বাকি 58টি সংখ্যার সমষ্টি = 2520 - 110 = 2410।</p>
+                        <p>বাকি সংখ্যাগুলির গড় = 2410 / 58 = <strong>41.5517... ≈ 41.5</strong>।</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>গড়ে পরিবর্তন = (বাতিল করা সংখ্যাগুলির সমষ্টি - পুরানো গড় × বাতিল করা সংখ্যা) / নতুন সংখ্যা।</p>
+                        <p>= (110 - 42 × 2) / 58 = (110 - 84) / 58 = 26 / 58 ≈ 0.448।</p>
+                        <p>নতুন গড় = 42 - 0.448 = 41.552 ≈ 41.5।</p>
+                        <p><strong>উত্তর: 41.5</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Average"
+                },
+                {
+                    text: "যদি a + b + c = 0 হয়, তবে ( (b+c)² / bc ) + ( (c+a)² / ca ) + ( (a+b)² / ab ) এর মান কত?",
+                    options: ["0", "1", "2", "3"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>প্রদত্ত a + b + c = 0, তাই b + c = -a, c + a = -b, a + b = -c।</p>
+                        <p>সমীকরণে প্রতিস্থাপন করুন:</p>
+                        <p>= [ (-a)² / bc ] + [ (-b)² / ca ] + [ (-c)² / ab ]</p>
+                        <p>= [ a²/bc ] + [ b²/ca ] + [ c²/ab ]</p>
+                        <p>= (a³ + b³ + c³) / (abc)। (abc দিয়ে সাধারণ হর করার পরে)</p>
+                        <p>এখন, যেহেতু a + b + c = 0, আমরা জানি a³ + b³ + c³ = 3abc।</p>
+                        <p>সুতরাং, রাশিটি হয়ে যায় (3abc) / (abc) = <strong>3</strong>।</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>সার্বজনীন সূত্র এবং প্রতিস্থাপন মনে রাখুন। রাশিটি সরলীকৃত হয়ে পরিচিত সূত্র a³+b³+c³ / abc হয় যখন a+b+c=0, যা 3 এর সমান।</p>
+                        <p><strong>উত্তর: 3</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Algebra"
+                },
+                {
+                    text: "একজন ব্যক্তি স্থির জলে 12 কিমি/ঘন্টা বেগে নৌকা চালাতে পারে। যদি স্রোতের গতি 4 কিমি/ঘন্টা হয়, তবে স্রোতের প্রতিকূলে 24 কিমি গিয়ে ফিরে আসতে তার কত সময় লাগবে?",
+                    options: ["4.5 ঘন্টা", "5 ঘন্টা", "5.5 ঘন্টা", "6 ঘন্টা"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>স্রোতের প্রতিকূলে গতি = 12 - 4 = 8 কিমি/ঘন্টা।</p>
+                        <p>স্রোতের অনুকূলে গতি = 12 + 4 = 16 কিমি/ঘন্টা।</p>
+                        <p>স্রোতের প্রতিকূলে যেতে সময় = 24 / 8 = 3 ঘন্টা।</p>
+                        <p>ফিরে আসতে (স্রোতের অনুকূলে) সময় = 24 / 16 = 1.5 ঘন্টা।</p>
+                        <p>মোট সময় = 3 + 1.5 = <strong>4.5 ঘন্টা</strong>।</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>সরাসরি গণনা। সময় 2:1 অনুপাতে আছে স্রোতের প্রতিকূলে:অনুকূলে জন্য কারণ গতি একই দূরত্বের জন্য 1:2 অনুপাতে আছে।</p>
+                        <p><strong>উত্তর: 4.5 ঘন্টা</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Time, Speed and Distance"
+                },
+                {
+                    text: "দুটি সংখ্যার গরিষ্ঠ সাধারণ গুণনীয়ক (HCF) 18 এবং তাদের লঘিষ্ঠ সাধারণ গুণিতক (LCM) 1080। যদি একটি সংখ্যা 180 হয়, তবে অন্য সংখ্যাটি কত?",
+                    options: ["108", "120", "144", "162"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>আমরা জানি: দুটি সংখ্যার গুণফল = HCF × LCM।</p>
+                        <p>ধরি অন্য সংখ্যাটি N।</p>
+                        <p>সুতরাং, 180 × N = 18 × 1080</p>
+                        <p>N = (18 × 1080) / 180 = (18 × 6) = <strong>108</strong>।</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>যেহেতু HCF 18, সংখ্যাগুলি 18 এর গুণিতক। তাই অন্য সংখ্যা = (18 × 1080) / 180 = 18 × (1080/180) = 18 × 6 = 108।</p>
+                        <p><strong>উত্তর: 108</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "HCF and LCM"
+                },
+                {
+                    text: "একজন ব্যক্তি স্থির জলে 10 কিমি/ঘন্টা বেগে নৌকা চালাতে পারে। যদি স্রোতের গতি 2 কিমি/ঘন্টা হয়, তবে স্রোতের অনুকূলে 24 কিমি গিয়ে ফিরে আসতে তার কত সময় লাগবে?",
+                    options: ["4 ঘন্টা", "4.5 ঘন্টা", "5 ঘন্টা", "5.5 ঘন্টা"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>স্রোতের অনুকূলে গতি = 10 + 2 = 12 কিমি/ঘন্টা।</p>
+                        <p>স্রোতের প্রতিকূলে গতি = 10 - 2 = 8 কিমি/ঘন্টা।</p>
+                        <p>স্রোতের অনুকূলে যেতে সময় = 24 / 12 = 2 ঘন্টা।</p>
+                        <p>ফিরে আসতে (স্রোতের প্রতিকূলে) সময় = 24 / 8 = 3 ঘন্টা।</p>
+                        <p>মোট সময় = 2 + 3 = <strong>5 ঘন্টা</strong>।</p>
+                        <p><strong>সংক্ষিপ্ত পদ্ধতি:</strong></p>
+                        <p>সরাসরি গণনা।</p>
+                        <p><strong>উত্তর: 5 ঘন্টা</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Time, Speed and Distance"
+                }
+            ]
+        };
+
+        // For other languages, we'll use English questions as fallback
+        questions.tamil = questions.english;
+        questions.telugu = questions.english;
+
+        let currentQuestion = 0;
+        let currentSolutionQuestion = 0;
+        let answers = new Array(10).fill(null);
+        let marked = new Array(10).fill(false);
+        let visited = new Array(10).fill(false);
+        let solutionAnswers = new Array(10).fill(null);
+        let timeLeft = 12 * 60; // 12 minutes in seconds
+        let currentLanguage = 'english';
+        let solutionLanguage = 'english';
+        let startTime = new Date();
+        
+        // Initialize question palette
+        function initQuestionPalette() {
+            const palette = document.getElementById('question-palette');
+            for (let i = 0; i < 10; i++) {
+                const btn = document.createElement('div');
+                btn.className = 'question-btn not-visited';
+                btn.textContent = i + 1;
+                btn.onclick = () => goToQuestion(i);
+                palette.appendChild(btn);
+            }
+            updateQuestionPalette();
+        }
+        
+        // Update question palette highlighting
+        function updateQuestionPalette() {
+            const buttons = document.querySelectorAll('.question-btn');
+            buttons.forEach((btn, index) => {
+                btn.className = 'question-btn';
+                
+                if (index === currentQuestion) {
+                    btn.classList.add('current');
+                } else if (answers[index] !== null) {
+                    btn.classList.add('answered');
+                } else if (marked[index]) {
+                    btn.classList.add('marked');
+                } else if (visited[index]) {
+                    btn.classList.add('not-answered');
+                } else {
+                    btn.classList.add('not-visited');
+                }
+            });
+        }
+        
+        // Go to specific question
+        function goToQuestion(index) {
+            currentQuestion = index;
+            visited[index] = true;
+            displayQuestion();
+            updateQuestionPalette();
+        }
+        
+        // Display current question
+        function displayQuestion() {
+            document.getElementById('current-q').textContent = currentQuestion + 1;
+            document.getElementById('question-text').textContent = questions[currentLanguage][currentQuestion].text;
+            
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                option.classList.remove('selected');
+                option.querySelector('label').textContent = questions[currentLanguage][currentQuestion].options[index];
+                
+                // Clear all radio buttons
+                option.querySelector('input').checked = false;
+            });
+            
+            // If answer exists for this question, select it
+            if (answers[currentQuestion] !== null) {
+                options[answers[currentQuestion]].classList.add('selected');
+                options[answers[currentQuestion]].querySelector('input').checked = true;
+            }
+        }
+        
+        // Select an option
+        function selectOption(optionIndex) {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex - 1].classList.add('selected');
+            options[optionIndex - 1].querySelector('input').checked = true;
+            
+            answers[currentQuestion] = optionIndex - 1;
+            updateQuestionPalette();
+        }
+        
+        // Clear response for current question
+        function clearResponse() {
+            answers[currentQuestion] = null;
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.classList.remove('selected');
+                option.querySelector('input').checked = false;
+            });
+            updateQuestionPalette();
+        }
+        
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestion < 9) {
+                currentQuestion++;
+                visited[currentQuestion] = true;
+                displayQuestion();
+                updateQuestionPalette();
+            }
+        }
+        
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                visited[currentQuestion] = true;
+                displayQuestion();
+                updateQuestionPalette();
+            }
+        }
+        
+        // Mark question for review
+        function markQuestion() {
+            marked[currentQuestion] = !marked[currentQuestion];
+            updateQuestionPalette();
+        }
+        
+        // Timer function
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            const timer = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    submitTest();
+                } else {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+        
+        // Change language
+        function changeLanguage() {
+            const languageSelect = document.getElementById('language-select');
+            currentLanguage = languageSelect.value;
+            displayQuestion();
+        }
+        
+        // Change solution language
+        function changeSolutionLanguage() {
+            const solutionLanguageSelect = document.getElementById('solution-language-select');
+            solutionLanguage = solutionLanguageSelect.value;
+            displaySolutionQuestion();
+        }
+        
+        // Show submit confirmation modal
+        function showSubmitModal() {
+            const answeredCount = answers.filter(answer => answer !== null).length;
+            document.getElementById('answered-count').textContent = answeredCount;
+            document.getElementById('submit-modal').style.display = 'flex';
+        }
+        
+        // Hide submit confirmation modal
+        function hideSubmitModal() {
+            document.getElementById('submit-modal').style.display = 'none';
+        }
+        
+        // Calculate score
+        function calculateScore() {
+            let score = 0;
+            for (let i = 0; i < 10; i++) {
+                if (answers[i] !== null) {
+                    if (answers[i] === questions[currentLanguage][i].correctAnswer) {
+                        score += 1;
+                    } else {
+                        score -= 1/3;
+                    }
+                }
+            }
+            return Math.max(0, score); // Ensure score is not negative
+        }
+        
+        // Calculate rank (simulated)
+        function calculateRank(score) {
+            // In a real application, this would be calculated based on other test takers
+            // For demo purposes, we'll use a simple formula
+            const maxScore = 10;
+            const percentile = (score / maxScore) * 100;
+            
+            if (percentile >= 90) return 1;
+            if (percentile >= 80) return Math.floor(Math.random() * 10) + 1;
+            if (percentile >= 70) return Math.floor(Math.random() * 50) + 11;
+            if (percentile >= 60) return Math.floor(Math.random() * 100) + 51;
+            if (percentile >= 50) return Math.floor(Math.random() * 200) + 151;
+            return Math.floor(Math.random() * 500) + 351;
+        }
+        
+        // Show solution panel (Testbook style)
+        function showSolutionPanel() {
+            document.getElementById('result-panel').style.display = 'none';
+            document.getElementById('solution-panel').style.display = 'block';
+            displaySolutionQuestion();
+        }
+        
+        // Display solution question
+        function displaySolutionQuestion() {
+            document.getElementById('solution-current-q').textContent = currentSolutionQuestion + 1;
+            document.getElementById('solution-question-text').textContent = questions[solutionLanguage][currentSolutionQuestion].text;
+            
+            const solutionOptions = document.getElementById('solution-options');
+            solutionOptions.innerHTML = '';
+            
+            questions[solutionLanguage][currentSolutionQuestion].options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'solution-option';
+                optionDiv.onclick = () => selectSolutionOption(index);
+                
+                // Highlight correct answer only if user has checked answer
+                if (solutionAnswers[currentSolutionQuestion] !== null && 
+                    index === questions[solutionLanguage][currentSolutionQuestion].correctAnswer) {
+                    optionDiv.classList.add('correct');
+                }
+                
+                // Highlight user's selection
+                if (solutionAnswers[currentSolutionQuestion] === index) {
+                    optionDiv.classList.add('selected');
+                }
+                
+                optionDiv.innerHTML = `
+                    <input type="radio" name="solution-option" id="solution-option${index+1}" ${solutionAnswers[currentSolutionQuestion] === index ? 'checked' : ''}>
+                    <label for="solution-option${index+1}">${option}</label>
+                `;
+                
+                solutionOptions.appendChild(optionDiv);
+            });
+            
+            // Set solution explanation
+            document.getElementById('solution-explanation').innerHTML = questions[solutionLanguage][currentSolutionQuestion].explanation;
+            
+            // Hide solution explanation initially
+            document.getElementById('solution-explanation').style.display = 'none';
+            
+            // Reset feedback
+            document.getElementById('solution-feedback').style.display = 'none';
+        }
+        
+        // Select an option in solution panel
+        function selectSolutionOption(optionIndex) {
+            const options = document.querySelectorAll('.solution-option');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            
+            solutionAnswers[currentSolutionQuestion] = optionIndex;
+            
+            // Update radio button
+            options.forEach((option, index) => {
+                option.querySelector('input').checked = (index === optionIndex);
+            });
+        }
+        
+        // Check answer in solution panel
+        function checkSolutionAnswer() {
+            if (solutionAnswers[currentSolutionQuestion] === null) {
+                alert('Please select an option first');
+                return;
+            }
+            
+            const options = document.querySelectorAll('.solution-option');
+            const correctIndex = questions[solutionLanguage][currentSolutionQuestion].correctAnswer;
+            const feedback = document.getElementById('solution-feedback');
+            
+            // Highlight correct answer
+            options[correctIndex].classList.add('correct');
+            
+            // Show feedback
+            if (solutionAnswers[currentSolutionQuestion] === correctIndex) {
+                feedback.textContent = 'Correct! Well done.';
+                feedback.className = 'solution-feedback feedback-correct';
+            } else {
+                feedback.textContent = 'Incorrect. The correct answer is highlighted in green.';
+                feedback.className = 'solution-feedback feedback-incorrect';
+            }
+            
+            feedback.style.display = 'block';
+        }
+        
+        // Toggle solution visibility
+        function toggleSolution() {
+            const explanation = document.getElementById('solution-explanation');
+            const button = document.querySelector('.btn-show-solution');
+            
+            if (explanation.style.display === 'none') {
+                explanation.style.display = 'block';
+                button.textContent = 'Hide Solution';
+            } else {
+                explanation.style.display = 'none';
+                button.textContent = 'Show Solution';
+            }
+        }
+        
+        // Navigate to next solution question
+        function nextSolutionQuestion() {
+            if (currentSolutionQuestion < 9) {
+                currentSolutionQuestion++;
+                displaySolutionQuestion();
+            }
+        }
+        
+        // Navigate to previous solution question
+        function prevSolutionQuestion() {
+            if (currentSolutionQuestion > 0) {
+                currentSolutionQuestion--;
+                displaySolutionQuestion();
+            }
+        }
+        
+        // Restart test
+        function restartTest() {
+            // Reset all variables
+            currentQuestion = 0;
+            currentSolutionQuestion = 0;
+            answers = new Array(10).fill(null);
+            solutionAnswers = new Array(10).fill(null);
+            marked = new Array(10).fill(false);
+            visited = new Array(10).fill(false);
+            timeLeft = 12 * 60;
+            startTime = new Date();
+            
+            // Hide solution panel and show main content
+            document.getElementById('solution-panel').style.display = 'none';
+            document.getElementById('result-panel').style.display = 'none';
+            document.querySelector('.main-content').style.display = 'flex';
+            document.querySelector('.mobile-nav').style.display = 'block';
+            
+            // Reset question palette and display
+            updateQuestionPalette();
+            displayQuestion();
+            startTimer();
+        }
+        
+        // Submit test
+        function submitTest() {
+            // Calculate time taken
+            const endTime = new Date();
+            const timeTaken = Math.floor((endTime - startTime) / 1000);
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            const timeTakenStr = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            // Calculate score and rank
+            const score = calculateScore();
+            const rank = calculateRank(score);
+            
+            // Display results
+            document.getElementById('score-value').textContent = score.toFixed(2);
+            document.getElementById('rank-value').textContent = rank;
+            document.getElementById('time-taken').textContent = timeTakenStr;
+            
+            // Show result panel and hide question panel
+            document.getElementById('result-panel').style.display = 'block';
+            document.querySelector('.main-content').style.display = 'none';
+            document.querySelector('.mobile-nav').style.display = 'none';
+            
+            hideSubmitModal();
+        }
+        
+        // Initialize the test
+        window.onload = function() {
+            initQuestionPalette();
+            displayQuestion();
+            startTimer();
+            
+            // Add event listener for language change
+            document.getElementById('language-select').addEventListener('change', changeLanguage);
+            
+            // Add event listener for solution language change
+            document.getElementById('solution-language-select').addEventListener('change', changeSolutionLanguage);
+        };
+    </script>
+</body>
+</html>
