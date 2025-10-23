@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-23LSZJ3WYJ');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Me or Love Me Not - Romantic Petal Tearing Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffcce6 0%, #ffe6f2 50%, #ffd9e8 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #8a1c4a;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            padding: 35px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #ff4d94 0%, #ff1a75 50%, #d63384 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
+            letter-spacing: 1px;
+        }
+
+        .game-screen {
+            display: none;
+        }
+
+        #initial-screen {
+            display: block;
+        }
+
+        .instructions {
+            font-size: 1.3rem;
+            margin-bottom: 35px;
+            color: #8a1c4a;
+            font-weight: 500;
+        }
+
+        .gender-selection {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .gender-btn {
+            padding: 16px 35px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            background: linear-gradient(135deg, #ff4d94 0%, #ff80ab 100%);
+            color: white;
+            box-shadow: 0 6px 20px rgba(255, 77, 148, 0.4);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gender-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .gender-btn:hover::before {
+            left: 100%;
+        }
+
+        .gender-btn:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 12px 25px rgba(255, 77, 148, 0.6);
+        }
+
+        .rose-container {
+            position: relative;
+            width: 350px;
+            height: 450px;
+            margin: 0 auto 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rose {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rose-center {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle at 30% 30%, #ffcc00, #ffaa00, #e69500);
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 
+                0 0 25px rgba(255, 204, 0, 0.8),
+                inset 0 0 15px rgba(255, 230, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #b37700;
+            font-size: 1.2rem;
+            animation: gentle-pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes gentle-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .petal {
+            position: absolute;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.7rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            box-shadow: 
+                inset 5px 5px 10px rgba(255, 255, 255, 0.5),
+                inset -5px -5px 10px rgba(190, 0, 70, 0.3),
+                2px 5px 10px rgba(0, 0, 0, 0.15);
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+        }
+
+        .petal:hover {
+            transform: scale(1.15);
+            filter: brightness(1.1) drop-shadow(3px 6px 8px rgba(0,0,0,0.3));
+        }
+
+        .petal.falling {
+            animation: fall 4s forwards;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1;
+            }
+            20% {
+                transform: translate(-10px, 50px) rotate(-20deg);
+            }
+            40% {
+                transform: translate(15px, 120px) rotate(15deg);
+            }
+            60% {
+                transform: translate(-5px, 200px) rotate(-10deg);
+            }
+            80% {
+                transform: translate(8px, 300px) rotate(5deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(5px, 500px) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        .message {
+            font-size: 2.4rem;
+            font-family: 'Dancing Script', cursive;
+            margin: 25px 0;
+            min-height: 70px;
+            color: #d63384;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+        }
+
+        .petal-counter {
+            display: none;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            background: linear-gradient(135deg, #ff80ab 0%, #ff4d94 100%);
+            color: white;
+            box-shadow: 0 5px 18px rgba(255, 77, 148, 0.4);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 77, 148, 0.6);
+        }
+
+        .result-screen {
+            display: none;
+            padding: 25px;
+        }
+
+        .result-message {
+            font-size: 3rem;
+            font-family: 'Dancing Script', cursive;
+            margin: 25px 0;
+            color: #d63384;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-image {
+            width: 220px;
+            height: 220px;
+            margin: 25px auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5.5rem;
+            color: white;
+            box-shadow: 0 15px 30px rgba(255, 77, 148, 0.5);
+            transition: all 0.5s ease;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .social-sharing {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin: 35px 0;
+        }
+
+        .social-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-7px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .facebook { background-color: #3b5998; }
+        .instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .whatsapp { background-color: #25D366; }
+        .twitter { background-color: #1DA1F2; }
+        .threads { background-color: #000000; }
+
+        .music-toggle {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            color: #d63384;
+            cursor: pointer;
+            transition: transform 0.4s ease;
+            z-index: 10;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.3);
+        }
+
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 1.5rem;
+            color: rgba(255, 77, 148, 0.3);
+            animation: float 8s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: sparkle 1.5s ease-out;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) rotate(180deg);
+                opacity: 0;
+            }
+        }
+
+        .progress-ring {
+            position: absolute;
+            top: 20px;
+            width: 60px;
+            height: 60px;
+            transform: rotate(-90deg);
+            z-index: 100;
+        }
+
+        .progress-ring-circle {
+            stroke: #ff4d94;
+            stroke-width: 4;
+            fill: transparent;
+            stroke-dasharray: 157;
+            stroke-dashoffset: 157;
+            transition: stroke-dashoffset 0.5s ease;
+            filter: drop-shadow(0 0 3px rgba(255, 77, 148, 0.5));
+        }
+
+        /* Game Rules Section */
+        .rules-container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .rules-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: #d63384;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .rules-content {
+            text-align: left;
+        }
+
+        .rules-section {
+            margin-bottom: 30px;
+        }
+
+        .rules-section h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            color: #8a1c4a;
+            margin-bottom: 15px;
+            border-left: 4px solid #ff80ab;
+            padding-left: 15px;
+        }
+
+        .rules-section p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .rules-section ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .rules-section li {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .step-number {
+            background: linear-gradient(to right, #ff4d94, #ff80ab);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .faq-item {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 20px;
+        }
+
+        .faq-question {
+            font-size: 1.2rem;
+            color: #8a1c4a;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            display: none;
+            padding-top: 10px;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .gender-selection {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .rose-container {
+                width: 300px;
+                height: 400px;
+            }
+            
+            .message {
+                font-size: 2rem;
+            }
+            
+            .result-message {
+                font-size: 2.5rem;
+            }
+            
+            .rules-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="music-toggle" id="music-toggle">
+            <i class="fas fa-volume-up"></i>
+        </button>
+        
+        <div class="floating-hearts" id="floating-hearts"></div>
+        
+        <h1>Love Me or Love Me Not</h1>
+        
+        <!-- Initial Screen -->
+        <div class="game-screen" id="initial-screen">
+            <p class="instructions">Select your gender to begin the game</p>
+            <div class="gender-selection">
+                <button class="gender-btn" id="male-btn">You are Male</button>
+                <button class="gender-btn" id="female-btn">You are Female</button>
+            </div>
+            <div class="rose-container">
+                <div class="rose" id="initial-rose">
+                    <div class="rose-center"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Game Screen -->
+        <div class="game-screen" id="game-screen">
+            <p class="instructions">Click on a petal to tear it away</p>
+            <div class="petal-counter" id="petal-counter"></div>
+            <div class="message" id="message"></div>
+            <div class="rose-container">
+                <svg class="progress-ring" id="progress-ring">
+                    <circle class="progress-ring-circle" id="progress-circle" r="25" cx="30" cy="30"></circle>
+                </svg>
+                <div class="rose" id="game-rose">
+                    <div class="rose-center"></div>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="btn" id="change-gender-btn">Change Gender</button>
+                <button class="btn" id="reset-btn">Reset Game</button>
+            </div>
+        </div>
+        
+        <!-- Result Screen -->
+        <div class="game-screen" id="result-screen">
+            <div class="result-message" id="result-message"></div>
+            <div class="result-image" id="result-image">
+                <i class="fas fa-heart"></i>
+            </div>
+            <p class="instructions" id="result-text"></p>
+            
+            <div class="social-sharing">
+                <div class="social-btn facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </div>
+                <div class="social-btn instagram">
+                    <i class="fab fa-instagram"></i>
+                </div>
+                <div class="social-btn whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="social-btn twitter">
+                    <i class="fab fa-twitter"></i>
+                </div>
+                <div class="social-btn threads">
+                    <i class="fab fa-threads"></i>
+                </div>
+            </div>
+            
+            <button class="btn" id="play-again-btn">Play Again</button>
+        </div>
+    </div>
+
+    <!-- Game Rules Section -->
+    <div class="rules-container">
+        <h2 class="rules-title">Game Rules & Instructions</h2>
+        
+        <div class="rules-content">
+            <div class="rules-section">
+                <h3>How to Play Love Me or Love Me Not</h3>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Select Your Gender</h3>
+                        <p>Begin by choosing whether you are male or female. This determines the pronouns used in the game (He/She).</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Start Tearing Petals</h3>
+                        <p>Click on the beautiful rose petals one by one. Each petal you tear will reveal an alternating message.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Discover Your Fate</h3>
+                        <p>The game alternates between "He/She loves me" and "He/She loves me not" with each petal. The last petal determines your fortune!</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Share Your Result</h3>
+                        <p>After the final petal, share your romantic fortune with friends on social media!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rules-section">
+                <h3>Game Rules</h3>
+                <h3>Objective</h3>
+                <p>Discover whether your crush or loved one returns your feelings by tearing petals from a digital rose.</p>
+                
+                <h3>Gameplay Rules</h3>
+                <ul>
+                    <li>Each rose has a random number of petals (between 9-19)</li>
+                    <li>Messages alternate with each petal: "He/She loves me" then "He/She loves me not"</li>
+                    <li>The final petal determines your romantic fortune</li>
+                    <li>You can restart the game anytime to try again</li>
+                    <li>Change your gender selection between games if needed</li>
+                </ul>
+                
+                <h3>Tips for Best Experience</h3>
+                <ul>
+                    <li>Play with sound on for immersive experience</li>
+                    <li>Focus on one person when playing for accurate results</li>
+                    <li>Share your results for fun with friends</li>
+                    <li>Remember it's a game - real relationships need communication!</li>
+                </ul>
+            </div>
+
+            <div class="rules-section">
+                <h3>Frequently Asked Questions</h3>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How does the Love Me or Love Me Not game work?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The Love Me or Love Me Not game is a digital version of the traditional flower petal fortune-telling game. You tear virtual petals from a beautiful rose, with each petal alternating between "loves me" and "loves me not." The last petal reveals your romantic fortune.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is the Love Me or Love Me Not game accurate?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>This is a fun fortune-telling game meant for entertainment purposes. While it's based on a traditional romantic ritual, it shouldn't be taken as a serious relationship predictor. Real relationships require communication, trust, and mutual understanding.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I play Love Me or Love Me Not on mobile?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Our Love Me or Love Me Not game is fully responsive and works perfectly on mobile devices, tablets, and desktop computers. You can play anywhere, anytime.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How many petals does the rose have?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Each rose in our game has a random number of petals between 9 and 19, making each playthrough unique. The random petal count adds to the excitement and unpredictability of the game.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="tear-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-quick-jump-arcade-game-239.mp3"></audio>
+    <audio id="bg-music" loop src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3"></audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Game state
+            const gameState = {
+                gender: null,
+                currentPetal: 0,
+                totalPetals: 0,
+                lovesMe: true,
+                gameActive: false
+            };
+
+            // Possible petal counts
+            const petalCounts = [9, 11, 17, 14, 11, 15, 12, 17, 13, 15, 19, 9, 17, 19, 15, 11, 19];
+            
+            // DOM elements
+            const initialScreen = document.getElementById('initial-screen');
+            const gameScreen = document.getElementById('game-screen');
+            const resultScreen = document.getElementById('result-screen');
+            const maleBtn = document.getElementById('male-btn');
+            const femaleBtn = document.getElementById('female-btn');
+            const changeGenderBtn = document.getElementById('change-gender-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const playAgainBtn = document.getElementById('play-again-btn');
+            const messageEl = document.getElementById('message');
+            const gameRose = document.getElementById('game-rose');
+            const resultMessageEl = document.getElementById('result-message');
+            const resultTextEl = document.getElementById('result-text');
+            const resultImage = document.getElementById('result-image');
+            const musicToggle = document.getElementById('music-toggle');
+            const tearSound = document.getElementById('tear-sound');
+            const bgMusic = document.getElementById('bg-music');
+            const floatingHearts = document.getElementById('floating-hearts');
+            const progressCircle = document.getElementById('progress-circle');
+            
+            // Social sharing buttons
+            const socialButtons = document.querySelectorAll('.social-btn');
+            
+            // Initialize the game
+            function initGame() {
+                // Check if gender is stored in localStorage
+                const storedGender = localStorage.getItem('loveGameGender');
+                if (storedGender) {
+                    gameState.gender = storedGender;
+                    showGameScreen();
+                }
+                
+                // Create initial rose
+                createInitialRose();
+                
+                // Create floating hearts
+                createFloatingHearts();
+                
+                // Set up event listeners
+                maleBtn.addEventListener('click', () => selectGender('male'));
+                femaleBtn.addEventListener('click', () => selectGender('female'));
+                changeGenderBtn.addEventListener('click', showInitialScreen);
+                resetBtn.addEventListener('click', resetGame);
+                playAgainBtn.addEventListener('click', resetGame);
+                musicToggle.addEventListener('click', toggleMusic);
+                
+                // Set up social sharing
+                socialButtons.forEach(button => {
+                    button.addEventListener('click', shareResult);
+                });
+
+                // FAQ toggle functionality
+                document.querySelectorAll('.faq-question').forEach(question => {
+                    question.addEventListener('click', () => {
+                        const answer = question.nextElementSibling;
+                        answer.classList.toggle('active');
+                        
+                        // Rotate chevron icon
+                        const icon = question.querySelector('i');
+                        icon.style.transform = answer.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+                    });
+                });
+            }
+            
+            // Create floating hearts in background
+            function createFloatingHearts() {
+                floatingHearts.innerHTML = '';
+                for (let i = 0; i < 15; i++) {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = '<i class="fas fa-heart"></i>';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDelay = Math.random() * 8 + 's';
+                    heart.style.fontSize = (Math.random() * 1 + 1) + 'rem';
+                    floatingHearts.appendChild(heart);
+                }
+            }
+            
+            // Create initial rose (static)
+            function createInitialRose() {
+                const initialRose = document.getElementById('initial-rose');
+                initialRose.innerHTML = '<div class="rose-center"></div>';
+                
+                // Create a beautiful decorative rose with CSS
+                for (let i = 0; i < 16; i++) {
+                    const angle = (i / 16) * Math.PI * 2;
+                    const radius = 140;
+                    const x = Math.cos(angle) * radius;
+                    const y = Math.sin(angle) * radius;
+                    
+                    const petal = document.createElement('div');
+                    petal.className = 'petal';
+                    petal.style.width = '80px';
+                    petal.style.height = '100px';
+                    petal.style.background = `linear-gradient(135deg, #ff4d94, #ff1a75, #e60073)`;
+                    petal.style.transform = `translate(${x}px, ${y}px) rotate(${angle}rad)`;
+                    petal.style.zIndex = '2';
+                    
+                    initialRose.appendChild(petal);
+                }
+            }
+            
+            // Create interactive rose with petals
+            function createInteractiveRose() {
+                gameRose.innerHTML = '<div class="rose-center"></div>';
+                gameState.currentPetal = 0;
+                gameState.lovesMe = true;
+                
+                // Randomly select petal count
+                gameState.totalPetals = petalCounts[Math.floor(Math.random() * petalCounts.length)];
+                
+                // Update progress ring
+                updateProgressRing();
+                
+                // Create petals in multiple layers with beautiful gradients
+                const layers = [
+                    { 
+                        count: Math.floor(gameState.totalPetals * 0.4), 
+                        radius: 100, 
+                        size: { width: 70, height: 90 }, 
+                        colors: ['#ff80ab', '#ff4d94', '#ff1a75'] 
+                    },
+                    { 
+                        count: Math.floor(gameState.totalPetals * 0.35), 
+                        radius: 140, 
+                        size: { width: 80, height: 100 }, 
+                        colors: ['#ff4d94', '#ff1a75', '#e60073'] 
+                    },
+                    { 
+                        count: Math.floor(gameState.totalPetals * 0.25), 
+                        radius: 180, 
+                        size: { width: 75, height: 95 }, 
+                        colors: ['#ff1a75', '#e60073', '#cc0052'] 
+                    }
+                ];
+                
+                let petalIndex = 0;
+                
+                layers.forEach(layer => {
+                    for (let i = 0; i < layer.count; i++) {
+                        if (petalIndex >= gameState.totalPetals) break;
+                        
+                        const angle = (i / layer.count) * Math.PI * 2;
+                        const x = Math.cos(angle) * layer.radius;
+                        const y = Math.sin(angle) * layer.radius;
+                        
+                        // Add some randomness to position for natural look
+                        const randomX = (Math.random() - 0.5) * 25;
+                        const randomY = (Math.random() - 0.5) * 25;
+                        
+                        const petal = document.createElement('div');
+                        petal.className = 'petal';
+                        petal.style.width = layer.size.width + 'px';
+                        petal.style.height = layer.size.height + 'px';
+                        petal.style.background = `linear-gradient(135deg, ${layer.colors[0]}, ${layer.colors[1]}, ${layer.colors[2]})`;
+                        petal.style.transform = `translate(${x + randomX}px, ${y + randomY}px) rotate(${angle}rad)`;
+                        petal.dataset.index = petalIndex;
+                        
+                        petal.addEventListener('click', tearPetal);
+                        
+                        gameRose.appendChild(petal);
+                        petalIndex++;
+                    }
+                });
+                
+                updateMessage();
+            }
+            
+            // Update progress ring
+            function updateProgressRing() {
+                const circumference = 157; // 2 * π * r
+                const offset = circumference - (gameState.currentPetal / gameState.totalPetals) * circumference;
+                progressCircle.style.strokeDashoffset = offset;
+            }
+            
+            // Select gender and start game
+            function selectGender(gender) {
+                gameState.gender = gender;
+                localStorage.setItem('loveGameGender', gender);
+                showGameScreen();
+            }
+            
+            // Show initial screen
+            function showInitialScreen() {
+                initialScreen.style.display = 'block';
+                gameScreen.style.display = 'none';
+                resultScreen.style.display = 'none';
+            }
+            
+            // Show game screen
+            function showGameScreen() {
+                initialScreen.style.display = 'none';
+                gameScreen.style.display = 'block';
+                resultScreen.style.display = 'none';
+                
+                createInteractiveRose();
+                gameState.gameActive = true;
+            }
+            
+            // Show result screen
+            function showResultScreen() {
+                initialScreen.style.display = 'none';
+                gameScreen.style.display = 'none';
+                resultScreen.style.display = 'block';
+                
+                // Determine result
+                const lovesMe = !gameState.lovesMe; // Last petal determines result
+                const pronoun = gameState.gender === 'male' ? 'She' : 'He';
+                
+                if (lovesMe) {
+                    resultMessageEl.textContent = `${pronoun} Loves You!`;
+                    resultTextEl.textContent = "Your love is returned! Celebrate this beautiful connection.";
+                    resultImage.innerHTML = '<i class="fas fa-heart"></i>';
+                    resultImage.style.background = 'linear-gradient(135deg, #ff4d94, #ff80ab)';
+                    createSparkles();
+                } else {
+                    resultMessageEl.textContent = `${pronoun} Loves You Not`;
+                    resultTextEl.textContent = "Don't lose hope! The right person is out there for you.";
+                    resultImage.innerHTML = '<i class="fas fa-heart-broken"></i>';
+                    resultImage.style.background = 'linear-gradient(135deg, #6a6a6a, #9e9e9e)';
+                }
+            }
+            
+            // Create sparkle effect
+            function createSparkles() {
+                for (let i = 0; i < 20; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = Math.random() * 100 + '%';
+                    sparkle.style.top = Math.random() * 100 + '%';
+                    sparkle.style.animationDelay = Math.random() * 1.5 + 's';
+                    document.body.appendChild(sparkle);
+                    
+                    // Remove sparkle after animation
+                    setTimeout(() => {
+                        sparkle.remove();
+                    }, 1500);
+                }
+            }
+            
+            // Tear a petal
+            function tearPetal(e) {
+                if (!gameState.gameActive) return;
+                
+                const petal = e.target;
+                const index = parseInt(petal.dataset.index);
+                
+                // Play tear sound
+                tearSound.currentTime = 0;
+                tearSound.play();
+                
+                // Add falling animation with random direction
+                const randomX = (Math.random() - 0.5) * 100;
+                petal.style.setProperty('--random-x', `${randomX}px`);
+                petal.classList.add('falling');
+                
+                // Update game state
+                gameState.currentPetal++;
+                gameState.lovesMe = !gameState.lovesMe;
+                
+                // Update UI
+                updateMessage();
+                updateProgressRing();
+                
+                // Remove petal after animation
+                setTimeout(() => {
+                    petal.remove();
+                    
+                    // Check if game is over
+                    if (gameState.currentPetal >= gameState.totalPetals) {
+                        gameState.gameActive = false;
+                        setTimeout(showResultScreen, 1000);
+                    }
+                }, 1000);
+            }
+            
+            // Update message based on current state
+            function updateMessage() {
+                const pronoun = gameState.gender === 'male' ? 'She' : 'He';
+                messageEl.textContent = gameState.lovesMe ? 
+                    `${pronoun} loves me` : 
+                    `${pronoun} loves me not`;
+                    
+                // Add a subtle animation to the message
+                messageEl.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    messageEl.style.transform = 'scale(1)';
+                }, 300);
+            }
+            
+            // Reset game
+            function resetGame() {
+                showGameScreen();
+            }
+            
+            // Toggle background music
+            function toggleMusic() {
+                if (bgMusic.paused) {
+                    bgMusic.play();
+                    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                } else {
+                    bgMusic.pause();
+                    musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                }
+            }
+            
+            // Share result on social media
+            function shareResult(e) {
+                const platform = e.currentTarget.classList[1];
+                const pronoun = gameState.gender === 'male' ? 'She' : 'He';
+                const lovesMe = !gameState.lovesMe;
+                const resultText = lovesMe ? 
+                    `${pronoun} loves me! ❤️` : 
+                    `${pronoun} loves me not. 💔`;
+                
+                const shareText = `I played Love Me or Love Me Not and ${resultText} Try it yourself!`;
+                const shareUrl = window.location.href;
+                
+                let shareLink = '';
+                
+                switch(platform) {
+                    case 'facebook':
+                        shareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
+                        break;
+                    case 'twitter':
+                        shareLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+                        break;
+                    case 'whatsapp':
+                        shareLink = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+                        break;
+                    case 'instagram':
+                    case 'threads':
+                        navigator.clipboard.writeText(shareText + ' ' + shareUrl)
+                            .then(() => alert('Link copied to clipboard! You can now paste it on ' + platform));
+                        return;
+                }
+                
+                if (shareLink) {
+                    window.open(shareLink, '_blank', 'width=600,height=400');
+                }
+            }
+            
+            // Initialize the game
+            initGame();
+        });
+    </script>
+</body>
+</html>
