@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-23LSZJ3WYJ');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RRB NTPC Mock Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 15px 0;
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .timer-container {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .time-left {
+            margin-right: 10px;
+            font-size: 16px;
+            font-weight: normal;
+        }
+        
+        .timer {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            display: flex;
+            margin-top: 20px;
+            gap: 20px;
+        }
+        
+        .question-panel {
+            flex: 3;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            position: relative;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .question-number {
+            font-size: 18px;
+            color: #2a5298;
+            font-weight: 600;
+        }
+        
+        .language-selector {
+            display: flex;
+            align-items: center;
+        }
+        
+        .language-selector select {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: #333;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .question-text {
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .options {
+            margin-bottom: 25px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #edf2ff;
+            border-color: #2a5298;
+        }
+        
+        .option.selected {
+            background-color: #e3ecff;
+            border-color: #2a5298;
+        }
+        
+        .option.correct {
+            background-color: #e8f5e9;
+            border-color: #4CAF50;
+        }
+        
+        .option.incorrect {
+            background-color: #ffebee;
+            border-color: #f44336;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .btn-prev {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-clear {
+            background-color: #ff6b6b;
+            color: white;
+        }
+        
+        .btn-next {
+            background-color: #2a5298;
+            color: white;
+        }
+        
+        .btn-submit {
+            background-color: #28a745;
+            color: white;
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            font-size: 16px;
+        }
+        
+        .btn-reattempt {
+            background-color: #2a5298;
+            color: white;
+            padding: 12px 30px;
+            font-size: 16px;
+            margin: 20px auto;
+            display: block;
+        }
+        
+        .btn-show-solution {
+            background-color: #FF9800;
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .btn-check-answer {
+            background-color: #2196F3;
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .sidebar {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        .question-palette {
+            margin-bottom: 20px;
+        }
+        
+        .palette-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2a5298;
+        }
+        
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+        
+        .question-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .question-btn.answered {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+        
+        .question-btn.current {
+            background-color: #2a5298;
+            color: white;
+            border-color: #2a5298;
+        }
+        
+        .question-btn.marked {
+            background-color: #FF9800;
+            color: white;
+            border-color: #FF9800;
+        }
+        
+        .question-btn.not-answered {
+            background-color: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+        
+        .question-btn.not-visited {
+            background-color: white;
+            color: #333;
+            border-color: #ddd;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+        
+        .answered-color {
+            background-color: #4CAF50;
+        }
+        
+        .current-color {
+            background-color: #2a5298;
+        }
+        
+        .marked-color {
+            background-color: #FF9800;
+        }
+        
+        .not-answered-color {
+            background-color: #f44336;
+        }
+        
+        .not-visited-color {
+            background-color: white;
+            border: 1px solid #ddd;
+        }
+        
+        .instructions {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .instructions h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #2a5298;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+            font-size: 14px;
+        }
+        
+        .instructions li {
+            margin-bottom: 5px;
+        }
+        
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 0 0 8px 8px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .submit-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .result-panel {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-top: 20px;
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2a5298;
+        }
+        
+        .result-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            width: 30%;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .score {
+            color: #2a5298;
+        }
+        
+        .rank {
+            color: #FF9800;
+        }
+        
+        .time-taken {
+            color: #4CAF50;
+        }
+        
+        .solutions {
+            margin-top: 30px;
+        }
+        
+        .solution-item {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        
+        .solution-question {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .solution-answer {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .correct-answer {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .solution-explanation {
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            font-size: 14px;
+            line-height: 1.6;
+            display: none;
+        }
+        
+        .solution-explanation h4 {
+            color: #2a5298;
+            margin-bottom: 10px;
+        }
+        
+        .solution-explanation p {
+            margin-bottom: 10px;
+        }
+        
+        .solution-explanation ul {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .solution-explanation li {
+            margin-bottom: 5px;
+        }
+        
+        .solution-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ddd;
+        }
+        
+        .solution-stat {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .solution-stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .solution-stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .mobile-nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .mobile-btn {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            text-align: center;
+            background-color: #2a5298;
+            color: white;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                margin-bottom: 70px;
+            }
+            
+            .question-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .result-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-box {
+                width: 80%;
+                margin-bottom: 15px;
+            }
+            
+            .timer-container {
+                margin-top: 10px;
+            }
+            
+            .mobile-nav {
+                display: block;
+            }
+            
+            .navigation {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .navigation > div {
+                display: flex;
+                gap: 10px;
+            }
+            
+            .btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .solution-language-selector {
+                margin-top: 10px;
+            }
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        .modal h2 {
+            color: #2a5298;
+            margin-bottom: 15px;
+        }
+        
+        .modal p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .modal-btn-cancel {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .modal-btn-confirm {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        /* Testbook Style Solution Panel */
+        .solution-panel {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-top: 20px;
+        }
+        
+        .solution-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2a5298;
+        }
+        
+        .solution-language-selector {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        .solution-language-selector select {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: #333;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .solution-question-panel {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .solution-options {
+            margin-bottom: 25px;
+        }
+        
+        .solution-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .solution-option:hover {
+            background-color: #edf2ff;
+            border-color: #2a5298;
+        }
+        
+        .solution-option.selected {
+            background-color: #e3ecff;
+            border-color: #2a5298;
+        }
+        
+        .solution-option.correct {
+            background-color: #e8f5e9;
+            border-color: #4CAF50;
+        }
+        
+        .solution-option.incorrect {
+            background-color: #ffebee;
+            border-color: #f44336;
+        }
+        
+        .solution-option input {
+            margin-right: 10px;
+        }
+        
+        .solution-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .solution-feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .feedback-correct {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #4CAF50;
+        }
+        
+        .feedback-incorrect {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <!-- Placeholder for logo -->
+                    <div style="width: 50px; height: 50px; background-color: white; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #2a5298; font-weight: bold;">RRB</div>
+                    <h1>RRB NTPC Mock Test</h1>
+                </div>
+                <div class="timer-container">
+                    <span class="time-left">Time Left:</span>
+                    <div class="timer" id="timer">12:00</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="question-panel">
+                <div class="question-header">
+                    <div class="question-number">Question <span id="current-q">1</span> of 10</div>
+                    <div class="language-selector">
+                        <select id="language-select">
+                            <option value="english">English</option>
+                            <option value="hindi">हिन्दी (Hindi)</option>
+                            <option value="bengali">বাংলা (Bengali)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="question-text" id="question-text">
+                    <!-- Question will be loaded here by JavaScript -->
+                </div>
+                
+                <div class="options" id="options">
+                    <!-- Options will be loaded here by JavaScript -->
+                </div>
+                
+                <div class="navigation">
+                    <button class="btn btn-prev" onclick="prevQuestion()">Previous</button>
+                    <div>
+                        <button class="btn btn-clear" onclick="clearResponse()">Clear Response</button>
+                        <button class="btn" onclick="markQuestion()">Mark for Review</button>
+                        <button class="btn btn-next" onclick="nextQuestion()">Next</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="question-palette">
+                    <div class="palette-title">Question Palette</div>
+                    <div class="question-grid" id="question-palette">
+                        <!-- Question buttons will be generated by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color answered-color"></div>
+                        <span>Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color current-color"></div>
+                        <span>Current</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color marked-color"></div>
+                        <span>Marked</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color not-answered-color"></div>
+                        <span>Not Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color not-visited-color"></div>
+                        <span>Not Visited</span>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h3>Instructions</h3>
+                    <ul>
+                        <li>Total time for this test is 12 minutes.</li>
+                        <li>You can navigate between questions using Previous/Next buttons.</li>
+                        <li>Click on question number in palette to jump to that question.</li>
+                        <li>Use "Mark for Review" to flag questions you want to review later.</li>
+                        <li>Use "Clear Response" to remove your selected answer.</li>
+                        <li>Correct answer: +1 mark, Wrong answer: -0.33 mark</li>
+                    </ul>
+                </div>
+                
+                <div class="submit-section">
+                    <button class="btn btn-submit" onclick="showSubmitModal()">Submit Test</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav">
+            <div class="mobile-nav-buttons">
+                <div class="mobile-btn" onclick="prevQuestion()">Previous</div>
+                <div class="mobile-btn" onclick="nextQuestion()">Next</div>
+                <div class="mobile-btn" onclick="showSubmitModal()">Submit</div>
+            </div>
+        </div>
+        
+        <!-- Results Panel -->
+        <div class="result-panel" id="result-panel">
+            <div class="result-header">
+                <h2>Test Results</h2>
+                <p>You have successfully completed the mock test</p>
+            </div>
+            
+            <div class="result-stats">
+                <div class="stat-box">
+                    <div class="stat-value score" id="score-value">0</div>
+                    <div class="stat-label">Marks Obtained</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value rank" id="rank-value">0</div>
+                    <div class="stat-label">Rank</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value time-taken" id="time-taken">12:00</div>
+                    <div class="stat-label">Time Taken</div>
+                </div>
+            </div>
+            
+            <button class="btn btn-reattempt" onclick="showSolutionPanel()">View Solutions</button>
+            
+            <div class="solutions" id="solutions-container">
+                <!-- Solutions will be generated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Solution Panel (Testbook Style) -->
+        <div class="solution-panel" id="solution-panel">
+            <div class="solution-header">
+                <h2>Solutions</h2>
+                <p>Review your answers and understand the solutions</p>
+            </div>
+            
+            <div class="solution-language-selector">
+                <span>View solutions in:</span>
+                <select id="solution-language-select">
+                    <option value="english">English</option>
+                    <option value="hindi">हिन्दी (Hindi)</option>
+                    <option value="bengali">বাংলা (Bengali)</option>
+                </select>
+            </div>
+            
+            <div class="solution-controls">
+                <button class="btn btn-prev" onclick="prevSolutionQuestion()">Previous</button>
+                <button class="btn btn-next" onclick="nextSolutionQuestion()">Next</button>
+            </div>
+            
+            <div class="solution-question-panel">
+                <div class="question-number">Solution for Question <span id="solution-current-q">1</span> of 10</div>
+                <div class="question-text" id="solution-question-text">
+                    <!-- Solution question will be loaded here by JavaScript -->
+                </div>
+                
+                <div class="solution-options" id="solution-options">
+                    <!-- Solution options will be generated by JavaScript -->
+                </div>
+                
+                <div class="solution-feedback" id="solution-feedback">
+                    <!-- Feedback will be shown here -->
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button class="btn btn-check-answer" onclick="checkSolutionAnswer()">Check Answer</button>
+                    <button class="btn btn-show-solution" onclick="toggleSolution()">Show Solution</button>
+                </div>
+                
+                <div class="solution-explanation" id="solution-explanation">
+                    <!-- Solution explanation will be generated by JavaScript -->
+                </div>
+            </div>
+            
+            <button class="btn btn-reattempt" onclick="restartTest()">Reattempt Test</button>
+        </div>
+        
+        <footer>
+            <p>© 2023 Railway Recruitment Board. This is a mock test interface for practice purposes.</p>
+        </footer>
+    </div>
+
+    <!-- Submit Confirmation Modal -->
+    <div class="modal" id="submit-modal">
+        <div class="modal-content">
+            <h2>Submit Test</h2>
+            <p>You have <span id="answered-count">0</span> out of 10 questions answered.</p>
+            <p>Are you sure you want to submit the test?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" onclick="hideSubmitModal()">Cancel</button>
+                <button class="modal-btn modal-btn-confirm" onclick="submitTest()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions data in multiple languages with solutions
+        const questions = {
+            english: [
+                {
+                    text: "3, 8, 15, 24, 35, ?",
+                    options: ["46", "48", "50", "52"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>Detailed Solution:</h4>
+                        <p>The pattern is: n² - 1, starting from n=2.</p>
+                        <p>2² - 1 = 3</p>
+                        <p>3² - 1 = 8</p>
+                        <p>4² - 1 = 15</p>
+                        <p>5² - 1 = 24</p>
+                        <p>6² - 1 = 35</p>
+                        <p>7² - 1 = 48</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>The differences are 5, 7, 9, 11, 13 (increasing by 2), so next difference is 15. 35 + 13 = 48.</p>
+                        <p><strong>Answer: 48</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Series Completion"
+                },
+                {
+                    text: "9 : 81 :: 13 : ?",
+                    options: ["169", "144", "196", "121"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>Detailed Solution:</h4>
+                        <p>The pattern is: n : n²</p>
+                        <p>9² = 81</p>
+                        <p>13² = 169</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Square the first number to get the second.</p>
+                        <p><strong>Answer: 169</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1 minute",
+                    topic: "Analogy"
+                },
+                {
+                    text: "Pointing to a man, a woman said, \"He is the son of my mother's only brother.\" How is the man related to the woman?",
+                    options: ["Brother", "Cousin", "Uncle", "Nephew"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>Detailed Solution:</h4>
+                        <p>\"My mother's only brother\" = the woman's maternal uncle</p>
+                        <p>\"Son of my maternal uncle\" = the woman's cousin</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>\"My mother's brother\" = my uncle. \"Son of my uncle\" = my cousin.</p>
+                        <p><strong>Answer: Cousin</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Blood Relation"
+                },
+                {
+                    text: "Rahul walked 15 meters South, then turned left and walked 20 meters, then turned right and walked 10 meters. How far and in which direction is he from the starting point?",
+                    options: ["25 meters South-East", "25 meters South-West", "15 meters South-East", "15 meters South-West"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>Detailed Solution:</h4>
+                        <p>Let's track the movement:</p>
+                        <p>South 15m</p>
+                        <p>Left turn (East) 20m</p>
+                        <p>Right turn (South) 10m</p>
+                        <p>Net displacement: East 20m, South 15m + 10m = 25m</p>
+                        <p>Distance = √(20² + 25²) = √(400 + 625) = √1025 ≈ 25 meters</p>
+                        <p>Direction: South-East</p>
+                        <p><strong>Answer: 25 meters South-East</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Direction Sense"
+                },
+                {
+                    text: "2, 6, 12, 20, 30, ?",
+                    options: ["40", "42", "44", "48"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>Detailed Solution:</h4>
+                        <p>The pattern is: n × (n + 1) where n starts from 1.</p>
+                        <p>1 × 2 = 2</p>
+                        <p>2 × 3 = 6</p>
+                        <p>3 × 4 = 12</p>
+                        <p>4 × 5 = 20</p>
+                        <p>5 × 6 = 30</p>
+                        <p>6 × 7 = 42</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>The differences increase by 2 each time: 4, 6, 8, 10, so next difference is 12, making 30 + 12 = 42.</p>
+                        <p><strong>Answer: 42</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Series Completion"
+                },
+                {
+                    text: "A car travels 25 km North, then turns right and travels 15 km, then turns right again and travels 25 km. How far is it from the starting point?",
+                    options: ["15 km", "20 km", "25 km", "30 km"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>Detailed Solution:</h4>
+                        <p>Let's track the movement:</p>
+                        <p>North 25 km</p>
+                        <p>Right turn (East) 15 km</p>
+                        <p>Right turn (South) 25 km</p>
+                        <p>Net displacement: East 15 km, North-South = 0</p>
+                        <p>Distance = 15 km</p>
+                        <p><strong>Answer: 15 km</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Direction Sense"
+                },
+                {
+                    text: "In a row of 40 students, A is 15th from the left end and B is 10th from the right end. How many students are between A and B?",
+                    options: ["13", "14", "15", "16"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>Detailed Solution:</h4>
+                        <p>A's position from left: 15</p>
+                        <p>B's position from right: 10, so from left: 40 - 10 + 1 = 31</p>
+                        <p>Students between them = (31 - 15) - 1 = 16 - 1 = 15</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Total - (Left position + Right position) = 40 - (15 + 10) = 15</p>
+                        <p><strong>Answer: 15</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Puzzle"
+                },
+                {
+                    text: "Find the odd one out:",
+                    options: ["64", "125", "216", "350"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>Detailed Solution:</h4>
+                        <p>64 = 4³, 125 = 5³, 216 = 6³, 350 = 7³ = 343 (not 350)</p>
+                        <p>So 350 is not a perfect cube.</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>Identify the number that is not a perfect cube.</p>
+                        <p><strong>Answer: 350</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Classification"
+                },
+                {
+                    text: "Five friends - P, Q, R, S, T - have different heights. P is taller than Q but shorter than R. S is taller than T but shorter than Q. Who is the shortest?",
+                    options: ["P", "Q", "S", "T"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>Detailed Solution:</h4>
+                        <p>From the information:</p>
+                        <p>R > P > Q</p>
+                        <p>Q > S > T</p>
+                        <p>Combining: R > P > Q > S > T</p>
+                        <p>So T is the shortest.</p>
+                        <p><strong>Answer: T</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "Puzzle"
+                },
+                {
+                    text: "Which of the following figures is contained in the problem figure? (Problem figure shows a square divided into 4 smaller squares by two lines)",
+                    options: ["Triangle", "Square", "Circle", "Rectangle"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>Detailed Solution:</h4>
+                        <p>When a square is divided into 4 smaller squares by two perpendicular lines through the center, each of the resulting figures is a smaller square.</p>
+                        <p><strong>Shortcut Method:</strong></p>
+                        <p>The most obvious embedded figure is the smaller square.</p>
+                        <p><strong>Answer: Square</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "Embedded Figure"
+                }
+            ],
+            hindi: [
+                {
+                    text: "3, 8, 15, 24, 35, ?",
+                    options: ["46", "48", "50", "52"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>पैटर्न है: n² - 1, जहाँ n = 2 से शुरू होता है।</p>
+                        <p>2² - 1 = 3</p>
+                        <p>3² - 1 = 8</p>
+                        <p>4² - 1 = 15</p>
+                        <p>5² - 1 = 24</p>
+                        <p>6² - 1 = 35</p>
+                        <p>7² - 1 = 48</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>अंतर हैं 5, 7, 9, 11, 13 (हर बार 2 से बढ़ रहे हैं), अगला अंतर 15 होगा।</p>
+                        <p>इसलिए 35 + 13 = 48।</p>
+                        <p><strong>उत्तर: 48</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "श्रेणी पूर्ण करें"
+                },
+                {
+                    text: "9 : 81 :: 13 : ?",
+                    options: ["169", "144", "196", "121"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>पैटर्न है: n : n²</p>
+                        <p>9² = 81</p>
+                        <p>13² = 169</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>पहली संख्या का वर्ग करें।</p>
+                        <p><strong>उत्तर: 169</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1 minute",
+                    topic: "समानता (Analogy)"
+                },
+                {
+                    text: "एक औरत ने एक आदमी की ओर इशारा करते हुए कहा, \"वह मेरी माँ के एकमात्र भाई का बेटा है।\" वह आदमी उस औरत से कैसे संबंधित है?",
+                    options: ["भाई", "चचेरा भाई", "मामा", "भतीजा"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>\"मेरी माँ का एकमात्र भाई\" = उस औरत का मामा</p>
+                        <p>\"मेरे मामा का बेटा\" = मेरा चचेरा भाई</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>"माँ का भाई" = मामा, "मामा का बेटा" = चचेरा भाई।</p>
+                        <p><strong>उत्तर: चचेरा भाई</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "रक्त संबंध"
+                },
+                {
+                    text: "राहुल 15 मीटर दक्षिण चला, फिर बाएँ मुड़ा और 20 मीटर चला, फिर दाएँ मुड़ा और 10 मीटर चला। वह प्रारंभिक बिंदु से कितनी दूर और किस दिशा में है?",
+                    options: ["25 मीटर दक्षिण-पूर्व", "25 मीटर दक्षिण-पश्चिम", "15 मीटर दक्षिण-पूर्व", "15 मीटर दक्षिण-पश्चिम"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>दिशाएँ:</p>
+                        <p>दक्षिण 15 मीटर</p>
+                        <p>बाएँ (पूर्व) 20 मीटर</p>
+                        <p>दाएँ (दक्षिण) 10 मीटर</p>
+                        <p>कुल विस्थापन:</p>
+                        <p>पूर्व = 20 मीटर, दक्षिण = 25 मीटर</p>
+                        <p>दूरी = √(20² + 25²) = √1025 ≈ 25 मीटर</p>
+                        <p>दिशा = दक्षिण-पूर्व</p>
+                        <p><strong>उत्तर: 25 मीटर दक्षिण-पूर्व</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "दिशा ज्ञान"
+                },
+                {
+                    text: "2, 6, 12, 20, 30, ?",
+                    options: ["40", "42", "44", "48"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>पैटर्न: n × (n + 1), जहाँ n = 1 से शुरू होता है।</p>
+                        <p>1×2 = 2</p>
+                        <p>2×3 = 6</p>
+                        <p>3×4 = 12</p>
+                        <p>4×5 = 20</p>
+                        <p>5×6 = 30</p>
+                        <p>6×7 = 42</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>अंतर हैं 4, 6, 8, 10 ⇒ अगला अंतर 12 ⇒ 30 + 12 = 42</p>
+                        <p><strong>उत्तर: 42</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "श्रेणी पूर्ण करें"
+                },
+                {
+                    text: "एक कार 25 किमी उत्तर गई, फिर दाएँ मुड़कर 15 किमी गई, फिर फिर से दाएँ मुड़कर 25 किमी गई। वह प्रारंभिक बिंदु से कितनी दूर है?",
+                    options: ["15 किमी", "20 किमी", "25 किमी", "30 किमी"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>उत्तर 25 किमी → दाएँ (पूर्व) 15 किमी → दाएँ (दक्षिण) 25 किमी</p>
+                        <p>उत्तर-दक्षिण विस्थापन = 0</p>
+                        <p>पूर्व = 15 किमी</p>
+                        <p>दूरी = 15 किमी</p>
+                        <p><strong>उत्तर: 15 किमी</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "दिशा संबंधी प्रश्न"
+                },
+                {
+                    text: "40 छात्रों की पंक्ति में, A बाएँ से 15वाँ और B दाएँ से 10वाँ है। A और B के बीच कितने छात्र हैं?",
+                    options: ["13", "14", "15", "16"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>B की स्थिति बाएँ से = 40 - 10 + 1 = 31</p>
+                        <p>बीच के छात्र = (31 - 15) - 1 = 15</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>कुल - (बाएँ + दाएँ स्थिति) = 40 - (15 + 10) = 15</p>
+                        <p><strong>उत्तर: 15</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "पहेली"
+                },
+                {
+                    text: "विषम संख्या चुनें:",
+                    options: ["64", "125", "216", "350"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>64 = 4³, 125 = 5³, 216 = 6³, 350 ≠ 7³ (343)</p>
+                        <p>इसलिए 350 घन संख्या नहीं है।</p>
+                        <p><strong>शॉर्टकट विधि:</strong></p>
+                        <p>जो संख्या घन नहीं है, वही विषम है।</p>
+                        <p><strong>उत्तर: 350</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "वर्गीकरण"
+                },
+                {
+                    text: "पाँच दोस्त P, Q, R, S, T की ऊँचाई अलग-अलग है। P, Q से लंबा है लेकिन R से छोटा है। S, T से लंबा है लेकिन Q से छोटा है। सबसे छोटा कौन है?",
+                    options: ["P", "Q", "S", "T"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>R > P > Q</p>
+                        <p>Q > S > T</p>
+                        <p>मिलाकर: R > P > Q > S > T</p>
+                        <p>इसलिए T सबसे छोटा है।</p>
+                        <p><strong>उत्तर: T</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "तर्क पहेली"
+                },
+                {
+                    text: "निम्न में से कौन-सी आकृति प्रश्न आकृति में सम्मिलित है? (प्रश्न आकृति: एक वर्ग जो 4 छोटे वर्गों में विभाजित है)",
+                    options: ["त्रिभुज", "वर्ग", "वृत्त", "आयत"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>विस्तृत समाधान:</h4>
+                        <p>जब एक वर्ग को दो लम्बवत रेखाओं से विभाजित किया जाता है, तो चार छोटे वर्ग बनते हैं।</p>
+                        <p>इसलिए निहित आकृति "वर्ग" है।</p>
+                        <p><strong>उत्तर: वर्ग</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "आकृति"
+                }
+            ],
+            bengali: [
+                {
+                    text: "3, 8, 15, 24, 35, ?",
+                    options: ["46", "48", "50", "52"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>ধারা: n² - 1, যেখানে n = 2 থেকে শুরু।</p>
+                        <p>2² - 1 = 3</p>
+                        <p>3² - 1 = 8</p>
+                        <p>4² - 1 = 15</p>
+                        <p>5² - 1 = 24</p>
+                        <p>6² - 1 = 35</p>
+                        <p>7² - 1 = 48</p>
+                        <p><strong>শর্টকাট:</strong></p>
+                        <p>পার্থক্যগুলো 5, 7, 9, 11, 13 (প্রতি বার +2), পরেরটি হবে 15।</p>
+                        <p>অতএব 35 + 13 = 48।</p>
+                        <p><strong>উত্তর: 48</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "সিরিজ সম্পূর্ণ করুন"
+                },
+                {
+                    text: "9 : 81 :: 13 : ?",
+                    options: ["169", "144", "196", "121"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>ধারা: n : n²</p>
+                        <p>9² = 81</p>
+                        <p>13² = 169</p>
+                        <p><strong>শর্টকাট:</strong></p>
+                        <p>প্রথম সংখ্যার বর্গ নিন।</p>
+                        <p><strong>উত্তর: 169</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1 minute",
+                    topic: "উপমা (Analogy)"
+                },
+                {
+                    text: "এক মহিলা একজন পুরুষকে দেখিয়ে বলল, \"সে আমার মায়ের একমাত্র ভাইয়ের ছেলে।\" পুরুষটি মহিলার কী হন?",
+                    options: ["ভাই", "চাচাতো ভাই", "মামা", "ভাতিজা"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>"আমার মায়ের একমাত্র ভাই" = মামা</p>
+                        <p>"মামার ছেলে" = চাচাতো ভাই</p>
+                        <p><strong>উত্তর: চাচাতো ভাই</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "রক্ত সম্পর্ক"
+                },
+                {
+                    text: "রাহুল 15 মিটার দক্ষিণে হাঁটল, তারপর বামে ঘুরে 20 মিটার, তারপর ডানে ঘুরে 10 মিটার হাঁটল। সে শুরু পয়েন্ট থেকে কত দূরে এবং কোন দিকে আছে?",
+                    options: ["25 মিটার দক্ষিণ-পূর্ব", "25 মিটার দক্ষিণ-পশ্চিম", "15 মিটার দক্ষিণ-পূর্ব", "15 মিটার দক্ষিণ-পশ্চিম"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>দক্ষিণ 15 মিটার → পূর্ব 20 মিটার → দক্ষিণ 10 মিটার</p>
+                        <p>পূর্ব = 20 মিটার, দক্ষিণ = 25 মিটার</p>
+                        <p>দূরত্ব = √(20² + 25²) = √1025 ≈ 25 মিটার</p>
+                        <p>দিক = দক্ষিণ-পূর্ব</p>
+                        <p><strong>উত্তর: 25 মিটার দক্ষিণ-পূর্ব</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "দিক নির্ণয়"
+                },
+                {
+                    text: "2, 6, 12, 20, 30, ?",
+                    options: ["40", "42", "44", "48"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>ধারা: n × (n + 1), n = 1 থেকে শুরু।</p>
+                        <p>1×2 = 2</p>
+                        <p>2×3 = 6</p>
+                        <p>3×4 = 12</p>
+                        <p>4×5 = 20</p>
+                        <p>5×6 = 30</p>
+                        <p>6×7 = 42</p>
+                        <p><strong>শর্টকাট:</strong></p>
+                        <p>পার্থক্য: 4, 6, 8, 10 → পরেরটি 12 → 30 + 12 = 42</p>
+                        <p><strong>উত্তর: 42</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "সিরিজ সম্পূর্ণ করুন"
+                },
+                {
+                    text: "একটি গাড়ি 25 কিমি উত্তর যায়, তারপর ডানে ঘুরে 15 কিমি, তারপর আবার ডানে ঘুরে 25 কিমি যায়। গাড়িটি শুরু পয়েন্ট থেকে কত দূরে?",
+                    options: ["15 কিমি", "20 কিমি", "25 কিমি", "30 কিমি"],
+                    correctAnswer: 0,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>উত্তর 25 কিমি → পূর্ব 15 কিমি → দক্ষিণ 25 কিমি</p>
+                        <p>উত্তর-দক্ষিণ দূরত্ব = 0</p>
+                        <p>পূর্ব = 15 কিমি</p>
+                        <p>দূরত্ব = 15 কিমি</p>
+                        <p><strong>উত্তর: 15 কিমি</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "দিক সম্পর্কিত প্রশ্ন"
+                },
+                {
+                    text: "40 জন ছাত্রের সারিতে, A বাম দিক থেকে 15তম এবং B ডান দিক থেকে 10তম। A ও B-এর মধ্যে কতজন আছে?",
+                    options: ["13", "14", "15", "16"],
+                    correctAnswer: 2,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>B বাম থেকে = 40 - 10 + 1 = 31</p>
+                        <p>মাঝখানে = (31 - 15) - 1 = 15</p>
+                        <p><strong>শর্টকাট:</strong></p>
+                        <p>মোট - (বাম + ডান অবস্থান) = 40 - (15 + 10) = 15</p>
+                        <p><strong>উত্তর: 15</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "ধাঁধা"
+                },
+                {
+                    text: "বেমানান সংখ্যা নির্ণয় করুন:",
+                    options: ["64", "125", "216", "350"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>64 = 4³, 125 = 5³, 216 = 6³, 350 ≠ 7³ (343)</p>
+                        <p>তাই 350 ঘন সংখ্যা নয়।</p>
+                        <p><strong>উত্তর: 350</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "শ্রেণিবিন্যাস"
+                },
+                {
+                    text: "P, Q, R, S, T — পাঁচ বন্ধুর উচ্চতা আলাদা। P, Q-এর চেয়ে লম্বা কিন্তু R-এর চেয়ে খাটো। S, T-এর চেয়ে লম্বা কিন্তু Q-এর চেয়ে খাটো। সবচেয়ে খাটো কে?",
+                    options: ["P", "Q", "S", "T"],
+                    correctAnswer: 3,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>R > P > Q</p>
+                        <p>Q > S > T</p>
+                        <p>একত্রে: R > P > Q > S > T</p>
+                        <p>অতএব, T সবচেয়ে খাটো।</p>
+                        <p><strong>উত্তর: T</strong></p>
+                    `,
+                    difficulty: "Medium",
+                    timeToSolve: "2-3 minutes",
+                    topic: "যুক্তি ধাঁধা"
+                },
+                {
+                    text: "প্রদত্ত চিত্রে কোন আকৃতি আছে? (চিত্রে একটি বর্গ, যা ৪টি ছোট বর্গে ভাগ করা হয়েছে)",
+                    options: ["ত্রিভুজ", "বর্গ", "বৃত্ত", "আয়তক্ষেত্র"],
+                    correctAnswer: 1,
+                    explanation: `
+                        <h4>বিস্তারিত সমাধান:</h4>
+                        <p>একটি বর্গকে দুটি লম্ব রেখা দ্বারা ভাগ করলে চারটি ছোট বর্গ হয়।</p>
+                        <p>অতএব, অন্তর্নিহিত চিত্র হলো বর্গ।</p>
+                        <p><strong>উত্তর: বর্গ</strong></p>
+                    `,
+                    difficulty: "Easy",
+                    timeToSolve: "1-2 minutes",
+                    topic: "চিত্র বিশ্লেষণ"
+                }
+            ]
+        };
+
+        let currentQuestion = 0;
+        let currentSolutionQuestion = 0;
+        let answers = new Array(10).fill(null);
+        let marked = new Array(10).fill(false);
+        let visited = new Array(10).fill(false);
+        let solutionAnswers = new Array(10).fill(null);
+        let timeLeft = 12 * 60; // 12 minutes in seconds
+        let currentLanguage = 'english';
+        let solutionLanguage = 'english';
+        let startTime = new Date();
+        
+        // Initialize question palette
+        function initQuestionPalette() {
+            const palette = document.getElementById('question-palette');
+            for (let i = 0; i < 10; i++) {
+                const btn = document.createElement('div');
+                btn.className = 'question-btn not-visited';
+                btn.textContent = i + 1;
+                btn.onclick = () => goToQuestion(i);
+                palette.appendChild(btn);
+            }
+            updateQuestionPalette();
+        }
+        
+        // Update question palette highlighting
+        function updateQuestionPalette() {
+            const buttons = document.querySelectorAll('.question-btn');
+            buttons.forEach((btn, index) => {
+                btn.className = 'question-btn';
+                
+                if (index === currentQuestion) {
+                    btn.classList.add('current');
+                } else if (answers[index] !== null) {
+                    btn.classList.add('answered');
+                } else if (marked[index]) {
+                    btn.classList.add('marked');
+                } else if (visited[index]) {
+                    btn.classList.add('not-answered');
+                } else {
+                    btn.classList.add('not-visited');
+                }
+            });
+        }
+        
+        // Go to specific question
+        function goToQuestion(index) {
+            currentQuestion = index;
+            visited[index] = true;
+            displayQuestion();
+            updateQuestionPalette();
+        }
+        
+        // Display current question
+        function displayQuestion() {
+            document.getElementById('current-q').textContent = currentQuestion + 1;
+            document.getElementById('question-text').textContent = questions[currentLanguage][currentQuestion].text;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            questions[currentLanguage][currentQuestion].options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                if (answers[currentQuestion] === index) {
+                    optionDiv.classList.add('selected');
+                }
+                optionDiv.onclick = () => selectOption(index);
+                
+                optionDiv.innerHTML = `
+                    <input type="radio" name="option" id="option${index+1}" ${answers[currentQuestion] === index ? 'checked' : ''}>
+                    <label for="option${index+1}">${option}</label>
+                `;
+                
+                optionsContainer.appendChild(optionDiv);
+            });
+        }
+        
+        // Select an option
+        function selectOption(optionIndex) {
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            options[optionIndex].querySelector('input').checked = true;
+            
+            answers[currentQuestion] = optionIndex;
+            updateQuestionPalette();
+        }
+        
+        // Clear response for current question
+        function clearResponse() {
+            answers[currentQuestion] = null;
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.classList.remove('selected');
+                option.querySelector('input').checked = false;
+            });
+            updateQuestionPalette();
+        }
+        
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestion < 9) {
+                currentQuestion++;
+                visited[currentQuestion] = true;
+                displayQuestion();
+                updateQuestionPalette();
+            }
+        }
+        
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                visited[currentQuestion] = true;
+                displayQuestion();
+                updateQuestionPalette();
+            }
+        }
+        
+        // Mark question for review
+        function markQuestion() {
+            marked[currentQuestion] = !marked[currentQuestion];
+            updateQuestionPalette();
+        }
+        
+        // Timer function
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            const timer = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    submitTest();
+                } else {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+        
+        // Change language
+        function changeLanguage() {
+            const languageSelect = document.getElementById('language-select');
+            currentLanguage = languageSelect.value;
+            displayQuestion();
+        }
+        
+        // Change solution language
+        function changeSolutionLanguage() {
+            const solutionLanguageSelect = document.getElementById('solution-language-select');
+            solutionLanguage = solutionLanguageSelect.value;
+            displaySolutionQuestion();
+        }
+        
+        // Show submit confirmation modal
+        function showSubmitModal() {
+            const answeredCount = answers.filter(answer => answer !== null).length;
+            document.getElementById('answered-count').textContent = answeredCount;
+            document.getElementById('submit-modal').style.display = 'flex';
+        }
+        
+        // Hide submit confirmation modal
+        function hideSubmitModal() {
+            document.getElementById('submit-modal').style.display = 'none';
+        }
+        
+        // Calculate score
+        function calculateScore() {
+            let score = 0;
+            for (let i = 0; i < 10; i++) {
+                if (answers[i] !== null) {
+                    if (answers[i] === questions[currentLanguage][i].correctAnswer) {
+                        score += 1;
+                    } else {
+                        score -= 1/3;
+                    }
+                }
+            }
+            return Math.max(0, score); // Ensure score is not negative
+        }
+        
+        // Calculate rank (simulated)
+        function calculateRank(score) {
+            // In a real application, this would be calculated based on other test takers
+            // For demo purposes, we'll use a simple formula
+            const maxScore = 10;
+            const percentile = (score / maxScore) * 100;
+            
+            if (percentile >= 90) return 1;
+            if (percentile >= 80) return Math.floor(Math.random() * 10) + 1;
+            if (percentile >= 70) return Math.floor(Math.random() * 50) + 11;
+            if (percentile >= 60) return Math.floor(Math.random() * 100) + 51;
+            if (percentile >= 50) return Math.floor(Math.random() * 200) + 151;
+            return Math.floor(Math.random() * 500) + 351;
+        }
+        
+        // Show solution panel (Testbook style)
+        function showSolutionPanel() {
+            document.getElementById('result-panel').style.display = 'none';
+            document.getElementById('solution-panel').style.display = 'block';
+            displaySolutionQuestion();
+        }
+        
+        // Display solution question
+        function displaySolutionQuestion() {
+            document.getElementById('solution-current-q').textContent = currentSolutionQuestion + 1;
+            document.getElementById('solution-question-text').textContent = questions[solutionLanguage][currentSolutionQuestion].text;
+            
+            const solutionOptions = document.getElementById('solution-options');
+            solutionOptions.innerHTML = '';
+            
+            questions[solutionLanguage][currentSolutionQuestion].options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'solution-option';
+                optionDiv.onclick = () => selectSolutionOption(index);
+                
+                // Highlight correct answer only if user has checked answer
+                if (solutionAnswers[currentSolutionQuestion] !== null && 
+                    index === questions[solutionLanguage][currentSolutionQuestion].correctAnswer) {
+                    optionDiv.classList.add('correct');
+                }
+                
+                // Highlight user's selection
+                if (solutionAnswers[currentSolutionQuestion] === index) {
+                    optionDiv.classList.add('selected');
+                }
+                
+                optionDiv.innerHTML = `
+                    <input type="radio" name="solution-option" id="solution-option${index+1}" ${solutionAnswers[currentSolutionQuestion] === index ? 'checked' : ''}>
+                    <label for="solution-option${index+1}">${option}</label>
+                `;
+                
+                solutionOptions.appendChild(optionDiv);
+            });
+            
+            // Set solution explanation
+            document.getElementById('solution-explanation').innerHTML = questions[solutionLanguage][currentSolutionQuestion].explanation;
+            
+            // Hide solution explanation initially
+            document.getElementById('solution-explanation').style.display = 'none';
+            
+            // Reset feedback
+            document.getElementById('solution-feedback').style.display = 'none';
+        }
+        
+        // Select an option in solution panel
+        function selectSolutionOption(optionIndex) {
+            const options = document.querySelectorAll('.solution-option');
+            options.forEach(option => option.classList.remove('selected'));
+            options[optionIndex].classList.add('selected');
+            
+            solutionAnswers[currentSolutionQuestion] = optionIndex;
+            
+            // Update radio button
+            options.forEach((option, index) => {
+                option.querySelector('input').checked = (index === optionIndex);
+            });
+        }
+        
+        // Check answer in solution panel
+        function checkSolutionAnswer() {
+            if (solutionAnswers[currentSolutionQuestion] === null) {
+                alert('Please select an option first');
+                return;
+            }
+            
+            const options = document.querySelectorAll('.solution-option');
+            const correctIndex = questions[solutionLanguage][currentSolutionQuestion].correctAnswer;
+            const feedback = document.getElementById('solution-feedback');
+            
+            // Highlight correct answer
+            options[correctIndex].classList.add('correct');
+            
+            // Show feedback
+            if (solutionAnswers[currentSolutionQuestion] === correctIndex) {
+                feedback.textContent = 'Correct! Well done.';
+                feedback.className = 'solution-feedback feedback-correct';
+            } else {
+                feedback.textContent = 'Incorrect. The correct answer is highlighted in green.';
+                feedback.className = 'solution-feedback feedback-incorrect';
+            }
+            
+            feedback.style.display = 'block';
+        }
+        
+        // Toggle solution visibility
+        function toggleSolution() {
+            const explanation = document.getElementById('solution-explanation');
+            const button = document.querySelector('.btn-show-solution');
+            
+            if (explanation.style.display === 'none') {
+                explanation.style.display = 'block';
+                button.textContent = 'Hide Solution';
+            } else {
+                explanation.style.display = 'none';
+                button.textContent = 'Show Solution';
+            }
+        }
+        
+        // Navigate to next solution question
+        function nextSolutionQuestion() {
+            if (currentSolutionQuestion < 9) {
+                currentSolutionQuestion++;
+                displaySolutionQuestion();
+            }
+        }
+        
+        // Navigate to previous solution question
+        function prevSolutionQuestion() {
+            if (currentSolutionQuestion > 0) {
+                currentSolutionQuestion--;
+                displaySolutionQuestion();
+            }
+        }
+        
+        // Restart test
+        function restartTest() {
+            // Reset all variables
+            currentQuestion = 0;
+            currentSolutionQuestion = 0;
+            answers = new Array(10).fill(null);
+            solutionAnswers = new Array(10).fill(null);
+            marked = new Array(10).fill(false);
+            visited = new Array(10).fill(false);
+            timeLeft = 12 * 60;
+            startTime = new Date();
+            
+            // Hide solution panel and show main content
+            document.getElementById('solution-panel').style.display = 'none';
+            document.getElementById('result-panel').style.display = 'none';
+            document.querySelector('.main-content').style.display = 'flex';
+            document.querySelector('.mobile-nav').style.display = 'block';
+            
+            // Reset question palette and display
+            updateQuestionPalette();
+            displayQuestion();
+            startTimer();
+        }
+        
+        // Submit test
+        function submitTest() {
+            // Calculate time taken
+            const endTime = new Date();
+            const timeTaken = Math.floor((endTime - startTime) / 1000);
+            const minutes = Math.floor(timeTaken / 60);
+            const seconds = timeTaken % 60;
+            const timeTakenStr = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            // Calculate score and rank
+            const score = calculateScore();
+            const rank = calculateRank(score);
+            
+            // Display results
+            document.getElementById('score-value').textContent = score.toFixed(2);
+            document.getElementById('rank-value').textContent = rank;
+            document.getElementById('time-taken').textContent = timeTakenStr;
+            
+            // Show result panel and hide question panel
+            document.getElementById('result-panel').style.display = 'block';
+            document.querySelector('.main-content').style.display = 'none';
+            document.querySelector('.mobile-nav').style.display = 'none';
+            
+            hideSubmitModal();
+        }
+        
+        // Initialize the test
+        window.onload = function() {
+            initQuestionPalette();
+            displayQuestion();
+            startTimer();
+            
+            // Add event listener for language change
+            document.getElementById('language-select').addEventListener('change', changeLanguage);
+            
+            // Add event listener for solution language change
+            document.getElementById('solution-language-select').addEventListener('change', changeSolutionLanguage);
+        };
+    </script>
+</body>
+</html>
