@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
+   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -423,6 +423,57 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
         }
+
+        /* Game Rules Styles */
+        .game-rules {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-rules h2 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+
+        .rules-section {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .rules-section:last-child {
+            border-bottom: none;
+        }
+
+        .rules-section h3 {
+            color: #8BC34A;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .rules-section p, .rules-section li {
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .rules-section ul, .rules-section ol {
+            padding-left: 20px;
+        }
+
+        .rules-section li {
+            margin-bottom: 8px;
+        }
+
+        .rules-section strong {
+            color: #FFC107;
+        }
     </style>
 </head>
 <body>
@@ -580,6 +631,82 @@
         </div>
 
         <button class="reset-btn" id="reset-btn">Reset Choices</button>
+
+        <!-- GAME RULES SECTION -->
+        <div class="game-rules">
+            <h2>Game Rules & How to Play</h2>
+            
+            <div class="rules-content">
+                <div class="rules-section">
+                    <h3>🎯 Objective</h3>
+                    <p>The goal of Carbon Footprint Simulator is to make sustainable lifestyle choices across different categories to minimize your carbon footprint while learning about environmental impact.</p>
+                </div>
+                
+                <div class="rules-section">
+                    <h3>🔄 How to Play</h3>
+                    <ol>
+                        <li><strong>Select Choices:</strong> Click on different options in each category (Transportation, Diet, Housing, Energy)</li>
+                        <li><strong>See Impact:</strong> Watch how your choices affect your carbon footprint in real-time</li>
+                        <li><strong>Learn Facts:</strong> Read the "Did You Know?" popups to understand the environmental impact of each choice</li>
+                        <li><strong>Optimize:</strong> Try different combinations to achieve the lowest possible carbon footprint</li>
+                        <li><strong>Earn Achievements:</strong> Unlock sustainability badges by making eco-friendly choices</li>
+                    </ol>
+                </div>
+                
+                <div class="rules-section">
+                    <h3>📊 Scoring System</h3>
+                    <ul>
+                        <li><strong>Excellent (Under 4 tons):</strong> Minimal environmental impact</li>
+                        <li><strong>Good (4-6 tons):</strong> Moderate environmental impact</li>
+                        <li><strong>Poor (6-8 tons):</strong> Noticeable environmental impact</li>
+                        <li><strong>Critical (Over 8 tons):</strong> Significant environmental damage</li>
+                    </ul>
+                    <p>Your goal is to maintain an "Excellent" or "Good" environmental status.</p>
+                </div>
+                
+                <div class="rules-section">
+                    <h3>🏆 Achievements</h3>
+                    <ul>
+                        <li><strong>Eco-Starter:</strong> Begin your sustainability journey</li>
+                        <li><strong>Low-Carbon Diet:</strong> Choose plant-based or vegetarian options</li>
+                        <li><strong>Green Commuter:</strong> Select walking, biking, or electric vehicles</li>
+                        <li><strong>Energy Saver:</strong> Choose eco-homes and renewable energy</li>
+                        <li><strong>Eco Master:</strong> Optimize all categories for minimal impact</li>
+                    </ul>
+                </div>
+                
+                <div class="rules-section">
+                    <h3>🌍 Environmental Impact</h3>
+                    <p>The visual environment changes based on your carbon footprint:</p>
+                    <ul>
+                        <li><strong>Low footprint:</strong> Clear skies, healthy green trees</li>
+                        <li><strong>High footprint:</strong> Polluted skies, industrial elements, less vibrant nature</li>
+                    </ul>
+                </div>
+                
+                <div class="rules-section">
+                    <h3>💡 Tips for Success</h3>
+                    <ul>
+                        <li>Read the environmental facts to understand why certain choices are better</li>
+                        <li>Try to balance choices across all categories</li>
+                        <li>Reset and experiment with different combinations</li>
+                        <li>Aim for the Eco Master achievement by optimizing all categories</li>
+                    </ul>
+                </div>
+                
+                <div class="rules-section">
+                    <h3>📈 Learning Outcomes</h3>
+                    <p>By playing this game, you'll learn:</p>
+                    <ul>
+                        <li>The carbon impact of different transportation methods</li>
+                        <li>How dietary choices affect the environment</li>
+                        <li>The importance of energy-efficient housing</li>
+                        <li>The benefits of renewable energy sources</li>
+                        <li>Strategies for reducing your personal carbon footprint</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="fact-popup" id="fact-popup">
