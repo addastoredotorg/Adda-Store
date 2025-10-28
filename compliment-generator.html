@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
+   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -384,6 +384,81 @@
             margin-top: 15px;
         }
 
+        /* About Section Styles */
+        .about-section {
+            background: linear-gradient(135deg, #ffc3a0, #ffafbd);
+            padding: 60px 20px;
+            margin-top: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .about-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            background: linear-gradient(to right, #d63384, #fd7e14);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-section h3 {
+            color: #e83e8c;
+            margin: 30px 0 15px;
+            font-size: 1.5rem;
+        }
+
+        .about-section p {
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: #5a3e36;
+            font-size: 1.1rem;
+        }
+
+        .about-section strong {
+            color: #e83e8c;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-item h4 {
+            color: #e83e8c;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .feature-item p {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
@@ -414,6 +489,14 @@
             
             .share-options {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .about-section h2 {
+                font-size: 2rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -498,6 +581,48 @@
             </section>
         </main>
     </div>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="container">
+            <h2>About Compliment Generator</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Mission: Spreading Authentic Kindness</h3>
+                    <p>Compliment Generator is a <strong>community-powered positivity platform</strong> dedicated to spreading genuine kindness and uplifting people worldwide. In a digital world often filled with negativity, we provide a sanctuary of <strong>authentic human connection</strong> through thoughtful, human-written compliments.</p>
+                    
+                    <h3>How Our Compliment Community Works</h3>
+                    <p>Unlike automated generators, every compliment in our database comes from real people sharing genuine appreciation. Our <strong>community-driven approach</strong> ensures that each message carries the warmth and authenticity of human connection. We carefully review all submissions to maintain our standard of <strong>meaningful, uplifting content</strong> that truly makes a difference in people's days.</p>
+                    
+                    <h3>The Psychology Behind Compliments</h3>
+                    <p>Scientific research shows that receiving genuine compliments activates the same reward centers in the brain as receiving monetary gifts. Our platform leverages this <strong>psychological benefit</strong> to boost mental wellness, self-esteem, and overall happiness. Whether you're having a difficult day or simply want to spread positivity, Compliment Generator serves as your <strong>daily dose of encouragement</strong>.</p>
+                    
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <div class="feature-icon">💖</div>
+                            <h4>Mental Wellness Tool</h4>
+                            <p>A scientifically-backed resource for improving mood and building emotional resilience through positive reinforcement.</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🌍</div>
+                            <h4>Global Community</h4>
+                            <p>Join thousands of kind-hearted individuals across 64+ countries sharing authentic compliments and encouragement.</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🛡️</div>
+                            <h4>Safe Space</h4>
+                            <p>Our carefully moderated environment ensures all compliments are respectful, appropriate, and genuinely uplifting.</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Join Our Movement of Kindness</h3>
+                    <p>Compliment Generator is more than just a website - it's a growing movement dedicated to making the internet a kinder place. By participating, you're contributing to a <strong>global chain of positivity</strong> that has already delivered over 1,247 genuine compliments to people needing encouragement.</p>
+                    
+                    <p><strong>Keywords:</strong> compliment generator, positive affirmations, mental health support, kindness community, self-esteem boost, daily encouragement, positivity tool, human-written compliments, emotional wellness, community support, authentic praise, mood enhancement, confidence building, uplifting messages, supportive community</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Share Modal -->
     <div class="share-modal" id="share-modal">
