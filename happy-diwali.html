@@ -12,8 +12,8 @@
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Diwali 2025 - Share the Joy!</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Happy Diwali 2025 - Festival of Lights | Create & Share Greetings</title>
+    <meta name="description" content="Create beautiful personalized Diwali greetings. Share Happy Diwali 2025 wishes with stunning animations. Easy to use and fully customizable.">
     <style>
         * {
             margin: 0;
@@ -23,15 +23,23 @@
         }
 
         body {
-            background: linear-gradient(135deg, #0c0c0c, #1a0b2e, #2d1b69);
+            background: linear-gradient(-45deg, #ff0000, #ff8000, #ffff00, #00ff00, #0080ff, #8000ff, #ff0080);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
 
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .container {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 20px;
             text-align: center;
@@ -43,53 +51,68 @@
             margin: 30px 0;
         }
 
-        .goddess-image {
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid #ff9800;
-            box-shadow: 0 0 30px #ff9800;
-            margin: 20px auto;
-            animation: glow 3s infinite alternate;
-        }
-
-        @keyframes glow {
-            0% { box-shadow: 0 0 20px #ff9800; }
-            100% { box-shadow: 0 0 40px #ffcc00, 0 0 60px #ff9800; }
-        }
-
-        h1 {
-            font-size: 3.8rem;
+        .diwali-title {
+            font-size: 4rem;
             margin: 20px 0;
-            text-shadow: 0 0 10px #ff9800, 0 0 20px #ff9800;
-            background: linear-gradient(to right, #ff9800, #ffcc00, #ff9800);
+            text-shadow: 0 0 15px #ff9800, 0 0 25px #ff9800, 0 0 35px #ff3300;
+            background: linear-gradient(45deg, #ff9800, #ffcc00, #ffff00, #ffcc00, #ff9800);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: textGlow 2s infinite alternate;
+            animation: titleGlow 3s infinite alternate, float 4s ease-in-out infinite;
+            position: relative;
         }
 
-        @keyframes textGlow {
-            0% { text-shadow: 0 0 10px #ff9800; }
-            100% { text-shadow: 0 0 20px #ffcc00, 0 0 30px #ff9800; }
+        @keyframes titleGlow {
+            0% { 
+                text-shadow: 0 0 10px #ff9800, 0 0 20px #ff9800;
+                transform: scale(1);
+            }
+            50% {
+                text-shadow: 0 0 20px #ffcc00, 0 0 30px #ff6600, 0 0 40px #ff3300;
+                transform: scale(1.02);
+            }
+            100% { 
+                text-shadow: 0 0 15px #ffff00, 0 0 25px #ff9800, 0 0 35px #ff6600;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(-1deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
         }
 
         .message {
             font-size: 1.3rem;
             margin: 30px 0;
             line-height: 1.7;
-            background: rgba(255, 152, 0, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             padding: 25px;
             border-radius: 15px;
-            border-left: 5px solid #ff9800;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            animation: messagePulse 4s infinite;
+        }
+
+        @keyframes messagePulse {
+            0%, 100% { box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); }
+            50% { box-shadow: 0 5px 30px rgba(255, 255, 255, 0.2), 0 0 40px rgba(255, 152, 0, 0.2); }
         }
 
         .input-section {
             margin: 40px 0;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             padding: 25px;
             border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: sectionGlow 6s infinite;
+            backdrop-filter: blur(5px);
+        }
+
+        @keyframes sectionGlow {
+            0%, 100% { border-color: rgba(255, 255, 255, 0.3); }
+            50% { border-color: rgba(255, 255, 255, 0.6); }
         }
 
         .input-group {
@@ -104,46 +127,62 @@
             padding: 16px;
             border: none;
             border-radius: 50px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             font-size: 1.1rem;
             text-align: center;
             outline: none;
             border: 2px solid transparent;
             transition: all 0.3s;
+            animation: inputShine 8s infinite;
+        }
+
+        @keyframes inputShine {
+            0%, 100% { background: rgba(255, 255, 255, 0.2); }
+            50% { background: rgba(255, 255, 255, 0.3); }
         }
 
         input:focus {
-            border: 2px solid #ff9800;
-            box-shadow: 0 0 15px #ff9800;
-            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 20px #ffffff, 0 0 30px #ffcc00;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
         }
 
         button {
             padding: 16px 35px;
             border: none;
             border-radius: 50px;
-            background: linear-gradient(to right, #ff9800, #ffcc00);
+            background: linear-gradient(45deg, #ff9800, #ffcc00, #ff9800);
             color: #1a0b2e;
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+            box-shadow: 0 5px 20px rgba(255, 152, 0, 0.5);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
         }
 
         button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 152, 0, 0.6);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 152, 0, 0.7), 0 0 30px rgba(255, 204, 0, 0.4);
         }
 
         .share-section {
             margin: 40px 0;
             display: none;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             padding: 30px;
             border-radius: 15px;
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.5s ease-out, shareGlow 4s infinite;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        @keyframes shareGlow {
+            0%, 100% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+            50% { box-shadow: 0 5px 25px rgba(255, 255, 255, 0.2); }
         }
 
         @keyframes fadeIn {
@@ -152,13 +191,19 @@
         }
 
         .share-link {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             padding: 18px;
             border-radius: 10px;
             margin: 25px 0;
             word-break: break-all;
             font-size: 1rem;
-            border: 1px solid rgba(255, 152, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: linkPulse 3s infinite;
+        }
+
+        @keyframes linkPulse {
+            0%, 100% { border-color: rgba(255, 255, 255, 0.3); }
+            50% { border-color: rgba(255, 255, 255, 0.6); }
         }
 
         .social-share {
@@ -179,7 +224,25 @@
             font-weight: bold;
             transition: all 0.3s;
             min-width: 180px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .social-btn:hover::before {
+            left: 100%;
         }
 
         .whatsapp {
@@ -212,24 +275,16 @@
             color: white;
         }
 
-        .pinterest {
-            background: #BD081C;
-            color: white;
-        }
-
-        .reddit {
-            background: #FF5700;
-            color: white;
-        }
-
         .copy {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
+            background: linear-gradient(45deg, #6a11cb, #2575fc, #6a11cb);
             color: white;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
         }
 
         .social-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         .social-btn i {
@@ -254,7 +309,7 @@
             border-radius: 50% 50% 30% 30%;
             box-shadow: 0 0 25px #ff9800;
             z-index: 5;
-            animation: flicker 2s infinite alternate;
+            animation: flicker 2s infinite alternate, diyaFloat 6s ease-in-out infinite;
         }
 
         .diya::before {
@@ -267,11 +322,22 @@
             background: #ffcc00;
             border-radius: 50% 50% 20% 20%;
             box-shadow: 0 0 18px #ffcc00;
+            animation: flameFlicker 1.5s infinite alternate;
         }
 
         @keyframes flicker {
-            0%, 100% { opacity: 0.8; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
+            0%, 100% { opacity: 0.8; transform: scale(1); box-shadow: 0 0 20px #ff9800; }
+            50% { opacity: 1; transform: scale(1.05); box-shadow: 0 0 30px #ffcc00, 0 0 40px #ff9800; }
+        }
+
+        @keyframes flameFlicker {
+            0%, 100% { transform: scaleY(1) scaleX(1); opacity: 0.9; }
+            50% { transform: scaleY(1.1) scaleX(0.9); opacity: 1; }
+        }
+
+        @keyframes diyaFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
         }
 
         .left-diya {
@@ -282,12 +348,189 @@
             right: 10%;
         }
 
+        /* Viral Messages Section */
+        .viral-section {
+            margin: 50px 0;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+            animation: sectionPulse 5s infinite;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes sectionPulse {
+            0%, 100% { box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); }
+            50% { box-shadow: 0 5px 30px rgba(255, 255, 255, 0.2); }
+        }
+
+        .viral-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+            animation: titleShimmer 4s infinite;
+        }
+
+        @keyframes titleShimmer {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 204, 0, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(255, 204, 0, 0.8), 0 0 30px rgba(255, 152, 0, 0.6); }
+        }
+
+        .viral-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .viral-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.4s;
+            animation: cardFloat 8s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .viral-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff9800, #ffcc00, #ffff00);
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .viral-card:nth-child(2) {
+            animation-delay: 1.5s;
+        }
+
+        .viral-card:nth-child(3) {
+            animation-delay: 3s;
+        }
+
+        .viral-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .viral-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+        }
+
+        .viral-card h3 {
+            color: #ffcc00;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .viral-card p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* How to Use Section */
+        .how-to-section {
+            margin: 60px 0 40px;
+            padding: 50px 30px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .how-to-title {
+            font-size: 2.8rem;
+            margin-bottom: 40px;
+            color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .step-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #ff9800, #ffcc00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1a0b2e;
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.5);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ffcc00;
+        }
+
+        .step-card h3 {
+            color: #ffcc00;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .step-card p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
         .footer {
             margin-top: 60px;
             padding: 25px;
             font-size: 1rem;
             color: rgba(255, 255, 255, 0.7);
-            border-top: 1px solid rgba(255, 152, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
         }
 
         .share-title {
@@ -297,19 +540,30 @@
             text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
         }
 
+        /* Media queries for responsiveness */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.8rem;
+            .diwali-title {
+                font-size: 3rem;
             }
             
-            .goddess-image {
-                width: 180px;
-                height: 180px;
+            .viral-title, .how-to-title {
+                font-size: 2rem;
+            }
+            
+            .viral-grid, .steps-container {
+                grid-template-columns: 1fr;
             }
             
             .diya {
                 width: 50px;
                 height: 50px;
+            }
+            
+            .diya::before {
+                top: -12px;
+                left: 20px;
+                width: 10px;
+                height: 18px;
             }
             
             .left-diya {
@@ -331,8 +585,8 @@
         }
 
         @media (max-width: 480px) {
-            h1 {
-                font-size: 2.2rem;
+            .diwali-title {
+                font-size: 2.3rem;
             }
             
             .container {
@@ -342,6 +596,14 @@
             .message {
                 font-size: 1.1rem;
                 padding: 20px;
+            }
+            
+            .viral-card, .step-card {
+                padding: 20px 15px;
+            }
+            
+            .viral-card p, .step-card p {
+                font-size: 1rem;
             }
             
             input, button {
@@ -363,8 +625,7 @@
     
     <div class="container">
         <div class="header">
-            <img src="https://i.postimg.cc/FzNXyWpS/Generated-Image-October-19-2025-9-59-AM.png" alt="Goddess Laxmi" class="goddess-image">
-            <h1 id="greeting">Happy Diwali</h1>
+            <h1 class="diwali-title" id="greeting">Happy Diwali</h1>
         </div>
         
         <div class="message">
@@ -386,32 +647,86 @@
             
             <div class="social-share">
                 <a href="#" class="social-btn whatsapp" id="whatsappBtn" target="_blank">
-                    <i class="fab fa-whatsapp"></i> WhatsApp
+                    <span>📱</span> WhatsApp
                 </a>
                 <a href="#" class="social-btn facebook" id="facebookBtn" target="_blank">
-                    <i class="fab fa-facebook-f"></i> Facebook
+                    <span>👤</span> Facebook
                 </a>
                 <a href="#" class="social-btn instagram" id="instagramBtn" target="_blank">
-                    <i class="fab fa-instagram"></i> Instagram
+                    <span>📷</span> Instagram
                 </a>
                 <a href="#" class="social-btn twitter" id="twitterBtn" target="_blank">
-                    <i class="fab fa-twitter"></i> Twitter
+                    <span>🐦</span> Twitter
                 </a>
                 <a href="#" class="social-btn telegram" id="telegramBtn" target="_blank">
-                    <i class="fab fa-telegram"></i> Telegram
+                    <span>✈️</span> Telegram
                 </a>
                 <a href="#" class="social-btn linkedin" id="linkedinBtn" target="_blank">
-                    <i class="fab fa-linkedin-in"></i> LinkedIn
-                </a>
-                <a href="#" class="social-btn pinterest" id="pinterestBtn" target="_blank">
-                    <i class="fab fa-pinterest-p"></i> Pinterest
-                </a>
-                <a href="#" class="social-btn reddit" id="redditBtn" target="_blank">
-                    <i class="fab fa-reddit-alien"></i> Reddit
+                    <span>💼</span> LinkedIn
                 </a>
                 <button class="social-btn copy" id="copyBtn">
-                    <i class="fas fa-copy"></i> Copy Link
+                    <span>📋</span> Copy Link
                 </button>
+            </div>
+        </div>
+
+        <!-- Viral Diwali Messages Section -->
+        <div class="viral-section">
+            <h2 class="viral-title">🎇 Spread Diwali Joy with These Messages 🪔</h2>
+            
+            <div class="viral-grid">
+                <div class="viral-card">
+                    <div class="viral-icon">✨</div>
+                    <h3>For Family & Friends</h3>
+                    <p>"This Diwali, I wish that your life is as colorful, sparkling, and bright as the lights of Diwali. May this festival bring endless joy and prosperity to you and your family."</p>
+                </div>
+                
+                <div class="viral-card">
+                    <div class="viral-icon">🪔</div>
+                    <h3>Spiritual Blessings</h3>
+                    <p>"As you light the diyas this Diwali, may your life be filled with the divine glow of happiness, peace, and prosperity. May Goddess Lakshmi bless your home with wealth and abundance."</p>
+                </div>
+                
+                <div class="viral-card">
+                    <div class="viral-icon">🌟</div>
+                    <h3>Prosperity & Success</h3>
+                    <p>"May the lamps of Diwali illuminate your path to success and happiness. May your business flourish and your dreams come true. Wishing you a Diwali filled with sweet moments!"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How to Use Section -->
+        <div class="how-to-section">
+            <h2 class="how-to-title">🎊 How to Use This Diwali Greeting Page 🎊</h2>
+            
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">✍️</div>
+                    <h3>Enter Your Name</h3>
+                    <p>Type your name in the input field to personalize your Diwali greeting. This will create a special message just for you!</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">🔗</div>
+                    <h3>Generate Your Link</h3>
+                    <p>Click the "Generate Shareable Link" button to create your personalized Diwali greeting URL with your name included.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">📤</div>
+                    <h3>Share with Friends</h3>
+                    <p>Use the social media buttons to share your personalized Diwali greeting with family and friends across all platforms.</p>
+                </div>
+                
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">🎉</div>
+                    <h3>Spread the Joy</h3>
+                    <p>Watch as your friends receive your beautiful Diwali wishes and create their own personalized greetings to share!</p>
+                </div>
             </div>
         </div>
         
@@ -422,17 +737,80 @@
     </div>
 
     <script>
-        // Get URL parameters
+        // Enhanced colorful fireworks with more colors and effects
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.classList.add('firework');
+            
+            // Random position
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            
+            // Extended color palette
+            const colors = [
+                '#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffff00',
+                '#bfff00', '#80ff00', '#40ff00', '#00ff00', '#00ff40',
+                '#00ff80', '#00ffbf', '#00ffff', '#00bfff', '#0080ff',
+                '#0040ff', '#0000ff', '#4000ff', '#8000ff', '#bf00ff',
+                '#ff00ff', '#ff00bf', '#ff0080', '#ff0040'
+            ];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            firework.style.left = `${x}px`;
+            firework.style.top = `${y}px`;
+            firework.style.backgroundColor = color;
+            
+            document.body.appendChild(firework);
+            
+            // Enhanced animation with random sizes and durations
+            const size = 8 + Math.random() * 25;
+            const duration = 0.8 + Math.random() * 2.5;
+            
+            const keyframes = [
+                { 
+                    transform: 'scale(0) rotate(0deg)', 
+                    opacity: 1,
+                    boxShadow: `0 0 20px ${color}`
+                },
+                { 
+                    transform: `scale(${size}) rotate(${Math.random() * 360}deg)`, 
+                    opacity: 0,
+                    boxShadow: `0 0 40px ${color}, 0 0 60px ${color}`
+                }
+            ];
+            
+            const options = {
+                duration: duration * 1000,
+                easing: 'cubic-bezier(0.2, 0.8, 0.4, 1)'
+            };
+            
+            firework.animate(keyframes, options).onfinish = () => {
+                firework.remove();
+            };
+        }
+
+        // Create initial enhanced fireworks
+        for (let i = 0; i < 25; i++) {
+            setTimeout(() => createFirework(), i * 120);
+        }
+        
+        // Create fireworks every 2.5 seconds with varying intensity
+        setInterval(() => {
+            const fireworkCount = 6 + Math.floor(Math.random() * 8);
+            for (let i = 0; i < fireworkCount; i++) {
+                setTimeout(() => createFirework(), i * 150);
+            }
+        }, 2500);
+
+        // Rest of the existing JavaScript code remains the same
         const urlParams = new URLSearchParams(window.location.search);
         const fromParam = urlParams.get('from');
         
-        // Update greeting if 'from' parameter exists
         if (fromParam) {
             document.getElementById('greeting').textContent = `Happy Diwali from ${fromParam}`;
             document.getElementById('nameInput').value = fromParam;
         }
         
-        // Generate shareable link
         document.getElementById('generateBtn').addEventListener('click', function() {
             const nameInput = document.getElementById('nameInput').value.trim();
             
@@ -443,114 +821,38 @@
                 document.getElementById('shareLink').textContent = shareableUrl;
                 document.getElementById('shareSection').style.display = 'block';
                 
-                // Set up social sharing
                 const message = `🎇 Happy Diwali! ${nameInput} sent you special Diwali greetings. Click here to view and create your own: ${shareableUrl} 🪔`;
                 const encodedMessage = encodeURIComponent(message);
                 const encodedUrl = encodeURIComponent(shareableUrl);
                 
-                // WhatsApp
                 document.getElementById('whatsappBtn').href = `https://wa.me/?text=${encodedMessage}`;
-                
-                // Facebook
                 document.getElementById('facebookBtn').href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedMessage}`;
-                
-                // Instagram (opens in app or web)
                 document.getElementById('instagramBtn').href = `https://www.instagram.com/?url=${encodedUrl}`;
-                
-                // Twitter
                 document.getElementById('twitterBtn').href = `https://twitter.com/intent/tweet?text=${encodedMessage}&url=${encodedUrl}`;
-                
-                // Telegram
                 document.getElementById('telegramBtn').href = `https://t.me/share/url?url=${encodedUrl}&text=${encodedMessage}`;
-                
-                // LinkedIn
                 document.getElementById('linkedinBtn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
                 
-                // Pinterest
-                document.getElementById('pinterestBtn').href = `https://pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encodedMessage}`;
-                
-                // Reddit
-                document.getElementById('redditBtn').href = `https://reddit.com/submit?url=${encodedUrl}&title=${encodedMessage}`;
-                
-                // Copy Link
                 document.getElementById('copyBtn').addEventListener('click', function() {
                     navigator.clipboard.writeText(shareableUrl).then(() => {
                         const originalText = this.innerHTML;
-                        this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        this.innerHTML = '<span>✅</span> Copied!';
                         setTimeout(() => {
                             this.innerHTML = originalText;
                         }, 2000);
                     });
                 });
                 
-                // Scroll to share section
                 document.getElementById('shareSection').scrollIntoView({ behavior: 'smooth' });
                 
-                // Create celebration fireworks
-                createCelebrationFireworks();
+                // Enhanced celebration fireworks
+                for (let i = 0; i < 40; i++) {
+                    setTimeout(() => createFirework(), i * 80);
+                }
             } else {
                 alert('Please enter your name first to create your personalized Diwali greeting!');
             }
         });
         
-        // Fireworks animation
-        function createFirework() {
-            const firework = document.createElement('div');
-            firework.classList.add('firework');
-            
-            // Random position
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight;
-            
-            // Random color
-            const colors = ['#ff9800', '#ffcc00', '#ff6600', '#ff3300', '#ffff00', '#ff00ff', '#00ffff'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            
-            firework.style.left = `${x}px`;
-            firework.style.top = `${y}px`;
-            firework.style.backgroundColor = color;
-            
-            document.body.appendChild(firework);
-            
-            // Animate firework
-            const size = 5 + Math.random() * 15;
-            const duration = 1 + Math.random() * 2;
-            
-            const keyframes = [
-                { transform: 'scale(0)', opacity: 1 },
-                { transform: `scale(${size})`, opacity: 0 }
-            ];
-            
-            const options = {
-                duration: duration * 1000,
-                easing: 'cubic-bezier(0, 0.9, 0.57, 1)'
-            };
-            
-            firework.animate(keyframes, options).onfinish = () => {
-                firework.remove();
-            };
-        }
-        
-        // Create celebration fireworks (more intense)
-        function createCelebrationFireworks() {
-            for (let i = 0; i < 30; i++) {
-                setTimeout(() => createFirework(), i * 100);
-            }
-        }
-        
-        // Create initial fireworks
-        for (let i = 0; i < 20; i++) {
-            setTimeout(() => createFirework(), i * 150);
-        }
-        
-        // Create fireworks every 3 seconds
-        setInterval(() => {
-            for (let i = 0; i < 8; i++) {
-                setTimeout(() => createFirework(), i * 200);
-            }
-        }, 3000);
-        
-        // Add some floating diyas for mobile
         if (window.innerWidth < 768) {
             for (let i = 0; i < 5; i++) {
                 const diya = document.createElement('div');
@@ -562,7 +864,6 @@
             }
         }
         
-        // Auto-open share section if name is already in URL
         if (fromParam) {
             setTimeout(() => {
                 document.getElementById('generateBtn').click();
