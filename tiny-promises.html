@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
+   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -187,34 +187,46 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             min-height: 400px;
             position: relative;
+            overflow: visible;
+        }
+        
+        .plant-visualization {
+            position: relative;
+            width: 180px;
+            height: 250px;
+            margin: 10px auto;
         }
         
         .plant-pot {
-            width: 120px;
-            height: 80px;
+            width: 100px;
+            height: 70px;
             background: #795548;
             border-radius: 0 0 10px 10px;
             position: absolute;
             bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 1;
         }
         
         .plant-stem {
-            width: 10px;
+            width: 8px;
             height: 0;
             background: var(--primary-dark);
             position: absolute;
-            bottom: 80px;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
             transition: height 1s ease;
             z-index: 2;
         }
         
         .plant-leaf {
-            width: 40px;
-            height: 25px;
+            width: 35px;
+            height: 22px;
             background: var(--primary);
             border-radius: 50%;
             position: absolute;
@@ -225,51 +237,52 @@
         }
         
         .leaf-1 {
-            bottom: 150px;
-            left: 50%;
+            bottom: 120px;
+            left: 45%;
             transform-origin: bottom center;
         }
         
         .leaf-2 {
-            bottom: 180px;
-            right: 50%;
+            bottom: 140px;
+            right: 45%;
             transform-origin: bottom center;
         }
         
         .leaf-3 {
-            bottom: 210px;
-            left: 50%;
+            bottom: 160px;
+            left: 45%;
             transform-origin: bottom center;
         }
         
         .leaf-4 {
-            bottom: 240px;
-            right: 50%;
+            bottom: 180px;
+            right: 45%;
             transform-origin: bottom center;
         }
         
         .leaf-5 {
-            bottom: 270px;
-            left: 50%;
+            bottom: 200px;
+            left: 45%;
             transform-origin: bottom center;
         }
         
         .plant-flower {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             background: #FFEB3B;
             border-radius: 50%;
             position: absolute;
-            bottom: 300px;
-            opacity: 0;
-            transform: scale(0);
+            bottom: 220px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
             transition: all 0.5s ease;
             z-index: 4;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--accent);
-            font-size: 1.5rem;
+            font-size: 1.3rem;
+            opacity: 0;
         }
         
         .streak-counter {
@@ -291,6 +304,7 @@
         
         .progress-section {
             margin-top: 30px;
+            width: 100%;
         }
         
         .progress-bar {
@@ -356,6 +370,7 @@
             display: flex;
             gap: 15px;
             margin-top: 20px;
+            width: 100%;
         }
         
         .instructions {
@@ -474,14 +489,16 @@
                 <h2>Your Promise Plant</h2>
                 <p>Your plant grows with each kept promise</p>
                 
-                <div class="plant-flower" id="plant-flower">🌼</div>
-                <div class="plant-leaf leaf-5" id="leaf-5"></div>
-                <div class="plant-leaf leaf-4" id="leaf-4"></div>
-                <div class="plant-leaf leaf-3" id="leaf-3"></div>
-                <div class="plant-leaf leaf-2" id="leaf-2"></div>
-                <div class="plant-leaf leaf-1" id="leaf-1"></div>
-                <div class="plant-stem" id="plant-stem"></div>
-                <div class="plant-pot"></div>
+                <div class="plant-visualization">
+                    <div class="plant-flower" id="plant-flower">🌼</div>
+                    <div class="plant-leaf leaf-5" id="leaf-5"></div>
+                    <div class="plant-leaf leaf-4" id="leaf-4"></div>
+                    <div class="plant-leaf leaf-3" id="leaf-3"></div>
+                    <div class="plant-leaf leaf-2" id="leaf-2"></div>
+                    <div class="plant-leaf leaf-1" id="leaf-1"></div>
+                    <div class="plant-stem" id="plant-stem"></div>
+                    <div class="plant-pot"></div>
+                </div>
                 
                 <div class="streak-counter">
                     <div class="streak-number" id="streak-count">0</div>
@@ -795,7 +812,7 @@
             
             function updatePlant() {
                 // Update stem height based on plant growth
-                const stemHeight = 50 + (plantGrowth / 100) * 200;
+                const stemHeight = 30 + (plantGrowth / 100) * 150;
                 plantStem.style.height = `${stemHeight}px`;
                 
                 // Update leaves based on plant growth
@@ -814,10 +831,10 @@
                 // Update flower based on streak
                 if (streak >= 5) {
                     plantFlower.style.opacity = '1';
-                    plantFlower.style.transform = 'scale(1)';
+                    plantFlower.style.transform = 'translateX(-50%) scale(1)';
                 } else {
                     plantFlower.style.opacity = '0';
-                    plantFlower.style.transform = 'scale(0)';
+                    plantFlower.style.transform = 'translateX(-50%) scale(0)';
                 }
                 
                 // Update progress bar
