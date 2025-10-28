@@ -12,9 +12,11 @@
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mood Mosaic - A visual emotion tracker that transforms your feelings into beautiful abstract art. Track your mental wellness journey through color and pattern.">
-    <meta name="keywords" content="mood tracker, emotion journal, mental wellness, self-awareness, art therapy, psychology tool, emotional health, mood mosaic, visual journal">
-    <title>Mood Mosaic - Visual Emotion Tracker | Transform Feelings into Art</title>
+    <meta name="description" content="Mood Mosaic - Visual emotion tracker & mental wellness journal. Transform feelings into beautiful 3x3 abstract art patterns. Track emotions, build streaks, share your mood art.">
+    <meta name="keywords" content="mood tracker, emotion journal, mental wellness, self-awareness, art therapy, psychology tool, emotional health, mood mosaic, visual journal, feelings tracker, mental health app, mood art, emotion art">
+    <meta name="author" content="Mood Mosaic">
+    <title>Mood Mosaic - Visual Emotion Tracker | Transform Feelings into 3x3 Art Patterns</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #6d5dfc;
@@ -66,8 +68,9 @@
         
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 1fr 1fr;
             gap: 30px;
+            align-items: start;
         }
         
         @media (max-width: 768px) {
@@ -95,7 +98,6 @@
             width: 100%;
             aspect-ratio: 1;
             border-radius: 8px;
-            cursor: grab;
             transition: var(--transition);
             box-shadow: var(--shadow);
             display: flex;
@@ -104,14 +106,34 @@
             color: white;
             font-weight: bold;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 5px;
         }
         
-        .mood-tile:hover {
+        .mood-tile::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .mood-tile:hover::after,
+        .mood-tile.active::after {
+            opacity: 1;
+        }
+        
+        .mood-tile.active {
             transform: scale(1.05);
-        }
-        
-        .mood-tile:active {
-            cursor: grabbing;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
         
         .mosaic-container {
@@ -119,33 +141,43 @@
             padding: 25px;
             border-radius: 10px;
             box-shadow: var(--shadow);
-            min-height: 500px;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         .mosaic-grid {
             display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            gap: 5px;
-            margin-bottom: 20px;
-            min-height: 400px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 300px;
+            aspect-ratio: 1;
         }
         
         .mosaic-cell {
-            aspect-ratio: 1;
-            border-radius: 4px;
+            border-radius: 8px;
             background-color: #f0f0f0;
             transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
         }
         
         .mosaic-cell.filled {
             box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
         }
         
+        .mosaic-cell:hover {
+            border: 2px solid var(--primary);
+        }
+        
         .action-buttons {
             display: flex;
             gap: 15px;
             margin-top: 20px;
+            width: 100%;
         }
         
         button {
@@ -173,6 +205,62 @@
         button.secondary:hover {
             background-color: #cbd5e0;
         }
+        
+        .share-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+            width: 100%;
+            display: none;
+        }
+        
+        .share-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .share-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .share-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            font-size: 14px;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .share-btn.facebook { background: #3b5998; }
+        .share-btn.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .share-btn.twitter { background: #1DA1F2; }
+        .share-btn.threads { background: #000000; }
+        .share-btn.whatsapp { background: #25D366; }
+        .share-btn.telegram { background: #0088cc; }
+        .share-btn.pinterest { background: #BD081C; }
         
         .stats-panel {
             background: white;
@@ -262,6 +350,7 @@
             transform: translate(-50%, -50%);
             text-align: center;
             color: #a0aec0;
+            width: 80%;
         }
         
         .empty-state h3 {
@@ -284,23 +373,332 @@
             border: 1px solid #e2e8f0;
             border-radius: 6px;
         }
+        
+        .mobile-instruction {
+            display: none;
+            background: #e6fffa;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 500;
+            color: #234e52;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-instruction {
+                display: block;
+            }
+            
+            .mood-palette {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .share-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .mood-palette {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .share-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .selected-mood-indicator {
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 6px;
+            background: #f0f9ff;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .selected-mood-indicator.active {
+            display: block;
+        }
+        
+        .about-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+        
+        .about-section h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .about-text {
+            line-height: 1.8;
+        }
+        
+        .about-text h3 {
+            margin: 20px 0 10px;
+            color: var(--primary-dark);
+        }
+        
+        .benefits-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .benefits-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .benefits-list li:before {
+            content: "✓";
+            color: #06D6A0;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .seo-content {
+            margin-top: 30px;
+            line-height: 1.7;
+        }
+        
+        .seo-content h3 {
+            margin: 15px 0 10px;
+            color: var(--primary-dark);
+        }
+        
+        .download-btn {
+            background: #06D6A0;
+            margin-top: 10px;
+        }
+        
+        .download-btn:hover {
+            background: #05b386;
+        }
+        
+        .hidden-canvas {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+        
+        .share-image-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .share-image-container.active {
+            display: flex;
+        }
+        
+        .share-image-preview {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90%;
+            max-height: 90%;
+            text-align: center;
+        }
+        
+        .share-image-preview img {
+            max-width: 100%;
+            max-height: 70vh;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .preview-buttons {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .social-share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .social-share-modal.active {
+            display: flex;
+        }
+        
+        .social-share-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .social-share-content h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .social-share-content p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .social-share-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .social-share-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .social-share-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .site-link {
+            background: var(--primary);
+            padding: 10px 15px;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            display: inline-block;
+            word-break: break-all;
+        }
+        
+        .site-link:hover {
+            background: var(--primary-dark);
+        }
+        
+        .copy-link-btn {
+            background: #4ECDC4;
+            margin-left: 10px;
+            padding: 8px 12px;
+            font-size: 12px;
+        }
+        
+        .copy-link-btn:hover {
+            background: #45b7af;
+        }
+        
+        .share-instructions {
+            background: #f0f9ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: left;
+        }
+        
+        .share-instructions ol {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        .share-instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .auto-share-section {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .auto-share-btn {
+            background: #ff6b6b;
+            margin: 5px;
+        }
+        
+        .auto-share-btn:hover {
+            background: #ff5252;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Mood Mosaic</h1>
-            <p class="tagline">Transform your emotional journey into beautiful abstract art</p>
+            <p class="tagline">Transform your emotional journey into beautiful 3x3 abstract art patterns</p>
         </header>
         
         <div class="main-content">
             <div class="controls-panel">
                 <h2>How are you feeling today?</h2>
-                <p>Drag a color tile to the mosaic to represent your current emotion</p>
+                <p>Select a mood color, then tap on the mosaic to place it</p>
+                
+                <div class="mobile-instruction">
+                    Tap a color, then tap anywhere on the mosaic to place it
+                </div>
                 
                 <div class="date-selector">
                     <label for="current-date">Select Date:</label>
                     <input type="date" id="current-date">
+                </div>
+                
+                <div class="selected-mood-indicator" id="selected-mood-indicator">
+                    Selected: <span id="selected-mood-text">Happy</span>
                 </div>
                 
                 <div class="mood-palette">
@@ -360,21 +758,86 @@
                 </div>
             </div>
             
-            <div class="mosaic-container">
+            <div class="mosaic-container" id="mosaic-container">
                 <h2>Your Mood Mosaic</h2>
                 <p>Watch your emotional journey unfold as a beautiful abstract pattern</p>
                 
                 <div class="mosaic-grid" id="mosaic-grid">
-                    <!-- Mosaic cells will be generated by JavaScript -->
+                    <!-- 3x3 mosaic cells will be generated by JavaScript -->
                 </div>
                 
                 <div class="empty-state" id="empty-state">
                     <h3>Your mosaic is empty</h3>
-                    <p>Drag emotion tiles from the palette to start building your mood mosaic</p>
+                    <p>Select a mood color and tap on the grid to start building your mood mosaic</p>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="symmetry-btn" class="secondary">Make Symmetrical</button>
+                </div>
+                
+                <div class="share-section" id="share-section">
+                    <h3>Share Your Mood Mosaic</h3>
+                    <p>Share your emotional art with friends and family</p>
+                    
+                    <div class="auto-share-section">
+                        <h4>One-Click Sharing</h4>
+                        <p>Click any button below to open the share dialog</p>
+                        <div class="share-buttons">
+                            <button class="share-btn facebook" id="auto-facebook">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </button>
+                            <button class="share-btn instagram" id="auto-instagram">
+                                <i class="fab fa-instagram"></i> Instagram
+                            </button>
+                            <button class="share-btn twitter" id="auto-twitter">
+                                <i class="fab fa-twitter"></i> Twitter
+                            </button>
+                            <button class="share-btn threads" id="auto-threads">
+                                <i class="fab fa-threads"></i> Threads
+                            </button>
+                            <button class="share-btn whatsapp" id="auto-whatsapp">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </button>
+                            <button class="share-btn telegram" id="auto-telegram">
+                                <i class="fab fa-telegram"></i> Telegram
+                            </button>
+                            <button class="share-btn pinterest" id="auto-pinterest">
+                                <i class="fab fa-pinterest"></i> Pinterest
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button id="download-btn" class="download-btn">
+                            <i class="fas fa-download"></i> Download as JPEG
+                        </button>
+                    </div>
+                    
+                    <div class="success-message" id="success-message">
+                        Your image has been generated! Download it and share on social media.
+                    </div>
                 </div>
             </div>
         </div>
         
+        <!-- Hidden canvas for image generation -->
+        <canvas id="mosaic-canvas" class="hidden-canvas" width="800" height="800"></canvas>
+        
+        <!-- Image preview modal -->
+        <div class="share-image-container" id="share-image-container">
+            <div class="share-image-preview">
+                <h3>Your Mood Mosaic Image</h3>
+                <img id="mosaic-preview" src="" alt="Mood Mosaic">
+                <p>Right-click the image to save, or use the buttons below</p>
+                <div class="preview-buttons">
+                    <button id="close-preview" class="secondary">Close</button>
+                    <button id="download-preview" class="download-btn">
+                        <i class="fas fa-download"></i> Download JPEG
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div class="stats-panel">
             <h2>Your Emotional Insights</h2>
             <div class="stats-grid">
@@ -397,28 +860,55 @@
             </div>
         </div>
         
+        <div class="about-section">
+            <h2>About Mood Mosaic</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p><strong>Mood Mosaic</strong> is a unique visual emotion tracker that transforms your feelings into beautiful 3x3 abstract art patterns. It combines the benefits of journaling with the therapeutic power of art creation.</p>
+                    
+                    <h3>How It Works</h3>
+                    <p>Each day, select colors that represent your emotions and place them on the 3x3 grid. Over time, you'll create a visual diary of your emotional journey that reveals patterns and insights about your mental wellness.</p>
+                    
+                    <h3>Benefits of Mood Tracking</h3>
+                    <ul class="benefits-list">
+                        <li>Increased emotional awareness and self-understanding</li>
+                        <li>Identification of emotional patterns and triggers</li>
+                        <li>Stress reduction through creative expression</li>
+                        <li>Visual representation of mental health progress</li>
+                        <li>Non-judgmental space for all emotions</li>
+                        <li>Beautiful art creation from your emotional journey</li>
+                    </ul>
+                </div>
+                
+                <div class="seo-content">
+                    <h3>Mental Wellness & Emotional Health</h3>
+                    <p>Mood Mosaic serves as a digital mental wellness journal that helps users track their emotional states through color-coded visual art. This approach to emotion tracking makes the process engaging and therapeutic.</p>
+                    
+                    <h3>Art Therapy & Self-Care</h3>
+                    <p>By transforming emotions into art, Mood Mosaic incorporates principles of art therapy into daily self-care routines. The simple 3x3 grid makes it accessible while allowing for creative expression.</p>
+                    
+                    <h3>Privacy-Focused Design</h3>
+                    <p>Your emotional data stays securely in your browser. We believe in privacy-first mental health tools that put you in control of your personal information.</p>
+                </div>
+            </div>
+        </div>
+        
         <div class="instructions">
             <h2>How to Use Mood Mosaic</h2>
             <ol>
                 <li><strong>Select a date</strong> - Choose the day you want to track emotions for</li>
-                <li><strong>Choose your emotions</strong> - Drag colored tiles from the palette that represent how you're feeling</li>
-                <li><strong>Build your mosaic</strong> - Place tiles on the grid to create a visual representation of your emotions</li>
-                <li><strong>Save your progress</strong> - Click "Save Today's Mood" to record your emotional state</li>
+                <li><strong>Choose your emotions</strong> - Tap colored tiles from the palette that represent how you're feeling</li>
+                <li><strong>Build your mosaic</strong> - Tap on the 3x3 grid to place tiles and create a visual representation of your emotions</li>
+                <li><strong>Save your progress</strong> - Click "Save Today's Mood" to record your emotional state and unlock sharing options</li>
+                <li><strong>Share your art</strong> - After saving, share your mood mosaic as a JPEG image on social media</li>
                 <li><strong>Track over time</strong> - Return daily to build a beautiful mosaic of your emotional journey</li>
             </ol>
-            
-            <h3>Game Rules & Benefits</h3>
-            <ul>
-                <li><strong>Consistency Reward</strong>: Build longer streaks for more visual satisfaction</li>
-                <li><strong>Pattern Recognition</strong>: Identify emotional patterns through color clusters</li>
-                <li><strong>Non-judgmental Tracking</strong>: All emotions are valid and contribute to your unique mosaic</li>
-                <li><strong>Art Therapy</strong>: The process of creating visual art from emotions has therapeutic benefits</li>
-                <li><strong>Privacy Focused</strong>: Your data stays in your browser - no registration required</li>
-            </ul>
         </div>
         
         <footer>
-            <p>Mood Mosaic &copy; 2023 | A tool for self-awareness and mental wellness through visual emotion tracking</p>
+            <p>Mood Mosaic &copy; 2023 | A visual emotion tracker for mental wellness and self-awareness</p>
+            <p>Visit: www.addastore.fun/mood-mosaic.html</p>
+            <p>Keywords: mood tracker, emotion journal, mental wellness, self-awareness, art therapy, psychology tool, emotional health, mood mosaic, visual journal, feelings tracker, mental health app, mood art, emotion art</p>
         </footer>
     </div>
 
@@ -428,45 +918,85 @@
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('current-date').value = today;
             
-            // Generate mosaic grid
+            // Generate 3x3 mosaic grid
             const mosaicGrid = document.getElementById('mosaic-grid');
-            const gridSize = 100; // 10x10 grid
+            const gridSize = 9; // 3x3 grid
             let selectedColor = null;
             let selectedMood = null;
+            let currentImageDataURL = null;
             
             for (let i = 0; i < gridSize; i++) {
                 const cell = document.createElement('div');
                 cell.className = 'mosaic-cell';
                 cell.dataset.index = i;
                 
-                // Allow dropping tiles
-                cell.addEventListener('dragover', function(e) {
-                    e.preventDefault();
-                });
-                
-                cell.addEventListener('drop', function(e) {
-                    e.preventDefault();
+                // Handle click/tap on mosaic cells
+                cell.addEventListener('click', function() {
                     if (selectedColor) {
                         this.style.backgroundColor = selectedColor;
                         this.dataset.mood = selectedMood;
                         this.classList.add('filled');
                         updateEmptyState();
                         updateStats();
+                    } else {
+                        alert('Please select a mood color first');
+                    }
+                });
+                
+                // Also handle touch events for mobile
+                cell.addEventListener('touchstart', function(e) {
+                    if (selectedColor) {
+                        this.style.backgroundColor = selectedColor;
+                        this.dataset.mood = selectedMood;
+                        this.classList.add('filled');
+                        updateEmptyState();
+                        updateStats();
+                        e.preventDefault(); // Prevent scrolling when tapping
                     }
                 });
                 
                 mosaicGrid.appendChild(cell);
             }
             
-            // Make mood tiles draggable
+            // Make mood tiles selectable
             const moodTiles = document.querySelectorAll('.mood-tile');
+            const selectedIndicator = document.getElementById('selected-mood-indicator');
+            const selectedMoodText = document.getElementById('selected-mood-text');
+            
             moodTiles.forEach(tile => {
-                tile.setAttribute('draggable', 'true');
-                
-                tile.addEventListener('dragstart', function(e) {
+                tile.addEventListener('click', function() {
+                    // Remove active class from all tiles
+                    moodTiles.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tile
+                    this.classList.add('active');
+                    
+                    // Set selected color and mood
                     selectedColor = this.dataset.color;
                     selectedMood = this.dataset.mood;
-                    e.dataTransfer.setData('text/plain', this.dataset.mood);
+                    
+                    // Update selected indicator
+                    selectedMoodText.textContent = selectedMood;
+                    selectedIndicator.classList.add('active');
+                });
+                
+                // Also handle touch events for mobile
+                tile.addEventListener('touchstart', function(e) {
+                    // Remove active class from all tiles
+                    moodTiles.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tile
+                    this.classList.add('active');
+                    
+                    // Set selected color and mood
+                    selectedColor = this.dataset.color;
+                    selectedMood = this.dataset.mood;
+                    
+                    // Update selected indicator
+                    selectedMoodText.textContent = selectedMood;
+                    selectedIndicator.classList.add('active');
+                    
+                    e.preventDefault(); // Prevent scrolling when tapping
                 });
             });
             
@@ -489,6 +1019,9 @@
                 savedData[date] = mosaicData;
                 localStorage.setItem('moodMosaicData', JSON.stringify(savedData));
                 
+                // Show share section
+                document.getElementById('share-section').classList.add('active');
+                
                 alert('Mood saved for ' + new Date(date).toLocaleDateString());
                 updateStats();
             });
@@ -506,6 +1039,194 @@
                 }
             });
             
+            // Symmetry button functionality
+            document.getElementById('symmetry-btn').addEventListener('click', function() {
+                const cells = document.querySelectorAll('.mosaic-cell');
+                const filledCells = [];
+                
+                // Get all filled cells
+                cells.forEach(cell => {
+                    if (cell.classList.contains('filled')) {
+                        filledCells.push({
+                            index: parseInt(cell.dataset.index),
+                            color: cell.style.backgroundColor,
+                            mood: cell.dataset.mood
+                        });
+                    }
+                });
+                
+                // Apply horizontal symmetry
+                filledCells.forEach(cell => {
+                    const row = Math.floor(cell.index / 3);
+                    const col = cell.index % 3;
+                    const symmetricIndex = row * 3 + (2 - col);
+                    
+                    if (symmetricIndex !== cell.index) {
+                        const symmetricCell = document.querySelector(`.mosaic-cell[data-index="${symmetricIndex}"]`);
+                        symmetricCell.style.backgroundColor = cell.color;
+                        symmetricCell.dataset.mood = cell.mood;
+                        symmetricCell.classList.add('filled');
+                    }
+                });
+                
+                updateEmptyState();
+                updateStats();
+            });
+            
+            // Generate and download mosaic as JPEG
+            document.getElementById('download-btn').addEventListener('click', function() {
+                generateMosaicImage(true);
+            });
+            
+            // Download from preview
+            document.getElementById('download-preview').addEventListener('click', function() {
+                downloadMosaicImage();
+            });
+            
+            // Close preview
+            document.getElementById('close-preview').addEventListener('click', function() {
+                document.getElementById('share-image-container').classList.remove('active');
+            });
+            
+            // Auto share buttons
+            document.getElementById('auto-facebook').addEventListener('click', function() {
+                generateMosaicImage(false);
+                setTimeout(() => {
+                    window.open('https://www.facebook.com/sharer/sharer.php?u=www.addastore.fun/mood-mosaic.html&quote=Check%20out%20my%20mood%20mosaic%20created%20with%20Mood%20Mosaic!', '_blank', 'width=600,height=400');
+                }, 500);
+            });
+            
+            document.getElementById('auto-twitter').addEventListener('click', function() {
+                generateMosaicImage(false);
+                setTimeout(() => {
+                    window.open('https://twitter.com/intent/tweet?text=Check%20out%20my%20mood%20mosaic%20created%20with%20Mood%20Mosaic!&url=www.addastore.fun/mood-mosaic.html', '_blank', 'width=600,height=400');
+                }, 500);
+            });
+            
+            document.getElementById('auto-whatsapp').addEventListener('click', function() {
+                generateMosaicImage(false);
+                setTimeout(() => {
+                    window.open('https://api.whatsapp.com/send?text=Check%20out%20my%20mood%20mosaic%20-%20www.addastore.fun/mood-mosaic.html', '_blank', 'width=600,height=600');
+                }, 500);
+            });
+            
+            document.getElementById('auto-telegram').addEventListener('click', function() {
+                generateMosaicImage(false);
+                setTimeout(() => {
+                    window.open('https://t.me/share/url?url=www.addastore.fun/mood-mosaic.html&text=Check%20out%20my%20mood%20mosaic', '_blank', 'width=600,height=500');
+                }, 500);
+            });
+            
+            document.getElementById('auto-pinterest').addEventListener('click', function() {
+                generateMosaicImage(false);
+                setTimeout(() => {
+                    window.open('https://pinterest.com/pin/create/button/?url=www.addastore.fun/mood-mosaic.html&description=My%20Mood%20Mosaic%20-%20Track%20your%20emotions%20with%20beautiful%20art', '_blank', 'width=750,height=600');
+                }, 500);
+            });
+            
+            document.getElementById('auto-instagram').addEventListener('click', function() {
+                generateMosaicImage(false);
+                alert('To share on Instagram:\n1. Download your mood mosaic image\n2. Open Instagram app\n3. Create a new post\n4. Upload your image\n5. Add caption: "Check out my mood mosaic! Created with www.addastore.fun/mood-mosaic.html"\n\nYour image is ready for download!');
+            });
+            
+            document.getElementById('auto-threads').addEventListener('click', function() {
+                generateMosaicImage(false);
+                alert('To share on Threads:\n1. Download your mood mosaic image\n2. Open Threads app\n3. Create a new post\n4. Upload your image\n5. Add text: "Check out my mood mosaic! www.addastore.fun/mood-mosaic.html"\n\nYour image is ready for download!');
+            });
+            
+            // Generate mosaic image function
+            function generateMosaicImage(download = false) {
+                const canvas = document.getElementById('mosaic-canvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Set canvas background
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw title
+                ctx.fillStyle = '#2d3748';
+                ctx.font = 'bold 40px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('My Mood Mosaic', canvas.width / 2, 60);
+                
+                // Draw date
+                const date = document.getElementById('current-date').value;
+                ctx.font = '20px Arial';
+                ctx.fillText(new Date(date).toLocaleDateString(), canvas.width / 2, 100);
+                
+                // Draw mosaic grid
+                const cellSize = 150;
+                const gridStartX = (canvas.width - (cellSize * 3)) / 2;
+                const gridStartY = 150;
+                
+                // Draw grid background
+                ctx.fillStyle = '#f0f0f0';
+                ctx.fillRect(gridStartX - 10, gridStartY - 10, cellSize * 3 + 20, cellSize * 3 + 20);
+                
+                // Draw each cell
+                const cells = document.querySelectorAll('.mosaic-cell');
+                cells.forEach((cell, index) => {
+                    const row = Math.floor(index / 3);
+                    const col = index % 3;
+                    const x = gridStartX + col * cellSize;
+                    const y = gridStartY + row * cellSize;
+                    
+                    // Draw cell background
+                    if (cell.classList.contains('filled')) {
+                        ctx.fillStyle = cell.style.backgroundColor;
+                    } else {
+                        ctx.fillStyle = '#e2e8f0';
+                    }
+                    
+                    ctx.fillRect(x, y, cellSize, cellSize);
+                    
+                    // Draw cell border
+                    ctx.strokeStyle = '#cbd5e0';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(x, y, cellSize, cellSize);
+                    
+                    // Draw mood text if filled
+                    if (cell.classList.contains('filled')) {
+                        ctx.fillStyle = '#ffffff';
+                        ctx.font = 'bold 20px Arial';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(cell.dataset.mood, x + cellSize/2, y + cellSize/2);
+                    }
+                });
+                
+                // Draw website URL
+                ctx.fillStyle = '#718096';
+                ctx.font = '16px Arial';
+                ctx.fillText('www.addastore.fun/mood-mosaic.html', canvas.width / 2, canvas.height - 50);
+                
+                // Store the data URL for sharing
+                currentImageDataURL = canvas.toDataURL('image/jpeg', 0.9);
+                
+                if (download) {
+                    // Show preview for download
+                    document.getElementById('mosaic-preview').src = currentImageDataURL;
+                    document.getElementById('share-image-container').classList.add('active');
+                }
+                
+                // Show success message
+                document.getElementById('success-message').style.display = 'block';
+            }
+            
+            // Download mosaic image
+            function downloadMosaicImage() {
+                if (!currentImageDataURL) {
+                    generateMosaicImage(false);
+                    return;
+                }
+                
+                const link = document.createElement('a');
+                const date = document.getElementById('current-date').value;
+                link.download = `mood-mosaic-${date}.jpg`;
+                link.href = currentImageDataURL;
+                link.click();
+            }
+            
             // Date change functionality
             document.getElementById('current-date').addEventListener('change', function() {
                 const date = this.value;
@@ -518,6 +1239,10 @@
                     cell.dataset.mood = '';
                     cell.classList.remove('filled');
                 });
+                
+                // Hide share section when changing dates
+                document.getElementById('share-section').classList.remove('active');
+                document.getElementById('success-message').style.display = 'none';
                 
                 // Load saved data for selected date
                 dateData.forEach(item => {
