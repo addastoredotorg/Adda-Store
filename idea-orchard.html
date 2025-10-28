@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!-- Google tag (gtag.js) -->
+<head><!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -239,6 +238,14 @@
             transition: var(--transition);
             z-index: 2;
             cursor: pointer;
+            animation: gentle-sway 8s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+        
+        @keyframes gentle-sway {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(1deg); }
+            75% { transform: rotate(-1deg); }
         }
         
         .tree-trunk {
@@ -255,6 +262,25 @@
             border-radius: 50%;
             position: relative;
             transition: all 1s ease;
+            animation: leaf-shimmer 4s ease-in-out infinite;
+        }
+        
+        @keyframes leaf-shimmer {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.1); }
+        }
+        
+        .tree-seed .tree-canopy {
+            width: 30px;
+            height: 30px;
+            background: #5D4037;
+            bottom: 5px;
+            animation: seed-pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes seed-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
         
         .tree-sapling .tree-canopy {
@@ -262,6 +288,7 @@
             height: 60px;
             background: var(--primary);
             bottom: 10px;
+            animation: leaf-shimmer 3s ease-in-out infinite, gentle-pulse 4s ease-in-out infinite;
         }
         
         .tree-growing .tree-canopy {
@@ -269,6 +296,7 @@
             height: 100px;
             background: var(--primary);
             bottom: 20px;
+            animation: leaf-shimmer 3.5s ease-in-out infinite, gentle-pulse 5s ease-in-out infinite;
         }
         
         .tree-mature .tree-canopy {
@@ -276,6 +304,7 @@
             height: 150px;
             background: var(--primary-dark);
             bottom: 30px;
+            animation: leaf-shimmer 4s ease-in-out infinite, gentle-pulse 6s ease-in-out infinite;
         }
         
         .tree-blooming .tree-canopy {
@@ -284,6 +313,12 @@
             background: linear-gradient(135deg, var(--primary-dark), #4CAF50);
             bottom: 40px;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: leaf-shimmer 2.5s ease-in-out infinite, gentle-pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes gentle-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
         
         .tree-fruit {
@@ -294,10 +329,22 @@
             border-radius: 50%;
             opacity: 0;
             transition: opacity 0.5s ease;
+            animation: fruit-glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes fruit-glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 152, 0, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(255, 152, 0, 0.8); }
         }
         
         .tree-blooming .tree-fruit {
             opacity: 1;
+            animation: fruit-glow 3s ease-in-out infinite, fruit-bounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes fruit-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
         
         .fruit-1 { top: 20%; left: 20%; }
@@ -600,6 +647,113 @@
             80% { opacity: 1; }
             100% { opacity: 0; }
         }
+        
+        /* New animations for enhanced plant visuals */
+        .seed {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #5D4037;
+            border-radius: 50%;
+            z-index: 3;
+            animation: seed-plant 2s ease-out forwards;
+        }
+        
+        @keyframes seed-plant {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .leaf {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--primary);
+            border-radius: 50% 0 50% 50%;
+            transform-origin: center;
+            animation: leaf-float 4s ease-in-out infinite;
+            z-index: 2;
+        }
+        
+        @keyframes leaf-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(180deg); }
+        }
+        
+        .bloom-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0;
+            z-index: 4;
+        }
+        
+        .ambient-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(139, 195, 74, 0.3);
+            z-index: 0;
+            animation: ambient-float 15s linear infinite;
+        }
+        
+        @keyframes ambient-float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
+        }
+        
+        /* Enhanced tree stage visibility */
+        .stage-indicator {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tree:hover .stage-indicator {
+            opacity: 1;
+        }
+        
+        /* Enhanced growth animation */
+        .growth-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 3;
+        }
+        
+        .growth-sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: gold;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle-rise 2s ease-out forwards;
+        }
+        
+        @keyframes sparkle-rise {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-50px); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -805,13 +959,13 @@
             let selectedIdeaId = null;
             let nextId = 1;
             
-            // Tree growth stages
+            // Tree growth stages - FIXED: Proper stage progression
             const growthStages = [
-                { name: 'Seed', minNurtures: 0, className: 'tree-sapling' },
+                { name: 'Seed', minNurtures: 0, className: 'tree-seed' },
                 { name: 'Sapling', minNurtures: 1, className: 'tree-sapling' },
                 { name: 'Growing', minNurtures: 3, className: 'tree-growing' },
-                { name: 'Mature', minNurtures: 7, className: 'tree-mature' },
-                { name: 'Blooming', minNurtures: 12, className: 'tree-blooming' }
+                { name: 'Mature', minNurtures: 5, className: 'tree-mature' },
+                { name: 'Blooming', minNurtures: 8, className: 'tree-blooming' }
             ];
             
             // Initialize
@@ -820,6 +974,7 @@
             renderOrchard();
             updateStats();
             renderIdeasList();
+            createAmbientParticles();
             
             // Event Listeners
             ideaTitleInput.addEventListener('input', updatePreview);
@@ -886,7 +1041,7 @@
                     created: new Date().toISOString(),
                     nurtures: [],
                     growth: 0, // 0-100 percentage
-                    stage: 0, // Index in growthStages array
+                    stage: 0, // Index in growthStages array - Start at Seed stage
                     position: getRandomPosition()
                 };
                 
@@ -898,7 +1053,8 @@
                 });
                 
                 newIdea.growth = 10;
-                newIdea.stage = 1; // Start at sapling stage
+                // Start at Seed stage (0)
+                newIdea.stage = 0;
                 
                 ideas.push(newIdea);
                 
@@ -916,6 +1072,24 @@
                 
                 // Show growth message
                 showGrowthMessage("Your idea has been planted!");
+                
+                // Create planting animation
+                createPlantingAnimation(newIdea.position);
+            }
+            
+            function createPlantingAnimation(position) {
+                // Create seed element
+                const seed = document.createElement('div');
+                seed.className = 'seed';
+                seed.style.left = `${position.x}px`;
+                seed.style.bottom = `${position.y + 100}px`; // Position on ground
+                
+                orchard.appendChild(seed);
+                
+                // Remove seed after animation completes
+                setTimeout(() => {
+                    seed.remove();
+                }, 2000);
             }
             
             function getRandomPosition() {
@@ -950,20 +1124,35 @@
                     tree.style.bottom = `${idea.position.y}px`;
                     tree.dataset.id = idea.id;
                     
+                    // Add stage indicator
+                    const stageIndicator = document.createElement('div');
+                    stageIndicator.className = 'stage-indicator';
+                    stageIndicator.textContent = growthStages[idea.stage].name;
+                    tree.appendChild(stageIndicator);
+                    
                     const trunk = document.createElement('div');
                     trunk.className = 'tree-trunk';
-                    trunk.style.height = `${40 + (idea.growth / 100) * 100}px`;
+                    // Adjust trunk height based on stage
+                    trunk.style.height = `${20 + (idea.stage * 15)}px`;
                     
                     const canopy = document.createElement('div');
                     canopy.className = 'tree-canopy';
                     
-                    // Add fruits for blooming trees
+                    // Add leaves for stages beyond seed
+                    if (idea.stage >= 1) {
+                        createLeaves(canopy, idea.stage);
+                    }
+                    
+                    // Add fruits for blooming trees (stage 4)
                     if (idea.stage >= 4) {
                         for (let i = 1; i <= 4; i++) {
                             const fruit = document.createElement('div');
                             fruit.className = `tree-fruit fruit-${i}`;
                             canopy.appendChild(fruit);
                         }
+                        
+                        // Add bloom particles for blooming trees
+                        createBloomParticles(tree, idea.position);
                     }
                     
                     tree.appendChild(trunk);
@@ -978,6 +1167,77 @@
                     
                     orchard.appendChild(tree);
                 });
+            }
+            
+            function createLeaves(container, stage) {
+                // Add individual leaves for more detailed tree appearance
+                const leafCount = stage * 8; // More leaves for more mature trees
+                
+                for (let i = 0; i < leafCount; i++) {
+                    const leaf = document.createElement('div');
+                    leaf.className = 'leaf';
+                    
+                    // Random position within canopy
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 0.8;
+                    const size = 8 + Math.random() * 8;
+                    
+                    leaf.style.width = `${size}px`;
+                    leaf.style.height = `${size}px`;
+                    leaf.style.left = `50%`;
+                    leaf.style.top = `50%`;
+                    leaf.style.marginLeft = `-${size/2}px`;
+                    leaf.style.marginTop = `-${size/2}px`;
+                    leaf.style.transform = `rotate(${Math.random() * 360}deg) translate(${distance * 50}px)`;
+                    leaf.style.animationDelay = `${Math.random() * 2}s`;
+                    leaf.style.backgroundColor = `hsl(${100 + Math.random() * 20}, 60%, ${50 + Math.random() * 10}%)`;
+                    
+                    container.appendChild(leaf);
+                }
+            }
+            
+            function createBloomParticles(container, position) {
+                // Create floating particles around blooming trees
+                const particleCount = 15;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'bloom-particle';
+                    
+                    // Random position around tree
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 80 + Math.random() * 40;
+                    
+                    particle.style.left = `${Math.cos(angle) * distance}px`;
+                    particle.style.top = `${Math.sin(angle) * distance}px`;
+                    particle.style.backgroundColor = `hsl(${30 + Math.random() * 30}, 100%, 60%)`;
+                    particle.style.animation = `bloom-float ${3 + Math.random() * 4}s ease-in-out infinite`;
+                    particle.style.animationDelay = `${Math.random() * 2}s`;
+                    
+                    container.appendChild(particle);
+                }
+            }
+            
+            function createAmbientParticles() {
+                // Create ambient floating particles in the background
+                const particleCount = 20;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'ambient-particle';
+                    
+                    // Random position
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.animationDelay = `${Math.random() * 15}s`;
+                    
+                    // Random size and color
+                    const size = 3 + Math.random() * 5;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.backgroundColor = `hsla(${80 + Math.random() * 40}, 60%, 60%, ${0.2 + Math.random() * 0.3})`;
+                    
+                    orchard.appendChild(particle);
+                }
             }
             
             function addNurturing() {
@@ -996,14 +1256,19 @@
                 // Update idea growth
                 idea.growth = Math.min(idea.growth + calculateGrowthValue(idea), 100);
                 
-                // Update stage based on number of nurtures
+                // FIXED: Update stage based on number of nurtures
                 const prevStage = idea.stage;
+                let newStage = 0;
+                
+                // Calculate the new stage based on number of nurtures
                 for (let i = growthStages.length - 1; i >= 0; i--) {
                     if (idea.nurtures.length >= growthStages[i].minNurtures) {
-                        idea.stage = i;
+                        newStage = i;
                         break;
                     }
                 }
+                
+                idea.stage = newStage;
                 
                 // Clear nurture text
                 nurtureText.value = '';
@@ -1021,16 +1286,41 @@
                 // Show growth message if stage increased
                 if (idea.stage > prevStage) {
                     showGrowthMessage(`Your idea is now ${growthStages[idea.stage].name}!`);
+                    createGrowthAnimation(idea.position);
                 } else {
                     showGrowthMessage("Your idea has been nurtured!");
                 }
             }
             
+            function createGrowthAnimation(position) {
+                const growthAnimation = document.createElement('div');
+                growthAnimation.className = 'growth-animation';
+                growthAnimation.style.left = `${position.x}px`;
+                growthAnimation.style.bottom = `${position.y}px`;
+                
+                // Create sparkles
+                for (let i = 0; i < 10; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'growth-sparkle';
+                    sparkle.style.left = `${Math.random() * 100 - 50}px`;
+                    sparkle.style.bottom = `${Math.random() * 50}px`;
+                    sparkle.style.animationDelay = `${Math.random() * 0.5}s`;
+                    growthAnimation.appendChild(sparkle);
+                }
+                
+                orchard.appendChild(growthAnimation);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    growthAnimation.remove();
+                }, 2000);
+            }
+            
             function calculateGrowthValue(idea) {
                 // Growth value decreases as idea matures (harder to grow mature ideas)
-                const baseGrowth = 10;
-                const stagePenalty = idea.stage * 1.5;
-                return Math.max(baseGrowth - stagePenalty, 3);
+                const baseGrowth = 15;
+                const stagePenalty = idea.stage * 2;
+                return Math.max(baseGrowth - stagePenalty, 5);
             }
             
             function renderIdeasList() {
@@ -1108,7 +1398,7 @@
                 // Update stage indicators
                 for (let i = 1; i <= 5; i++) {
                     const stageElement = document.getElementById(`stage-${i}`);
-                    if (i <= idea.stage) {
+                    if (i-1 <= idea.stage) {
                         stageElement.classList.add('completed');
                         stageElement.classList.add('active');
                     } else {
@@ -1128,10 +1418,15 @@
                 
                 const trunk = document.createElement('div');
                 trunk.className = 'tree-trunk';
-                trunk.style.height = `${40 + (idea.growth / 100) * 100}px`;
+                trunk.style.height = `${20 + (idea.stage * 15)}px`;
                 
                 const canopy = document.createElement('div');
                 canopy.className = 'tree-canopy';
+                
+                // Add leaves for stages beyond seed
+                if (idea.stage >= 1) {
+                    createLeaves(canopy, idea.stage);
+                }
                 
                 // Add fruits for blooming trees
                 if (idea.stage >= 4) {
