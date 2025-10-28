@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!-- Google tag (gtag.js) -->
+<head><!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -336,6 +335,155 @@
             opacity: 0.7;
         }
 
+        /* Game Rules Section */
+        .game-rules {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-rules h2 {
+            text-align: center;
+            color: #a8e6cf;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .rule-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rule-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .rule-section h3 {
+            display: flex;
+            align-items: center;
+            color: #4facfe;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .rule-icon {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .rules-list {
+            padding-left: 20px;
+        }
+
+        .rules-list li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .scoring-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .score-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .score-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00f2fe;
+            margin-bottom: 5px;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .note {
+            font-style: italic;
+            color: #a8e6cf;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .task-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .task-type {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .task-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .task-badge.time {
+            background: rgba(79, 172, 254, 0.3);
+            color: #4facfe;
+        }
+
+        .task-badge.action {
+            background: rgba(168, 230, 207, 0.3);
+            color: #a8e6cf;
+        }
+
+        .task-badge.mindset {
+            background: rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+        }
+
+        .task-badge.environment {
+            background: rgba(255, 206, 86, 0.3);
+            color: #ffce56;
+        }
+
+        .task-badge.progress {
+            background: rgba(179, 136, 255, 0.3);
+            color: #b388ff;
+        }
+
+        .task-badge.break {
+            background: rgba(77, 208, 225, 0.3);
+            color: #4dd0e1;
+        }
+
+        .task-type p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .tips-list {
+            padding-left: 20px;
+        }
+
+        .tips-list li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
@@ -360,6 +508,14 @@
             .progress-stats {
                 flex-direction: column;
                 gap: 15px;
+            }
+            
+            .game-rules {
+                padding: 20px 15px;
+            }
+            
+            .scoring-grid, .task-types {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -443,6 +599,88 @@
         <div class="task-history">
             <h4>Recent Tasks</h4>
             <ul id="task-list"></ul>
+        </div>
+        
+        <!-- Game Rules Section -->
+        <div class="game-rules">
+            <h2>How to Play Focus Dice</h2>
+            
+            <div class="rules-container">
+                <div class="rule-section">
+                    <h3><span class="rule-icon">🎯</span> The Goal</h3>
+                    <p>Break through procrastination by completing quick, randomized focus tasks that help you start working and build momentum.</p>
+                </div>
+                
+                <div class="rule-section">
+                    <h3><span class="rule-icon">⚡</span> Basic Rules</h3>
+                    <ol class="rules-list">
+                        <li><strong>Roll the dice</strong> when you're struggling to start or maintain focus</li>
+                        <li><strong>Complete the task</strong> that appears - no excuses!</li>
+                        <li><strong>Mark it done</strong> to track your progress and build streaks</li>
+                        <li><strong>Roll again</strong> whenever you need another focus boost</li>
+                    </ol>
+                </div>
+                
+                <div class="rule-section">
+                    <h3><span class="rule-icon">📊</span> Scoring & Progress</h3>
+                    <div class="scoring-grid">
+                        <div class="score-item">
+                            <div class="score-value">+1</div>
+                            <div class="score-label">per completed task</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-value">+1 day</div>
+                            <div class="score-label">streak for daily use</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-value">+X minutes</div>
+                            <div class="score-label">for time-based tasks</div>
+                        </div>
+                    </div>
+                    <p class="note">Your progress saves automatically between sessions!</p>
+                </div>
+                
+                <div class="rule-section">
+                    <h3><span class="rule-icon">🎲</span> Task Types</h3>
+                    <div class="task-types">
+                        <div class="task-type">
+                            <span class="task-badge time">Time</span>
+                            <p>Work for a specific duration (timer included)</p>
+                        </div>
+                        <div class="task-type">
+                            <span class="task-badge action">Action</span>
+                            <p>Complete a one-time productivity action</p>
+                        </div>
+                        <div class="task-type">
+                            <span class="task-badge mindset">Mindset</span>
+                            <p>Mental exercises to overcome blocks</p>
+                        </div>
+                        <div class="task-type">
+                            <span class="task-badge environment">Environment</span>
+                            <p>Optimize your workspace for focus</p>
+                        </div>
+                        <div class="task-type">
+                            <span class="task-badge progress">Progress</span>
+                            <p>Small steps to move projects forward</p>
+                        </div>
+                        <div class="task-type">
+                            <span class="task-badge break">Break</span>
+                            <p>Quick refreshers to maintain energy</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="rule-section">
+                    <h3><span class="rule-icon">💡</span> Pro Tips</h3>
+                    <ul class="tips-list">
+                        <li>Use Focus Dice at the start of your work session to build momentum</li>
+                        <li>When you hit a productivity wall, roll instead of checking social media</li>
+                        <li>Try to maintain your daily streak - consistency builds habits</li>
+                        <li>Even "skipped" tasks can provide insight into your resistance patterns</li>
+                        <li>Combine with other productivity methods like Pomodoro for best results</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
