@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-23LSZJ3WYJ');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>নাম কিপার - Indian YouTube Name Voting Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --saffron: #FF9933;
+            --white: #FFFFFF;
+            --green: #138808;
+            --blue: #000080;
+            --light-blue: #4A6FA5;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(to right, var(--saffron), var(--white), var(--green));
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: var(--blue);
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+        
+        .submission-form {
+            background-color: var(--light-gray);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            border-color: var(--blue);
+            outline: none;
+        }
+        
+        button {
+            padding: 12px 20px;
+            background-color: var(--blue);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--light-blue);
+        }
+        
+        .vote-btn {
+            background-color: var(--green);
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        
+        .vote-btn:hover {
+            background-color: #0d7006;
+        }
+        
+        .names-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .name-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--saffron);
+            transition: transform 0.2s;
+        }
+        
+        .name-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .name-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .name-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--blue);
+        }
+        
+        .vote-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .vote-count {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+        
+        .submission-count {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+        
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: var(--blue);
+        }
+        
+        .share-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+        }
+        
+        .share-title {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--blue);
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-3px);
+            opacity: 0.9;
+        }
+        
+        .facebook {
+            background-color: #3b5998;
+        }
+        
+        .instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+        
+        .threads {
+            background-color: #000000;
+        }
+        
+        .twitter {
+            background-color: #1DA1F2;
+        }
+        
+        .whatsapp {
+            background-color: #25D366;
+        }
+        
+        .linkedin {
+            background-color: #0077b5;
+        }
+        
+        .about-section {
+            margin-top: 50px;
+            padding: 30px;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-section h2 {
+            color: var(--blue);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        
+        .about-section h3 {
+            color: var(--blue);
+            margin: 25px 0 15px;
+            border-bottom: 2px solid var(--saffron);
+            padding-bottom: 5px;
+        }
+        
+        .about-section p {
+            margin-bottom: 15px;
+        }
+        
+        .about-section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .about-section li {
+            margin-bottom: 8px;
+        }
+        
+        .pillar {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--green);
+        }
+        
+        .pillar h4 {
+            color: var(--blue);
+            margin-bottom: 10px;
+        }
+        
+        .name-category {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--medium-gray);
+        }
+        
+        .name-category h4 {
+            color: var(--blue);
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--saffron);
+            padding-bottom: 5px;
+        }
+        
+        .name-idea {
+            display: inline-block;
+            background-color: var(--light-gray);
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: var(--blue);
+        }
+        
+        @media (max-width: 600px) {
+            .form-group {
+                flex-direction: column;
+            }
+            
+            .name-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-btn {
+                width: 200px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>নাম কিপার</h1>
+            <p class="tagline">Find the Perfect Indian YouTube Name</p>
+        </header>
+        
+        <section class="submission-form">
+            <form id="nameForm">
+                <div class="form-group">
+                    <input type="text" id="nameInput" placeholder="Enter the Perfect Indian YouTube Name" autocomplete="off">
+                    <button type="submit">Submit Name</button>
+                </div>
+            </form>
+        </section>
+        
+        <section class="names-list" id="namesList">
+            <!-- Names will be dynamically inserted here -->
+            <div class="empty-state">
+                <h3>No names submitted yet</h3>
+                <p>Be the first to suggest a YouTube channel name!</p>
+            </div>
+        </section>
+        
+        <section class="share-section">
+            <h3 class="share-title">Share নাম কিপার with others</h3>
+            <div class="share-buttons">
+                <a href="#" class="share-btn facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" class="share-btn instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="#" class="share-btn threads">
+                    <i class="fab fa-threads"></i>
+                    <span>Threads</span>
+                </a>
+                <a href="#" class="share-btn twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>X (Twitter)</span>
+                </a>
+                <a href="#" class="share-btn whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="#" class="share-btn linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+        </section>
+        
+        <section class="about-section">
+            <h2>Indian YouTube-like App-এর জন্য Perfect Name কী হওয়া উচিত? (একটি Digital India উদ্যোগ)</h2>
+            
+            <p>Digital India-র এই যুগে, যখন আমরা 'Aatmanirbhar Bharat'-কে champion করছি, তখন একটি গুরুত্বপূর্ণ প্রশ্ন আসে: আমাদের নিজস্ব homegrown video platform, অর্থাৎ YouTube-এর উত্তর হিসাবে আমরা সেটিকে কী নামে ডাকব? এটা শুধু branding-এর বিষয় নয়; এটা হলো একটা flag planting-এর মতো। এই Indian video sharing app-টির নাম হবে আমাদের technological sovereignty, আমাদের cultural pride এবং Indian creators-দের জন্য একটি নতুন deal-এর প্রতীক। একটি Swadeshi video platform তৈরি করার এটিই প্রথম step, যা সত্যিই Bharat-কে বোঝে। এই guide-টি next great Made in India video app-এর naming-এর পিছনের strategic philosophy নিয়ে আলোচনা করে।</p>
+            
+            <h3>নামের Strategic Importance: শুধু একটি App-এর চেয়েও বেশি</h3>
+            
+            <p>এই scale-এর একটি platform-এর নাম শুধু label নয়; এটি একটি manifesto। এর গুরুত্ব তিন গুণ:</p>
+            
+            <ul>
+                <li><strong>Cultural Identity vs. Global Homogenization:</strong> Uniform global platforms-এর বিশ্বে, আমাদের Indian video platform name-টিকে অবশ্যই Indian values, linguistic diversity, এবং storytelling traditions-এর beacon হতে হবে। এটিকে আলাদা ভাবে দাঁড়াতে হবে, blend in হলে চলবে না।</li>
+                <li><strong>Instant Trust & Familiarity তৈরি করা:</strong> নামটিকে metros থেকে rural India পর্যন্ত resonate করতে হবে, যা familiarity এবং ownership-এর একটি immediate sense তৈরি করবে। এটিকে আমাদের platform মনে হওয়া উচিত, যা আমাদের জন্য তৈরি।</li>
+                <li><strong>একটি Strategic Market Position:</strong> নামটি একটি weapon। এটি এই YouTube competitor India-কে কেবল একটি clone হিসাবে নয়, বরং একটি superior alternative হিসাবে position করে—যেটি creator monetization, data privacy, এবং ভারতের vernacular heartbeat-কে prioritize করে।</li>
+            </ul>
+            
+            <h3>Core Naming Philosophies: তিনটি Strategic Pillar</h3>
+            
+            <p>প্রত্যেকটি দারুণ নাম একটি solid foundation-এর উপর তৈরি হয়। একটি Bharat video platform-এর জন্য, আমরা তিনটি symmetrical, strategic pillar প্রস্তাব করছি।</p>
+            
+            <div class="pillar">
+                <h4>Pillar 1: Heritage-এর মূলে নিহিত</h4>
+                <p>Sanskrit এবং প্রাচীন ভারতীয় ধারণা থেকে আসা নাম, যা knowledge, vision, এবং narrative-এর একটি timeless legacy-কে evoke করে।</p>
+            </div>
+            
+            <div class="pillar">
+                <h4>Pillar 2: Aspiration দ্বারা ক্ষমতাপ্রাপ্ত</h4>
+                <p>নামগুলি যা modern, dynamic, এবং একটি নতুন ভারতের ambition-এর কথা বলে—youthful, creative, এবং future-forward।</p>
+            </div>
+            
+            <div class="pillar">
+                <h4>Pillar 3: Identity দ্বারা একত্রিত</h4>
+                <p>নামগুলি যা গর্বের সাথে tricolor wave করে, "Bharat," "Desi," বা "India" ব্যবহার করে collective national pride এবং ownership-কে fosters করে।</p>
+            </div>
+            
+            <h3>Brainstorming Methodology: Ideas-এর জন্য একটি Framework</h3>
+            
+            <p>Perfect name খুঁজে বের করতে একটি disciplined approach দরকার। এই five-step framework অনুসরণ করুন:</p>
+            
+            <ul>
+                <li><strong>Step 1: Core Mission Define করুন।</strong> Primary goal কি creator empowerment? Cultural preservation? Vernacular expression? Mission-টিই naming direction ঠিক করে দেয়।</li>
+                <li><strong>Step 2: Indian Languages Mine করুন।</strong> Sanskrit, Tamil, Hindi, এবং অন্যান্য ভাষায় "vision," "story," "stage," "creation," এবং "unity" মানে এমন powerful words-এর গভীরে dive করুন।</li>
+                <li><strong>Step 3: Heritage-এর সাথে Modernity Blend করুন।</strong> Powerful combinations তৈরি করুন। একটি meaningful Indian word-কে একটি modern tech suffix (যেমন: "-ify," "-stream")-এর সাথে fuse করুন বা একটি sleek, memorable portmanteau তৈরি করুন।</li>
+                <li><strong>Step 4: Global Appeal & Local Soul-এর জন্য Test করুন।</strong> নামটি international stage-এ parochial না হয়ে Indian dialects-এ authentic এবং easy মনে হতে হবে।</li>
+                <li><strong>Step 5: Legal & Linguistic Vet।</strong> এটি non-negotiable। নিশ্চিত করুন যে নামটি trademarkable এবং কোনও major Indian language-এ এর কোনও negative, unintended meaning নেই।</li>
+            </ul>
+            
+            <h3>Rationale সহ Categorized Name Ideas</h3>
+            
+            <p>এখানে Indian content creator platform-এর জন্য strategic name ideas দেওয়া হলো, যা তাদের core philosophy দ্বারা categorized।</p>
+            
+            <div class="name-category">
+                <h4>Heritage-Inspired Names</h4>
+                <p><span class="name-idea">Drishti</span> - (Sanskrit-এ "vision" বা "sight") - Indian visual storytelling-এর power এবং clarity evoke করে।</p>
+                <p><span class="name-idea">Kathalok</span> - ("Katha" - story, এবং "Lok" - world-এর Portmanteau) - "World of Stories" translate করে, app-টিকে narratives-এর একটি infinite universe হিসাবে position করে।</p>
+                <p><span class="name-idea">VaniVerse</span> - ("Vani," যার মানে speech, তার সাথে "Verse" combine করে) - knowledgeable discourse এবং expression-এর জন্য একটি modern cosmos suggest করে।</p>
+            </div>
+            
+            <div class="name-category">
+                <h4>Aspirational & Modern Names</h4>
+                <p><span class="name-idea">Creato</span> - Short, global, এবং directly "Creator" মানে। এটি energetic, tech-friendly, এবং creator-কে center-এ রাখে।</p>
+                <p><span class="name-idea">Spoken Bharat</span> - এই নাম vernacular content এবং ভারতের authentic, unfiltered voice-কে powerfully highlight করে।</p>
+                <p><span class="name-idea">Utsav TV</span> - ("Utsav" মানে festival) - daily content consumption-কে একটি celebration, entertainment এবং knowledge-এর একটি feast হিসাবে position করে।</p>
+            </div>
+            
+            <div class="name-category">
+                <h4>Identity-Driven Names</h4>
+                <p><span class="name-idea">BharatView</span> - Clear, confident, এবং proud। এটি সরাসরি বলে যে এটি "India's Perspective."</p>
+                <p><span class="name-idea">DesiStream</span> - Colloquial, মনে রাখা সহজ, এবং instantly নিজেকে authentic, mainstream Desi YouTube app content-এর home হিসাবে position করে।</p>
+                <p><span class="name-idea">Swaraaj</span> - একটি profoundly powerful concept যার মানে self-rule। এটি app-টিকে digital sovereignty-এর একটি movement হিসাবে position করে, creators এবং viewers-কে তাদের content এবং data-এর উপর control দেয়।</p>
+            </div>
+            
+            <h3>The Final Validation Framework: ৫-পয়েন্টের Checklist</h3>
+            
+            <p>আপনি Indian video app-এর name finalise করার আগে, এটিকে এই strategic test-টি pass করতে হবে:</p>
+            
+            <ul>
+                <li><strong>এটি কি Culturally Deep & Respectful?</strong> Indian culture-এর সাথে এর কি কোনো positive, meaningful connection আছে, নাকি এটি superficial?</li>
+                <li><strong>এটি কি Memorable এবং বলা সহজ?</strong> ভারতের diverse linguistic landscape জুড়ে এটিকে কি সহজে recall এবং pronounce করা যায়?</li>
+                <li><strong>এটি কি YouTube থেকে Differentiate করে?</strong> এটি কি একটি unique, superior identity establish করে, নাকি এটিকে একটি "me-too" product মনে হয়?</li>
+                <li><strong>এটি কি Scalable এবং Brandable?</strong> নামটি কি live streaming, podcasts, music, বা educational content-এ future expansion support করতে পারে?</li>
+                <li><strong>Digital Assets কি Available?</strong> .in, .com, এবং .bharat domain কি available? key platforms জুড়ে social media handles (@name) কি free?</li>
+            </ul>
+            
+            <h3>Conclusion & ভবিষ্যতের জন্য Vision</h3>
+            
+            <p>ভারতের নিজস্ব video platform-এর নাম হল সেই flag, যার অধীনে একটি digital revolution মার্চ করবে। এটি কেবল একটি app name-এর চেয়ে অনেক বেশি; এটি intent-এর একটি statement, আমাদের capability-এর একটি declaration, এবং প্রত্যেক Indian storyteller-এর জন্য একটি invitation।</p>
+            
+            <p>সঠিক নাম হবে catalyst, যা billion মানুষকে inspire করবে একটি platform-এ build, share, এবং thrive করতে, যাকে তারা সত্যি নিজেদের বলতে পারে। এটি একটি নতুন digital ecosystem-এর bedrock হবে যেখানে success শুধু views-এ মাপা হবে না, বরং cultural impact এবং creator prosperity-তে মাপা হবে।</p>
+            
+            <p><strong>নামটি প্রথম step। পরেরটি হলো এর যোগ্য একটি platform তৈরি করা। চলুন, এমন একটি future তৈরি করি যেখানে Indian stories একটি Indian stage-এ বলা হবে।</strong></p>
+        </section>
+    </div>
+
+    <script>
+        // Data structure to store names
+        let youtubeNames = [];
+
+        // DOM elements
+        const nameForm = document.getElementById('nameForm');
+        const nameInput = document.getElementById('nameInput');
+        const namesList = document.getElementById('namesList');
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => {
+            loadNamesFromStorage();
+            renderNameList();
+            
+            // Set up share buttons
+            setupShareButtons();
+        });
+
+        // Load names from localStorage
+        function loadNamesFromStorage() {
+            const storedNames = localStorage.get
