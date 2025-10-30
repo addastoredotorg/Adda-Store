@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NaamKeeper - Indian YouTube Name Voting Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --saffron: #FF9933;
+            --white: #FFFFFF;
+            --green: #138808;
+            --blue: #000080;
+            --light-blue: #4A6FA5;
+            --light-gray: #f5f5f5;
+            --medium-gray: #e0e0e0;
+            --dark-gray: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(to right, var(--saffron), var(--white), var(--green));
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: var(--blue);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+        
+        .submission-form {
+            background-color: var(--light-gray);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            border-color: var(--blue);
+            outline: none;
+        }
+        
+        button {
+            padding: 12px 20px;
+            background-color: var(--blue);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--light-blue);
+        }
+        
+        .vote-btn {
+            background-color: var(--green);
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        
+        .vote-btn:hover {
+            background-color: #0d7006;
+        }
+        
+        .names-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .name-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--saffron);
+            transition: transform 0.2s;
+        }
+        
+        .name-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .name-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .name-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--blue);
+        }
+        
+        .vote-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .vote-count {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+        
+        .submission-count {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+        
+        .empty-state h3 {
+            margin-bottom: 10px;
+            color: var(--blue);
+        }
+        
+        .share-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+        }
+        
+        .share-title {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--blue);
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-3px);
+            opacity: 0.9;
+        }
+        
+        .facebook {
+            background-color: #3b5998;
+        }
+        
+        .instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+        
+        .threads {
+            background-color: #000000;
+        }
+        
+        .twitter {
+            background-color: #1DA1F2;
+        }
+        
+        .whatsapp {
+            background-color: #25D366;
+        }
+        
+        .linkedin {
+            background-color: #0077b5;
+        }
+        
+        .about-section {
+            margin-top: 50px;
+            padding: 30px;
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-section h2 {
+            color: var(--blue);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        
+        .about-section h3 {
+            color: var(--blue);
+            margin: 25px 0 15px;
+            border-bottom: 2px solid var(--saffron);
+            padding-bottom: 5px;
+        }
+        
+        .about-section p {
+            margin-bottom: 15px;
+        }
+        
+        .about-section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .about-section li {
+            margin-bottom: 8px;
+        }
+        
+        .pillar {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--green);
+        }
+        
+        .pillar h4 {
+            color: var(--blue);
+            margin-bottom: 10px;
+        }
+        
+        .name-category {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--medium-gray);
+        }
+        
+        .name-category h4 {
+            color: var(--blue);
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--saffron);
+            padding-bottom: 5px;
+        }
+        
+        .name-idea {
+            display: inline-block;
+            background-color: var(--light-gray);
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: var(--blue);
+        }
+        
+        @media (max-width: 600px) {
+            .form-group {
+                flex-direction: column;
+            }
+            
+            .name-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-btn {
+                width: 200px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NaamKeeper</h1>
+            <p class="tagline">Find the Perfect Indian YouTube Name</p>
+        </header>
+        
+        <section class="submission-form">
+            <form id="nameForm">
+                <div class="form-group">
+                    <input type="text" id="nameInput" placeholder="Enter the Perfect Indian YouTube Name" autocomplete="off">
+                    <button type="submit">Submit Name</button>
+                </div>
+            </form>
+        </section>
+        
+        <section class="names-list" id="namesList">
+            <!-- Names will be dynamically inserted here -->
+            <div class="empty-state">
+                <h3>No names submitted yet</h3>
+                <p>Be the first to suggest a YouTube channel name!</p>
+            </div>
+        </section>
+        
+        <section class="share-section">
+            <h3 class="share-title">Share NaamKeeper with others</h3>
+            <div class="share-buttons">
+                <a href="#" class="share-btn facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" class="share-btn instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="#" class="share-btn threads">
+                    <i class="fab fa-threads"></i>
+                    <span>Threads</span>
+                </a>
+                <a href="#" class="share-btn twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>X (Twitter)</span>
+                </a>
+                <a href="#" class="share-btn whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="#" class="share-btn linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+        </section>
+        
+        <section class="about-section">
+            <h2>What Should Be The Perfect Name for an Indian YouTube-like App? (A Digital India Initiative)</h2>
+            
+            <p>In an era of Digital India, as we champion 'Aatmanirbhar Bharat,' a crucial question emerges: what should we call our own homegrown video platform, our answer to YouTube? This is not just about branding; it's about planting a flag. The name of this <strong>Indian video sharing app</strong> will be a symbol of our technological sovereignty, our cultural pride, and a new deal for Indian creators. It's the first step in building a <strong>Swadeshi video platform</strong> that truly understands Bharat. This guide explores the strategic philosophy behind naming the next great <strong>Made in India video app</strong>.</p>
+            
+            <h3>The Strategic Importance of the Name: More Than Just an App</h3>
+            
+            <p>A name for a platform of this scale is not a label; it is a manifesto. Its importance is threefold:</p>
+            
+            <ul>
+                <li><strong>Cultural Identity vs. Global Homogenization:</strong> In a world of uniform global platforms, our <strong>Indian video platform name</strong> must be a beacon of Indian values, linguistic diversity, and storytelling traditions. It must stand apart, not blend in.</li>
+                <li><strong>Building Instant Trust & Familiarity:</strong> The name must resonate from metros to rural India, creating an immediate sense of familiarity and ownership. It should feel like <em>our</em> platform, built for <em>us</em>.</li>
+                <li><strong>A Strategic Market Position:</strong> The name is a weapon. It positions this <strong>YouTube competitor India</strong> not as a mere clone, but as a superior <em>alternative</em>—one that prioritizes creator monetization, data privacy, and the vernacular heartbeat of India.</li>
+            </ul>
+            
+            <h3>Core Naming Philosophies: The Three Strategic Pillars</h3>
+            
+            <p>Every great name is built on a solid foundation. For a <strong>Bharat video platform</strong>, we propose three symmetrical, strategic pillars.</p>
+            
+            <div class="pillar">
+                <h4>Pillar 1: Rooted in Heritage</h4>
+                <p>Names derived from Sanskrit and ancient Indian concepts that evoke a timeless legacy of knowledge, vision, and narrative.</p>
+            </div>
+            
+            <div class="pillar">
+                <h4>Pillar 2: Empowered by Aspiration</h4>
+                <p>Names that are modern, dynamic, and speak to the ambition of a new India—youthful, creative, and future-forward.</p>
+            </div>
+            
+            <div class="pillar">
+                <h4>Pillar 3: Unified by Identity</h4>
+                <p>Names that proudly wave the tricolor, using "Bharat," "Desi," or "India" to foster collective national pride and ownership.</p>
+            </div>
+            
+            <h3>Brainstorming Methodology: A Framework for Ideas</h3>
+            
+            <p>Finding the perfect name requires a disciplined approach. Follow this five-step framework:</p>
+            
+            <ol>
+                <li><strong>Step 1: Define the Core Mission.</strong> Is the primary goal creator empowerment? Cultural preservation? Vernacular expression? The mission dictates the naming direction.</li>
+                <li><strong>Step 2: Mine Indian Languages.</strong> Dive deep into Sanskrit, Tamil, Hindi, and other languages for powerful words meaning "vision," "story," "stage," "creation," and "unity."</li>
+                <li><strong>Step 3: Blend Heritage with Modernity.</strong> Create powerful combinations. Fuse a meaningful Indian word with a modern tech suffix (e.g., "-ify," "-stream") or craft a sleek, memorable portmanteau.</li>
+                <li><strong>Step 4: Test for Global Appeal & Local Soul.</strong> The name must feel authentic and easy in Indian dialects without sounding parochial on the international stage.</li>
+                <li><strong>Step 5: Legal & Linguistic Vet.</strong> This is non-negotiable. Ensure the name is trademarkable and has no negative, unintended meanings in any major Indian language.</li>
+            </ol>
+            
+            <h3>Categorized Name Ideas with Rationale</h3>
+            
+            <p>Here are strategic name ideas for the <strong>Indian content creator platform</strong>, categorized by their core philosophy.</p>
+            
+            <div class="name-category">
+                <h4>Heritage-Inspired Names</h4>
+                <p><span class="name-idea">Drishti</span> - (Sanskrit for "vision" or "sight") - Evokes the power and clarity of Indian visual storytelling.</p>
+                <p><span class="name-idea">Kathalok</span> - (Portmanteau of "Katha" - story, and "Lok" - world) - Translates to "World of Stories," positioning the app as an infinite universe of narratives.</p>
+                <p><span class="name-idea">VaniVerse</span> - (Combining "Vani," meaning speech, with "Verse") - Suggests a modern cosmos for knowledgeable discourse and expression.</p>
+            </div>
+            
+            <div class="name-category">
+                <h4>Aspirational & Modern Names</h4>
+                <p><span class="name-idea">Creato</span> - Short, global, and directly means "Creator." It's energetic, tech-friendly, and puts the creator at the center.</p>
+                <p><span class="name-idea">Spoken Bharat</span> - This name powerfully highlights vernacular content and the authentic, unfiltered voice of India.</p>
+                <p><span class="name-idea">Utsav TV</span> - ("Utsav" means festival) - Positions daily content consumption as a celebration, a feast of entertainment and knowledge.</p>
+            </div>
+            
+            <div class="name-category">
+                <h4>Identity-Driven Names</h4>
+                <p><span class="name-idea">BharatView</span> - Clear, confident, and proud. It directly states that this is "India's Perspective."</p>
+                <p><span class="name-idea">DesiStream</span> - Colloquial, easy to remember, and instantly positions itself as the home for authentic, mainstream <strong>Desi YouTube app</strong> content.</p>
+                <p><span class="name-idea">Swaraaj</span> - A profoundly powerful concept meaning self-rule. It positions the app as a movement for digital sovereignty, giving creators and viewers control over their content and data.</p>
+            </div>
+            
+            <h3>The Final Validation Framework: The 5-Point Checklist</h3>
+            
+            <p>Before you finalize the <strong>name for Indian video app</strong>, it must pass this strategic test:</p>
+            
+            <ol>
+                <li><strong>Is it Culturally Deep & Respectful?</strong> Does it have a positive, meaningful connection to Indian culture, or is it superficial?</li>
+                <li><strong>Is it Memorable and Easy to Say?</strong> Can it be easily recalled and pronounced across India's diverse linguistic landscape?</li>
+                <li><strong>Does it Differentiate from YouTube?</strong> Does it establish a unique, superior identity, or does it feel like a "me-too" product?</li>
+                <li><strong>Is it Scalable and Brandable?</strong> Can the name support future expansion into live streaming, podcasts, music, or educational content?</li>
+                <li><strong>Are the Digital Assets Available?</strong> Is the .in, .com, and .bharat domain available? Are the social media handles (@name) free across key platforms?</li>
+            </ol>
+            
+            <h3>Conclusion & Vision for the Future</h3>
+            
+            <p>The name of India's own video platform is the flag under which a digital revolution will march. It is far more than an app name; it is a statement of intent, a declaration of our capability, and an invitation to every Indian storyteller.</p>
+            
+            <p>The right name will be the catalyst, inspiring a billion people to build, share, and thrive on a platform they can truly call their own. It will be the bedrock of a new digital ecosystem where success is measured not just in views, but in cultural impact and creator prosperity.</p>
+            
+            <p><strong>The name is the first step. The next is building a platform worthy of it. Let's build a future where Indian stories are told on an Indian stage.</strong></p>
+        </section>
+    </div>
+
+    <script>
+        // Data structure to store names
+        let youtubeNames = [];
+
+        // DOM elements
+        const nameForm = document.getElementById('nameForm');
+        const nameInput = document.getElementById('nameInput');
+        const namesList = document.getElementById('namesList');
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => {
+            loadNamesFromStorage();
+            renderNameList();
+            
+            // Set up share buttons
+            setupShareButtons();
+        });
+
+        // Load names from localStorage
+        function loadNamesFromStorage() {
+            const storedNames = localStorage.getItem('youtubeNames');
+            if (storedNames) {
+                youtubeNames = JSON.parse(storedNam
