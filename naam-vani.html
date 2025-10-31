@@ -14,6 +14,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NaamVani - Indian Social Media Name Voting Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics-compat.js"></script>
     <style>
         :root {
             --saffron: #FF9933;
@@ -695,6 +698,28 @@
             color: var(--blue);
         }
         
+        .connection-status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .connection-online {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .connection-offline {
+            background-color: #f44336;
+            color: white;
+        }
+        
         footer {
             text-align: center;
             margin-top: 40px;
@@ -740,10 +765,21 @@
                 padding: 12px 6px;
                 font-size: 0.75rem;
             }
+            
+            .connection-status {
+                top: 5px;
+                right: 5px;
+                font-size: 0.7rem;
+                padding: 5px 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="connection-status connection-online" id="connectionStatus">
+        <i class="fas fa-wifi"></i> Online
+    </div>
+
     <div class="container">
         <header>
             <h1>NaamVani</h1>
@@ -757,4 +793,1577 @@
             </button>
             <button class="tab-btn facebook-tab" data-tab="facebook-tab">
                 <i class="fab fa-facebook"></i> Facebook
-          
+            </button>
+            <button class="tab-btn instagram-tab" data-tab="instagram-tab">
+                <i class="fab fa-instagram"></i> Instagram
+            </button>
+            <button class="tab-btn twitter-tab" data-tab="twitter-tab">
+                <i class="fab fa-twitter"></i> X (Twitter)
+            </button>
+        </div>
+
+        <!-- YouTube Tab Content -->
+        <div class="tab-content active" id="youtube-tab">
+            <section class="submission-form">
+                <form id="youtubeNameForm">
+                    <div class="form-group">
+                        <input type="text" id="youtubeNameInput" placeholder="Enter the Perfect Indian YouTube Name" autocomplete="off">
+                        <button type="submit" class="youtube-submit">Submit Name</button>
+                    </div>
+                </form>
+            </section>
+            
+            <section class="names-list" id="youtubeNamesList">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i> Loading YouTube names...
+                </div>
+            </section>
+            
+            <section class="about-section youtube-about">
+                <h2>What Should Be The Perfect Name for an Indian YouTube-like App? (A Digital India Initiative)</h2>
+                
+                <p>In an era of Digital India, as we champion 'Aatmanirbhar Bharat,' a crucial question emerges: what should we call our own homegrown video platform, our answer to YouTube? This is not just about branding; it's about planting a flag. The name of this <strong>Indian video sharing app</strong> will be a symbol of our technological sovereignty, our cultural pride, and a new deal for Indian creators. It's the first step in building a <strong>Swadeshi video platform</strong> that truly understands Bharat. This guide explores the strategic philosophy behind naming the next great <strong>Made in India video app</strong>.</p>
+                
+                <h3>The Strategic Importance of the Name: More Than Just an App</h3>
+                
+                <p>A name for a platform of this scale is not a label; it is a manifesto. Its importance is threefold:</p>
+                
+                <ul>
+                    <li><strong>Cultural Identity vs. Global Homogenization:</strong> In a world of uniform global platforms, our <strong>Indian video platform name</strong> must be a beacon of Indian values, linguistic diversity, and storytelling traditions. It must stand apart, not blend in.</li>
+                    <li><strong>Building Instant Trust & Familiarity:</strong> The name must resonate from metros to rural India, creating an immediate sense of familiarity and ownership. It should feel like <em>our</em> platform, built for <em>us</em>.</li>
+                    <li><strong>A Strategic Market Position:</strong> The name is a weapon. It positions this <strong>YouTube competitor India</strong> not as a mere clone, but as a superior <em>alternative</em>—one that prioritizes creator monetization, data privacy, and the vernacular heartbeat of India.</li>
+                </ul>
+                
+                <h3>Core Naming Philosophies: The Three Strategic Pillars</h3>
+                
+                <p>Every great name is built on a solid foundation. For a <strong>Bharat video platform</strong>, we propose three symmetrical, strategic pillars.</p>
+                
+                <div class="pillar youtube-pillar">
+                    <h4>Pillar 1: Rooted in Heritage</h4>
+                    <p>Names derived from Sanskrit and ancient Indian concepts that evoke a timeless legacy of knowledge, vision, and narrative.</p>
+                </div>
+                
+                <div class="pillar youtube-pillar">
+                    <h4>Pillar 2: Empowered by Aspiration</h4>
+                    <p>Names that are modern, dynamic, and speak to the ambition of a new India—youthful, creative, and future-forward.</p>
+                </div>
+                
+                <div class="pillar youtube-pillar">
+                    <h4>Pillar 3: Unified by Identity</h4>
+                    <p>Names that proudly wave the tricolor, using "Bharat," "Desi," or "India" to foster collective national pride and ownership.</p>
+                </div>
+                
+                <h3>Brainstorming Methodology: A Framework for Ideas</h3>
+                
+                <p>Finding the perfect name requires a disciplined approach. Follow this five-step framework:</p>
+                
+                <ol>
+                    <li><strong>Step 1: Define the Core Mission.</strong> Is the primary goal creator empowerment? Cultural preservation? Vernacular expression? The mission dictates the naming direction.</li>
+                    <li><strong>Step 2: Mine Indian Languages.</strong> Dive deep into Sanskrit, Tamil, Hindi, and other languages for powerful words meaning "vision," "story," "stage," "creation," and "unity."</li>
+                    <li><strong>Step 3: Blend Heritage with Modernity.</strong> Create powerful combinations. Fuse a meaningful Indian word with a modern tech suffix (e.g., "-ify," "-stream") or craft a sleek, memorable portmanteau.</li>
+                    <li><strong>Step 4: Test for Global Appeal & Local Soul.</strong> The name must feel authentic and easy in Indian dialects without sounding parochial on the international stage.</li>
+                    <li><strong>Step 5: Legal & Linguistic Vet.</strong> This is non-negotiable. Ensure the name is trademarkable and has no negative, unintended meanings in any major Indian language.</li>
+                </ol>
+                
+                <h3>Categorized Name Ideas with Rationale</h3>
+                
+                <p>Here are strategic name ideas for the <strong>Indian content creator platform</strong>, categorized by their core philosophy.</p>
+                
+                <div class="name-category youtube-category">
+                    <h4>Heritage-Inspired Names</h4>
+                    <p><span class="name-idea">Drishti</span> - (Sanskrit for "vision" or "sight") - Evokes the power and clarity of Indian visual storytelling.</p>
+                    <p><span class="name-idea">Kathalok</span> - (Portmanteau of "Katha" - story, and "Lok" - world) - Translates to "World of Stories," positioning the app as an infinite universe of narratives.</p>
+                    <p><span class="name-idea">VaniVerse</span> - (Combining "Vani," meaning speech, with "Verse") - Suggests a modern cosmos for knowledgeable discourse and expression.</p>
+                </div>
+                
+                <div class="name-category youtube-category">
+                    <h4>Aspirational & Modern Names</h4>
+                    <p><span class="name-idea">Creato</span> - Short, global, and directly means "Creator." It's energetic, tech-friendly, and puts the creator at the center.</p>
+                    <p><span class="name-idea">Spoken Bharat</span> - This name powerfully highlights vernacular content and the authentic, unfiltered voice of India.</p>
+                    <p><span class="name-idea">Utsav TV</span> - ("Utsav" means festival) - Positions daily content consumption as a celebration, a feast of entertainment and knowledge.</p>
+                </div>
+                
+                <div class="name-category youtube-category">
+                    <h4>Identity-Driven Names</h4>
+                    <p><span class="name-idea">BharatView</span> - Clear, confident, and proud. It directly states that this is "India's Perspective."</p>
+                    <p><span class="name-idea">DesiStream</span> - Colloquial, easy to remember, and instantly positions itself as the home for authentic, mainstream <strong>Desi YouTube app</strong> content.</p>
+                    <p><span class="name-idea">Swaraaj</span> - A profoundly powerful concept meaning self-rule. It positions the app as a movement for digital sovereignty, giving creators and viewers control over their content and data.</p>
+                </div>
+                
+                <h3>The Final Validation Framework: The 5-Point Checklist</h3>
+                
+                <p>Before you finalize the <strong>name for Indian video app</strong>, it must pass this strategic test:</p>
+                
+                <ol>
+                    <li><strong>Is it Culturally Deep & Respectful?</strong> Does it have a positive, meaningful connection to Indian culture, or is it superficial?</li>
+                    <li><strong>Is it Memorable and Easy to Say?</strong> Can it be easily recalled and pronounced across India's diverse linguistic landscape?</li>
+                    <li><strong>Does it Differentiate from YouTube?</strong> Does it establish a unique, superior identity, or does it feel like a "me-too" product?</li>
+                    <li><strong>Is it Scalable and Brandable?</strong> Can the name support future expansion into live streaming, podcasts, music, or educational content?</li>
+                    <li><strong>Are the Digital Assets Available?</strong> Is the .in, .com, and .bharat domain available? Are the social media handles (@name) free across key platforms?</li>
+                </ol>
+                
+                <h3>Conclusion & Vision for the Future</h3>
+                
+                <p>The name of India's own video platform is the flag under which a digital revolution will march. It is far more than an app name; it is a statement of intent, a declaration of our capability, and an invitation to every Indian storyteller.</p>
+                
+                <p>The right name will be the catalyst, inspiring a billion people to build, share, and thrive on a platform they can truly call their own. It will be the bedrock of a new digital ecosystem where success is measured not just in views, but in cultural impact and creator prosperity.</p>
+                
+                <p><strong>The name is the first step. The next is building a platform worthy of it. Let's build a future where Indian stories are told on an Indian stage.</strong></p>
+            </section>
+        </div>
+
+        <!-- Facebook Tab Content -->
+        <div class="tab-content" id="facebook-tab">
+            <section class="submission-form">
+                <form id="facebookNameForm">
+                    <div class="form-group">
+                        <input type="text" id="facebookNameInput" placeholder="Enter the Perfect Indian Facebook Name" autocomplete="off">
+                        <button type="submit" class="facebook-submit">Submit Name</button>
+                    </div>
+                </form>
+            </section>
+            
+            <section class="names-list" id="facebookNamesList">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i> Loading Facebook names...
+                </div>
+            </section>
+            
+            <section class="about-section facebook-about">
+                <h2>What Makes the Perfect Indian Facebook Name? (Digital Identity Matters)</h2>
+                
+                <h3>The Significance of Your Facebook Identity</h3>
+                
+                <p>In today's digital landscape, your Facebook name is more than just a label—it's your digital identity, your social calling card, and often the first impression you make in the virtual world. For Indians, this carries special significance as we balance cultural heritage with global connectivity.</p>
+                
+                <h3>Cultural Considerations for Indian Facebook Names</h3>
+                
+                <p><strong>Preserving Heritage While Embracing Modernity</strong></p>
+                <ul>
+                    <li>Names that reflect Indian values and traditions</li>
+                    <li>Balancing traditional elements with contemporary appeal</li>
+                    <li>Respecting cultural sensitivities while maintaining individuality</li>
+                </ul>
+                
+                <p><strong>Linguistic Diversity as Strength</strong></p>
+                <ul>
+                    <li>Incorporating regional language elements</li>
+                    <li>Using meaningful Sanskrit or vernacular terms</li>
+                    <li>Creating names that resonate across India's diverse linguistic landscape</li>
+                </ul>
+                
+                <h3>Types of Indian Facebook Names</h3>
+                
+                <div class="pillar facebook-pillar">
+                    <h4>1. Traditional & Cultural Names</h4>
+                    <p>Names derived from mythology and scriptures, cultural references that evoke pride and identity, heritage-based names with modern twists.</p>
+                </div>
+                
+                <div class="pillar facebook-pillar">
+                    <h4>2. Professional & Aspirational Names</h4>
+                    <p>Names that reflect career ambitions, professional identity building, industry-specific terminology with Indian context.</p>
+                </div>
+                
+                <div class="pillar facebook-pillar">
+                    <h4>3. Creative & Personality-driven Names</h4>
+                    <p>Names showcasing individual personality, creative wordplay with Indian languages, memorable names that tell a story.</p>
+                </div>
+                
+                <div class="pillar facebook-pillar">
+                    <h4>4. Regional & Community-focused Names</h4>
+                    <p>Names celebrating regional identity, community-specific references, local cultural elements with universal appeal.</p>
+                </div>
+                
+                <h3>Best Practices for Indian Facebook Names</h3>
+                
+                <div class="name-category facebook-category">
+                    <h4>Authenticity Matters</h4>
+                    <p>Choose names that genuinely represent you, avoid misleading or pretentious elements, maintain consistency across platforms.</p>
+                </div>
+                
+                <div class="name-category facebook-category">
+                    <h4>Memorability & Pronunciation</h4>
+                    <p>Easy to remember and spell, clear pronunciation across different languages, avoid complex spellings that confuse others.</p>
+                </div>
+                
+                <div class="name-category facebook-category">
+                    <h4>Cultural Sensitivity</h4>
+                    <p>Respect religious and cultural sentiments, avoid controversial or offensive references, consider how names translate across Indian cultures.</p>
+                </div>
+                
+                <div class="name-category facebook-category">
+                    <h4>Professional Considerations</h4>
+                    <p>Appropriate for professional networks, future-proof for career growth, versatile enough for various contexts.</p>
+                </div>
+                
+                <h3>The Psychology Behind Name Choices</h3>
+                
+                <p><strong>Identity Expression</strong></p>
+                <ul>
+                    <li>How names reflect personal values</li>
+                    <li>Cultural pride and representation</li>
+                    <li>Aspirational self-presentation</li>
+                </ul>
+                
+                <p><strong>Social Connectivity</strong></p>
+                <ul>
+                    <li>Names that facilitate social connections</li>
+                    <li>Community belonging indicators</li>
+                    <li>Conversation starters</li>
+                </ul>
+                
+                <h3>Technical Considerations</h3>
+                
+                <p><strong>Availability & Uniqueness</strong></p>
+                <ul>
+                    <li>Checking name availability across platforms</li>
+                    <li>Maintaining consistent digital identity</li>
+                    <li>SEO and discoverability factors</li>
+                </ul>
+                
+                <p><strong>Privacy & Security</strong></p>
+                <ul>
+                    <li>Balancing personal information in names</li>
+                    <li>Safety considerations for public profiles</li>
+                    <li>Professional vs. personal identity separation</li>
+                </ul>
+                
+                <h3>Future Trends in Indian Digital Naming</h3>
+                
+                <p><strong>Emerging Patterns</strong></p>
+                <ul>
+                    <li>Blended traditional-modern names</li>
+                    <li>Vernacular language resurgence</li>
+                    <li>Gender-neutral and inclusive naming</li>
+                    <li>Regional pride expressions</li>
+                </ul>
+                
+                <h3>Conclusion: Your Digital Legacy</h3>
+                
+                <p>Your Facebook name is the foundation of your digital legacy in an increasingly connected India. It should honor your roots while embracing your aspirations, creating a bridge between tradition and innovation in the digital age.</p>
+                
+                <p><strong>Choose wisely—your name is the first chapter of your digital story.</strong></p>
+            </section>
+        </div>
+
+        <!-- Instagram Tab Content -->
+        <div class="tab-content" id="instagram-tab">
+            <section class="submission-form">
+                <form id="instagramNameForm">
+                    <div class="form-group">
+                        <input type="text" id="instagramNameInput" placeholder="Enter the Perfect Indian Instagram Name" autocomplete="off">
+                        <button type="submit" class="instagram-submit">Submit Name</button>
+                    </div>
+                </form>
+            </section>
+            
+            <section class="names-list" id="instagramNamesList">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i> Loading Instagram names...
+                </div>
+            </section>
+            
+            <section class="about-section instagram-about">
+                <h2>Crafting the Perfect Indian Instagram Identity (Visual Storytelling Matters)</h2>
+                
+                <h3>The Power of Instagram as a Visual Platform</h3>
+                
+                <p>Instagram has revolutionized how we share stories through visuals. For Indian users, an Instagram name is more than just a handle—it's a visual brand, a creative identity, and a gateway to building communities around shared cultural experiences, artistic expression, and personal branding.</p>
+                
+                <h3>Unique Aspects of Indian Instagram Names</h3>
+                
+                <div class="pillar instagram-pillar">
+                    <h4>Visual & Aesthetic Appeal</h4>
+                    <p>Names that evoke imagery, color, and visual storytelling elements that resonate with Indian aesthetics and cultural symbolism.</p>
+                </div>
+                
+                <div class="pillar instagram-pillar">
+                    <h4>Creative Expression</h4>
+                    <p>Emphasis on artistic, poetic, and creative names that reflect the visual nature of the platform while maintaining Indian cultural roots.</p>
+                </div>
+                
+                <div class="pillar instagram-pillar">
+                    <h4>Community Building</h4>
+                    <p>Names that facilitate connection with specific Indian communities, interests, or cultural niches while being visually appealing.</p>
+                </div>
+                
+                <h3>Categories of Indian Instagram Names</h3>
+                
+                <div class="name-category instagram-category">
+                    <h4>Artistic & Creative Names</h4>
+                    <p><span class="name-idea">RangBharat</span> - (Colors of India) - Perfect for art, photography, or design-focused accounts</p>
+                    <p><span class="name-idea">KavyaKala</span> - (Poetic Art) - For literary and artistic expression</p>
+                    <p><span class="name-idea">ChitranKatha</span> - (Visual Stories) - Ideal for storytelling through images</p>
+                </div>
+                
+                <div class="name-category instagram-category">
+                    <h4>Lifestyle & Culture Names</h4>
+                    <p><span class="name-idea">SanskrutiDarshan</span> - (Cultural Vision) - For cultural heritage accounts</p>
+                    <p><span class="name-idea">ShubhJeevan</span> - (Auspicious Life) - Lifestyle and wellness content</p>
+                    <p><span class="name-idea">RitiRiwaz</span> - (Traditions and Customs) - Traditional practices and festivals</p>
+                </div>
+                
+                <div class="name-category instagram-category">
+                    <h4>Food & Travel Names</h4>
+                    <p><span class="name-idea">SwadBharat</span> - (Taste of India) - Food and culinary journeys</p>
+                    <p><span class="name-idea">SafarSangram</span> - (Travel Chronicles) - Travel and exploration</p>
+                    <p><span class="name-idea">RasoiRaja</span> - (Kitchen King) - Cooking and recipes</p>
+                </div>
+                
+                <div class="name-category instagram-category">
+                    <h4>Fashion & Beauty Names</h4>
+                    <p><span class="name-idea">SringaarSaga</span> - (Beauty Chronicle) - Fashion and beauty content</p>
+                    <p><span class="name-idea">VeshBhusha</span> - (Attire and Ornaments) - Traditional and modern fashion</p>
+                    <p><span class="name-idea">RoopRachna</span> - (Beauty Creation) - Makeup and beauty tutorials</p>
+                </div>
+                
+                <h3>Instagram-Specific Naming Strategies</h3>
+                
+                <p><strong>Visual Keywords</strong></p>
+                <ul>
+                    <li>Incorporate words related to vision, imagery, and aesthetics</li>
+                    <li>Use terms that evoke specific visual emotions or cultural imagery</li>
+                    <li>Consider how the name will look in visual content and profile layouts</li>
+                </ul>
+                
+                <p><strong>Hashtag Compatibility</strong></p>
+                <ul>
+                    <li>Ensure names work well with relevant Indian hashtags</li>
+                    <li>Consider searchability and discoverability</li>
+                    <li>Balance uniqueness with community relevance</li>
+                </ul>
+                
+                <p><strong>Bio Integration</strong></p>
+                <ul>
+                    <li>Names that complement Instagram bios naturally</li>
+                    <li>Consider how the name tells part of your story</li>
+                    <li>Ensure it works with your content niche</li>
+                </ul>
+                
+                <h3>Cultural Sensitivity in Instagram Names</h3>
+                
+                <div class="pillar instagram-pillar">
+                    <h4>Respectful Representation</h4>
+                    <p>Avoid cultural appropriation while celebrating heritage. Ensure names honor traditions without misrepresenting them.</p>
+                </div>
+                
+                <div class="pillar instagram-pillar">
+                    <h4>Regional Considerations</h4>
+                    <p>Be mindful of regional sensitivities and ensure names don't inadvertently offend specific communities or traditions.</p>
+                </div>
+                
+                <div class="pillar instagram-pillar">
+                    <h4>Modern Interpretation</h4>
+                    <p>Balance traditional elements with contemporary appeal to reach wider audiences while maintaining cultural authenticity.</p>
+                </div>
+                
+                <h3>Technical Considerations for Instagram</h3>
+                
+                <p><strong>Handle Availability</strong></p>
+                <ul>
+                    <li>Check Instagram handle availability early</li>
+                    <li>Consider variations if primary name is taken</li>
+                    <li>Ensure consistency across platforms</li>
+                </ul>
+                
+                <p><strong>Visual Presentation</strong></p>
+                <ul>
+                    <li>How the name appears in profile layout</li>
+                    <li>Readability in different font styles</li>
+                    <li>Appearance in Stories and Reels</li>
+                </ul>
+                
+                <p><strong>Algorithm Compatibility</strong></p>
+                <ul>
+                    <li>Names that are easy for Instagram's algorithm to categorize</li>
+                    <li>Clear niche indication for better content distribution</li>
+                    <li>Search-friendly terms for discoverability</li>
+                </ul>
+                
+                <h3>Future Trends in Indian Instagram Naming</h3>
+                
+                <p><strong>Emerging Patterns</strong></p>
+                <ul>
+                    <li>Vernacular language handles gaining popularity</li>
+                    <li>Fusion names blending traditional and modern elements</li>
+                    <li>Niche-specific names for micro-communities</li>
+                    <li>Sustainability and eco-conscious naming</li>
+                    <li>Mental health and wellness-focused identities</li>
+                </ul>
+                
+                <h3>Building Your Instagram Legacy</h3>
+                
+                <p>Your Instagram name is the foundation of your visual storytelling journey. It should reflect your artistic vision, cultural roots, and the community you wish to build. In the visually-driven world of Instagram, your name is your first impression—make it memorable, meaningful, and authentically Indian.</p>
+                
+                <p><strong>Your Instagram name is not just a handle—it's your visual signature in the digital world. Choose one that tells your story before you even post your first picture.</strong></p>
+            </section>
+        </div>
+
+        <!-- X (Twitter) Tab Content -->
+        <div class="tab-content" id="twitter-tab">
+            <section class="submission-form">
+                <form id="twitterNameForm">
+                    <div class="form-group">
+                        <input type="text" id="twitterNameInput" placeholder="Enter the Perfect Indian X (Twitter) Name" autocomplete="off">
+                        <button type="submit" class="twitter-submit">Submit Name</button>
+                    </div>
+                </form>
+            </section>
+            
+            <section class="names-list" id="twitterNamesList">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i> Loading X (Twitter) names...
+                </div>
+            </section>
+            
+            <section class="about-section twitter-about">
+                <h2>Crafting the Perfect Indian X (Twitter) Identity (Conversation & Impact Matters)</h2>
+                
+                <h3>The Power of X (Twitter) as a Conversation Platform</h3>
+                
+                <p>X (formerly Twitter) has become the global town square for real-time conversations, news, and cultural discourse. For Indian users, an X handle is more than just a username—it's a digital identity that represents your voice, opinions, and engagement in the most important conversations of our time.</p>
+                
+                <h3>Unique Aspects of Indian X (Twitter) Names</h3>
+                
+                <div class="pillar twitter-pillar">
+                    <h4>Conversation & Engagement Focus</h4>
+                    <p>Names that encourage interaction, spark conversations, and reflect thought leadership in specific domains relevant to Indian audiences.</p>
+                </div>
+                
+                <div class="pillar twitter-pillar">
+                    <h4>Impact & Influence</h4>
+                    <p>Handles that convey authority, expertise, or unique perspectives while maintaining the concise nature required by the platform's character limits.</p>
+                </div>
+                
+                <div class="pillar twitter-pillar">
+                    <h4>Real-time Relevance</h4>
+                    <p>Names that work well with trending topics, hashtags, and current affairs while maintaining long-term brand consistency.</p>
+                </div>
+                
+                <h3>Categories of Indian X (Twitter) Names</h3>
+                
+                <div class="name-category twitter-category">
+                    <h4>Thought Leadership Names</h4>
+                    <p><span class="name-idea">BharatVichaar</span> - (India Thought) - For intellectuals and thought leaders</p>
+                    <p><span class="name-idea">SamaajSamanvay</span> - (Social Harmony) - For social commentators</p>
+                    <p><span class="name-idea">RashtraBodh</span> - (National Awareness) - For political and policy analysts</p>
+                </div>
+                
+                <div class="name-category twitter-category">
+                    <h4>Professional & Industry Names</h4>
+                    <p><span class="name-idea">UdyogVikas</span> - (Industry Development) - For business and entrepreneurship</p>
+                    <p><span class="name-idea">TaknikiTwacha</span> - (Technical Layer) - For tech professionals</p>
+                    <p><span class="name-idea">ArthVyavastha</span> - (Economic System) - For finance and economy experts</p>
+                </div>
+                
+                <div class="name-category twitter-category">
+                    <h4>Creative & Cultural Names</h4>
+                    <p><span class="name-idea">SahityaSetu</span> - (Literature Bridge) - For writers and literary enthusiasts</p>
+                    <p><span class="name-idea">KalaKendra</span> - (Art Center) - For artists and creatives</p>
+                    <p><span class="name-idea">SanskritiSrot</span> - (Cultural Source) - For cultural commentators</p>
+                </div>
+                
+                <div class="name-category twitter-category">
+                    <h4>News & Current Affairs Names</h4>
+                    <p><span class="name-idea">SamacharSagar</span> - (News Ocean) - For journalists and news commentators</p>
+                    <p><span class="name-idea">VartamanVani</span> - (Current Voice) - For real-time news analysis</p>
+                    <p><span class="name-idea">Paridrishya</span> - (Perspective) - For opinion and analysis</p>
+                </div>
+                
+                <h3>X (Twitter)-Specific Naming Strategies</h3>
+                
+                <p><strong>Character Limit Optimization</strong></p>
+                <ul>
+                    <li>Keep names concise and memorable within character limits</li>
+                    <li>Consider how names appear in tweets and replies</li>
+                    <li>Balance uniqueness with ease of mention in conversations</li>
+                </ul>
+                
+                <p><strong>Hashtag & Trend Integration</strong></p>
+                <ul>
+                    <li>Names that work well with relevant Indian hashtags</li>
+                    <li>Consider trending topics and current affairs relevance</li>
+                    <li>Balance evergreen appeal with topical relevance</li>
+                </ul>
+                
+                <p><strong>Conversation Starter</strong></p>
+                <ul>
+                    <li>Names that naturally invite engagement and discussion</li>
+                    <li>Consider how the name positions you in conversations</li>
+                    <li>Ensure it reflects your desired level of formality/informality</li>
+                </ul>
+                
+                <h3>Cultural Considerations for Indian X Handles</h3>
+                
+                <div class="pillar twitter-pillar">
+                    <h4>Respectful Discourse</h4>
+                    <p>Choose names that encourage constructive conversations while respecting diverse viewpoints in the Indian context.</p>
+                </div>
+                
+                <div class="pillar twitter-pillar">
+                    <h4>Regional Sensitivity</h4>
+                    <p>Be mindful of regional and linguistic diversity while ensuring names don't inadvertently exclude or offend specific communities.</p>
+                </div>
+                
+                <div class="pillar twitter-pillar">
+                    <h4>Professional Boundaries</h4>
+                    <p>Balance personal expression with professional considerations, especially for those using X for career advancement.</p>
+                </div>
+                
+                <h3>Technical Considerations for X (Twitter)</h3>
+                
+                <p><strong>Handle Availability</strong></p>
+                <ul>
+                    <li>Check X handle availability considering global competition</li>
+                    <li>Consider variations with Indian context markers</li>
+                    <li>Ensure consistency with other professional platforms</li>
+                </ul>
+                
+                <p><strong>Search & Discovery</strong></p>
+                <ul>
+                    <li>Names that are easily searchable and discoverable</li>
+                    <li>Consider keyword relevance for your expertise area</li>
+                    <li>Balance uniqueness with search engine optimization</li>
+                </ul>
+                
+                <p><strong>Algorithm Compatibility</strong></p>
+                <ul>
+                    <li>Names that help X's algorithm understand your content focus</li>
+                    <li>Clear niche indication for better content distribution</li>
+                    <li>Consider how names work with X's recommendation systems</li>
+                </ul>
+                
+                <h3>Future Trends in Indian X (Twitter) Naming</h3>
+                
+                <p><strong>Emerging Patterns</strong></p>
+                <ul>
+                    <li>Vernacular language handles gaining prominence</li>
+                    <li>Issue-specific names focusing on particular causes</li>
+                    <li>Professional niche handles for micro-expertise areas</li>
+                    <li>Cross-platform consistency becoming increasingly important</li>
+                    <li>Verification and credibility indicators in naming</li>
+                </ul>
+                
+                <h3>Building Your X (Twitter) Legacy</h3>
+                
+                <p>Your X (Twitter) name is the foundation of your digital voice and influence. It should reflect your perspective, expertise, and the conversations you want to shape. In the fast-paced world of X, your name is your calling card—make it impactful, meaningful, and authentically Indian while being globally relevant.</p>
+                
+                <p><strong>Your X handle is not just a username—it's your digital signature in the global conversation. Choose one that represents your voice before you even send your first tweet.</strong></p>
+            </section>
+        </div>
+        
+        <section class="share-section">
+            <h3 class="share-title">Share NaamVani with others</h3>
+            <div class="share-buttons">
+                <a href="#" class="social-share-btn facebook-share">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </a>
+                <a href="#" class="social-share-btn instagram-share">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="#" class="social-share-btn twitter-share">
+                    <i class="fab fa-twitter"></i>
+                    <span>X (Twitter)</span>
+                </a>
+                <a href="#" class="social-share-btn threads">
+                    <i class="fab fa-threads"></i>
+                    <span>Threads</span>
+                </a>
+                <a href="#" class="social-share-btn whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="#" class="social-share-btn linkedin">
+                    <i class="fab fa-linkedin-in"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="#" class="social-share-btn telegram">
+                    <i class="fab fa-telegram"></i>
+                    <span>Telegram</span>
+                </a>
+            </div>
+        </section>
+        
+        <footer>
+            <p>NaamVani &copy; 2023 - Find Your Perfect Indian Social Media Identity</p>
+        </footer>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-content">
+            <div class="share-modal-header">
+                <h3 class="share-modal-title">Share this name</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="share-platforms" id="sharePlatforms">
+                <!-- Share platforms will be dynamically inserted here -->
+            </div>
+            <div class="share-link">
+                <input type="text" class="share-link-input" id="shareLinkInput" readonly>
+                <button class="copy-link-btn" id="copyLinkBtn">Copy Link</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDee_4qTCrBO9RpR45I9RnStEUIEM_wUs",
+            authDomain: "naam-keeper.firebaseapp.com",
+            projectId: "naam-keeper",
+            storageBucket: "naam-keeper.firebasestorage.app",
+            messagingSenderId: "592921074367",
+            appId: "1:592921074367:web:9397a55d76b8ef81ad440a",
+            measurementId: "G-EKFE8GFKQ2"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const analytics = firebase.analytics();
+
+        // Data structures to store names
+        let youtubeNames = [];
+        let facebookNames = [];
+        let instagramNames = [];
+        let twitterNames = [];
+
+        // DOM elements
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const connectionStatus = document.getElementById('connectionStatus');
+        
+        // YouTube elements
+        const youtubeNameForm = document.getElementById('youtubeNameForm');
+        const youtubeNameInput = document.getElementById('youtubeNameInput');
+        const youtubeNamesList = document.getElementById('youtubeNamesList');
+        
+        // Facebook elements
+        const facebookNameForm = document.getElementById('facebookNameForm');
+        const facebookNameInput = document.getElementById('facebookNameInput');
+        const facebookNamesList = document.getElementById('facebookNamesList');
+        
+        // Instagram elements
+        const instagramNameForm = document.getElementById('instagramNameForm');
+        const instagramNameInput = document.getElementById('instagramNameInput');
+        const instagramNamesList = document.getElementById('instagramNamesList');
+        
+        // Twitter elements
+        const twitterNameForm = document.getElementById('twitterNameForm');
+        const twitterNameInput = document.getElementById('twitterNameInput');
+        const twitterNamesList = document.getElementById('twitterNamesList');
+        
+        // Shared elements
+        const shareModal = document.getElementById('shareModal');
+        const closeModal = document.getElementById('closeModal');
+        const sharePlatforms = document.getElementById('sharePlatforms');
+        const shareLinkInput = document.getElementById('shareLinkInput');
+        const copyLinkBtn = document.getElementById('copyLinkBtn');
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set up connection monitoring
+            setupConnectionMonitoring();
+            
+            // Load names from Firebase
+            loadYouTubeNamesFromFirebase();
+            loadFacebookNamesFromFirebase();
+            loadInstagramNamesFromFirebase();
+            loadTwitterNamesFromFirebase();
+            
+            // Set up tab navigation
+            setupTabNavigation();
+            
+            // Set up share buttons
+            setupShareButtons();
+            
+            // Set up modal events
+            closeModal.addEventListener('click', () => {
+                shareModal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === shareModal) {
+                    shareModal.style.display = 'none';
+                }
+            });
+            
+            copyLinkBtn.addEventListener('click', copyShareLink);
+            
+            // Log analytics event
+            analytics.logEvent('app_loaded');
+        });
+
+        // Set up connection monitoring
+        function setupConnectionMonitoring() {
+            firebase.firestore().enablePersistence()
+                .then(() => {
+                    connectionStatus.innerHTML = '<i class="fas fa-wifi"></i> Online';
+                    connectionStatus.className = 'connection-status connection-online';
+                })
+                .catch((err) => {
+                    if (err.code == 'failed-precondition') {
+                        console.log('Multiple tabs open, persistence can only be enabled in one tab at a time.');
+                    } else if (err.code == 'unimplemented') {
+                        console.log('The current browser does not support persistence.');
+                    }
+                });
+
+            // Monitor connection state
+            firebase.firestore().onSnapshotsInSync(() => {
+                connectionStatus.innerHTML = '<i class="fas fa-wifi"></i> Online';
+                connectionStatus.className = 'connection-status connection-online';
+            });
+
+            // Handle offline state
+            firebase.firestore().disableNetwork().then(() => {
+                connectionStatus.innerHTML = '<i class="fas fa-wifi-slash"></i> Offline';
+                connectionStatus.className = 'connection-status connection-offline';
+            });
+        }
+
+        // Tab Navigation
+        function setupTabNavigation() {
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and contents
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    btn.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // Log analytics event
+                    analytics.logEvent('tab_switch', { tab: tabId });
+                });
+            });
+        }
+
+        // Load YouTube names from Firebase
+        function loadYouTubeNamesFromFirebase() {
+            db.collection("youtubeNames")
+                .orderBy("votes", "desc")
+                .onSnapshot((querySnapshot) => {
+                    youtubeNames = [];
+                    querySnapshot.forEach((doc) => {
+                        youtubeNames.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    });
+                    renderYouTubeNameList();
+                }, (error) => {
+                    console.error("Error loading YouTube names: ", error);
+                    youtubeNamesList.innerHTML = `
+                        <div class="empty-state">
+                            <h3>Error loading YouTube names</h3>
+                            <p>Please check your connection and try again.</p>
+                        </div>
+                    `;
+                });
+        }
+
+        // Load Facebook names from Firebase
+        function loadFacebookNamesFromFirebase() {
+            db.collection("facebookNames")
+                .orderBy("votes", "desc")
+                .onSnapshot((querySnapshot) => {
+                    facebookNames = [];
+                    querySnapshot.forEach((doc) => {
+                        facebookNames.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    });
+                    renderFacebookNameList();
+                }, (error) => {
+                    console.error("Error loading Facebook names: ", error);
+                    facebookNamesList.innerHTML = `
+                        <div class="empty-state">
+                            <h3>Error loading Facebook names</h3>
+                            <p>Please check your connection and try again.</p>
+                        </div>
+                    `;
+                });
+        }
+
+        // Load Instagram names from Firebase
+        function loadInstagramNamesFromFirebase() {
+            db.collection("instagramNames")
+                .orderBy("votes", "desc")
+                .onSnapshot((querySnapshot) => {
+                    instagramNames = [];
+                    querySnapshot.forEach((doc) => {
+                        instagramNames.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    });
+                    renderInstagramNameList();
+                }, (error) => {
+                    console.error("Error loading Instagram names: ", error);
+                    instagramNamesList.innerHTML = `
+                        <div class="empty-state">
+                            <h3>Error loading Instagram names</h3>
+                            <p>Please check your connection and try again.</p>
+                        </div>
+                    `;
+                });
+        }
+
+        // Load Twitter names from Firebase
+        function loadTwitterNamesFromFirebase() {
+            db.collection("twitterNames")
+                .orderBy("votes", "desc")
+                .onSnapshot((querySnapshot) => {
+                    twitterNames = [];
+                    querySnapshot.forEach((doc) => {
+                        twitterNames.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    });
+                    renderTwitterNameList();
+                }, (error) => {
+                    console.error("Error loading Twitter names: ", error);
+                    twitterNamesList.innerHTML = `
+                        <div class="empty-state">
+                            <h3>Error loading X (Twitter) names</h3>
+                            <p>Please check your connection and try again.</p>
+                        </div>
+                    `;
+                });
+        }
+
+        // Handle YouTube form submission
+        youtubeNameForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const nameValue = youtubeNameInput.value.trim();
+            
+            if (!nameValue) {
+                alert('Please enter a YouTube name');
+                return;
+            }
+            
+            try {
+                // Check if name already exists (case-insensitive)
+                const querySnapshot = await db.collection("youtubeNames")
+                    .where("nameLower", "==", nameValue.toLowerCase())
+                    .get();
+                
+                if (!querySnapshot.empty) {
+                    // Update existing name
+                    const doc = querySnapshot.docs[0];
+                    await db.collection("youtubeNames").doc(doc.id).update({
+                        submissions: firebase.firestore.FieldValue.increment(1)
+                    });
+                    alert(`"${nameValue}" already exists! Submission count increased.`);
+                } else {
+                    // Add new name
+                    await db.collection("youtubeNames").add({
+                        name: nameValue,
+                        nameLower: nameValue.toLowerCase(),
+                        votes: 0,
+                        likes: 0,
+                        comments: [],
+                        submissions: 1,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        createdBy: getUserId()
+                    });
+                    alert(`"${nameValue}" submitted successfully!`);
+                }
+                
+                // Clear input
+                youtubeNameInput.value = '';
+                
+                // Log analytics event
+                analytics.logEvent('name_submitted', { platform: 'youtube', name: nameValue });
+            } catch (error) {
+                console.error("Error adding YouTube name: ", error);
+                alert("Error submitting YouTube name. Please try again.");
+            }
+        });
+
+        // Handle Facebook form submission
+        facebookNameForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const nameValue = facebookNameInput.value.trim();
+            
+            if (!nameValue) {
+                alert('Please enter a Facebook name');
+                return;
+            }
+            
+            try {
+                // Check if name already exists (case-insensitive)
+                const querySnapshot = await db.collection("facebookNames")
+                    .where("nameLower", "==", nameValue.toLowerCase())
+                    .get();
+                
+                if (!querySnapshot.empty) {
+                    // Update existing name
+                    const doc = querySnapshot.docs[0];
+                    await db.collection("facebookNames").doc(doc.id).update({
+                        submissions: firebase.firestore.FieldValue.increment(1)
+                    });
+                    alert(`"${nameValue}" already exists! Submission count increased.`);
+                } else {
+                    // Add new name
+                    await db.collection("facebookNames").add({
+                        name: nameValue,
+                        nameLower: nameValue.toLowerCase(),
+                        votes: 0,
+                        likes: 0,
+                        comments: [],
+                        submissions: 1,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        createdBy: getUserId()
+                    });
+                    alert(`"${nameValue}" submitted successfully!`);
+                }
+                
+                // Clear input
+                facebookNameInput.value = '';
+                
+                // Log analytics event
+                analytics.logEvent('name_submitted', { platform: 'facebook', name: nameValue });
+            } catch (error) {
+                console.error("Error adding Facebook name: ", error);
+                alert("Error submitting Facebook name. Please try again.");
+            }
+        });
+
+        // Handle Instagram form submission
+        instagramNameForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const nameValue = instagramNameInput.value.trim();
+            
+            if (!nameValue) {
+                alert('Please enter an Instagram name');
+                return;
+            }
+            
+            try {
+                // Check if name already exists (case-insensitive)
+                const querySnapshot = await db.collection("instagramNames")
+                    .where("nameLower", "==", nameValue.toLowerCase())
+                    .get();
+                
+                if (!querySnapshot.empty) {
+                    // Update existing name
+                    const doc = querySnapshot.docs[0];
+                    await db.collection("instagramNames").doc(doc.id).update({
+                        submissions: firebase.firestore.FieldValue.increment(1)
+                    });
+                    alert(`"${nameValue}" already exists! Submission count increased.`);
+                } else {
+                    // Add new name
+                    await db.collection("instagramNames").add({
+                        name: nameValue,
+                        nameLower: nameValue.toLowerCase(),
+                        votes: 0,
+                        likes: 0,
+                        comments: [],
+                        submissions: 1,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        createdBy: getUserId()
+                    });
+                    alert(`"${nameValue}" submitted successfully!`);
+                }
+                
+                // Clear input
+                instagramNameInput.value = '';
+                
+                // Log analytics event
+                analytics.logEvent('name_submitted', { platform: 'instagram', name: nameValue });
+            } catch (error) {
+                console.error("Error adding Instagram name: ", error);
+                alert("Error submitting Instagram name. Please try again.");
+            }
+        });
+
+        // Handle Twitter form submission
+        twitterNameForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const nameValue = twitterNameInput.value.trim();
+            
+            if (!nameValue) {
+                alert('Please enter an X (Twitter) name');
+                return;
+            }
+            
+            try {
+                // Check if name already exists (case-insensitive)
+                const querySnapshot = await db.collection("twitterNames")
+                    .where("nameLower", "==", nameValue.toLowerCase())
+                    .get();
+                
+                if (!querySnapshot.empty) {
+                    // Update existing name
+                    const doc = querySnapshot.docs[0];
+                    await db.collection("twitterNames").doc(doc.id).update({
+                        submissions: firebase.firestore.FieldValue.increment(1)
+                    });
+                    alert(`"${nameValue}" already exists! Submission count increased.`);
+                } else {
+                    // Add new name
+                    await db.collection("twitterNames").add({
+                        name: nameValue,
+                        nameLower: nameValue.toLowerCase(),
+                        votes: 0,
+                        likes: 0,
+                        comments: [],
+                        submissions: 1,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        createdBy: getUserId()
+                    });
+                    alert(`"${nameValue}" submitted successfully!`);
+                }
+                
+                // Clear input
+                twitterNameInput.value = '';
+                
+                // Log analytics event
+                analytics.logEvent('name_submitted', { platform: 'twitter', name: nameValue });
+            } catch (error) {
+                console.error("Error adding X (Twitter) name: ", error);
+                alert("Error submitting X (Twitter) name. Please try again.");
+            }
+        });
+
+        // Handle YouTube voting
+        async function handleYouTubeVote(id) {
+            try {
+                await db.collection("youtubeNames").doc(id).update({
+                    votes: firebase.firestore.FieldValue.increment(1)
+                });
+                analytics.logEvent('vote', { platform: 'youtube', nameId: id });
+            } catch (error) {
+                console.error("Error voting for YouTube name: ", error);
+                alert("Error voting. Please try again.");
+            }
+        }
+
+        // Handle Facebook voting
+        async function handleFacebookVote(id) {
+            try {
+                await db.collection("facebookNames").doc(id).update({
+                    votes: firebase.firestore.FieldValue.increment(1)
+                });
+                analytics.logEvent('vote', { platform: 'facebook', nameId: id });
+            } catch (error) {
+                console.error("Error voting for Facebook name: ", error);
+                alert("Error voting. Please try again.");
+            }
+        }
+
+        // Handle Instagram voting
+        async function handleInstagramVote(id) {
+            try {
+                await db.collection("instagramNames").doc(id).update({
+                    votes: firebase.firestore.FieldValue.increment(1)
+                });
+                analytics.logEvent('vote', { platform: 'instagram', nameId: id });
+            } catch (error) {
+                console.error("Error voting for Instagram name: ", error);
+                alert("Error voting. Please try again.");
+            }
+        }
+
+        // Handle Twitter voting
+        async function handleTwitterVote(id) {
+            try {
+                await db.collection("twitterNames").doc(id).update({
+                    votes: firebase.firestore.FieldValue.increment(1)
+                });
+                analytics.logEvent('vote', { platform: 'twitter', nameId: id });
+            } catch (error) {
+                console.error("Error voting for X (Twitter) name: ", error);
+                alert("Error voting. Please try again.");
+            }
+        }
+
+        // Handle liking (all platforms)
+        async function handleLike(platform, id) {
+            try {
+                await db.collection(`${platform}Names`).doc(id).update({
+                    likes: firebase.firestore.FieldValue.increment(1)
+                });
+                analytics.logEvent('like', { platform: platform, nameId: id });
+            } catch (error) {
+                console.error(`Error liking ${platform} name: `, error);
+                alert("Error liking. Please try again.");
+            }
+        }
+
+        // Handle comment toggle
+        function toggleComments(platform, id) {
+            const commentsSection = document.getElementById(`comments-${platform}-${id}`);
+            if (commentsSection.style.display === 'block') {
+                commentsSection.style.display = 'none';
+            } else {
+                commentsSection.style.display = 'block';
+            }
+        }
+
+        // Handle adding comment
+        async function addComment(platform, id) {
+            const commentInput = document.getElementById(`comment-input-${platform}-${id}`);
+            const commentText = commentInput.value.trim();
+            
+            if (!commentText) {
+                alert('Please enter a comment');
+                return;
+            }
+            
+            try {
+                await db.collection(`${platform}Names`).doc(id).update({
+                    comments: firebase.firestore.FieldValue.arrayUnion({
+                        text: commentText,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        user: getUserId()
+                    })
+                });
+                
+                // Clear input
+                commentInput.value = '';
+                
+                analytics.logEvent('comment_added', { platform: platform, nameId: id });
+            } catch (error) {
+                console.error(`Error adding comment to ${platform} name: `, error);
+                alert("Error adding comment. Please try again.");
+            }
+        }
+
+        // Generate a simple user ID for tracking
+        function getUserId() {
+            let userId = localStorage.getItem('naamvani_userId');
+            if (!userId) {
+                userId = 'user_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('naamvani_userId', userId);
+            }
+            return userId;
+        }
+
+        // Handle sharing - opens modal with multiple options
+        function handleShare(platform, id) {
+            let namesArray, name;
+            
+            if (platform === 'youtube') {
+                namesArray = youtubeNames;
+            } else if (platform === 'facebook') {
+                namesArray = facebookNames;
+            } else if (platform === 'instagram') {
+                namesArray = instagramNames;
+            } else {
+                namesArray = twitterNames;
+            }
+            
+            const nameIndex = namesArray.findIndex(item => item.id === id);
+            
+            if (nameIndex !== -1) {
+                name = namesArray[nameIndex].name;
+                const shareUrl = encodeURIComponent(window.location.href + `#${platform}-name-${id}`);
+                const shareText = encodeURIComponent(`Check out this ${platform} name suggestion: "${name}" on NaamVani!`);
+                
+                // Set the share link
+                shareLinkInput.value = window.location.href + `#${platform}-name-${id}`;
+                
+                // Generate share platform buttons
+                sharePlatforms.innerHTML = `
+                    <div class="share-platform" onclick="shareToPlatform('facebook', '${shareUrl}', '${shareText}')">
+                        <i class="fab fa-facebook-f" style="color: #3b5998;"></i>
+                        <span class="share-platform-name">Facebook</span>
+                    </div>
+                    <div class="share-platform" onclick="shareToPlatform('twitter', '${shareUrl}', '${shareText}')">
+                        <i class="fab fa-twitter" style="color: #1DA1F2;"></i>
+                        <span class="share-platform-name">Twitter</span>
+                    </div>
+                    <div class="share-platform" onclick="shareToPlatform('whatsapp', '${shareUrl}', '${shareText}')">
+                        <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+                        <span class="share-platform-name">WhatsApp</span>
+                    </div>
+                    <div class="share-platform" onclick="shareToPlatform('linkedin', '${shareUrl}', '${shareText}')">
+                        <i class="fab fa-linkedin-in" style="color: #0077b5;"></i>
+                        <span class="share-platform-name">LinkedIn</span>
+                    </div>
+                    <div class="share-platform" onclick="shareToPlatform('telegram', '${shareUrl}', '${shareText}')">
+                        <i class="fab fa-telegram" style="color: #0088cc;"></i>
+                        <span class="share-platform-name">Telegram</span>
+                    </div>
+                    <div class="share-platform" onclick="shareToPlatform('email', '${shareUrl}', '${shareText}')">
+                        <i class="fas fa-envelope" style="color: #ea4335;"></i>
+                        <span class="share-platform-name">Email</span>
+                    </div>
+                `;
+                
+                // Show the modal
+                shareModal.style.display = 'flex';
+                
+                analytics.logEvent('share_opened', { platform: platform, nameId: id });
+            }
+        }
+
+        // Share to specific platforms
+        function shareToPlatform(platform, url, text) {
+            let shareUrl = '';
+            
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://api.whatsapp.com/send?text=${text} ${url}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                    break;
+                case 'telegram':
+                    shareUrl = `https://t.me/share/url?url=${url}&text=${text}`;
+                    break;
+                case 'instagram':
+                    // Instagram doesn't support direct sharing, so we'll copy to clipboard
+                    copyShareLink();
+                    alert('Link copied to clipboard! You can now share it on Instagram.');
+                    return;
+                case 'email':
+                    shareUrl = `mailto:?subject=Check out this name on NaamVani&body=${text} ${url}`;
+                    break;
+            }
+            
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+            analytics.logEvent('shared', { platform: platform });
+        }
+
+        // Copy share link to clipboard
+        function copyShareLink() {
+            shareLinkInput.select();
+            shareLinkInput.setSelectionRange(0, 99999); // For mobile devices
+    
+            try {
+                navigator.clipboard.writeText(shareLinkInput.value).then(() => {
+                    copyLinkBtn.textContent = 'Copied!';
+                    setTimeout(() => {
+                        copyLinkBtn.textContent = 'Copy Link';
+                    }, 2000);
+                });
+                analytics.logEvent('link_copied');
+            } catch (err) {
+                // Fallback for older browsers
+                document.execCommand('copy');
+                copyLinkBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyLinkBtn.textContent = 'Copy Link';
+                }, 2000);
+                analytics.logEvent('link_copied');
+            }
+        }
+
+        // Render YouTube name list
+        function renderYouTubeNameList() {
+            if (youtubeNames.length === 0) {
+                youtubeNamesList.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No YouTube names submitted yet</h3>
+                        <p>Be the first to suggest a great Indian YouTube name!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            youtubeNamesList.innerHTML = youtubeNames.map(name => `
+                <div class="name-item" id="youtube-name-${name.id}">
+                    <div class="name-header">
+                        <div class="name-text">${name.name}</div>
+                        <div class="vote-section">
+                            <span class="vote-count">${name.votes || 0} votes</span>
+                            <button class="vote-btn youtube-vote" onclick="handleYouTubeVote('${name.id}')">
+                                <i class="fas fa-vote-yea"></i> Vote
+                            </button>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="like-btn" onclick="handleLike('youtube', '${name.id}')">
+                            <i class="fas fa-heart"></i> Like (${name.likes || 0})
+                        </button>
+                        <button class="comment-btn" onclick="toggleComments('youtube', '${name.id}')">
+                            <i class="fas fa-comment"></i> Comment
+                        </button>
+                        <button class="share-btn" onclick="handleShare('youtube', '${name.id}')">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                    </div>
+                    <div class="comments-section" id="comments-youtube-${name.id}">
+                        <h4>Comments:</h4>
+                        <div class="comments-list">
+                            ${(name.comments && name.comments.length > 0) ? 
+                                name.comments.map(comment => `
+                                    <div class="comment">${comment.text || comment} <small>${comment.timestamp ? new Date(comment.timestamp.seconds * 1000).toLocaleDateString() : ''}</small></div>
+                                `).join('') : 
+                                '<p>No comments yet. Be the first to comment!</p>'
+                            }
+                        </div>
+                        <div class="comment-form">
+                            <input type="text" class="comment-input" id="comment-input-youtube-${name.id}" placeholder="Add a comment...">
+                            <button class="comment-submit" onclick="addComment('youtube', '${name.id}')">Post</button>
+                        </div>
+                    </div>
+                    <div class="submission-count">
+                        This name has been submitted ${name.submissions || 1} time(s)
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Facebook name list
+        function renderFacebookNameList() {
+            if (facebookNames.length === 0) {
+                facebookNamesList.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No Facebook names submitted yet</h3>
+                        <p>Be the first to suggest a great Indian Facebook name!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            facebookNamesList.innerHTML = facebookNames.map(name => `
+                <div class="name-item facebook-name" id="facebook-name-${name.id}">
+                    <div class="name-header">
+                        <div class="name-text">${name.name}</div>
+                        <div class="vote-section">
+                            <span class="vote-count">${name.votes || 0} votes</span>
+                            <button class="vote-btn facebook-vote" onclick="handleFacebookVote('${name.id}')">
+                                <i class="fas fa-vote-yea"></i> Vote
+                            </button>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="like-btn" onclick="handleLike('facebook', '${name.id}')">
+                            <i class="fas fa-heart"></i> Like (${name.likes || 0})
+                        </button>
+                        <button class="comment-btn" onclick="toggleComments('facebook', '${name.id}')">
+                            <i class="fas fa-comment"></i> Comment
+                        </button>
+                        <button class="share-btn" onclick="handleShare('facebook', '${name.id}')">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                    </div>
+                    <div class="comments-section" id="comments-facebook-${name.id}">
+                        <h4>Comments:</h4>
+                        <div class="comments-list">
+                            ${(name.comments && name.comments.length > 0) ? 
+                                name.comments.map(comment => `
+                                    <div class="comment">${comment.text || comment} <small>${comment.timestamp ? new Date(comment.timestamp.seconds * 1000).toLocaleDateString() : ''}</small></div>
+                                `).join('') : 
+                                '<p>No comments yet. Be the first to comment!</p>'
+                            }
+                        </div>
+                        <div class="comment-form">
+                            <input type="text" class="comment-input" id="comment-input-facebook-${name.id}" placeholder="Add a comment...">
+                            <button class="comment-submit" onclick="addComment('facebook', '${name.id}')">Post</button>
+                        </div>
+                    </div>
+                    <div class="submission-count">
+                        This name has been submitted ${name.submissions || 1} time(s)
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Instagram name list
+        function renderInstagramNameList() {
+            if (instagramNames.length === 0) {
+                instagramNamesList.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No Instagram names submitted yet</h3>
+                        <p>Be the first to suggest a great Indian Instagram name!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            instagramNamesList.innerHTML = instagramNames.map(name => `
+                <div class="name-item instagram-name" id="instagram-name-${name.id}">
+                    <div class="name-header">
+                        <div class="name-text">${name.name}</div>
+                        <div class="vote-section">
+                            <span class="vote-count">${name.votes || 0} votes</span>
+                            <button class="vote-btn instagram-vote" onclick="handleInstagramVote('${name.id}')">
+                                <i class="fas fa-vote-yea"></i> Vote
+                            </button>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="like-btn" onclick="handleLike('instagram', '${name.id}')">
+                            <i class="fas fa-heart"></i> Like (${name.likes || 0})
+                        </button>
+                        <button class="comment-btn" onclick="toggleComments('instagram', '${name.id}')">
+                            <i class="fas fa-comment"></i> Comment
+                        </button>
+                        <button class="share-btn" onclick="handleShare('instagram', '${name.id}')">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                    </div>
+                    <div class="comments-section" id="comments-instagram-${name.id}">
+                        <h4>Comments:</h4>
+                        <div class="comments-list">
+                            ${(name.comments && name.comments.length > 0) ? 
+                                name.comments.map(comment => `
+                                    <div class="comment">${comment.text || comment} <small>${comment.timestamp ? new Date(comment.timestamp.seconds * 1000).toLocaleDateString() : ''}</small></div>
+                                `).join('') : 
+                                '<p>No comments yet. Be the first to comment!</p>'
+                            }
+                        </div>
+                        <div class="comment-form">
+                            <input type="text" class="comment-input" id="comment-input-instagram-${name.id}" placeholder="Add a comment...">
+                            <button class="comment-submit" onclick="addComment('instagram', '${name.id}')">Post</button>
+                        </div>
+                    </div>
+                    <div class="submission-count">
+                        This name has been submitted ${name.submissions || 1} time(s)
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Twitter name list
+        function renderTwitterNameList() {
+            if (twitterNames.length === 0) {
+                twitterNamesList.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No X (Twitter) names submitted yet</h3>
+                        <p>Be the first to suggest a great Indian X (Twitter) name!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            twitterNamesList.innerHTML = twitterNames.map(name => `
+                <div class="name-item twitter-name" id="twitter-name-${name.id}">
+                    <div class="name-header">
+                        <div class="name-text">${name.name}</div>
+                        <div class="vote-section">
+                            <span class="vote-count">${name.votes || 0} votes</span>
+                            <button class="vote-btn twitter-vote" onclick="handleTwitterVote('${name.id}')">
+                                <i class="fas fa-vote-yea"></i> Vote
+                            </button>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="like-btn" onclick="handleLike('twitter', '${name.id}')">
+                            <i class="fas fa-heart"></i> Like (${name.likes || 0})
+                        </button>
+                        <button class="comment-btn" onclick="toggleComments('twitter', '${name.id}')">
+                            <i class="fas fa-comment"></i> Comment
+                        </button>
+                        <button class="share-btn" onclick="handleShare('twitter', '${name.id}')">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                    </div>
+                    <div class="comments-section" id="comments-twitter-${name.id}">
+                        <h4>Comments:</h4>
+                        <div class="comments-list">
+                            ${(name.comments && name.comments.length > 0) ? 
+                                name.comments.map(comment => `
+                                    <div class="comment">${comment.text || comment} <small>${comment.timestamp ? new Date(comment.timestamp.seconds * 1000).toLocaleDateString() : ''}</small></div>
+                                `).join('') : 
+                                '<p>No comments yet. Be the first to comment!</p>'
+                            }
+                        </div>
+                        <div class="comment-form">
+                            <input type="text" class="comment-input" id="comment-input-twitter-${name.id}" placeholder="Add a comment...">
+                            <button class="comment-submit" onclick="addComment('twitter', '${name.id}')">Post</button>
+                        </div>
+                    </div>
+                    <div class="submission-count">
+                        This name has been submitted ${name.submissions || 1} time(s)
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Set up social share buttons
+        function setupShareButtons() {
+            const shareButtons = document.querySelectorAll('.social-share-btn');
+            const pageUrl = encodeURIComponent(window.location.href);
+            const pageTitle = encodeURIComponent('NaamVani - Indian Social Media Name Voting Hub');
+            
+            shareButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    let shareUrl = '';
+                    
+                    if (btn.classList.contains('facebook-share')) {
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}&quote=${pageTitle}`;
+                    } else if (btn.classList.contains('instagram-share')) {
+                        // Instagram doesn't support direct sharing, copy to clipboard instead
+                        copyToClipboard(window.location.href);
+                        alert('Link copied to clipboard! You can now share it on Instagram.');
+                        return;
+                    } else if (btn.classList.contains('twitter-share')) {
+                        shareUrl = `https://twitter.com/intent/tweet?text=${pageTitle}&url=${pageUrl}`;
+                    } else if (btn.classList.contains('threads')) {
+                        // Threads doesn't have direct sharing API yet
+                        copyToClipboard(window.location.href);
+                        alert('Link copied to clipboard! You can now share it on Threads.');
+                        return;
+                    } else if (btn.classList.contains('whatsapp')) {
+                        shareUrl = `https://api.whatsapp.com/send?text=${pageTitle} ${pageUrl}`;
+                    } else if (btn.classList.contains('linkedin')) {
+                        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`;
+                    } else if (btn.classList.contains('telegram')) {
+                        shareUrl = `https://t.me/share/url?url=${pageUrl}&text=${pageTitle}`;
+                    }
+                    
+                    if (shareUrl) {
+                        window.open(shareUrl, '_blank', 'width=600,height=400');
+                    }
+                    
+                    analytics.logEvent('app_shared');
+                });
+            });
+        }
+
+        // Utility function to copy to clipboard
+        function copyToClipboard(text) {
+            try {
+                navigator.clipboard.writeText(text);
+            } catch (err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+        }
+
+        // Make functions available globally for onclick handlers
+        window.handleYouTubeVote = handleYouTubeVote;
+        window.handleFacebookVote = handleFacebookVote;
+        window.handleInstagramVote = handleInstagramVote;
+        window.handleTwitterVote = handleTwitterVote;
+        window.handleLike = handleLike;
+        window.toggleComments = toggleComments;
+        window.addComment = addComment;
+        window.handleShare = handleShare;
+        window.shareToPlatform = shareToPlatform;
+        window.copyShareLink = copyShareLink;
+    </script>
+</body>
+</html>
