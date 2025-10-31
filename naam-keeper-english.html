@@ -495,6 +495,12 @@
             cursor: pointer;
         }
         
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--blue);
+        }
+        
         @media (max-width: 600px) {
             .form-group {
                 flex-direction: column;
@@ -547,10 +553,8 @@
         </section>
         
         <section class="names-list" id="namesList">
-            <!-- Names will be dynamically inserted here -->
-            <div class="empty-state">
-                <h3>No names submitted yet</h3>
-                <p>Be the first to suggest a YouTube channel name!</p>
+            <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Loading names...
             </div>
         </section>
         
@@ -698,7 +702,29 @@
         </div>
     </div>
 
-    <script>
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-analytics.js";
+        import { getFirestore, collection, addDoc, updateDoc, doc, onSnapshot, orderBy, query, where, getDocs, serverTimestamp, arrayUnion, increment } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDee_4qTCrBO9RpR45I9RnStEUIEM_wUs",
+            authDomain: "naam-keeper.firebaseapp.com",
+            projectId: "naam-keeper",
+            storageBucket: "naam-keeper.firebasestorage.app",
+            messagingSenderId: "592921074367",
+            appId: "1:592921074367:web:9397a55d76b8ef81ad440a",
+            measurementId: "G-EKFE8GFKQ2"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
         // Data structure to store names
         let youtubeNames = [];
 
@@ -714,8 +740,7 @@
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', () => {
-            loadNamesFromStorage();
-            renderNameList();
+            loadNamesFromFirebase();
             
             // Set up share buttons
             setupShareButtons();
@@ -734,21 +759,32 @@
             copyLinkBtn.addEventListener('click', copyShareLink);
         });
 
-        // Load names from localStorage
-        function loadNamesFromStorage() {
-            const storedNames = localStorage.getItem('youtubeNames');
-            if (storedNames) {
-                youtubeNames = JSON.parse(storedNames);
-            }
-        }
-
-        // Save names to localStorage
-        function saveNamesToStorage() {
-            localStorage.setItem('youtubeNames', JSON.stringify(youtubeNames));
+        // Load names from Firebase
+        function loadNamesFromFirebase() {
+            const q = query(collection(db, "youtubeNames"), orderBy("votes", "desc"));
+            
+            onSnapshot(q, (querySnapshot) => {
+                youtubeNames = [];
+                querySnapshot.forEach((doc) => {
+                    youtubeNames.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                renderNameList();
+            }, (error) => {
+                console.error("Error loading names: ", error);
+                namesList.innerHTML = `
+                    <div class="empty-state">
+                        <h3>Error loading names</h3>
+                        <p>Please check your connection and try again.</p>
+                    </div>
+                `;
+            });
         }
 
         // Handle form submission
-        nameForm.addEventListener('submit', (e) => {
+        nameForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const nameValue = nameInput.value.trim();
@@ -758,53 +794,61 @@
                 return;
             }
             
-            // Check if name already exists (case-sensitive)
-            const existingNameIndex = youtubeNames.findIndex(item => 
-                item.name.toLowerCase() === nameValue.toLowerCase()
-            );
-            
-            if (existingNameIndex !== -1) {
-                // Increment submission count for existing name
-                youtubeNames[existingNameIndex].submissions += 1;
-            } else {
-                // Add new name
-                youtubeNames.push({
-                    id: Date.now(),
-                    name: nameValue,
-                    votes: 0,
-                    likes: 0,
-                    comments: [],
-                    submissions: 1
-                });
+            try {
+                // Check if name already exists (case-insensitive)
+                const q = query(collection(db, "youtubeNames"), where("nameLower", "==", nameValue.toLowerCase()));
+                const querySnapshot = await getDocs(q);
+                
+                if (!querySnapshot.empty) {
+                    // Update existing name
+                    const doc = querySnapshot.docs[0];
+                    await updateDoc(doc.ref, {
+                        submissions: increment(1)
+                    });
+                    alert(`"${nameValue}" already exists! Submission count increased.`);
+                } else {
+                    // Add new name
+                    await addDoc(collection(db, "youtubeNames"), {
+                        name: nameValue,
+                        nameLower: nameValue.toLowerCase(),
+                        votes: 0,
+                        likes: 0,
+                        comments: [],
+                        submissions: 1,
+                        createdAt: serverTimestamp()
+                    });
+                    alert(`"${nameValue}" submitted successfully!`);
+                }
+                
+                // Clear input
+                nameInput.value = '';
+            } catch (error) {
+                console.error("Error adding name: ", error);
+                alert("Error submitting name. Please try again.");
             }
-            
-            // Save to storage and re-render
-            saveNamesToStorage();
-            renderNameList();
-            
-            // Clear input
-            nameInput.value = '';
         });
 
         // Handle voting
-        function handleVote(id) {
-            const nameIndex = youtubeNames.findIndex(item => item.id === id);
-            
-            if (nameIndex !== -1) {
-                youtubeNames[nameIndex].votes += 1;
-                saveNamesToStorage();
-                renderNameList();
+        async function handleVote(id) {
+            try {
+                await updateDoc(doc(db, "youtubeNames", id), {
+                    votes: increment(1)
+                });
+            } catch (error) {
+                console.error("Error voting: ", error);
+                alert("Error voting. Please try again.");
             }
         }
 
         // Handle liking
-        function handleLike(id) {
-            const nameIndex = youtubeNames.findIndex(item => item.id === id);
-            
-            if (nameIndex !== -1) {
-                youtubeNames[nameIndex].likes += 1;
-                saveNamesToStorage();
-                renderNameList();
+        async function handleLike(id) {
+            try {
+                await updateDoc(doc(db, "youtubeNames", id), {
+                    likes: increment(1)
+                });
+            } catch (error) {
+                console.error("Error liking: ", error);
+                alert("Error liking. Please try again.");
             }
         }
 
@@ -819,7 +863,7 @@
         }
 
         // Handle adding comment
-        function addComment(id) {
+        async function addComment(id) {
             const commentInput = document.getElementById(`comment-input-${id}`);
             const commentText = commentInput.value.trim();
             
@@ -828,15 +872,16 @@
                 return;
             }
             
-            const nameIndex = youtubeNames.findIndex(item => item.id === id);
-            
-            if (nameIndex !== -1) {
-                if (!youtubeNames[nameIndex].comments) {
-                    youtubeNames[nameIndex].comments = [];
-                }
-                youtubeNames[nameIndex].comments.push(commentText);
-                saveNamesToStorage();
-                renderNameList();
+            try {
+                await updateDoc(doc(db, "youtubeNames", id), {
+                    comments: arrayUnion(commentText)
+                });
+                
+                // Clear input
+                commentInput.value = '';
+            } catch (error) {
+                console.error("Error adding comment: ", error);
+                alert("Error adding comment. Please try again.");
             }
         }
 
@@ -944,11 +989,8 @@
                 return;
             }
             
-            // Sort by votes (descending)
-            const sortedNames = [...youtubeNames].sort((a, b) => b.votes - a.votes);
-            
             // Create name items
-            sortedNames.forEach(name => {
+            youtubeNames.forEach(name => {
                 const nameItem = document.createElement('div');
                 nameItem.className = 'name-item';
                 nameItem.id = `name-${name.id}`;
@@ -963,19 +1005,19 @@
                         <div class="name-text">${name.name}</div>
                         <div class="vote-section">
                             <span class="vote-count">${name.votes}</span>
-                            <button class="vote-btn" onclick="handleVote(${name.id})">
+                            <button class="vote-btn" onclick="handleVote('${name.id}')">
                                 <i class="fas fa-thumbs-up"></i> Vote
                             </button>
                         </div>
                     </div>
                     <div class="action-buttons">
-                        <button class="like-btn" onclick="handleLike(${name.id})">
+                        <button class="like-btn" onclick="handleLike('${name.id}')">
                             <i class="fas fa-heart"></i> Like (${name.likes || 0})
                         </button>
-                        <button class="comment-btn" onclick="toggleComments(${name.id})">
+                        <button class="comment-btn" onclick="toggleComments('${name.id}')">
                             <i class="fas fa-comment"></i> Comment (${name.comments.length})
                         </button>
-                        <button class="share-btn" onclick="handleShare(${name.id})">
+                        <button class="share-btn" onclick="handleShare('${name.id}')">
                             <i class="fas fa-share"></i> Share
                         </button>
                     </div>
@@ -987,7 +1029,7 @@
                         }
                         <div class="comment-form">
                             <input type="text" class="comment-input" id="comment-input-${name.id}" placeholder="Add a comment...">
-                            <button class="comment-submit" onclick="addComment(${name.id})">Post</button>
+                            <button class="comment-submit" onclick="addComment('${name.id}')">Post</button>
                         </div>
                     </div>
                     <div class="submission-count">Submitted by ${name.submissions} ${name.submissions === 1 ? 'person' : 'people'}</div>
@@ -1018,6 +1060,14 @@
                 alert("To share on Threads, copy this link: " + window.location.href);
             });
         }
+
+        // Make functions globally available
+        window.handleVote = handleVote;
+        window.handleLike = handleLike;
+        window.toggleComments = toggleComments;
+        window.addComment = addComment;
+        window.handleShare = handleShare;
+        window.shareToPlatform = shareToPlatform;
     </script>
 </body>
 </html>
