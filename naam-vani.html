@@ -570,6 +570,17 @@
             border-left: 3px solid var(--light-blue);
         }
         
+        .comment-text {
+            margin-bottom: 5px;
+        }
+        
+        .comment-meta {
+            font-size: 0.8rem;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+        }
+        
         .comment-form {
             display: flex;
             gap: 10px;
@@ -1916,7 +1927,7 @@
             }
         }
 
-        // Handle adding comment
+        // Handle adding comment - FIXED VERSION
         async function addComment(platform, id) {
             const commentInput = document.getElementById(`comment-input-${platform}-${id}`);
             const commentText = commentInput.value.trim();
@@ -1927,12 +1938,17 @@
             }
             
             try {
+                // Create comment object
+                const comment = {
+                    text: commentText,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    user: getUserId(),
+                    userDisplay: `User${getUserId().substring(5, 9)}` // Simple user display name
+                };
+                
+                // Add comment to the array
                 await db.collection(`${platform}Names`).doc(id).update({
-                    comments: firebase.firestore.FieldValue.arrayUnion({
-                        text: commentText,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                        user: getUserId()
-                    })
+                    comments: firebase.firestore.FieldValue.arrayUnion(comment)
                 });
                 
                 // Clear input
@@ -1955,7 +1971,23 @@
             return userId;
         }
 
-        // Handle sharing - opens modal with multiple options
+        // Format timestamp for display
+        function formatTimestamp(timestamp) {
+            if (!timestamp) return '';
+            
+            try {
+                // If timestamp is a Firestore timestamp
+                if (timestamp.toDate) {
+                    return timestamp.toDate().toLocaleDateString() + ' ' + timestamp.toDate().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                }
+                // If it's a regular date
+                return new Date(timestamp).toLocaleDateString();
+            } catch (error) {
+                return '';
+            }
+        }
+
+        // Handle sharing
         function handleShare(platform, id) {
             let namesArray, name;
             
@@ -2072,7 +2104,7 @@
             }
         }
 
-        // Render YouTube name list
+        // Render YouTube name list - UPDATED COMMENT DISPLAY
         function renderYouTubeNameList() {
             if (youtubeNames.length === 0) {
                 youtubeNamesList.innerHTML = `
@@ -2100,7 +2132,7 @@
                             <i class="fas fa-heart"></i> Like (${name.likes || 0})
                         </button>
                         <button class="comment-btn" onclick="toggleComments('youtube', '${name.id}')">
-                            <i class="fas fa-comment"></i> Comment
+                            <i class="fas fa-comment"></i> Comment (${name.comments ? name.comments.length : 0})
                         </button>
                         <button class="share-btn" onclick="handleShare('youtube', '${name.id}')">
                             <i class="fas fa-share"></i> Share
@@ -2111,7 +2143,13 @@
                         <div class="comments-list">
                             ${(name.comments && name.comments.length > 0) ? 
                                 name.comments.map(comment => `
-                                    <div class="comment">${comment.text || comment} <small>${comment.timestamp ? new Date(comment.timestamp.seconds * 1000).toLocaleDateString() : ''}</small></div>
+                                    <div class="comment">
+                                        <div class="comment-text">${comment.text || comment}</div>
+                                        <div class="comment-meta">
+                                            <span>${comment.userDisplay || 'Anonymous'}</span>
+                                            <span>${formatTimestamp(comment.timestamp)}</span>
+                                        </div>
+                                    </div>
                                 `).join('') : 
                                 '<p>No comments yet. Be the first to comment!</p>'
                             }
@@ -2128,7 +2166,7 @@
             `).join('');
         }
 
-        // Render Facebook name list
+        // Render Facebook name list - UPDATED COMMENT DISPLAY
         function renderFacebookNameList() {
             if (facebookNames.length === 0) {
                 facebookNamesList.innerHTML = `
@@ -2156,7 +2194,7 @@
                             <i class="fas fa-heart"></i> Like (${name.likes || 0})
                         </button>
                         <button class="comment-btn" onclick="toggleComments('facebook', '${name.id}')">
-                            <i class="fas fa-comment"></i> Comment
+                            <i class="fas fa-comment"></i> Comment (${name.comments ? name.comments.length : 0})
                         </button>
                         <button class="share-btn" onclick="handleShare('facebook', '${name.id}')">
                             <i class="fas fa-share"></i> Share
@@ -2167,7 +2205,13 @@
                         <div class="comments-list">
                             ${(name.comments && name.comments.length > 0) ? 
                                 name.comments.map(comment => `
-                                    <div class="comment">${comment.text || comment} <small>${comment.timestamp ? new Date(comment.timestamp.seconds * 1000).toLocaleDateString() : ''}</small></div>
+                                    <div class="comment">
+                                        <div class="comment-text">${comment.text || comment}</div>
+                                        <div class="comment-meta">
+                                            <span>${comment.userDisplay || 'Anonymous'}</span>
+                                            <span>${formatTimestamp(comment.timestamp)}</span>
+                                        </div>
+                                    </div>
                                 `).join('') : 
                                 '<p>No comments yet. Be the first to comment!</p>'
                             }
@@ -2184,7 +2228,7 @@
             `).join('');
         }
 
-        // Render Instagram name list
+        // Render Instagram name list - UPDATED COMMENT DISPLAY
         function renderInstagramNameList() {
             if (instagramNames.length === 0) {
                 instagramNamesList.innerHTML = `
@@ -2212,7 +2256,7 @@
                             <i class="fas fa-heart"></i> Like (${name.likes || 0})
                         </button>
                         <button class="comment-btn" onclick="toggleComments('instagram', '${name.id}')">
-                            <i class="fas fa-comment"></i> Comment
+                            <i class="fas fa-comment"></i> Comment (${name.comments ? name.comments.length : 0})
                         </button>
                         <button class="share-btn" onclick="handleShare('instagram', '${name.id}')">
                             <i class="fas fa-share"></i> Share
@@ -2223,7 +2267,13 @@
                         <div class="comments-list">
                             ${(name.comments && name.comments.length > 0) ? 
                                 name.comments.map(comment => `
-                                    <div class="comment">${comment.text || comment} <small>${comment.timestamp ? new Date(comment.timestamp.seconds * 1000).toLocaleDateString() : ''}</small></div>
+                                    <div class="comment">
+                                        <div class="comment-text">${comment.text || comment}</div>
+                                        <div class="comment-meta">
+                                            <span>${comment.userDisplay || 'Anonymous'}</span>
+                                            <span>${formatTimestamp(comment.timestamp)}</span>
+                                        </div>
+                                    </div>
                                 `).join('') : 
                                 '<p>No comments yet. Be the first to comment!</p>'
                             }
@@ -2240,7 +2290,7 @@
             `).join('');
         }
 
-        // Render Twitter name list
+        // Render Twitter name list - UPDATED COMMENT DISPLAY
         function renderTwitterNameList() {
             if (twitterNames.length === 0) {
                 twitterNamesList.innerHTML = `
@@ -2268,7 +2318,7 @@
                             <i class="fas fa-heart"></i> Like (${name.likes || 0})
                         </button>
                         <button class="comment-btn" onclick="toggleComments('twitter', '${name.id}')">
-                            <i class="fas fa-comment"></i> Comment
+                            <i class="fas fa-comment"></i> Comment (${name.comments ? name.comments.length : 0})
                         </button>
                         <button class="share-btn" onclick="handleShare('twitter', '${name.id}')">
                             <i class="fas fa-share"></i> Share
@@ -2279,7 +2329,13 @@
                         <div class="comments-list">
                             ${(name.comments && name.comments.length > 0) ? 
                                 name.comments.map(comment => `
-                                    <div class="comment">${comment.text || comment} <small>${comment.timestamp ? new Date(comment.timestamp.seconds * 1000).toLocaleDateString() : ''}</small></div>
+                                    <div class="comment">
+                                        <div class="comment-text">${comment.text || comment}</div>
+                                        <div class="comment-meta">
+                                            <span>${comment.userDisplay || 'Anonymous'}</span>
+                                            <span>${formatTimestamp(comment.timestamp)}</span>
+                                        </div>
+                                    </div>
                                 `).join('') : 
                                 '<p>No comments yet. Be the first to comment!</p>'
                             }
