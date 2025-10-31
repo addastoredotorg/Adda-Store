@@ -495,6 +495,22 @@
             cursor: pointer;
         }
         
+        /* New style for the home page link */
+        .home-page-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .home-page-link:hover {
+            color: var(--light-blue);
+            text-decoration: underline;
+        }
+        
         @media (max-width: 600px) {
             .form-group {
                 flex-direction: column;
@@ -544,6 +560,8 @@
                     <button type="submit">Submit Name</button>
                 </div>
             </form>
+            <!-- Added the home page link here -->
+            <a href="naam-keeper-english.html" class="home-page-link">Go to NaamKeeper Home Page</a>
         </section>
         
         <section class="names-list" id="namesList">
