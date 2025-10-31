@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
+  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -56,9 +56,8 @@
         
         h1 {
             color: var(--blue);
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 10px;
-            font-weight: 700;
         }
         
         .tagline {
@@ -110,14 +109,44 @@
             background-color: var(--light-blue);
         }
         
-        .vote-btn {
-            background-color: var(--green);
+        .vote-btn, .like-btn, .comment-btn, .share-btn {
             padding: 8px 15px;
             font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .vote-btn {
+            background-color: var(--green);
         }
         
         .vote-btn:hover {
             background-color: #0d7006;
+        }
+        
+        .like-btn {
+            background-color: #e74c3c;
+        }
+        
+        .like-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .comment-btn {
+            background-color: #3498db;
+        }
+        
+        .comment-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .share-btn {
+            background-color: #9b59b6;
+        }
+        
+        .share-btn:hover {
+            background-color: #8e44ad;
         }
         
         .names-list {
@@ -165,6 +194,12 @@
             color: var(--dark-gray);
         }
         
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
         .submission-count {
             font-size: 0.9rem;
             color: #666;
@@ -203,7 +238,7 @@
             flex-wrap: wrap;
         }
         
-        .share-btn {
+        .social-share-btn {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -215,7 +250,7 @@
             transition: transform 0.2s, opacity 0.2s;
         }
         
-        .share-btn:hover {
+        .social-share-btn:hover {
             transform: translateY(-3px);
             opacity: 0.9;
         }
@@ -242,6 +277,10 @@
         
         .linkedin {
             background-color: #0077b5;
+        }
+        
+        .telegram {
+            background-color: #0088cc;
         }
         
         .about-section {
@@ -292,40 +331,168 @@
             margin-bottom: 10px;
         }
         
-        .name-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
+        .name-category {
             background-color: white;
+            padding: 15px;
             border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: 1px solid var(--medium-gray);
         }
         
-        .name-table th {
+        .name-category h4 {
+            color: var(--blue);
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--saffron);
+            padding-bottom: 5px;
+        }
+        
+        .name-idea {
+            display: inline-block;
+            background-color: var(--light-gray);
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: var(--blue);
+        }
+        
+        .comments-section {
+            margin-top: 15px;
+            display: none;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid var(--medium-gray);
+        }
+        
+        .comment {
+            background-color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            border-left: 3px solid var(--light-blue);
+        }
+        
+        .comment-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .comment-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+        }
+        
+        .comment-submit {
+            padding: 8px 15px;
             background-color: var(--blue);
             color: white;
-            padding: 12px 15px;
-            text-align: left;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
         
-        .name-table td {
-            padding: 12px 15px;
+        .share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .share-modal-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .share-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
             border-bottom: 1px solid var(--medium-gray);
+            padding-bottom: 10px;
         }
         
-        .name-table tr:last-child td {
-            border-bottom: none;
+        .share-modal-title {
+            font-size: 1.3rem;
+            color: var(--blue);
+            font-weight: 600;
         }
         
-        .name-table tr:hover {
-            background-color: var(--light-gray);
-        }
-        
-        .category-header {
-            background-color: var(--saffron) !important;
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
             color: var(--dark-gray);
-            font-weight: bold;
+        }
+        
+        .share-platforms {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .share-platform {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 10px;
+            border-radius: 8px;
+            background-color: var(--light-gray);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .share-platform:hover {
+            background-color: var(--medium-gray);
+        }
+        
+        .share-platform i {
+            font-size: 1.8rem;
+        }
+        
+        .share-platform-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .share-link {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .share-link-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .copy-link-btn {
+            padding: 10px 15px;
+            background-color: var(--green);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
         
         @media (max-width: 600px) {
@@ -339,8 +506,12 @@
                 gap: 10px;
             }
             
+            .action-buttons {
+                flex-wrap: wrap;
+            }
+            
             h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
             
             .share-buttons {
@@ -348,14 +519,13 @@
                 align-items: center;
             }
             
-            .share-btn {
+            .social-share-btn {
                 width: 200px;
                 justify-content: center;
             }
             
-            .name-table {
-                display: block;
-                overflow-x: auto;
+            .share-platforms {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -387,35 +557,39 @@
         <section class="share-section">
             <h3 class="share-title">Share नाम कीपर with others</h3>
             <div class="share-buttons">
-                <a href="#" class="share-btn facebook">
+                <a href="#" class="social-share-btn facebook">
                     <i class="fab fa-facebook-f"></i>
                     <span>Facebook</span>
                 </a>
-                <a href="#" class="share-btn instagram">
+                <a href="#" class="social-share-btn instagram">
                     <i class="fab fa-instagram"></i>
                     <span>Instagram</span>
                 </a>
-                <a href="#" class="share-btn threads">
+                <a href="#" class="social-share-btn threads">
                     <i class="fab fa-threads"></i>
                     <span>Threads</span>
                 </a>
-                <a href="#" class="share-btn twitter">
+                <a href="#" class="social-share-btn twitter">
                     <i class="fab fa-twitter"></i>
                     <span>X (Twitter)</span>
                 </a>
-                <a href="#" class="share-btn whatsapp">
+                <a href="#" class="social-share-btn whatsapp">
                     <i class="fab fa-whatsapp"></i>
                     <span>WhatsApp</span>
                 </a>
-                <a href="#" class="share-btn linkedin">
+                <a href="#" class="social-share-btn linkedin">
                     <i class="fab fa-linkedin-in"></i>
                     <span>LinkedIn</span>
+                </a>
+                <a href="#" class="social-share-btn telegram">
+                    <i class="fab fa-telegram"></i>
+                    <span>Telegram</span>
                 </a>
             </div>
         </section>
         
         <section class="about-section">
-            <h2>🇮🇳 Indian YouTube-like App के लिए Perfect Name क्या होना चाहिए? (एक Digital India पहल)</h2>
+            <h2>Indian YouTube-like App के लिए Perfect Name क्या होना चाहिए? (एक Digital India पहल)</h2>
             
             <p>Digital India के इस युग में, जब हम 'Aatmanirbhar Bharat' (आत्मनिर्भर भारत) को champion कर रहे हैं, तो एक ज़रूरी सवाल सामने आता है: हमारे अपने homegrown video platform, यानी YouTube के जवाब में, हम उसे क्या नाम दें? यह सिर्फ़ branding का मामला नहीं है; यह एक तरह से flag planting करने जैसा है। इस Indian video sharing app का नाम हमारी technological sovereignty, हमारा cultural pride और Indian creators के लिए एक new deal का प्रतीक होगा। एक Swadeshi video platform बनाने का यह पहला step है, जो सच में Bharat को समझता है। यह guide अगले बेहतरीन Made in India video app की naming के पीछे की strategic philosophy पर बात करता है।</p>
             
@@ -452,92 +626,398 @@
             
             <p>Perfect name ढूंढने के लिए एक disciplined approach चाहिए। इस five-step framework को फ़ॉलो करें:</p>
             
-            <ul>
+            <ol>
                 <li><strong>Step 1: Core Mission Define करें।</strong> Primary goal क्या है creator empowerment? Cultural preservation? Vernacular expression? Mission ही naming direction तय करती है।</li>
                 <li><strong>Step 2: Indian Languages Mine करें।</strong> Sanskrit, Tamil, Hindi, और अन्य भाषाओं में "vision," "story," "stage," "creation," और "unity" का मतलब बताने वाले powerful words की गहराई में dive करें।</li>
                 <li><strong>Step 3: Heritage के साथ Modernity Blend करें।</strong> Powerful combinations बनाएँ। एक meaningful Indian word को एक modern tech suffix (जैसे: "-ify," "-stream") के साथ fuse करें या एक sleek, memorable portmanteau तैयार करें।</li>
                 <li><strong>Step 4: Global Appeal & Local Soul के लिए Test करें।</strong> नाम international stage पर parochial न लगे और Indian dialects में authentic और easy महसूस हो।</li>
                 <li><strong>Step 5: Legal & Linguistic Vet।</strong> यह non-negotiable है। सुनिश्चित करें कि नाम trademarkable हो और किसी भी major Indian language में इसका कोई negative, unintended meaning न हो।</li>
-            </ul>
+            </ol>
             
             <h3>Rationale के साथ Categorized Name Ideas</h3>
             
             <p>यहाँ Indian content creator platform के लिए strategic name ideas दिए गए हैं, जो उनकी core philosophy द्वारा categorized हैं:</p>
             
-            <table class="name-table">
-                <thead>
-                    <tr>
-                        <th>Category</th>
-                        <th>Name</th>
-                        <th>Rationale (तर्क)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="category-header" colspan="3">Heritage-Inspired Names</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><strong>Drishti</strong></td>
-                        <td>(Sanskrit में "vision" या "sight") - Indian visual storytelling की power और clarity को दर्शाता है।</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><strong>Kathalok</strong></td>
-                        <td>("Katha" - story, और "Lok" - world, का Portmanteau) - "World of Stories" का अनुवाद, app को narratives के एक infinite universe के रूप में position करता है।</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><strong>VaniVerse</strong></td>
-                        <td>("Vani," जिसका मतलब speech, है, को "Verse" के साथ combine करता है) - knowledgeable discourse और expression के लिए एक modern cosmos का सुझाव देता है।</td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="category-header" colspan="3">Aspirational & Modern Names</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><strong>Creato</strong></td>
-                        <td>Short, global, और सीधे "Creator" का मतलब। यह energetic, tech-friendly, और creator को center में रखता है।</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><strong>Spoken Bharat</strong></td>
-                        <td>यह नाम vernacular content और भारत की authentic, unfiltered voice को दमदार तरीके से highlight करता है।</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><strong>Utsav TV</strong></td>
-                        <td>("Utsav" का मतलब festival) - daily content consumption को एक celebration, entertainment और knowledge की feast के रूप में position करता है।</td>
-                    </tr>
-                    
-                    <tr>
-                        <td class="category-header" colspan="3">Identity-Driven Names</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><strong>BharatView</strong></td>
-                        <td>Clear, confident, और proud। यह सीधे कहता है कि यह "India's Perspective." है।</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><strong>DesiStream</strong></td>
-                        <td>Colloquial, याद रखने में आसान, और तुरंत खुद को authentic, mainstream Desi YouTube app content के home के रूप में position करता है।</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><strong>Swaraaj</strong></td>
-                        <td>एक profoundly powerful concept जिसका मतलब self-rule है। यह app को digital sovereignty की एक movement के रूप में position करता है, creators और viewers को उनके content और data पर control देता है।</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="name-category">
+                <h4>Heritage-Inspired Names</h4>
+                <p><span class="name-idea">Drishti</span> - (Sanskrit में "vision" या "sight") - Indian visual storytelling की power और clarity को दर्शाता है।</p>
+                <p><span class="name-idea">Kathalok</span> - ("Katha" - story, और "Lok" - world, का Portmanteau) - "World of Stories" का अनुवाद, app को narratives के एक infinite universe के रूप में position करता है।</p>
+                <p><span class="name-idea">VaniVerse</span> - ("Vani," जिसका मतलब speech, है, को "Verse" के साथ combine करता है) - knowledgeable discourse और expression के लिए एक modern cosmos का सुझाव देता है।</p>
+            </div>
+            
+            <div class="name-category">
+                <h4>Aspirational & Modern Names</h4>
+                <p><span class="name-idea">Creato</span> - Short, global, और सीधे "Creator" का मतलब। यह energetic, tech-friendly, और creator को center में रखता है।</p>
+                <p><span class="name-idea">Spoken Bharat</span> - यह नाम vernacular content और भारत की authentic, unfiltered voice को दमदार तरीके से highlight करता है।</p>
+                <p><span class="name-idea">Utsav TV</span> - ("Utsav" का मतलब festival) - daily content consumption को एक celebration, entertainment और knowledge की feast के रूप में position करता है।</p>
+            </div>
+            
+            <div class="name-category">
+                <h4>Identity-Driven Names</h4>
+                <p><span class="name-idea">BharatView</span> - Clear, confident, और proud। यह सीधे कहता है कि यह "India's Perspective." है।</p>
+                <p><span class="name-idea">DesiStream</span> - Colloquial, याद रखने में आसान, और तुरंत खुद को authentic, mainstream Desi YouTube app content के home के रूप में position करता है।</p>
+                <p><span class="name-idea">Swaraaj</span> - एक profoundly powerful concept जिसका मतलब self-rule है। यह app को digital sovereignty की एक movement के रूप में position करता है, creators और viewers को उनके content और data पर control देता है।</p>
+            </div>
             
             <h3>The Final Validation Framework: 5-पॉइंट्स की Checklist</h3>
             
             <p>आप Indian video app का name finalise करने से पहले, इसे इस strategic test को pass करना होगा:</p>
             
-            <ul>
+            <ol>
                 <li><strong>क्या यह Culturally Deep & Respectful है?</strong> Indian culture के साथ इसका कोई positive, meaningful connection है, या यह superficial है?</li>
                 <li><strong>क्या यह Memorable और बोला आसान है?</strong> भारत के diverse linguistic landscape में इसे क्या आसानी से recall और pronounce किया जा सकता है?</li>
                 <li><strong>क्या यह YouTube से Differentiate करता है?</strong> क्या यह एक unique, superior identity establish करता है, या यह एक "me-too" product जैसा लगता है?</li>
-                <li><strong>क्या
+                <li><strong>क्या यह Scalable और Brandable है?</strong> क्या नाम live streaming, podcasts, music, या educational content में future expansion support कर सकता है?</li>
+                <li><strong>Digital Assets क्या Available हैं?</strong> .in, .com, और .bharat domain क्या available हैं? key platforms पर social media handles (@name) क्या free हैं?</li>
+            </ol>
+            
+            <h3>Conclusion & भविष्य के लिए Vision</h3>
+            
+            <p>भारत के खुद के video platform का नाम वह flag है, जिसके नीचे एक digital revolution march करेगा। यह सिर्फ़ एक app name से कहीं ज़्यादा है; यह intent का एक statement, हमारी capability की एक declaration, और हर Indian storyteller के लिए एक invitation है।</p>
+            
+            <p>सही नाम वह catalyst होगा, जो एक billion लोगों को एक ऐसे platform पर build, share, और thrive करने के लिए inspire करेगा, जिसे वे सच में अपना कह सकें। यह एक नए digital ecosystem का bedrock होगा जहाँ success को सिर्फ़ views में नहीं, बल्कि cultural impact और creator prosperity में मापा जाएगा।</p>
+            
+            <p><strong>नाम पहला step है। अगला कदम इसके लायक एक platform बनाना है। चलिए, एक ऐसा future बनाते हैं जहाँ Indian stories एक Indian stage पर कही जाएँगी।</strong></p>
+        </section>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-content">
+            <div class="share-modal-header">
+                <h3 class="share-modal-title">Share this name</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="share-platforms" id="sharePlatforms">
+                <!-- Share platforms will be dynamically inserted here -->
+            </div>
+            <div class="share-link">
+                <input type="text" class="share-link-input" id="shareLinkInput" readonly>
+                <button class="copy-link-btn" id="copyLinkBtn">Copy Link</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data structure to store names
+        let youtubeNames = [];
+
+        // DOM elements
+        const nameForm = document.getElementById('nameForm');
+        const nameInput = document.getElementById('nameInput');
+        const namesList = document.getElementById('namesList');
+        const shareModal = document.getElementById('shareModal');
+        const closeModal = document.getElementById('closeModal');
+        const sharePlatforms = document.getElementById('sharePlatforms');
+        const shareLinkInput = document.getElementById('shareLinkInput');
+        const copyLinkBtn = document.getElementById('copyLinkBtn');
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => {
+            loadNamesFromStorage();
+            renderNameList();
+            
+            // Set up share buttons
+            setupShareButtons();
+            
+            // Set up modal events
+            closeModal.addEventListener('click', () => {
+                shareModal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === shareModal) {
+                    shareModal.style.display = 'none';
+                }
+            });
+            
+            copyLinkBtn.addEventListener('click', copyShareLink);
+        });
+
+        // Load names from localStorage
+        function loadNamesFromStorage() {
+            const storedNames = localStorage.getItem('youtubeNames');
+            if (storedNames) {
+                youtubeNames = JSON.parse(storedNames);
+            }
+        }
+
+        // Save names to localStorage
+        function saveNamesToStorage() {
+            localStorage.setItem('youtubeNames', JSON.stringify(youtubeNames));
+        }
+
+        // Handle form submission
+        nameForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const nameValue = nameInput.value.trim();
+            
+            if (!nameValue) {
+                alert('Please enter a name');
+                return;
+            }
+            
+            // Check if name already exists (case-sensitive)
+            const existingNameIndex = youtubeNames.findIndex(item => 
+                item.name.toLowerCase() === nameValue.toLowerCase()
+            );
+            
+            if (existingNameIndex !== -1) {
+                // Increment submission count for existing name
+                youtubeNames[existingNameIndex].submissions += 1;
+            } else {
+                // Add new name
+                youtubeNames.push({
+                    id: Date.now(),
+                    name: nameValue,
+                    votes: 0,
+                    likes: 0,
+                    comments: [],
+                    submissions: 1
+                });
+            }
+            
+            // Save to storage and re-render
+            saveNamesToStorage();
+            renderNameList();
+            
+            // Clear input
+            nameInput.value = '';
+        });
+
+        // Handle voting
+        function handleVote(id) {
+            const nameIndex = youtubeNames.findIndex(item => item.id === id);
+            
+            if (nameIndex !== -1) {
+                youtubeNames[nameIndex].votes += 1;
+                saveNamesToStorage();
+                renderNameList();
+            }
+        }
+
+        // Handle liking
+        function handleLike(id) {
+            const nameIndex = youtubeNames.findIndex(item => item.id === id);
+            
+            if (nameIndex !== -1) {
+                youtubeNames[nameIndex].likes += 1;
+                saveNamesToStorage();
+                renderNameList();
+            }
+        }
+
+        // Handle comment toggle
+        function toggleComments(id) {
+            const commentsSection = document.getElementById(`comments-${id}`);
+            if (commentsSection.style.display === 'block') {
+                commentsSection.style.display = 'none';
+            } else {
+                commentsSection.style.display = 'block';
+            }
+        }
+
+        // Handle adding comment
+        function addComment(id) {
+            const commentInput = document.getElementById(`comment-input-${id}`);
+            const commentText = commentInput.value.trim();
+            
+            if (!commentText) {
+                alert('Please enter a comment');
+                return;
+            }
+            
+            const nameIndex = youtubeNames.findIndex(item => item.id === id);
+            
+            if (nameIndex !== -1) {
+                if (!youtubeNames[nameIndex].comments) {
+                    youtubeNames[nameIndex].comments = [];
+                }
+                youtubeNames[nameIndex].comments.push(commentText);
+                saveNamesToStorage();
+                renderNameList();
+            }
+        }
+
+        // Handle sharing - opens modal with multiple options
+        function handleShare(id) {
+            const nameIndex = youtubeNames.findIndex(item => item.id === id);
+            
+            if (nameIndex !== -1) {
+                const name = youtubeNames[nameIndex].name;
+                const shareUrl = encodeURIComponent(window.location.href + '#name-' + id);
+                const shareText = encodeURIComponent(`Check out this YouTube name suggestion: "${name}" on नाम कीपर!`);
+                
+                // Set the share link
+                shareLinkInput.value = window.location.href + '#name-' + id;
+                
+                // Generate share platform buttons
+                sharePlatforms.innerHTML = `
+                    <div class="share-platform" onclick="shareToPlatform('facebook', '${shareUrl}', '${shareText}')">
+                        <i class="fab fa-facebook-f" style="color: #3b5998;"></i>
+                        <span class="share-platform-name">Facebook</span>
+                    </div>
+                    <div class="share-platform" onclick="shareToPlatform('twitter', '${shareUrl}', '${shareText}')">
+                        <i class="fab fa-twitter" style="color: #1DA1F2;"></i>
+                        <span class="share-platform-name">Twitter</span>
+                    </div>
+                    <div class="share-platform" onclick="shareToPlatform('whatsapp', '${shareUrl}', '${shareText}')">
+                        <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+                        <span class="share-platform-name">WhatsApp</span>
+                    </div>
+                    <div class="share-platform" onclick="shareToPlatform('instagram', '${shareUrl}', '${shareText}')">
+                        <i class="fab fa-instagram" style="color: #E4405F;"></i>
+                        <span class="share-platform-name">Instagram</span>
+                    </div>
+                    <div class="share-platform" onclick="shareToPlatform('telegram', '${shareUrl}', '${shareText}')">
+                        <i class="fab fa-telegram" style="color: #0088cc;"></i>
+                        <span class="share-platform-name">Telegram</span>
+                    </div>
+                    <div class="share-platform" onclick="shareToPlatform('linkedin', '${shareUrl}', '${shareText}')">
+                        <i class="fab fa-linkedin-in" style="color: #0077b5;"></i>
+                        <span class="share-platform-name">LinkedIn</span>
+                    </div>
+                `;
+                
+                // Show the modal
+                shareModal.style.display = 'flex';
+            }
+        }
+
+        // Share to specific platform
+        function shareToPlatform(platform, url, text) {
+            let shareUrl;
+            
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://api.whatsapp.com/send?text=${text}%20${url}`;
+                    break;
+                case 'telegram':
+                    shareUrl = `https://t.me/share/url?url=${url}&text=${text}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                    break;
+                case 'instagram':
+                    // Instagram doesn't have direct sharing, so we'll copy to clipboard
+                    navigator.clipboard.writeText(shareLinkInput.value).then(() => {
+                        alert('Link copied to clipboard! You can now paste it in your Instagram post or story.');
+                    });
+                    return;
+                default:
+                    return;
+            }
+            
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+        }
+
+        // Copy share link to clipboard
+        function copyShareLink() {
+            shareLinkInput.select();
+            navigator.clipboard.writeText(shareLinkInput.value).then(() => {
+                copyLinkBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyLinkBtn.textContent = 'Copy Link';
+                }, 2000);
+            });
+        }
+
+        // Render the list of names
+        function renderNameList() {
+            // Clear current list
+            namesList.innerHTML = '';
+            
+            if (youtubeNames.length === 0) {
+                namesList.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No names submitted yet</h3>
+                        <p>Be the first to suggest a YouTube channel name!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort by votes (descending)
+            const sortedNames = [...youtubeNames].sort((a, b) => b.votes - a.votes);
+            
+            // Create name items
+            sortedNames.forEach(name => {
+                const nameItem = document.createElement('div');
+                nameItem.className = 'name-item';
+                nameItem.id = `name-${name.id}`;
+                
+                // Ensure comments array exists
+                if (!name.comments) {
+                    name.comments = [];
+                }
+                
+                nameItem.innerHTML = `
+                    <div class="name-header">
+                        <div class="name-text">${name.name}</div>
+                        <div class="vote-section">
+                            <span class="vote-count">${name.votes}</span>
+                            <button class="vote-btn" onclick="handleVote(${name.id})">
+                                <i class="fas fa-thumbs-up"></i> Vote
+                            </button>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="like-btn" onclick="handleLike(${name.id})">
+                            <i class="fas fa-heart"></i> Like (${name.likes || 0})
+                        </button>
+                        <button class="comment-btn" onclick="toggleComments(${name.id})">
+                            <i class="fas fa-comment"></i> Comment (${name.comments.length})
+                        </button>
+                        <button class="share-btn" onclick="handleShare(${name.id})">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                    </div>
+                    <div class="comments-section" id="comments-${name.id}">
+                        <h4>Comments:</h4>
+                        ${name.comments.length > 0 ? 
+                            name.comments.map(comment => `<div class="comment">${comment}</div>`).join('') : 
+                            '<p>No comments yet</p>'
+                        }
+                        <div class="comment-form">
+                            <input type="text" class="comment-input" id="comment-input-${name.id}" placeholder="Add a comment...">
+                            <button class="comment-submit" onclick="addComment(${name.id})">Post</button>
+                        </div>
+                    </div>
+                    <div class="submission-count">Submitted by ${name.submissions} ${name.submissions === 1 ? 'person' : 'people'}</div>
+                `;
+                namesList.appendChild(nameItem);
+            });
+        }
+
+        // Set up share buttons
+        function setupShareButtons() {
+            const shareUrl = encodeURIComponent(window.location.href);
+            const shareText = encodeURIComponent("Check out नाम कीपर - a tool to find the perfect Indian YouTube name!");
+            
+            document.querySelector('.facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+            document.querySelector('.twitter').href = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
+            document.querySelector('.linkedin').href = `https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`;
+            document.querySelector('.whatsapp').href = `https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}`;
+            document.querySelector('.telegram').href = `https://t.me/share/url?url=${shareUrl}&text=${shareText}`;
+            
+            // Instagram and Threads don't have direct sharing URLs, so we'll open a new window with the text
+            document.querySelector('.instagram').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert("To share on Instagram, copy this link: " + window.location.href);
+            });
+            
+            document.querySelector('.threads').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert("To share on Threads, copy this link: " + window.location.href);
+            });
+        }
+    </script>
+</body>
+</html>
