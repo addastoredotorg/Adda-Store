@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-23LSZJ3WYJ');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-23LSZJ3WYJ');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Memory Palace Builder: Train your memory using the ancient Method of Loci technique. Create virtual memory palaces, place items to remember, and strengthen your cognitive skills through spatial memorization.">
@@ -348,6 +347,17 @@
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 1rem;
             margin-top: 1.5rem;
+        }
+        
+        .recall-input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .recall-input-group label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--primary);
         }
         
         .recall-input {
@@ -1085,19 +1095,26 @@
             function startStudyTimer() {
                 let timeLeft = gameState.studyTime;
                 
+                // Update timer display immediately
+                updateTimerDisplay(timeLeft);
+                
                 gameState.studyTimer = setInterval(function() {
                     timeLeft--;
                     
-                    const minutes = Math.floor(timeLeft / 60);
-                    const seconds = timeLeft % 60;
-                    
-                    studyTimer.textContent = `Study Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+                    updateTimerDisplay(timeLeft);
                     
                     if (timeLeft <= 0) {
                         clearInterval(gameState.studyTimer);
                         startRecallBtn.click(); // Automatically start recall when time is up
                     }
                 }, 1000);
+            }
+            
+            // Update timer display
+            function updateTimerDisplay(timeLeft) {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                studyTimer.textContent = `Study Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
             }
             
             // Set up recall inputs
@@ -1152,6 +1169,7 @@
                 const percentage = (correctCount / gameState.items.length) * 100;
                 if (percentage >= 90) {
                     resultsMessage.textContent = 'Outstanding! Your memory palace is incredibly effective!';
+                    scoreDisplay.classList.add('celebrate');
                 } else if (percentage >= 70) {
                     resultsMessage.textContent = 'Great job! Your memory palace is working well.';
                 } else if (percentage >= 50) {
