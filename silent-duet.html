@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-23LSZJ3WYJ');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-23LSZJ3WYJ');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Silent Duet: A two-player cooperative puzzle game where players solve abstract challenges together using only cursor movements. Experience non-verbal collaboration and strengthen empathy through unique gameplay.">
@@ -27,6 +26,9 @@
             --light-gray: #e8e2dc;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             --transition: all 0.3s ease;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --error: #F44336;
         }
         
         * {
@@ -82,11 +84,30 @@
             padding: 3rem 0;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.05"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30" fill="none" stroke="white" stroke-width="2"/></svg>');
+            z-index: 0;
+        }
+        
+        header .container {
+            position: relative;
+            z-index: 1;
         }
         
         header h1 {
             color: white;
             margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         
         .tagline {
@@ -140,6 +161,24 @@
             transition: var(--transition);
             width: 45%;
             box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .player-option::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .player-option:hover::before {
+            transform: scaleX(1);
         }
         
         .player-option:hover {
@@ -149,6 +188,10 @@
         .player-option.selected {
             border: 3px solid var(--accent);
             background-color: #f0f7f7;
+        }
+        
+        .player-option.selected::before {
+            transform: scaleX(1);
         }
         
         .player-icon {
@@ -171,6 +214,37 @@
             align-items: center;
             justify-content: center;
             margin: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
         }
         
         .btn:hover {
@@ -234,6 +308,9 @@
             border-radius: 12px;
             box-shadow: var(--shadow);
             overflow: hidden;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(93, 78, 117, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(232, 165, 152, 0.05) 0%, transparent 50%);
         }
         
         /* Puzzle Elements */
@@ -245,10 +322,16 @@
             cursor: pointer;
             transition: var(--transition);
             z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
         .node:hover {
             transform: scale(1.2);
+        }
+        
+        .node.selected {
+            transform: scale(1.3);
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
         }
         
         .connection {
@@ -257,6 +340,17 @@
             background-color: var(--primary);
             transform-origin: 0 0;
             z-index: 5;
+            transition: all 0.3s ease;
+        }
+        
+        .connection.correct {
+            background-color: var(--success);
+            height: 6px;
+        }
+        
+        .connection.incorrect {
+            background-color: var(--error);
+            animation: shake 0.5s;
         }
         
         .cursor {
@@ -267,6 +361,7 @@
             pointer-events: none;
             z-index: 100;
             transition: transform 0.1s ease;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
         }
         
         .player1-cursor {
@@ -277,6 +372,17 @@
         .player2-cursor {
             background-color: rgba(76, 139, 139, 0.7);
             border: 2px solid #4c8b8b;
+        }
+        
+        .cursor-trail {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99;
+            opacity: 0.5;
+            transition: opacity 1s ease;
         }
         
         /* How It Works Section */
@@ -300,6 +406,18 @@
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent);
         }
         
         .step:hover {
@@ -372,6 +490,24 @@
             box-shadow: var(--shadow);
             text-align: center;
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .benefit-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .benefit-card:hover::before {
+            transform: scaleX(1);
         }
         
         .benefit-card:hover {
@@ -408,6 +544,57 @@
             margin-top: 1.5rem;
             font-size: 0.9rem;
             opacity: 0.8;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            animation: modalAppear 0.3s ease;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: var(--light-gray);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: 4px;
+            transition: width 0.5s ease;
         }
         
         /* Responsive Design */
@@ -447,7 +634,7 @@
             }
         }
         
-        /* Animation */
+        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -466,6 +653,99 @@
         
         .celebrate {
             animation: celebrate 0.5s ease 3;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        @keyframes modalAppear {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Particle Effects */
+        .particle {
+            position: absolute;
+            pointer-events: none;
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 20;
+        }
+        
+        /* Difficulty Selector */
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        
+        .difficulty-option {
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        
+        .difficulty-option:hover {
+            transform: translateY(-2px);
+        }
+        
+        .difficulty-option.selected {
+            border-color: var(--accent);
+            background-color: #f0f7f7;
+        }
+        
+        /* Timer */
+        .timer {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        /* Hint System */
+        .hint-system {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        .hint-btn {
+            background-color: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .hint-btn:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .hint-text {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f0f7f7;
+            border-radius: 8px;
+            display: none;
         }
     </style>
 </head>
@@ -506,6 +786,12 @@
                         </div>
                     </div>
                     
+                    <div class="difficulty-selector">
+                        <div class="difficulty-option" data-level="easy">Easy</div>
+                        <div class="difficulty-option selected" data-level="medium">Medium</div>
+                        <div class="difficulty-option" data-level="hard">Hard</div>
+                    </div>
+                    
                     <div style="text-align: center;">
                         <button class="btn btn-primary" id="startGameBtn"><i class="fas fa-play"></i> Start Game</button>
                         <button class="btn" id="howToPlayBtn"><i class="fas fa-question-circle"></i> How to Play</button>
@@ -529,15 +815,26 @@
                     <div>
                         <span id="puzzleStatus">Puzzle: Connecting Nodes</span>
                     </div>
+                    <div class="timer" id="timer">00:00</div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
                 </div>
                 
                 <div class="game-container" id="gameContainer">
                     <!-- Game elements will be generated here -->
                 </div>
                 
+                <div class="hint-system">
+                    <button class="hint-btn" id="hintBtn"><i class="fas fa-lightbulb"></i> Need a Hint?</button>
+                    <div class="hint-text" id="hintText"></div>
+                </div>
+                
                 <div style="text-align: center; margin-top: 1.5rem;">
                     <button class="btn" id="resetPuzzleBtn"><i class="fas fa-redo"></i> Reset Puzzle</button>
                     <button class="btn" id="newPuzzleBtn"><i class="fas fa-plus"></i> New Puzzle</button>
+                    <button class="btn" id="changeDifficultyBtn"><i class="fas fa-sliders-h"></i> Change Difficulty</button>
                 </div>
             </div>
         </section>
@@ -627,6 +924,27 @@
         </div>
     </footer>
 
+    <!-- How to Play Modal -->
+    <div class="modal" id="howToPlayModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2>How to Play Silent Duet</h2>
+            <p>Silent Duet is a two-player cooperative puzzle game where communication happens through cursor movements, not words.</p>
+            <ol style="margin-left: 1.5rem; margin-top: 1rem;">
+                <li>Each player opens the game in a separate browser window</li>
+                <li>Player 1 selects "Player 1" and Player 2 selects "Player 2"</li>
+                <li>Both players see the same puzzle but from different perspectives</li>
+                <li>Work together to connect nodes in the correct pattern</li>
+                <li>Use cursor movements to communicate your intentions</li>
+                <li>No talking, typing, or other verbal communication allowed</li>
+                <li>Complete the puzzle by making all the correct connections</li>
+            </ol>
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <button class="btn btn-primary" id="startFromModal">Start Playing</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Game state
@@ -639,7 +957,12 @@
                     player1: { x: 0, y: 0, visible: false },
                     player2: { x: 0, y: 0, visible: false }
                 },
-                selectedNode: null
+                selectedNode: null,
+                difficulty: 'medium',
+                startTime: null,
+                timerInterval: null,
+                cursorTrails: [],
+                hintCount: 0
             };
             
             // DOM elements
@@ -653,6 +976,26 @@
             const newPuzzleBtn = document.getElementById('newPuzzleBtn');
             const howToPlayBtn = document.getElementById('howToPlayBtn');
             const puzzleStatus = document.getElementById('puzzleStatus');
+            const progressBar = document.getElementById('progressBar');
+            const timer = document.getElementById('timer');
+            const hintBtn = document.getElementById('hintBtn');
+            const hintText = document.getElementById('hintText');
+            const changeDifficultyBtn = document.getElementById('changeDifficultyBtn');
+            const howToPlayModal = document.getElementById('howToPlayModal');
+            const closeModal = document.getElementById('closeModal');
+            const startFromModal = document.getElementById('startFromModal');
+            
+            // Difficulty options
+            const difficultyOptions = document.querySelectorAll('.difficulty-option');
+            
+            // Set up difficulty selection
+            difficultyOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    difficultyOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    gameState.difficulty = this.dataset.level;
+                });
+            });
             
             // Player selection
             player1Option.addEventListener('click', function() {
@@ -681,11 +1024,28 @@
                 gameArea.style.display = 'block';
                 generatePuzzle();
                 setupGameEvents();
+                startTimer();
             });
             
-            // How to play
+            // How to play modal
             howToPlayBtn.addEventListener('click', function() {
-                alert('Silent Duet is a two-player cooperative puzzle game. Each player sees the same puzzle from a different perspective. Work together using only cursor movements to solve the puzzle. No talking or typing allowed!');
+                howToPlayModal.style.display = 'flex';
+            });
+            
+            closeModal.addEventListener('click', function() {
+                howToPlayModal.style.display = 'none';
+            });
+            
+            startFromModal.addEventListener('click', function() {
+                howToPlayModal.style.display = 'none';
+                if (!gameState.player) {
+                    player1Option.click();
+                }
+                gameSetup.style.display = 'none';
+                gameArea.style.display = 'block';
+                generatePuzzle();
+                setupGameEvents();
+                startTimer();
             });
             
             // Reset puzzle
@@ -698,6 +1058,23 @@
                 generatePuzzle();
             });
             
+            // Change difficulty
+            changeDifficultyBtn.addEventListener('click', function() {
+                gameArea.style.display = 'none';
+                gameSetup.style.display = 'block';
+            });
+            
+            // Hint system
+            hintBtn.addEventListener('click', function() {
+                if (gameState.hintCount < 3) {
+                    showHint();
+                    gameState.hintCount++;
+                } else {
+                    hintText.textContent = "No more hints available for this puzzle.";
+                    hintText.style.display = 'block';
+                }
+            });
+            
             // Generate a new puzzle
             function generatePuzzle() {
                 // Clear previous puzzle
@@ -705,9 +1082,37 @@
                 gameState.nodes = [];
                 gameState.connections = [];
                 gameState.selectedNode = null;
+                gameState.hintCount = 0;
+                hintText.style.display = 'none';
+                progressBar.style.width = '0%';
                 
-                // Puzzle configuration
-                const nodeCount = 6;
+                // Reset timer
+                if (gameState.timerInterval) {
+                    clearInterval(gameState.timerInterval);
+                }
+                startTimer();
+                
+                // Puzzle configuration based on difficulty
+                let nodeCount, connectionPattern;
+                
+                switch(gameState.difficulty) {
+                    case 'easy':
+                        nodeCount = 4;
+                        connectionPattern = 'square';
+                        break;
+                    case 'medium':
+                        nodeCount = 6;
+                        connectionPattern = 'hexagon';
+                        break;
+                    case 'hard':
+                        nodeCount = 8;
+                        connectionPattern = 'complex';
+                        break;
+                    default:
+                        nodeCount = 6;
+                        connectionPattern = 'hexagon';
+                }
+                
                 const containerWidth = gameContainer.offsetWidth;
                 const containerHeight = gameContainer.offsetHeight;
                 const margin = 80;
@@ -718,20 +1123,46 @@
                     node.className = 'node';
                     node.dataset.id = i;
                     
-                    // Position nodes in a circular pattern
-                    const angle = (i / nodeCount) * 2 * Math.PI;
-                    const radius = Math.min(containerWidth, containerHeight) / 2 - margin;
-                    const centerX = containerWidth / 2;
-                    const centerY = containerHeight / 2;
+                    // Position nodes based on pattern
+                    let x, y;
                     
-                    const x = centerX + radius * Math.cos(angle);
-                    const y = centerY + radius * Math.sin(angle);
+                    if (connectionPattern === 'square' && nodeCount === 4) {
+                        // Square pattern
+                        const positions = [
+                            { x: containerWidth / 2 - 100, y: containerHeight / 2 - 100 },
+                            { x: containerWidth / 2 + 100, y: containerHeight / 2 - 100 },
+                            { x: containerWidth / 2 + 100, y: containerHeight / 2 + 100 },
+                            { x: containerWidth / 2 - 100, y: containerHeight / 2 + 100 }
+                        ];
+                        x = positions[i].x;
+                        y = positions[i].y;
+                    } else if (connectionPattern === 'hexagon' && nodeCount === 6) {
+                        // Hexagon pattern
+                        const angle = (i / nodeCount) * 2 * Math.PI;
+                        const radius = Math.min(containerWidth, containerHeight) / 2 - margin;
+                        const centerX = containerWidth / 2;
+                        const centerY = containerHeight / 2;
+                        
+                        x = centerX + radius * Math.cos(angle);
+                        y = centerY + radius * Math.sin(angle);
+                    } else {
+                        // Complex pattern for hard difficulty
+                        const angle = (i / nodeCount) * 2 * Math.PI;
+                        const radius = Math.min(containerWidth, containerHeight) / 2 - margin;
+                        const centerX = containerWidth / 2;
+                        const centerY = containerHeight / 2;
+                        
+                        // Add some randomness for complex patterns
+                        const randomOffset = (Math.random() - 0.5) * 40;
+                        x = centerX + (radius + randomOffset) * Math.cos(angle);
+                        y = centerY + (radius + randomOffset) * Math.sin(angle);
+                    }
                     
                     node.style.left = `${x}px`;
                     node.style.top = `${y}px`;
                     
                     // Assign colors in a pattern
-                    const hue = (i * 60) % 360;
+                    const hue = (i * (360 / nodeCount)) % 360;
                     node.style.backgroundColor = `hsl(${hue}, 70%, 60%)`;
                     
                     gameContainer.appendChild(node);
@@ -749,20 +1180,40 @@
                     });
                 }
                 
-                // Set up the goal connections (create a hexagon)
-                const goalConnections = [
-                    [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0]
-                ];
+                // Set up the goal connections based on pattern
+                let goalConnections;
+                
+                switch(connectionPattern) {
+                    case 'square':
+                        goalConnections = [[0, 1], [1, 2], [2, 3], [3, 0]];
+                        break;
+                    case 'hexagon':
+                        goalConnections = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0]];
+                        break;
+                    case 'complex':
+                        // Create a more complex connection pattern for hard difficulty
+                        goalConnections = [
+                            [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 0],
+                            [0, 2], [2, 4], [4, 6], [6, 0]
+                        ];
+                        break;
+                    default:
+                        goalConnections = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 0]];
+                }
                 
                 gameState.puzzle = {
                     goalConnections: goalConnections,
-                    currentConnections: []
+                    currentConnections: [],
+                    pattern: connectionPattern
                 };
                 
-                puzzleStatus.textContent = 'Puzzle: Connect all nodes in a hexagon pattern';
+                puzzleStatus.textContent = `Puzzle: Connect nodes in a ${connectionPattern} pattern`;
                 
                 // Create cursors
                 createCursors();
+                
+                // Apply player perspective
+                applyPlayerPerspective();
             }
             
             // Create player cursors
@@ -795,6 +1246,9 @@
                     cursor.style.top = `${y}px`;
                     cursor.style.display = 'block';
                     
+                    // Create cursor trail
+                    createCursorTrail(x, y);
+                    
                     // In a real implementation, this would send the cursor position to the other player
                     // For this demo, we'll simulate the other player's cursor
                     simulateOtherPlayerCursor();
@@ -807,13 +1261,43 @@
                 });
             }
             
+            // Create cursor trail effect
+            function createCursorTrail(x, y) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.style.left = `${x}px`;
+                trail.style.top = `${y}px`;
+                
+                if (gameState.player === 1) {
+                    trail.style.backgroundColor = 'rgba(232, 165, 152, 0.5)';
+                } else {
+                    trail.style.backgroundColor = 'rgba(76, 139, 139, 0.5)';
+                }
+                
+                gameContainer.appendChild(trail);
+                gameState.cursorTrails.push(trail);
+                
+                // Remove trail after animation
+                setTimeout(() => {
+                    trail.style.opacity = '0';
+                    setTimeout(() => {
+                        if (trail.parentNode) {
+                            gameContainer.removeChild(trail);
+                        }
+                        gameState.cursorTrails = gameState.cursorTrails.filter(t => t !== trail);
+                    }, 1000);
+                }, 100);
+            }
+            
             // Handle node clicks
             function handleNodeClick(nodeId) {
                 if (gameState.selectedNode === null) {
                     // First node selected
                     gameState.selectedNode = nodeId;
-                    gameState.nodes[nodeId].element.style.transform = 'scale(1.3)';
-                    gameState.nodes[nodeId].element.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+                    gameState.nodes[nodeId].element.classList.add('selected');
+                    
+                    // Create particle effect
+                    createParticles(gameState.nodes[nodeId].x, gameState.nodes[nodeId].y);
                 } else {
                     // Second node selected - create connection
                     if (gameState.selectedNode !== nodeId) {
@@ -821,8 +1305,7 @@
                     }
                     
                     // Reset selection
-                    gameState.nodes[gameState.selectedNode].element.style.transform = '';
-                    gameState.nodes[gameState.selectedNode].element.style.boxShadow = '';
+                    gameState.nodes[gameState.selectedNode].element.classList.remove('selected');
                     gameState.selectedNode = null;
                     
                     // Check if puzzle is solved
@@ -862,8 +1345,33 @@
                 connection.style.top = `${node1.y}px`;
                 connection.style.transform = `rotate(${angle}deg)`;
                 
+                // Check if this connection is correct
+                const isCorrect = gameState.puzzle.goalConnections.some(conn => 
+                    (conn[0] === node1Id && conn[1] === node2Id) || 
+                    (conn[0] === node2Id && conn[1] === node1Id)
+                );
+                
+                if (isCorrect) {
+                    connection.classList.add('correct');
+                } else {
+                    connection.classList.add('incorrect');
+                    // Remove incorrect connection after animation
+                    setTimeout(() => {
+                        if (connection.parentNode) {
+                            gameContainer.removeChild(connection);
+                        }
+                        gameState.puzzle.currentConnections = gameState.puzzle.currentConnections.filter(
+                            conn => !(conn[0] === node1Id && conn[1] === node2Id) && 
+                                   !(conn[0] === node2Id && conn[1] === node1Id)
+                        );
+                    }, 1000);
+                }
+                
                 gameContainer.appendChild(connection);
                 gameState.connections.push(connection);
+                
+                // Update progress
+                updateProgress();
             }
             
             // Check if the puzzle is solved
@@ -880,6 +1388,14 @@
                     puzzleStatus.textContent = 'Puzzle Solved! Great collaboration!';
                     gameContainer.classList.add('celebrate');
                     
+                    // Create celebration particles
+                    createCelebrationParticles();
+                    
+                    // Stop timer
+                    if (gameState.timerInterval) {
+                        clearInterval(gameState.timerInterval);
+                    }
+                    
                     // Remove celebration class after animation
                     setTimeout(() => {
                         gameContainer.classList.remove('celebrate');
@@ -891,21 +1407,31 @@
             function resetPuzzle() {
                 // Remove all connections
                 gameState.connections.forEach(conn => {
-                    gameContainer.removeChild(conn);
+                    if (conn.parentNode) {
+                        gameContainer.removeChild(conn);
+                    }
                 });
                 
                 // Reset nodes
                 gameState.nodes.forEach(node => {
-                    node.element.style.transform = '';
-                    node.element.style.boxShadow = '';
+                    node.element.classList.remove('selected');
                 });
                 
                 // Reset game state
                 gameState.connections = [];
                 gameState.puzzle.currentConnections = [];
                 gameState.selectedNode = null;
+                gameState.hintCount = 0;
+                hintText.style.display = 'none';
+                progressBar.style.width = '0%';
                 
-                puzzleStatus.textContent = 'Puzzle: Connect all nodes in a hexagon pattern';
+                puzzleStatus.textContent = `Puzzle: Connect nodes in a ${gameState.puzzle.pattern} pattern`;
+                
+                // Reset timer
+                if (gameState.timerInterval) {
+                    clearInterval(gameState.timerInterval);
+                }
+                startTimer();
             }
             
             // Simulate other player's cursor (for demo purposes)
@@ -923,6 +1449,30 @@
                     cursor.style.left = `${x}px`;
                     cursor.style.top = `${y}px`;
                     cursor.style.display = 'block';
+                    
+                    // Create cursor trail for other player
+                    const trail = document.createElement('div');
+                    trail.className = 'cursor-trail';
+                    trail.style.left = `${x}px`;
+                    trail.style.top = `${y}px`;
+                    
+                    if (otherPlayer === 1) {
+                        trail.style.backgroundColor = 'rgba(232, 165, 152, 0.5)';
+                    } else {
+                        trail.style.backgroundColor = 'rgba(76, 139, 139, 0.5)';
+                    }
+                    
+                    gameContainer.appendChild(trail);
+                    
+                    // Remove trail after animation
+                    setTimeout(() => {
+                        trail.style.opacity = '0';
+                        setTimeout(() => {
+                            if (trail.parentNode) {
+                                gameContainer.removeChild(trail);
+                            }
+                        }, 1000);
+                    }, 100);
                     
                     // Hide after a random time
                     setTimeout(() => {
@@ -952,6 +1502,149 @@
                         node.x = newX;
                         node.y = newY;
                     });
+                }
+            }
+            
+            // Start timer
+            function startTimer() {
+                gameState.startTime = new Date();
+                gameState.timerInterval = setInterval(updateTimer, 1000);
+            }
+            
+            // Update timer display
+            function updateTimer() {
+                const currentTime = new Date();
+                const elapsedTime = Math.floor((currentTime - gameState.startTime) / 1000);
+                const minutes = Math.floor(elapsedTime / 60);
+                const seconds = elapsedTime % 60;
+                timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            // Update progress bar
+            function updateProgress() {
+                const totalConnections = gameState.puzzle.goalConnections.length;
+                const completedConnections = gameState.puzzle.currentConnections.filter(conn => {
+                    return gameState.puzzle.goalConnections.some(goalConn => 
+                        (goalConn[0] === conn[0] && goalConn[1] === conn[1]) ||
+                        (goalConn[0] === conn[1] && goalConn[1] === conn[0])
+                    );
+                }).length;
+                
+                const progress = (completedConnections / totalConnections) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+            
+            // Show hint
+            function showHint() {
+                // Find a goal connection that hasn't been made yet
+                const missingConnection = gameState.puzzle.goalConnections.find(goalConn => {
+                    return !gameState.puzzle.currentConnections.some(currentConn => 
+                        (currentConn[0] === goalConn[0] && currentConn[1] === goalConn[1]) ||
+                        (currentConn[0] === goalConn[1] && currentConn[1] === goalConn[0])
+                    );
+                });
+                
+                if (missingConnection) {
+                    hintText.textContent = `Try connecting node ${missingConnection[0] + 1} to node ${missingConnection[1] + 1}`;
+                    hintText.style.display = 'block';
+                    
+                    // Highlight the nodes for the hint
+                    const node1 = gameState.nodes[missingConnection[0]].element;
+                    const node2 = gameState.nodes[missingConnection[1]].element;
+                    
+                    node1.classList.add('pulse');
+                    node2.classList.add('pulse');
+                    
+                    setTimeout(() => {
+                        node1.classList.remove('pulse');
+                        node2.classList.remove('pulse');
+                    }, 3000);
+                } else {
+                    hintText.textContent = "You're almost there! Keep going.";
+                    hintText.style.display = 'block';
+                }
+            }
+            
+            // Create particle effects
+            function createParticles(x, y) {
+                for (let i = 0; i < 10; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = `${x}px`;
+                    particle.style.top = `${y}px`;
+                    
+                    const size = Math.random() * 8 + 4;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    const hue = (Math.random() * 60 + 180) % 360;
+                    particle.style.backgroundColor = `hsl(${hue}, 70%, 60%)`;
+                    
+                    gameContainer.appendChild(particle);
+                    
+                    // Animate particle
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 50 + 30;
+                    const targetX = x + Math.cos(angle) * distance;
+                    const targetY = y + Math.sin(angle) * distance;
+                    
+                    const animation = particle.animate([
+                        { transform: 'translate(0, 0)', opacity: 1 },
+                        { transform: `translate(${targetX - x}px, ${targetY - y}px)`, opacity: 0 }
+                    ], {
+                        duration: Math.random() * 1000 + 500,
+                        easing: 'cubic-bezier(0, .9, .57, 1)'
+                    });
+                    
+                    animation.onfinish = () => {
+                        if (particle.parentNode) {
+                            gameContainer.removeChild(particle);
+                        }
+                    };
+                }
+            }
+            
+            // Create celebration particles
+            function createCelebrationParticles() {
+                for (let i = 0; i < 30; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    
+                    const size = Math.random() * 10 + 5;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    const hue = Math.random() * 360;
+                    particle.style.backgroundColor = `hsl(${hue}, 70%, 60%)`;
+                    
+                    // Random position in container
+                    const x = Math.random() * gameContainer.offsetWidth;
+                    const y = Math.random() * gameContainer.offsetHeight;
+                    particle.style.left = `${x}px`;
+                    particle.style.top = `${y}px`;
+                    
+                    gameContainer.appendChild(particle);
+                    
+                    // Animate particle
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 100 + 50;
+                    const targetX = x + Math.cos(angle) * distance;
+                    const targetY = y + Math.sin(angle) * distance;
+                    
+                    const animation = particle.animate([
+                        { transform: 'scale(0)', opacity: 0 },
+                        { transform: 'scale(1)', opacity: 1 },
+                        { transform: `translate(${targetX - x}px, ${targetY - y}px) scale(0)`, opacity: 0 }
+                    ], {
+                        duration: Math.random() * 1000 + 1000,
+                        easing: 'cubic-bezier(0, .9, .57, 1)'
+                    });
+                    
+                    animation.onfinish = () => {
+                        if (particle.parentNode) {
+                            gameContainer.removeChild(particle);
+                        }
+                    };
                 }
             }
         });
