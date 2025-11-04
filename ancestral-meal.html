@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-23LSZJ3WYJ');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-23LSZJ3WYJ');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ancestral Meal | Cook Historical Recipes & Experience Life Through Time</title>
@@ -183,6 +182,7 @@
             padding: 25px;
             border: 1px solid #E0C9A6;
             height: 100%;
+            position: relative;
         }
         
         .narrative-title {
@@ -196,6 +196,7 @@
         .narrative-text {
             line-height: 1.7;
             font-size: 1.05rem;
+            min-height: 150px;
         }
         
         .character-info {
@@ -249,11 +250,18 @@
             padding: 8px;
             background: rgba(255, 255, 255, 0.7);
             border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .ingredient:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(5px);
         }
         
         .ingredient-checkbox {
             margin-right: 10px;
             transform: scale(1.2);
+            cursor: pointer;
         }
         
         .cooking-steps {
@@ -266,6 +274,18 @@
             background: rgba(255, 255, 255, 0.7);
             border-radius: 4px;
             border-left: 3px solid var(--accent);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .step:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(5px);
+        }
+        
+        .step.completed {
+            background: rgba(205, 133, 63, 0.2);
+            border-left-color: var(--primary);
         }
         
         .step-number {
@@ -324,6 +344,12 @@
             border: 5px solid var(--accent);
             font-size: 4rem;
             color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .meal-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
         
         .completion-message {
@@ -338,6 +364,12 @@
             padding: 20px;
             margin: 30px 0;
             border: 1px solid #E0C9A6;
+            transition: var(--transition);
+        }
+        
+        .historical-facts:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
         }
         
         .facts-title {
@@ -382,6 +414,12 @@
             border-radius: var(--radius);
             margin-top: 20px;
             border: 1px solid #E0C9A6;
+            transition: var(--transition);
+        }
+        
+        .game-rules:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
         }
         
         .rules-list {
@@ -427,6 +465,12 @@
             padding: 20px;
             border: 1px solid #E0C9A6;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        
+        .context-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
         }
         
         .context-title {
@@ -452,11 +496,86 @@
             text-decoration: line-through;
             color: #8D6E63;
         }
+        
+        .era-card.selected {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+        
+        .sound-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .sound-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .achievement-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 5px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .flavor-text {
+            font-style: italic;
+            color: var(--primary-light);
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        .timer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            font-size: 1.1rem;
+        }
+        
+        .timer-icon {
+            font-size: 1.5rem;
+        }
+        
+        .interaction-hint {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: var(--primary-light);
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
+            <button class="sound-toggle" id="sound-toggle">🔊</button>
             <h1>Ancestral Meal</h1>
             <p class="tagline">Experience history through food - cook authentic recipes from different eras while learning about the lives of people who ate them</p>
         </header>
@@ -484,6 +603,12 @@
                         <div class="era-icon">⚓</div>
                         <h3 class="era-title">Viking Explorer</h3>
                         <p class="era-description">Prepare a Norse meal during the age of exploration</p>
+                    </div>
+                    
+                    <div class="era-card" data-era="colonial">
+                        <div class="era-icon">🪵</div>
+                        <h3 class="era-title">Colonial Settler</h3>
+                        <p class="era-description">Cook a meal from early American colonial times</p>
                     </div>
                 </div>
                 
@@ -523,10 +648,16 @@
                                 <div id="character-location">Hadrian's Wall, Britannia</div>
                             </div>
                         </div>
+                        <div class="interaction-hint">Click steps to mark as complete</div>
                     </div>
                     
                     <div class="cooking-panel">
                         <h3 class="recipe-title" id="recipe-title">Pulticula (Roman Soldier's Porridge)</h3>
+                        
+                        <div class="timer">
+                            <span class="timer-icon">⏱️</span>
+                            <span id="cooking-time">Cooking time: ~60 minutes</span>
+                        </div>
                         
                         <div class="ingredients-list">
                             <h4>Ingredients:</h4>
@@ -554,23 +685,23 @@
                         
                         <div class="cooking-steps">
                             <h4>Preparation:</h4>
-                            <div class="step">
+                            <div class="step" data-step="1">
                                 <span class="step-number">1.</span>
                                 <span>Rinse the grains thoroughly in cold water</span>
                             </div>
-                            <div class="step">
+                            <div class="step" data-step="2">
                                 <span class="step-number">2.</span>
                                 <span>Combine grains, water, and salt in your cooking pot</span>
                             </div>
-                            <div class="step">
+                            <div class="step" data-step="3">
                                 <span class="step-number">3.</span>
                                 <span>Bring to a boil, then reduce heat and simmer for 45 minutes, stirring occasionally</span>
                             </div>
-                            <div class="step">
+                            <div class="step" data-step="4">
                                 <span class="step-number">4.</span>
                                 <span>Stir in oil or fat until well combined</span>
                             </div>
-                            <div class="step">
+                            <div class="step" data-step="5">
                                 <span class="step-number">5.</span>
                                 <span>Add any available vegetables or meat in the last 15 minutes of cooking</span>
                             </div>
@@ -591,6 +722,8 @@
                 <div class="completion-message" id="completion-message">
                     You've successfully prepared a Roman soldier's meal! As you eat your warm porridge, you feel a connection to the thousands of legionaries who sustained themselves on similar fare across the empire.
                 </div>
+                
+                <div class="achievement-badge">Historical Chef Unlocked!</div>
                 
                 <div class="historical-facts">
                     <h3 class="facts-title">Historical Context</h3>
@@ -619,6 +752,7 @@
             const nextStepBtn = document.getElementById('next-step-btn');
             const cookAgainBtn = document.getElementById('cook-again-btn');
             const eraCards = document.querySelectorAll('.era-card');
+            const soundToggle = document.getElementById('sound-toggle');
             
             // Narrative elements
             const narrativeTitle = document.getElementById('narrative-title');
@@ -631,6 +765,7 @@
             const completionMessage = document.getElementById('completion-message');
             const historicalFacts = document.getElementById('historical-facts');
             const progressBar = document.getElementById('progress-bar-fill');
+            const cookingTime = document.getElementById('cooking-time');
             
             // Game data
             const gameData = {
@@ -649,6 +784,7 @@
                     },
                     recipe: {
                         title: "Pulticula (Roman Soldier's Porridge)",
+                        cookingTime: "~60 minutes",
                         ingredients: [
                             "1 cup spelt or wheat grains",
                             "3 cups water",
@@ -682,6 +818,7 @@
                     },
                     recipe: {
                         title: "Pottage (Medieval Peasant Stew)",
+                        cookingTime: "~90 minutes",
                         ingredients: [
                             "1 cup mixed grains (barley, oats, rye)",
                             "4 cups water or broth",
@@ -717,6 +854,7 @@
                     },
                     recipe: {
                         title: "Norse Fisherman's Stew",
+                        cookingTime: "~120 minutes",
                         ingredients: [
                             "200g stockfish (dried cod)",
                             "1 cup dried peas",
@@ -735,6 +873,41 @@
                     },
                     completion: "The hot stew warms you from within as you take watch under the stars. The familiar flavors comfort you on this long voyage, connecting you to the seafaring traditions of your people.",
                     facts: "Viking diets varied by location but commonly included fish, meat, dairy, and grains. Dried and preserved foods were essential for long voyages. Archaeological evidence shows Vikings ate a relatively balanced diet with more vegetables than previously thought, including cabbages, onions, peas, and beans grown in their homelands."
+                },
+                colonial: {
+                    title: "Colonial Settler",
+                    narrative: [
+                        "You are Abigail, a settler in the Massachusetts Bay Colony. The autumn air is crisp as you prepare a simple meal from your family's provisions. The harvest is in, and you're grateful for the corn, beans, and squash that will see you through the winter.",
+                        "As you grind the corn into meal, you think of the native people who taught your community how to cultivate these strange new crops. Their knowledge has been essential to your survival in this unfamiliar land.",
+                        "You add beans to the pot - a precious protein source that will thicken the stew. The scent of cooking cornmeal brings comfort, a small piece of home in this vast wilderness."
+                    ],
+                    character: {
+                        name: "Abigail",
+                        role: "Colonial Settler",
+                        location: "Massachusetts Bay Colony, 17th Century",
+                        avatar: "🪵"
+                    },
+                    recipe: {
+                        title: "Succotash (Colonial Stew)",
+                        cookingTime: "~45 minutes",
+                        ingredients: [
+                            "2 cups corn (fresh or dried)",
+                            "1 cup lima beans or other shell beans",
+                            "1 onion, chopped",
+                            "4 cups water or broth",
+                            "Salt and pepper",
+                            "Optional: bits of salt pork or bacon"
+                        ],
+                        steps: [
+                            "If using dried corn and beans, soak overnight",
+                            "Combine all ingredients in a large pot",
+                            "Bring to a boil, then simmer for 30-45 minutes until tender",
+                            "Season with salt and pepper to taste",
+                            "Serve hot with cornbread if available"
+                        ]
+                    },
+                    completion: "The hearty succotash warms your family as darkness falls. As you eat by firelight, you feel a connection to both your English roots and this new land that is becoming home.",
+                    facts: "Early American colonists relied heavily on Native American foodways, adopting corn, beans, and squash as dietary staples. These 'Three Sisters' were often planted together as they supported each other's growth. Colonial diets were simple and seasonal, with preservation methods like salting, drying, and pickling essential for winter survival."
                 }
             };
             
@@ -742,15 +915,16 @@
             let currentEra = null;
             let currentStep = 0;
             let selectedEra = null;
+            let soundEnabled = true;
             
             // Initialize game
             eraCards.forEach(card => {
                 card.addEventListener('click', function() {
                     // Remove selection from all cards
-                    eraCards.forEach(c => c.style.borderColor = '#E0C9A6');
+                    eraCards.forEach(c => c.classList.remove('selected'));
                     
                     // Add selection to clicked card
-                    this.style.borderColor = 'var(--primary)';
+                    this.classList.add('selected');
                     
                     // Enable start button
                     startBtn.disabled = false;
@@ -813,10 +987,30 @@
                 introScreen.classList.remove('hidden');
                 
                 // Reset era selection
-                eraCards.forEach(c => c.style.borderColor = '#E0C9A6');
+                eraCards.forEach(c => c.classList.remove('selected'));
                 startBtn.disabled = true;
                 startBtn.textContent = 'Select an Era to Begin';
                 selectedEra = null;
+            });
+            
+            // Sound toggle
+            soundToggle.addEventListener('click', function() {
+                soundEnabled = !soundEnabled;
+                this.textContent = soundEnabled ? '🔊' : '🔇';
+            });
+            
+            // Step completion
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.step')) {
+                    const step = e.target.closest('.step');
+                    step.classList.toggle('completed');
+                    
+                    // Play sound if enabled
+                    if (soundEnabled) {
+                        // In a real implementation, you would play an audio file here
+                        console.log("Step completion sound played");
+                    }
+                }
             });
             
             function loadEraData(era) {
@@ -830,12 +1024,18 @@
                 characterRole.textContent = data.character.role;
                 characterLocation.textContent = data.character.location;
                 recipeTitle.textContent = data.recipe.title;
+                cookingTime.textContent = `Cooking time: ${data.recipe.cookingTime}`;
                 
                 // Reset progress
                 progressBar.style.width = '0%';
                 
                 // Reset next button
                 nextStepBtn.textContent = 'Continue Story →';
+                
+                // Reset steps
+                document.querySelectorAll('.step').forEach(step => {
+                    step.classList.remove('completed');
+                });
             }
             
             function showCompletionScreen() {
