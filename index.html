@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
+   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -612,6 +612,31 @@
         .floating {
             animation: float 5s ease-in-out infinite;
         }
+        
+        /* Category Section Styles */
+        .category-section {
+            background-color: var(--section-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .category-section#productivity {
+            border-left: 5px solid var(--productivity-color);
+        }
+        
+        .category-section#mindfulness {
+            border-left: 5px solid var(--mindfulness-color);
+        }
+        
+        .category-section#creativity {
+            border-left: 5px solid var(--creativity-color);
+        }
+        
+        .category-section#learning {
+            border-left: 5px solid var(--learning-color);
+        }
     </style>
 </head>
 <body>
@@ -673,7 +698,35 @@
             </div>
         </section>
         
-        <!-- About Section moved to bottom -->
+        <!-- Productivity Section -->
+        <section id="productivity" class="category-section">
+            <h2>Productivity Tools</h2>
+            <p>Boost your efficiency and get more done with our productivity tools. From task management to focus enhancement, these tools help you optimize your workflow and achieve your goals.</p>
+            <p>Use the category filter above to view all productivity tools.</p>
+        </section>
+        
+        <!-- Mindfulness Section -->
+        <section id="mindfulness" class="category-section">
+            <h2>Mindfulness Tools</h2>
+            <p>Find peace and balance in your daily life with our mindfulness tools. These resources help you cultivate awareness, reduce stress, and develop a more mindful approach to your day-to-day activities.</p>
+            <p>Use the category filter above to view all mindfulness tools.</p>
+        </section>
+        
+        <!-- Creativity Section -->
+        <section id="creativity" class="category-section">
+            <h2>Creativity Tools</h2>
+            <p>Unleash your creative potential with our collection of creativity tools. From idea generation to artistic expression, these tools help you tap into your imagination and bring your ideas to life.</p>
+            <p>Use the category filter above to view all creativity tools.</p>
+        </section>
+        
+        <!-- Learning Section -->
+        <section id="learning" class="category-section">
+            <h2>Learning Tools</h2>
+            <p>Expand your knowledge and skills with our learning tools. Whether you're studying for exams, learning a new subject, or just curious about the world, these tools make learning engaging and effective.</p>
+            <p>Use the category filter above to view all learning tools.</p>
+        </section>
+        
+        <!-- About Section -->
         <section class="about" id="about">
             <h2>About Adda Store</h2>
             <p>Welcome to AddaStore.fun — a creative playground where tools meet games, and fun meets purpose.</p>
