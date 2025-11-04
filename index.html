@@ -111,115 +111,6 @@
             opacity: 0.9;
         }
 
-        /* Navigation */
-        nav {
-            background: linear-gradient(90deg, #2B2D42 0%, #3A3D5B 100%);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-        
-        .nav-desktop {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            padding: 1rem 0;
-            flex-wrap: wrap;
-        }
-        
-        .nav-desktop li {
-            margin: 0 1rem;
-        }
-        
-        .nav-desktop a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .nav-desktop a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: all 0.5s;
-        }
-        
-        .nav-desktop a:hover::before {
-            left: 100%;
-        }
-        
-        .nav-desktop a:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-        }
-
-        /* Mobile Navigation */
-        .nav-mobile {
-            display: none;
-            padding: 1rem;
-        }
-        
-        .mobile-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .mobile-menu-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            transition: transform 0.3s;
-        }
-        
-        .mobile-menu-btn:hover {
-            transform: scale(1.1);
-        }
-        
-        .mobile-menu {
-            display: none;
-            list-style: none;
-            padding-top: 1rem;
-        }
-        
-        .mobile-menu li {
-            margin-bottom: 0.5rem;
-        }
-        
-        .mobile-menu a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.75rem 1rem;
-            border-radius: 4px;
-            display: block;
-            transition: background-color 0.3s;
-        }
-        
-        .mobile-menu a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
         /* Main Content */
         main {
             max-width: 1200px;
@@ -539,18 +430,6 @@
             .tool-card h3 {
                 font-size: 1.2rem;
             }
-            
-            .nav-desktop {
-                display: none;
-            }
-            
-            .nav-mobile {
-                display: block;
-            }
-            
-            .mobile-menu.active {
-                display: block;
-            }
         }
 
         @media (max-width: 480px) {
@@ -597,11 +476,6 @@
             font-size: 1.2rem;
         }
         
-        /* Hide navigation on scroll */
-        .nav-hidden {
-            transform: translateY(-100%);
-        }
-        
         /* Floating Animation */
         @keyframes float {
             0% { transform: translateY(0px); }
@@ -620,6 +494,12 @@
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             margin-bottom: 2rem;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
         
         .category-section#productivity {
@@ -637,6 +517,13 @@
         .category-section#learning {
             border-left: 5px solid var(--learning-color);
         }
+        
+        .category-section p {
+            max-width: 800px;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
     </style>
 </head>
 <body>
@@ -644,36 +531,6 @@
         <h1 class="floating">Adda Store</h1>
         <p>Discover unique tools and games designed to enhance your daily life, productivity, and creativity.</p>
     </header>
-    
-    <nav id="mainNav">
-        <div class="nav-container">
-            <!-- Desktop Navigation -->
-            <ul class="nav-desktop">
-                <li><a href="#all-tools">All Tools</a></li>
-                <li><a href="#productivity">Productivity</a></li>
-                <li><a href="#mindfulness">Mindfulness</a></li>
-                <li><a href="#creativity">Creativity</a></li>
-                <li><a href="#learning">Learning</a></li>
-                <li><a href="#about">About</a></li>
-            </ul>
-            
-            <!-- Mobile Navigation -->
-            <div class="nav-mobile">
-                <div class="mobile-header">
-                    <span>Menu</span>
-                    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
-                </div>
-                <ul class="mobile-menu" id="mobileMenu">
-                    <li><a href="#all-tools">All Tools</a></li>
-                    <li><a href="#productivity">Productivity</a></li>
-                    <li><a href="#mindfulness">Mindfulness</a></li>
-                    <li><a href="#creativity">Creativity</a></li>
-                    <li><a href="#learning">Learning</a></li>
-                    <li><a href="#about">About</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
     <main>
         <section id="all-tools">
@@ -696,34 +553,6 @@
             <div class="tools-grid" id="toolsContainer">
                 <!-- Tool cards will be generated by JavaScript -->
             </div>
-        </section>
-        
-        <!-- Productivity Section -->
-        <section id="productivity" class="category-section">
-            <h2>Productivity Tools</h2>
-            <p>Boost your efficiency and get more done with our productivity tools. From task management to focus enhancement, these tools help you optimize your workflow and achieve your goals.</p>
-            <p>Use the category filter above to view all productivity tools.</p>
-        </section>
-        
-        <!-- Mindfulness Section -->
-        <section id="mindfulness" class="category-section">
-            <h2>Mindfulness Tools</h2>
-            <p>Find peace and balance in your daily life with our mindfulness tools. These resources help you cultivate awareness, reduce stress, and develop a more mindful approach to your day-to-day activities.</p>
-            <p>Use the category filter above to view all mindfulness tools.</p>
-        </section>
-        
-        <!-- Creativity Section -->
-        <section id="creativity" class="category-section">
-            <h2>Creativity Tools</h2>
-            <p>Unleash your creative potential with our collection of creativity tools. From idea generation to artistic expression, these tools help you tap into your imagination and bring your ideas to life.</p>
-            <p>Use the category filter above to view all creativity tools.</p>
-        </section>
-        
-        <!-- Learning Section -->
-        <section id="learning" class="category-section">
-            <h2>Learning Tools</h2>
-            <p>Expand your knowledge and skills with our learning tools. Whether you're studying for exams, learning a new subject, or just curious about the world, these tools make learning engaging and effective.</p>
-            <p>Use the category filter above to view all learning tools.</p>
         </section>
         
         <!-- About Section -->
@@ -1157,9 +986,6 @@
         // Generate tool cards
         const toolsContainer = document.getElementById('toolsContainer');
         const searchInput = document.getElementById('searchInput');
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mainNav = document.getElementById('mainNav');
         
         function generateToolCards(toolsToShow = tools) {
             toolsContainer.innerHTML = '';
@@ -1239,55 +1065,6 @@
             );
             
             generateToolCards(filteredTools);
-        });
-        
-        // Mobile menu toggle
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('active');
-        });
-        
-        // Close mobile menu when clicking a link
-        mobileMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-            });
-        });
-        
-        // Hide navigation on scroll for mobile
-        let lastScrollTop = 0;
-        
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            // Only apply on mobile screens
-            if (window.innerWidth <= 768) {
-                if (scrollTop > lastScrollTop && scrollTop > 100) {
-                    // Scrolling down
-                    mainNav.classList.add('nav-hidden');
-                } else {
-                    // Scrolling up
-                    mainNav.classList.remove('nav-hidden');
-                }
-            }
-            
-            lastScrollTop = scrollTop;
-        });
-        
-        // Smooth scrolling for navigation
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                if (targetSection) {
-                    window.scrollTo({
-                        top: targetSection.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
         });
     </script>
 </body>
