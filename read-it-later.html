@@ -12,11 +12,16 @@
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Read-It-Later Digest: Transform Your Reading List into Actionable Insights</title>
-    <meta name="description" content="Read-It-Later Digest: Paste 3-5 article URLs and get a cohesive AI-powered summary digest. Save time, reduce information overload, and master your reading list.">
-    <meta name="keywords" content="article summarizer, reading list, AI digest, content curation, time saving tool, information overload, read-it-later, productivity">
+    <title>Read-It-Later Digest</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
         :root {
             --primary: #4361ee;
             --primary-dark: #3a56d4;
@@ -25,19 +30,11 @@
             --accent: #f72585;
             --light: #f8f9fa;
             --dark: #212529;
-            --success: #4cc9f0;
-            --warning: #f8961e;
+            --success: #4bb543;
             --gray: #6c757d;
             --border-radius: 12px;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
         body {
@@ -49,93 +46,37 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
         header {
             text-align: center;
             padding: 2rem 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            line-height: 1.2;
         }
 
         .tagline {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--gray);
             max-width: 600px;
-            margin: 0 auto 1.5rem;
-        }
-
-        .game-rules {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            margin: 2rem auto;
-            max-width: 800px;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .game-rules::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-        }
-
-        .game-rules h2 {
-            color: var(--secondary);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .rules-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .rule-card {
-            background: var(--light);
-            padding: 1.2rem;
-            border-radius: var(--border-radius);
-            border-left: 4px solid var(--primary);
-            transition: var(--transition);
-        }
-
-        .rule-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
-        }
-
-        .rule-card h3 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
+            margin: 0 auto;
         }
 
         .app-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         @media (max-width: 768px) {
@@ -147,24 +88,8 @@
         .input-section, .output-section {
             background: white;
             border-radius: var(--border-radius);
-            padding: 2rem;
+            padding: 1.5rem;
             box-shadow: var(--shadow);
-            position: relative;
-        }
-
-        .input-section::before, .output-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--primary);
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-        }
-
-        .output-section::before {
-            background: var(--secondary);
         }
 
         .section-title {
@@ -173,11 +98,12 @@
             gap: 10px;
             margin-bottom: 1.5rem;
             color: var(--primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
         }
 
         .url-input-container {
             margin-bottom: 1.5rem;
-            position: relative;
         }
 
         .url-input {
@@ -188,7 +114,6 @@
             font-size: 1rem;
             margin-bottom: 10px;
             transition: var(--transition);
-            padding-right: 120px;
         }
 
         .url-input:focus {
@@ -209,10 +134,8 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            position: absolute;
-            right: 0;
-            top: 0;
-            height: 44px;
+            width: 100%;
+            justify-content: center;
         }
 
         .add-url-btn:hover {
@@ -223,6 +146,9 @@
             margin: 1.5rem 0;
             max-height: 300px;
             overflow-y: auto;
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+            padding: 10px;
         }
 
         .url-item {
@@ -245,6 +171,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            font-size: 0.9rem;
         }
 
         .remove-url {
@@ -265,9 +192,9 @@
             background: var(--secondary);
             color: white;
             border: none;
-            padding: 15px 25px;
+            padding: 12px 20px;
             border-radius: var(--border-radius);
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
@@ -281,13 +208,11 @@
 
         .generate-btn:hover {
             background: #651aa0;
-            transform: translateY(-2px);
         }
 
         .generate-btn:disabled {
             background: var(--gray);
             cursor: not-allowed;
-            transform: none;
         }
 
         .output-placeholder {
@@ -307,7 +232,7 @@
         }
 
         .digest-title {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--primary);
             margin-bottom: 0.5rem;
         }
@@ -318,21 +243,23 @@
         }
 
         .summary-section {
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .summary-section h3 {
             color: var(--secondary);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             padding-bottom: 0.5rem;
             border-bottom: 1px dashed #eee;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 1.1rem;
         }
 
         .summary-content {
             line-height: 1.7;
+            font-size: 0.95rem;
         }
 
         .key-points {
@@ -351,12 +278,12 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             background: var(--primary);
             color: white;
             border-radius: 50%;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             margin-right: 10px;
             flex-shrink: 0;
             margin-top: 2px;
@@ -365,137 +292,35 @@
         .stats-container {
             display: flex;
             gap: 1rem;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             flex-wrap: wrap;
         }
 
         .stat-card {
             flex: 1;
-            min-width: 120px;
+            min-width: 100px;
             background: var(--light);
-            padding: 1rem;
+            padding: 0.8rem;
             border-radius: var(--border-radius);
             text-align: center;
             transition: var(--transition);
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             box-shadow: var(--shadow);
         }
 
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary);
         }
 
         .stat-label {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: var(--gray);
             margin-top: 5px;
-        }
-
-        .gamification-badge {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-top: 1rem;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem 1rem;
-            color: var(--gray);
-            font-size: 0.9rem;
-            margin-top: 2rem;
-            border-top: 1px solid #ddd;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: var(--primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .progress-bar {
-            height: 6px;
-            background: #eee;
-            border-radius: 3px;
-            margin-top: 1rem;
-            overflow: hidden;
-        }
-
-        .progress {
-            height: 100%;
-            background: var(--primary);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .level-indicator {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: var(--light);
-            border-radius: var(--border-radius);
-        }
-
-        .level-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .level-badge {
-            background: var(--warning);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 2rem;
-            color: var(--gray);
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--primary-light);
         }
 
         .action-buttons {
@@ -506,7 +331,7 @@
 
         .action-btn {
             flex: 1;
-            padding: 10px;
+            padding: 8px;
             border: none;
             border-radius: var(--border-radius);
             background: var(--light);
@@ -517,6 +342,7 @@
             align-items: center;
             justify-content: center;
             gap: 5px;
+            font-size: 0.9rem;
         }
 
         .action-btn:hover {
@@ -532,11 +358,32 @@
             background: var(--primary-dark);
         }
 
+        footer {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            border-top: 1px solid #ddd;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-light);
+        }
+
         .notification {
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 15px 20px;
+            padding: 12px 18px;
             background: white;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
@@ -555,62 +402,31 @@
 
         .notification i {
             color: var(--success);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
-        .tabs {
-            display: flex;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid #eee;
-        }
-
-        .tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: var(--transition);
-        }
-
-        .tab.active {
-            border-bottom-color: var(--primary);
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .preset-card {
+        .tips {
             background: var(--light);
-            padding: 1.5rem;
+            padding: 1rem;
             border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            border-left: 4px solid var(--primary);
+            margin-top: 1rem;
+            font-size: 0.9rem;
         }
 
-        .preset-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow);
-        }
-
-        .preset-card h4 {
+        .tips h4 {
             color: var(--primary);
             margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .preset-card p {
-            color: var(--gray);
-            font-size: 0.9rem;
+        .tips ul {
+            padding-left: 1.2rem;
+        }
+
+        .tips li {
+            margin-bottom: 0.3rem;
         }
     </style>
 </head>
@@ -618,31 +434,7 @@
     <div class="container">
         <header>
             <h1>Read-It-Later Digest</h1>
-            <p class="tagline">Transform your cluttered reading list into actionable insights with AI-powered summaries</p>
-            
-            <div class="game-rules">
-                <h2><i class="fas fa-gamepad"></i> How to Play the Knowledge Game</h2>
-                <p>Turn your reading backlog into a rewarding productivity game with these simple rules:</p>
-                
-                <div class="rules-list">
-                    <div class="rule-card">
-                        <h3><i class="fas fa-flag"></i> Start Small</h3>
-                        <p>Add 3-5 articles from your reading list. Quality over quantity!</p>
-                    </div>
-                    <div class="rule-card">
-                        <h3><i class="fas fa-bullseye"></i> Set Your Goal</h3>
-                        <p>Choose your focus: quick overview or deep understanding.</p>
-                    </div>
-                    <div class="rule-card">
-                        <h3><i class="fas fa-chart-line"></i> Earn Points</h3>
-                        <p>Gain points for each article processed and insights discovered.</p>
-                    </div>
-                    <div class="rule-card">
-                        <h3><i class="fas fa-trophy"></i> Level Up</h3>
-                        <p>Advance through reader levels as you digest more content.</p>
-                    </div>
-                </div>
-            </div>
+            <p class="tagline">A straightforward tool to manage and digest your reading list</p>
         </header>
 
         <main>
@@ -650,143 +442,94 @@
                 <section class="input-section">
                     <h2 class="section-title"><i class="fas fa-inbox"></i> Your Reading List</h2>
                     
-                    <div class="tabs">
-                        <div class="tab active" data-tab="manual">Manual Input</div>
-                        <div class="tab" data-tab="presets">Quick Presets</div>
+                    <div class="url-input-container">
+                        <input type="url" class="url-input" placeholder="Paste article URL here...">
+                        <button class="add-url-btn"><i class="fas fa-plus"></i> Add Article</button>
                     </div>
                     
-                    <div class="tab-content active" id="manual-tab">
-                        <div class="url-input-container">
-                            <input type="url" class="url-input" placeholder="Paste article URL here...">
-                            <button class="add-url-btn"><i class="fas fa-plus"></i> Add Article</button>
-                        </div>
-                        
-                        <div class="url-list">
-                            <!-- URL items will be added here dynamically -->
-                            <div class="empty-state" id="empty-url-list">
-                                <i class="fas fa-file-alt"></i>
-                                <p>No articles added yet</p>
-                                <p><small>Add 3-5 URLs to create your digest</small></p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="tab-content" id="presets-tab">
-                        <div class="preset-card" data-preset="productivity">
-                            <h4><i class="fas fa-rocket"></i> Productivity Boost</h4>
-                            <p>Time management, focus techniques, workflow optimization</p>
-                        </div>
-                        <div class="preset-card" data-preset="tech">
-                            <h4><i class="fas fa-laptop-code"></i> Tech Insights</h4>
-                            <p>AI developments, programming, tech industry trends</p>
-                        </div>
-                        <div class="preset-card" data-preset="business">
-                            <h4><i class="fas fa-chart-bar"></i> Business Strategy</h4>
-                            <p>Leadership, marketing, entrepreneurship, management</p>
-                        </div>
-                        <div class="preset-card" data-preset="health">
-                            <h4><i class="fas fa-heartbeat"></i> Health & Wellness</h4>
-                            <p>Mental health, nutrition, exercise, mindfulness</p>
-                        </div>
-                    </div>
-                    
-                    <div class="level-indicator">
-                        <div class="level-info">
-                            <div class="level-badge">1</div>
-                            <div>
-                                <strong>Novice Reader</strong>
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 30%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <small>45/150 points to next level</small>
+                    <div class="url-list">
+                        <div class="empty-state" id="empty-url-list">
+                            <i class="fas fa-file-alt"></i>
+                            <p>No articles added yet</p>
+                            <p><small>Add URLs to create your digest</small></p>
                         </div>
                     </div>
                     
                     <button class="generate-btn" id="generate-digest" disabled>
-                        <i class="fas fa-magic"></i> Generate My Digest
+                        <i class="fas fa-file-contract"></i> Create Digest
                     </button>
+                    
+                    <div class="tips">
+                        <h4><i class="fas fa-lightbulb"></i> Tips for Better Digests</h4>
+                        <ul>
+                            <li>Add articles on similar topics for more cohesive summaries</li>
+                            <li>Include a mix of perspectives for balanced insights</li>
+                            <li>Review and edit the generated digest before saving</li>
+                        </ul>
+                    </div>
                 </section>
                 
                 <section class="output-section">
-                    <h2 class="section-title"><i class="fas fa-file-alt"></i> Your Personalized Digest</h2>
+                    <h2 class="section-title"><i class="fas fa-file-alt"></i> Your Reading Digest</h2>
                     
                     <div class="output-placeholder" id="output-placeholder">
                         <i class="fas fa-newspaper"></i>
-                        <p>Your AI-powered digest will appear here</p>
-                        <p><small>Add 3-5 URLs and click "Generate My Digest"</small></p>
+                        <p>Your reading digest will appear here</p>
+                        <p><small>Add URLs and click "Create Digest"</small></p>
                     </div>
                     
                     <div class="digest-output" id="digest-output">
                         <div class="digest-header">
-                            <h2 class="digest-title">Weekly Knowledge Digest</h2>
-                            <p class="digest-meta">Generated on <span id="digest-date">October 26, 2023</span> • <span id="article-count">3 articles</span> processed</p>
+                            <h2 class="digest-title">Reading Digest</h2>
+                            <p class="digest-meta">Created on <span id="digest-date">October 26, 2023</span> • <span id="article-count">3 articles</span> summarized</p>
                         </div>
                         
                         <div class="summary-section">
-                            <h3><i class="fas fa-file-contract"></i> Executive Summary</h3>
+                            <h3><i class="fas fa-file-contract"></i> Overview</h3>
                             <div class="summary-content">
-                                <p>Based on your selected articles about productivity and AI tools, here's the synthesized overview:</p>
-                                <p>The intersection of AI and personal productivity is creating new paradigms for knowledge work. While tools are becoming more sophisticated, the human element of focus and intentionality remains critical.</p>
+                                <p>Based on your selected articles, here's a synthesized overview of the key themes and ideas:</p>
+                                <p>Your reading list covers several important topics that intersect in interesting ways. While each article has its own focus, common threads emerge when viewed together.</p>
                             </div>
                         </div>
                         
                         <div class="summary-section">
-                            <h3><i class="fas fa-lightbulb"></i> Key Insights</h3>
+                            <h3><i class="fas fa-lightbulb"></i> Key Points</h3>
                             <ul class="key-points">
-                                <li><span class="points-counter">1</span> AI summarization can reduce reading time by up to 70% while maintaining comprehension</li>
-                                <li><span class="points-counter">2</span> The "read-it-later" paradox: we save more than we consume, creating digital clutter</li>
-                                <li><span class="points-counter">3</span> Synthesis across multiple sources reveals patterns single articles can't show</li>
-                                <li><span class="points-counter">4</span> The most effective learners combine quick scanning with deep reading strategically</li>
+                                <li><span class="points-counter">1</span> Each article contributes a unique perspective to the broader topic</li>
+                                <li><span class="points-counter">2</span> Look for connections between the different sources you've collected</li>
+                                <li><span class="points-counter">3</span> Consider how these ideas might apply to your own work or interests</li>
+                                <li><span class="points-counter">4</span> Identify any conflicting viewpoints that require further investigation</li>
                             </ul>
                         </div>
                         
                         <div class="summary-section">
-                            <h3><i class="fas fa-tasks"></i> Actionable Takeaways</h3>
+                            <h3><i class="fas fa-tasks"></i> Next Steps</h3>
                             <ul class="key-points">
-                                <li><span class="points-counter">1</span> Implement a weekly "digest session" to process saved articles</li>
-                                <li><span class="points-counter">2</span> Use the 3-5-1 rule: save 3 articles max per day, process 5 per week, implement 1 insight</li>
-                                <li><span class="points-counter">3</span> Combine AI tools with critical thinking - don't outsource understanding</li>
+                                <li><span class="points-counter">1</span> Read the full articles for deeper understanding</li>
+                                <li><span class="points-counter">2</span> Take notes on how these ideas connect to your existing knowledge</li>
+                                <li><span class="points-counter">3</span> Share interesting findings with colleagues or peers</li>
                             </ul>
                         </div>
                         
                         <div class="stats-container">
                             <div class="stat-card">
-                                <div class="stat-value">72%</div>
-                                <div class="stat-label">Time Saved</div>
+                                <div class="stat-value" id="article-count-stat">3</div>
+                                <div class="stat-label">Articles</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">5</div>
-                                <div class="stat-label">Key Insights</div>
+                                <div class="stat-value" id="insight-count">4</div>
+                                <div class="stat-label">Key Points</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-value">3</div>
-                                <div class="stat-label">Action Items</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-value">15</div>
-                                <div class="stat-label">Points Earned</div>
+                                <div class="stat-value" id="action-count">3</div>
+                                <div class="stat-label">Next Steps</div>
                             </div>
                         </div>
                         
                         <div class="action-buttons">
-                            <button class="action-btn"><i class="fas fa-download"></i> Export</button>
-                            <button class="action-btn"><i class="fas fa-share-alt"></i> Share</button>
-                            <button class="action-btn primary"><i class="fas fa-save"></i> Save</button>
-                        </div>
-                        
-                        <div class="gamification-badge">
-                            <i class="fas fa-trophy"></i> Knowledge Synthesizer Badge Unlocked!
-                        </div>
-                    </div>
-                    
-                    <div class="loading" id="loading">
-                        <div class="spinner"></div>
-                        <p>AI is analyzing your articles and creating your digest...</p>
-                        <div class="progress-bar">
-                            <div class="progress" id="loading-progress"></div>
+                            <button class="action-btn" id="copy-digest"><i class="fas fa-copy"></i> Copy</button>
+                            <button class="action-btn" id="print-digest"><i class="fas fa-print"></i> Print</button>
+                            <button class="action-btn primary" id="save-digest"><i class="fas fa-save"></i> Save</button>
                         </div>
                     </div>
                 </section>
@@ -794,8 +537,8 @@
         </main>
         
         <footer>
-            <p>Read-It-Later Digest &copy; 2023 | Transform information overload into actionable knowledge</p>
-            <p>This is a frontend demonstration. In a full implementation, AI processing would occur via API.</p>
+            <p>Read-It-Later Digest &copy; 2023 | A no-frills tool for managing your reading list</p>
+            <p>Simple organization and note-taking</p>
         </footer>
     </div>
 
@@ -803,7 +546,7 @@
         <i class="fas fa-check-circle"></i>
         <div>
             <strong>Success!</strong>
-            <p>Your digest has been generated successfully.</p>
+            <p id="notification-message">Your digest has been created successfully.</p>
         </div>
     </div>
 
@@ -815,16 +558,14 @@
             const generateBtn = document.getElementById('generate-digest');
             const outputPlaceholder = document.getElementById('output-placeholder');
             const digestOutput = document.getElementById('digest-output');
-            const loading = document.getElementById('loading');
-            const loadingProgress = document.getElementById('loading-progress');
             const emptyUrlList = document.getElementById('empty-url-list');
             const notification = document.getElementById('notification');
-            const tabs = document.querySelectorAll('.tab');
-            const tabContents = document.querySelectorAll('.tab-content');
-            const presetCards = document.querySelectorAll('.preset-card');
+            const notificationMessage = document.getElementById('notification-message');
+            const copyBtn = document.getElementById('copy-digest');
+            const printBtn = document.getElementById('print-digest');
+            const saveBtn = document.getElementById('save-digest');
             
             let urls = [];
-            let points = 45;
             
             // Set current date in digest
             const now = new Date();
@@ -834,43 +575,13 @@
                 day: 'numeric' 
             });
             
-            // Tab functionality
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabId = tab.dataset.tab;
-                    
-                    // Update active tab
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    
-                    // Show corresponding content
-                    tabContents.forEach(content => {
-                        content.classList.remove('active');
-                        if (content.id === `${tabId}-tab`) {
-                            content.classList.add('active');
-                        }
-                    });
-                });
-            });
-            
-            // Preset functionality
-            presetCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const preset = card.dataset.preset;
-                    loadPreset(preset);
-                    
-                    // Switch back to manual tab to show loaded URLs
-                    document.querySelector('.tab[data-tab="manual"]').click();
-                });
-            });
-            
             // Add URL to list
             addUrlBtn.addEventListener('click', function() {
                 const url = urlInput.value.trim();
                 
-                if (url && isValidUrl(url)) {
-                    if (urls.length >= 5) {
-                        showNotification("Maximum 5 articles allowed. Remove one to add another.", "error");
+                if (url) {
+                    if (urls.length >= 10) {
+                        showNotification("Maximum 10 articles allowed. Remove one to add another.", "error");
                         return;
                     }
                     
@@ -880,13 +591,14 @@
                     
                     // Update article count in digest preview
                     document.getElementById('article-count').textContent = urls.length + ' articles';
+                    document.getElementById('article-count-stat').textContent = urls.length;
                     
                     // Enable/disable generate button
-                    generateBtn.disabled = urls.length < 3;
+                    generateBtn.disabled = urls.length < 1;
                     
                     showNotification("Article added successfully!");
                 } else {
-                    showNotification("Please enter a valid URL", "error");
+                    showNotification("Please enter a URL", "error");
                 }
             });
             
@@ -899,38 +611,38 @@
             
             // Generate digest
             generateBtn.addEventListener('click', function() {
-                if (urls.length < 3) {
-                    showNotification("Please add at least 3 articles to generate a digest", "error");
+                if (urls.length < 1) {
+                    showNotification("Please add at least one article to create a digest", "error");
                     return;
                 }
                 
-                // Show loading state
+                // Show digest
                 outputPlaceholder.style.display = 'none';
-                digestOutput.style.display = 'none';
-                loading.style.display = 'block';
+                digestOutput.style.display = 'block';
                 
-                // Simulate loading progress
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += Math.random() * 15;
-                    if (progress >= 100) {
-                        progress = 100;
-                        clearInterval(interval);
-                        
-                        // Show digest after "processing"
-                        setTimeout(() => {
-                            loading.style.display = 'none';
-                            digestOutput.style.display = 'block';
-                            
-                            // Add points for generating digest
-                            points += 15;
-                            updateLevelIndicator();
-                            
-                            showNotification("Your digest has been generated successfully!");
-                        }, 500);
-                    }
-                    loadingProgress.style.width = progress + '%';
-                }, 300);
+                // Update stats
+                document.getElementById('article-count').textContent = urls.length + ' articles';
+                document.getElementById('article-count-stat').textContent = urls.length;
+                
+                showNotification("Your digest has been created successfully!");
+            });
+            
+            // Copy digest to clipboard
+            copyBtn.addEventListener('click', function() {
+                const digestText = document.querySelector('.digest-output').innerText;
+                navigator.clipboard.writeText(digestText).then(() => {
+                    showNotification("Digest copied to clipboard!");
+                });
+            });
+            
+            // Print digest
+            printBtn.addEventListener('click', function() {
+                window.print();
+            });
+            
+            // Save digest (simulated)
+            saveBtn.addEventListener('click', function() {
+                showNotification("Digest saved successfully!");
             });
             
             // Render URL list
@@ -962,9 +674,10 @@
                         
                         // Update article count in digest preview
                         document.getElementById('article-count').textContent = urls.length + ' articles';
+                        document.getElementById('article-count-stat').textContent = urls.length;
                         
                         // Enable/disable generate button
-                        generateBtn.disabled = urls.length < 3;
+                        generateBtn.disabled = urls.length < 1;
                     });
                     
                     urlItem.appendChild(urlText);
@@ -974,86 +687,16 @@
                 
                 // Update generate button text based on URL count
                 if (urls.length > 0) {
-                    generateBtn.innerHTML = `<i class="fas fa-magic"></i> Generate Digest (${urls.length}/5 articles)`;
+                    generateBtn.innerHTML = `<i class="fas fa-file-contract"></i> Create Digest (${urls.length} articles)`;
                 } else {
-                    generateBtn.innerHTML = '<i class="fas fa-magic"></i> Generate My Digest';
+                    generateBtn.innerHTML = '<i class="fas fa-file-contract"></i> Create Digest';
                 }
-            }
-            
-            // Update level indicator
-            function updateLevelIndicator() {
-                const level = Math.floor(points / 150) + 1;
-                const progress = (points % 150) / 150 * 100;
-                
-                document.querySelector('.level-badge').textContent = level;
-                document.querySelector('.level-info strong').textContent = 
-                    level === 1 ? 'Novice Reader' : 
-                    level === 2 ? 'Knowledge Seeker' : 
-                    level === 3 ? 'Information Master' : 'Wisdom Sage';
-                
-                document.querySelector('.progress').style.width = progress + '%';
-                document.querySelector('.level-indicator small').textContent = 
-                    `${points % 150}/150 points to next level`;
-            }
-            
-            // Load preset
-            function loadPreset(preset) {
-                // Clear existing URLs
-                urls = [];
-                
-                // Add preset-specific URLs
-                switch(preset) {
-                    case 'productivity':
-                        urls = [
-                            'https://example.com/time-management-techniques',
-                            'https://example.com/deep-work-strategies',
-                            'https://example.com/digital-minimalism',
-                            'https://example.com/productivity-myths'
-                        ];
-                        break;
-                    case 'tech':
-                        urls = [
-                            'https://example.com/ai-trends-2023',
-                            'https://example.com/web-development-best-practices',
-                            'https://example.com/cybersecurity-essentials',
-                            'https://example.com/cloud-computing-guide'
-                        ];
-                        break;
-                    case 'business':
-                        urls = [
-                            'https://example.com/leadership-principles',
-                            'https://example.com/digital-marketing-strategies',
-                            'https://example.com/startup-funding-guide',
-                            'https://example.com/remote-team-management'
-                        ];
-                        break;
-                    case 'health':
-                        urls = [
-                            'https://example.com/mindfulness-meditation',
-                            'https://example.com/nutrition-for-energy',
-                            'https://example.com/sleep-optimization',
-                            'https://example.com/exercise-routines'
-                        ];
-                        break;
-                }
-                
-                renderUrlList();
-                
-                // Update article count in digest preview
-                document.getElementById('article-count').textContent = urls.length + ' articles';
-                
-                // Enable generate button
-                generateBtn.disabled = urls.length < 3;
-                
-                showNotification(`"${preset.charAt(0).toUpperCase() + preset.slice(1)}" preset loaded successfully!`);
             }
             
             // Show notification
             function showNotification(message, type = "success") {
-                const notification = document.getElementById('notification');
                 const icon = notification.querySelector('i');
                 const strong = notification.querySelector('strong');
-                const p = notification.querySelector('p');
                 
                 // Update notification content
                 if (type === "error") {
@@ -1068,7 +711,7 @@
                     strong.textContent = "Success!";
                 }
                 
-                p.textContent = message;
+                notificationMessage.textContent = message;
                 
                 // Show notification
                 notification.classList.add('show');
@@ -1077,16 +720,6 @@
                 setTimeout(() => {
                     notification.classList.remove('show');
                 }, 3000);
-            }
-            
-            // Simple URL validation
-            function isValidUrl(string) {
-                try {
-                    new URL(string);
-                    return true;
-                } catch (_) {
-                    return false;
-                }
             }
             
             // Initialize with empty URL list
