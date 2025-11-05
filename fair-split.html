@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
+   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -259,6 +259,74 @@
         .hidden {
             display: none;
         }
+        
+        /* About Section Styles */
+        .about-section {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .about-content {
+            max-width: 100%;
+        }
+        
+        .about-content h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .about-content h3 {
+            color: var(--primary-color);
+            margin: 1.5rem 0 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .about-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .about-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .benefit-card {
+            padding: 1.2rem;
+            background-color: var(--light-color);
+            border-radius: 6px;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .benefit-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-info {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .contact-info p {
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -399,6 +467,66 @@
             <h2>Your Fair Split Summary</h2>
             <div id="results-content">
                 <!-- Results will be populated here by JavaScript -->
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="about-content">
+                <h2>About the Fair Split Calculator</h2>
+                <p>The Fair Split Calculator is a free tool designed to help roommates, couples, and cohabitants split shared expenses in a way that feels truly fair to everyone involved. We believe that financial harmony is key to maintaining healthy relationships in shared living situations.</p>
+                
+                <h3>Why Fair Splitting Matters</h3>
+                <p>Traditional 50/50 splits don't always account for differences in income, usage, or preferences. When one person earns significantly more than the other, or when one person uses certain resources more, a simple equal split can create financial strain and resentment over time.</p>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <h4>Financial Fairness</h4>
+                        <p>Our calculator ensures that each person contributes proportionally to their financial capacity, preventing undue burden on lower-income earners.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>Relationship Harmony</h4>
+                        <p>By eliminating money arguments, our tool helps maintain positive relationships between roommates and partners.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>Transparency</h4>
+                        <p>Clear calculations and breakdowns ensure everyone understands exactly how costs are divided.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>Flexibility</h4>
+                        <p>Choose between different splitting methods to find what works best for your specific situation.</p>
+                    </div>
+                </div>
+                
+                <h3>How It Works</h3>
+                <p>Our calculator offers two distinct methods for splitting expenses:</p>
+                
+                <h4>Income-Weighted Split</h4>
+                <p>This method calculates each person's share based on their proportional income. If Person A earns 70% of the total household income, they would pay 70% of the shared expenses. This approach is ideal when:</p>
+                <ul>
+                    <li>There's a significant income disparity between housemates</li>
+                    <li>You want to ensure expenses are proportional to financial capacity</li>
+                    <li>All shared resources are used approximately equally</li>
+                </ul>
+                
+                <h4>Fixed-Cost Split</h4>
+                <p>This method allows you to assign specific fixed costs to individuals (like a larger bedroom or dedicated parking space), then split the remaining flexible costs 50/50. This works well when:</p>
+                <ul>
+                    <li>Different housemates use different resources or have different benefits</li>
+                    <li>There are clear differences in room sizes or amenities</li>
+                    <li>You want to account for unequal usage of certain resources</li>
+                </ul>
+                
+                <h3>Our Mission</h3>
+                <p>We created the Fair Split Calculator to help people navigate the often-tricky territory of shared finances. Money disagreements are a leading cause of tension in shared living situations, and our goal is to provide a simple, transparent tool that eliminates these conflicts before they start.</p>
+                
+                <p>Whether you're moving in with a partner for the first time, sharing an apartment with roommates, or managing household expenses in any shared living situation, our calculator can help ensure financial arrangements are fair, transparent, and agreed upon by all parties.</p>
+                
+                <div class="contact-info">
+                    <h3>Contact & Feedback</h3>
+                    <p>We're constantly working to improve the Fair Split Calculator. If you have suggestions, feedback, or encounter any issues, please reach out to us.</p>
+                    <p>Email: <strong>support@fairsplitcalculator.com</strong></p>
+                </div>
             </div>
         </section>
     </main>
