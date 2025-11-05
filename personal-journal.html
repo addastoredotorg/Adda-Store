@@ -10,6 +10,15 @@
 
   gtag('config', 'G-23LSZJ3WYJ');
 </script>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-23LSZJ3WYJ');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="This Day in My Life - A private journal for reflecting on your thoughts from the same date across different years. Track your personal growth journey through time.">
@@ -208,6 +217,25 @@
             margin-top: 20px;
             font-size: 0.9rem;
         }
+
+        .debug-info {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: var(--radius);
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .save-message {
+            background-color: var(--success);
+            color: white;
+            padding: 10px;
+            border-radius: var(--radius);
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
         
         @media (max-width: 600px) {
             .container {
@@ -242,6 +270,18 @@
             
             <div id="entry-container">
                 <!-- Entry form or display will be shown here -->
+            </div>
+            
+            <div class="save-message" id="save-message">
+                Entry saved successfully!
+            </div>
+            
+            <!-- Debug information -->
+            <div class="debug-info">
+                <strong>Debug Info:</strong>
+                <div id="debug-content"></div>
+                <button onclick="clearAllData()" style="margin-top: 10px; padding: 5px 10px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer;">Clear All Data</button>
+                <button onclick="showLocalStorage()" style="margin-top: 10px; padding: 5px 10px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">Show Storage</button>
             </div>
         </div>
         
@@ -290,6 +330,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded - initializing journal');
             // Set current year in footer
             document.getElementById('current-year').textContent = new Date().getFullYear();
             
@@ -298,9 +339,10 @@
         });
         
         function initJournal() {
+            console.log('Initializing journal...');
             const currentDate = new Date();
-            const currentMonth = currentDate.getMonth();
-            const currentDay = currentDate.getDate();
+            const currentMonth = currentDate.getMonth(); // 0-11
+            const currentDay = currentDate.getDate(); // 1-31
             const currentYear = currentDate.getFullYear();
             
             // Display current date
@@ -309,6 +351,15 @@
             
             // Get or initialize journal data
             let journalData = JSON.parse(localStorage.getItem('thisDayJournal')) || {};
+            console.log('Loaded journal data:', journalData);
+            
+            // Update debug info
+            document.getElementById('debug-content').innerHTML = `
+                Current Date: ${currentMonth}-${currentDay}-${currentYear}<br>
+                Storage Key: thisDayJournal<br>
+                Data: ${JSON.stringify(journalData)}<br>
+                Has current year data: ${!!journalData[currentYear]}
+            `;
             
             // Create year tabs
             const yearTabsContainer = document.getElementById('year-tabs');
@@ -319,13 +370,20 @@
             
             // Add previous years that have entries for this date
             Object.keys(journalData).forEach(year => {
-                if (journalData[year][`${currentMonth}-${currentDay}`] && !years.includes(parseInt(year))) {
-                    years.push(parseInt(year));
+                const yearInt = parseInt(year);
+                // Check if the year object exists and has an entry for this date
+                if (journalData[year] && journalData[year][`${currentMonth}-${currentDay}`]) {
+                    if (!years.includes(yearInt)) {
+                        years.push(yearInt);
+                    }
                 }
             });
             
             // Sort years in descending order
             years.sort((a, b) => b - a);
+            
+            // Clear existing tabs
+            yearTabsContainer.innerHTML = '';
             
             // Create year tabs
             years.forEach(year => {
@@ -337,6 +395,7 @@
                 }
                 
                 tab.addEventListener('click', function() {
+                    console.log('Clicked year:', year);
                     // Remove active class from all tabs
                     document.querySelectorAll('.year-tab').forEach(t => t.classList.remove('active'));
                     // Add active class to clicked tab
@@ -353,6 +412,7 @@
             
             // Function to load entry for a specific year and date
             function loadEntry(year, month, day, journalData) {
+                console.log('Loading entry for:', year, month, day);
                 const dateKey = `${month}-${day}`;
                 
                 // Clear entry container
@@ -362,15 +422,24 @@
                     // Show entry form for current year
                     const form = document.createElement('div');
                     form.className = 'entry-form';
+                    
+                    // Get existing entry if it exists
+                    let existingEntry = '';
+                    if (journalData[year] && journalData[year][dateKey]) {
+                        existingEntry = journalData[year][dateKey];
+                        console.log('Found existing entry:', existingEntry);
+                    }
+                    
                     form.innerHTML = `
                         <h3>What's on your mind today?</h3>
-                        <textarea id="entry-text" placeholder="Write about your day, your thoughts, your feelings...">${journalData[year] && journalData[year][dateKey] ? journalData[year][dateKey] : ''}</textarea>
+                        <textarea id="entry-text" placeholder="Write about your day, your thoughts, your feelings...">${existingEntry}</textarea>
                         <button id="save-entry">Save Today's Entry</button>
                     `;
                     entryContainer.appendChild(form);
                     
                     // Add event listener for save button
                     document.getElementById('save-entry').addEventListener('click', function() {
+                        console.log('Save button clicked');
                         saveEntry(year, month, day, journalData);
                     });
                 } else {
@@ -398,8 +467,20 @@
             
             // Function to save an entry
             function saveEntry(year, month, day, journalData) {
-                const entryText = document.getElementById('entry-text').value.trim();
+                console.log('Saving entry...');
+                const entryTextElement = document.getElementById('entry-text');
+                
+                if (!entryTextElement) {
+                    console.error('Textarea element not found!');
+                    alert('Error: Could not find the text area. Please refresh the page.');
+                    return;
+                }
+                
+                const entryText = entryTextElement.value.trim();
                 const dateKey = `${month}-${day}`;
+                
+                console.log('Entry text to save:', entryText);
+                console.log('Date key:', dateKey);
                 
                 if (entryText === '') {
                     alert('Please write something before saving.');
@@ -409,17 +490,54 @@
                 // Initialize year if it doesn't exist
                 if (!journalData[year]) {
                     journalData[year] = {};
+                    console.log('Created new year object for:', year);
                 }
                 
                 // Save entry
                 journalData[year][dateKey] = entryText;
+                console.log('Updated journal data:', journalData);
                 
-                // Save to localStorage
-                localStorage.setItem('thisDayJournal', JSON.stringify(journalData));
-                
-                // Show confirmation
-                alert('Entry saved successfully! Come back next year to reflect on today.');
+                try {
+                    // Save to localStorage
+                    localStorage.setItem('thisDayJournal', JSON.stringify(journalData));
+                    console.log('Successfully saved to localStorage');
+                    
+                    // Show success message
+                    const saveMessage = document.getElementById('save-message');
+                    saveMessage.style.display = 'block';
+                    setTimeout(() => {
+                        saveMessage.style.display = 'none';
+                    }, 3000);
+                    
+                    // Update debug info
+                    document.getElementById('debug-content').innerHTML = `
+                        Current Date: ${month}-${day}-${year}<br>
+                        Storage Key: thisDayJournal<br>
+                        Data: ${JSON.stringify(journalData)}<br>
+                        Last saved: ${new Date().toLocaleTimeString()}
+                    `;
+                    
+                } catch (error) {
+                    console.error('Error saving to localStorage:', error);
+                    alert('Error saving your entry. Please try again.');
+                }
             }
+        }
+
+        // Debug functions
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all journal data? This cannot be undone.')) {
+                localStorage.removeItem('thisDayJournal');
+                console.log('Cleared all journal data');
+                alert('All data cleared. Refreshing page...');
+                location.reload();
+            }
+        }
+
+        function showLocalStorage() {
+            const data = localStorage.getItem('thisDayJournal');
+            console.log('LocalStorage data:', data);
+            alert('LocalStorage data: ' + data);
         }
     </script>
 </body>
