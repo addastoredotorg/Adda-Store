@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
+   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-23LSZJ3WYJ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -25,7 +25,7 @@
         body {
             background: linear-gradient(-45deg, #ff0000, #ff8000, #ffff00, #00ff00, #0080ff, #8000ff, #ff0080);
             background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            animation: gradientShift 30s ease infinite;
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
@@ -58,28 +58,7 @@
             background: linear-gradient(45deg, #ff9800, #ffcc00, #ffff00, #ffcc00, #ff9800);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: titleGlow 3s infinite alternate, float 4s ease-in-out infinite;
             position: relative;
-        }
-
-        @keyframes titleGlow {
-            0% { 
-                text-shadow: 0 0 10px #ff9800, 0 0 20px #ff9800;
-                transform: scale(1);
-            }
-            50% {
-                text-shadow: 0 0 20px #ffcc00, 0 0 30px #ff6600, 0 0 40px #ff3300;
-                transform: scale(1.02);
-            }
-            100% { 
-                text-shadow: 0 0 15px #ffff00, 0 0 25px #ff9800, 0 0 35px #ff6600;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(-1deg); }
-            50% { transform: translateY(-10px) rotate(1deg); }
         }
 
         .message {
@@ -92,12 +71,6 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            animation: messagePulse 4s infinite;
-        }
-
-        @keyframes messagePulse {
-            0%, 100% { box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); }
-            50% { box-shadow: 0 5px 30px rgba(255, 255, 255, 0.2), 0 0 40px rgba(255, 152, 0, 0.2); }
         }
 
         .input-section {
@@ -106,13 +79,7 @@
             padding: 25px;
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            animation: sectionGlow 6s infinite;
             backdrop-filter: blur(5px);
-        }
-
-        @keyframes sectionGlow {
-            0%, 100% { border-color: rgba(255, 255, 255, 0.3); }
-            50% { border-color: rgba(255, 255, 255, 0.6); }
         }
 
         .input-group {
@@ -134,12 +101,6 @@
             outline: none;
             border: 2px solid transparent;
             transition: all 0.3s;
-            animation: inputShine 8s infinite;
-        }
-
-        @keyframes inputShine {
-            0%, 100% { background: rgba(255, 255, 255, 0.2); }
-            50% { background: rgba(255, 255, 255, 0.3); }
         }
 
         input:focus {
@@ -160,8 +121,6 @@
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 5px 20px rgba(255, 152, 0, 0.5);
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease infinite;
         }
 
         button:hover {
@@ -175,14 +134,9 @@
             background: rgba(255, 255, 255, 0.1);
             padding: 30px;
             border-radius: 15px;
-            animation: fadeIn 0.5s ease-out, shareGlow 4s infinite;
+            animation: fadeIn 0.5s ease-out;
             border: 1px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(5px);
-        }
-
-        @keyframes shareGlow {
-            0%, 100% { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
-            50% { box-shadow: 0 5px 25px rgba(255, 255, 255, 0.2); }
         }
 
         @keyframes fadeIn {
@@ -198,12 +152,6 @@
             word-break: break-all;
             font-size: 1rem;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            animation: linkPulse 3s infinite;
-        }
-
-        @keyframes linkPulse {
-            0%, 100% { border-color: rgba(255, 255, 255, 0.3); }
-            50% { border-color: rgba(255, 255, 255, 0.6); }
         }
 
         .social-share {
@@ -230,19 +178,9 @@
             backdrop-filter: blur(5px);
         }
 
-        .social-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .social-btn:hover::before {
-            left: 100%;
+        .social-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         .whatsapp {
@@ -278,26 +216,10 @@
         .copy {
             background: linear-gradient(45deg, #6a11cb, #2575fc, #6a11cb);
             color: white;
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease infinite;
-        }
-
-        .social-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         .social-btn i {
             font-size: 1.3rem;
-        }
-
-        .firework {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
         }
 
         .diya {
@@ -309,7 +231,6 @@
             border-radius: 50% 50% 30% 30%;
             box-shadow: 0 0 25px #ff9800;
             z-index: 5;
-            animation: flicker 2s infinite alternate, diyaFloat 6s ease-in-out infinite;
         }
 
         .diya::before {
@@ -322,22 +243,6 @@
             background: #ffcc00;
             border-radius: 50% 50% 20% 20%;
             box-shadow: 0 0 18px #ffcc00;
-            animation: flameFlicker 1.5s infinite alternate;
-        }
-
-        @keyframes flicker {
-            0%, 100% { opacity: 0.8; transform: scale(1); box-shadow: 0 0 20px #ff9800; }
-            50% { opacity: 1; transform: scale(1.05); box-shadow: 0 0 30px #ffcc00, 0 0 40px #ff9800; }
-        }
-
-        @keyframes flameFlicker {
-            0%, 100% { transform: scaleY(1) scaleX(1); opacity: 0.9; }
-            50% { transform: scaleY(1.1) scaleX(0.9); opacity: 1; }
-        }
-
-        @keyframes diyaFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(2deg); }
         }
 
         .left-diya {
@@ -356,13 +261,7 @@
             border-radius: 20px;
             border: 2px solid rgba(255, 255, 255, 0.3);
             text-align: center;
-            animation: sectionPulse 5s infinite;
             backdrop-filter: blur(10px);
-        }
-
-        @keyframes sectionPulse {
-            0%, 100% { box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); }
-            50% { box-shadow: 0 5px 30px rgba(255, 255, 255, 0.2); }
         }
 
         .viral-title {
@@ -370,12 +269,6 @@
             margin-bottom: 40px;
             color: #ffcc00;
             text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
-            animation: titleShimmer 4s infinite;
-        }
-
-        @keyframes titleShimmer {
-            0%, 100% { text-shadow: 0 0 10px rgba(255, 204, 0, 0.5); }
-            50% { text-shadow: 0 0 20px rgba(255, 204, 0, 0.8), 0 0 30px rgba(255, 152, 0, 0.6); }
         }
 
         .viral-grid {
@@ -391,7 +284,6 @@
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             transition: all 0.4s;
-            animation: cardFloat 8s ease-in-out infinite;
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(5px);
@@ -405,19 +297,6 @@
             right: 0;
             height: 4px;
             background: linear-gradient(90deg, #ff9800, #ffcc00, #ffff00);
-        }
-
-        @keyframes cardFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .viral-card:nth-child(2) {
-            animation-delay: 1.5s;
-        }
-
-        .viral-card:nth-child(3) {
-            animation-delay: 3s;
         }
 
         .viral-card:hover {
@@ -617,8 +496,6 @@
     </style>
 </head>
 <body>
-    <!-- Firework elements will be created by JavaScript -->
-    
     <!-- Diya decorations -->
     <div class="diya left-diya"></div>
     <div class="diya right-diya"></div>
@@ -737,72 +614,8 @@
     </div>
 
     <script>
-        // Enhanced colorful fireworks with more colors and effects
-        function createFirework() {
-            const firework = document.createElement('div');
-            firework.classList.add('firework');
-            
-            // Random position
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight;
-            
-            // Extended color palette
-            const colors = [
-                '#ff0000', '#ff4000', '#ff8000', '#ffbf00', '#ffff00',
-                '#bfff00', '#80ff00', '#40ff00', '#00ff00', '#00ff40',
-                '#00ff80', '#00ffbf', '#00ffff', '#00bfff', '#0080ff',
-                '#0040ff', '#0000ff', '#4000ff', '#8000ff', '#bf00ff',
-                '#ff00ff', '#ff00bf', '#ff0080', '#ff0040'
-            ];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            
-            firework.style.left = `${x}px`;
-            firework.style.top = `${y}px`;
-            firework.style.backgroundColor = color;
-            
-            document.body.appendChild(firework);
-            
-            // Enhanced animation with random sizes and durations
-            const size = 8 + Math.random() * 25;
-            const duration = 0.8 + Math.random() * 2.5;
-            
-            const keyframes = [
-                { 
-                    transform: 'scale(0) rotate(0deg)', 
-                    opacity: 1,
-                    boxShadow: `0 0 20px ${color}`
-                },
-                { 
-                    transform: `scale(${size}) rotate(${Math.random() * 360}deg)`, 
-                    opacity: 0,
-                    boxShadow: `0 0 40px ${color}, 0 0 60px ${color}`
-                }
-            ];
-            
-            const options = {
-                duration: duration * 1000,
-                easing: 'cubic-bezier(0.2, 0.8, 0.4, 1)'
-            };
-            
-            firework.animate(keyframes, options).onfinish = () => {
-                firework.remove();
-            };
-        }
-
-        // Create initial enhanced fireworks
-        for (let i = 0; i < 25; i++) {
-            setTimeout(() => createFirework(), i * 120);
-        }
+        // Removed fireworks animation code
         
-        // Create fireworks every 2.5 seconds with varying intensity
-        setInterval(() => {
-            const fireworkCount = 6 + Math.floor(Math.random() * 8);
-            for (let i = 0; i < fireworkCount; i++) {
-                setTimeout(() => createFirework(), i * 150);
-            }
-        }, 2500);
-
-        // Rest of the existing JavaScript code remains the same
         const urlParams = new URLSearchParams(window.location.search);
         const fromParam = urlParams.get('from');
         
@@ -843,11 +656,6 @@
                 });
                 
                 document.getElementById('shareSection').scrollIntoView({ behavior: 'smooth' });
-                
-                // Enhanced celebration fireworks
-                for (let i = 0; i < 40; i++) {
-                    setTimeout(() => createFirework(), i * 80);
-                }
             } else {
                 alert('Please enter your name first to create your personalized Diwali greeting!');
             }
